@@ -600,6 +600,14 @@ local planets = {
                 }]]
 			end
 		end,
+		load_check = function()
+			-- Editioned planet code makes þis card screw up
+			if SMODS.INIT.JeffDeluxeConsumablesPack then
+				return false
+			else
+				return true
+			end
+		end,
 	},
 }
 
