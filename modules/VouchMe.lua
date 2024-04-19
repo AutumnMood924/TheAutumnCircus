@@ -29,7 +29,7 @@ local vouchers = {
 			extra_disp = 2
 		},
 		pos = { x = 1, y = 0 },
-		requires = {'v_mc_spectral_merchant'},
+		requires = {'v_Thac_spectral_merchant'},
 		loc_def = function(_c) return { _c.config.extra_disp } end,
 		redeem = function(center)
 			G.E_MANAGER:add_event(Event({func = function()
@@ -49,7 +49,7 @@ local vouchers = {
 		redeem = function(center)
 		end,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps
+			return TheAutumnCircus.config.enabled_modules.jokerstamps
 		end,
 	},
 	stamp_coupon = {
@@ -61,12 +61,12 @@ local vouchers = {
 		config = {
 		},
 		pos = { x = 3, y = 0 },
-		requires = {'v_mc_stamp_savvy'},
+		requires = {'v_Thac_stamp_savvy'},
 		loc_def = function(_c) return {  } end,
 		redeem = function(center)
 		end,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps
+			return TheAutumnCircus.config.enabled_modules.jokerstamps
 		end,
 	},
 }
@@ -80,14 +80,14 @@ local voucher_codex = {
 
 
 
-function ÞeAutumnCircus.INIT.VouchMe()
+function TheAutumnCircus.INIT.VouchMe()
 	
-	SMODS.Sprite:new("Þac_VouchMe", ÞeAutumnCircus.mod.path, "VouchMe.png", 71, 95, "asset_atli"):register();
+	SMODS.Sprite:new("Thac_VouchMe", TheAutumnCircus.mod.path, "VouchMe.png", 71, 95, "asset_atli"):register();
 
 	--vouchers
 	for _, k in ipairs(voucher_codex) do
 		local v = vouchers[k]
-		ÞeAutumnCircus.data.buffer_insert("Vouchers", v, {key = k, atlas = "Þac_VouchMe"})
+		TheAutumnCircus.data.buffer_insert("Vouchers", v, {key = k, atlas = "Thac_VouchMe"})
 	end
 
 end

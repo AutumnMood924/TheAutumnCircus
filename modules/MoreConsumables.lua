@@ -54,7 +54,7 @@ local tarots = {
 			end
 			delay(0.2)
 			for i=1, #G.hand.highlighted do
-				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.highlighted[i]:set_ability(ÞeAutumnCircus.func.pseudorandom_enhancement());return true end }))
+				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.highlighted[i]:set_ability(TheAutumnCircus.func.pseudorandom_enhancement());return true end }))
 			end
 			for i=1, #G.hand.highlighted do
 				local percent = 0.85 + (i-0.999)/(#G.hand.highlighted-0.998)*0.3
@@ -313,7 +313,7 @@ local planets = {
 		end,
 		use = function(self, area, copier)
 			local used_tarot = copier or self
-			local chosen_hand = ÞeAutumnCircus.func.pseudorandom_unlocked_hand()
+			local chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			level_up_hand(used_tarot, chosen_hand, nil, used_tarot.ability.consumeable.strength)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
@@ -325,7 +325,7 @@ local planets = {
 			return badges
 		end,
 		calculate = function(self, context)
-			if G.GAME.used_vouchers.v_observatory and context.scoring_name == ÞeAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'comet_observatory') then
+			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'comet_observatory') then
 				local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
                 return {
                     message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
@@ -359,12 +359,12 @@ local planets = {
 		use = function(self, area, copier)
 			local used_tarot = copier or self
 			-- upgrade
-			local chosen_hand = ÞeAutumnCircus.func.pseudorandom_unlocked_hand()
+			local chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			level_up_hand(used_tarot, chosen_hand, nil, used_tarot.ability.consumeable.strength)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 			-- downgrade
-			chosen_hand = ÞeAutumnCircus.func.pseudorandom_unlocked_hand(chosen_hand)
+			chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand(chosen_hand)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			if G.GAME.hands[chosen_hand].level <= 1 then delay(1.5) else
 				level_up_hand(used_tarot, chosen_hand, nil, -1 * (used_tarot.ability.consumeable.weakness or 1))
@@ -378,8 +378,8 @@ local planets = {
 			return badges
 		end,
 		calculate = function(self, context)
-			local hand_1 = ÞeAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
-			local hand_2 = ÞeAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
+			local hand_1 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
+			local hand_2 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
 			if G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_1 then
 				local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
                 return {
@@ -488,11 +488,11 @@ local planets = {
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_station', set = 'Other'}
 			end
-			return { _c.config.strength, ÞeAutumnCircus.func.favorite_hand() }
+			return { _c.config.strength, TheAutumnCircus.func.favorite_hand() }
 		end,
 		use = function(self, area, copier)
 			local used_tarot = copier or self
-			local chosen_hand = ÞeAutumnCircus.func.favorite_hand()
+			local chosen_hand = TheAutumnCircus.func.favorite_hand()
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			level_up_hand(used_tarot, chosen_hand, nil, used_tarot.ability.consumeable.strength)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
@@ -504,7 +504,7 @@ local planets = {
 			return badges
 		end,
 		calculate = function(self, context)
-			if G.GAME.used_vouchers.v_observatory and context.scoring_name == ÞeAutumnCircus.func.favorite_hand() then
+			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.favorite_hand() then
 				local value = G.P_CENTERS.v_observatory.config.extra
                 return {
                     message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
@@ -601,7 +601,7 @@ local planets = {
 			end
 		end,
 		load_check = function()
-			-- Editioned planet code makes þis card screw up
+			-- Editioned planet code makes This card screw up
 			if SMODS.INIT.JeffDeluxeConsumablesPack then
 				return false
 			else
@@ -652,7 +652,7 @@ local spectrals = {
 					
 					-- Enhancement (~ 80% chance)
 					if pseudorandom(pseudoseed('chancetime')) > 0.2 then
-						card:set_ability(ÞeAutumnCircus.func.pseudorandom_enhancement())
+						card:set_ability(TheAutumnCircus.func.pseudorandom_enhancement())
 					else
 						card:set_ability(G.P_CENTERS['c_base'])
 					end
@@ -670,7 +670,7 @@ local spectrals = {
 						local seal_list = {}
 						for k, _ in pairs(G.P_SEALS) do
 							local safe = true
-							for __, v in ipairs(ÞeAutumnCircus.data.joker_stamps) do
+							for __, v in ipairs(TheAutumnCircus.data.joker_stamps) do
 								if k == v then safe = false end
 							end
 							if safe then
@@ -832,7 +832,7 @@ local spectrals = {
 			-- add stamps to the rest
 			for k, v in ipairs(G.jokers.cards) do
 				if not chosen_joker or v ~= chosen_joker then
-					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function() v:set_seal(pseudorandom_element(ÞeAutumnCircus.data.joker_stamps, pseudoseed("mischiefs_reward")), false, true); return true end }))
+					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function() v:set_seal(pseudorandom_element(TheAutumnCircus.data.joker_stamps, pseudoseed("mischiefs_reward")), false, true); return true end }))
 				end
 			end
 			delay(0.5)
@@ -841,7 +841,7 @@ local spectrals = {
 			return #G.jokers.cards > 1
 		end,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps
+			return TheAutumnCircus.config.enabled_modules.jokerstamps
 		end,
 	},
 	comedy = {
@@ -860,7 +860,7 @@ local spectrals = {
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps and ÞeAutumnCircus.config.enabled_seals.todd
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.todd
 		end,
 	},
 	tragedy = {
@@ -879,7 +879,7 @@ local spectrals = {
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps and ÞeAutumnCircus.config.enabled_seals.steven
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.steven
 		end,
 	},
 	whimsy = {
@@ -898,7 +898,7 @@ local spectrals = {
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps and ÞeAutumnCircus.config.enabled_seals.jimbo
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.jimbo
 		end,
 	},
 	entropy = {
@@ -917,7 +917,7 @@ local spectrals = {
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps and ÞeAutumnCircus.config.enabled_seals.chaos
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.chaos
 		end,
 	},
 	wonder = {
@@ -936,7 +936,7 @@ local spectrals = {
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return ÞeAutumnCircus.config.enabled_modules.jokerstamps and ÞeAutumnCircus.config.enabled_seals.andy
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.andy
 		end,
 	},
 }
@@ -1032,28 +1032,28 @@ local function setup_localization()
 	G.localization.misc.dictionary["k_mc_shuffle"] = "Shuffled!"
 end
 
-function ÞeAutumnCircus.INIT.MoreConsumables()
+function TheAutumnCircus.INIT.MoreConsumables()
 	
 	setup_localization()
 	
-	SMODS.Sprite:new("Þac_MoreConsumables", ÞeAutumnCircus.mod.path, "MoreConsumables.png", 71, 95, "asset_atli"):register();
+	SMODS.Sprite:new("Thac_MoreConsumables", TheAutumnCircus.mod.path, "MoreConsumables.png", 71, 95, "asset_atli"):register();
 	
 	--tarots
 	for _, k in ipairs(tarot_codex) do
 		local v = tarots[k]
-		ÞeAutumnCircus.data.buffer_insert("Tarots", v, {key = k, atlas = "Þac_MoreConsumables"})
+		TheAutumnCircus.data.buffer_insert("Tarots", v, {key = k, atlas = "Thac_MoreConsumables"})
 	end
 	
 	--planets
 	for _, k in ipairs(planet_codex) do
 		local v = planets[k]
-		ÞeAutumnCircus.data.buffer_insert("Planets", v, {key = k, atlas = "Þac_MoreConsumables"})
+		TheAutumnCircus.data.buffer_insert("Planets", v, {key = k, atlas = "Thac_MoreConsumables"})
 	end
 	
 	--spectrals
 	for _, k in ipairs(spectral_codex) do
 		local v = spectrals[k]
-		ÞeAutumnCircus.data.buffer_insert("Spectrals", v, {key = k, atlas = "Þac_MoreConsumables"})
+		TheAutumnCircus.data.buffer_insert("Spectrals", v, {key = k, atlas = "Thac_MoreConsumables"})
 	end
 
 end

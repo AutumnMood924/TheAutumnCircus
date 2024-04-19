@@ -1,6 +1,12 @@
 -- This file doesn't need to return anything
 
 
+local alias__Card_Character_init = Card_Character.init;
+function Card_Character:init(args)
+	args.center = G.P_CENTERS.j_merry_andy
+	return alias__Card_Character_init(self, args)
+end
+
 -- Hook into this to roll editions for Joker (tarot)
 -- Also roll stamps for jokers
 local alias__create_card = create_card;
@@ -10,16 +16,16 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 	
 	local card = alias__create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	
-	if _type == 'Tarot' and card.config.center.key == 'c_mc_joker_tarot' then
+	if _type == 'Tarot' and card.config.center.key == 'c_Thac_joker_tarot' then
         local edition = poll_edition('edi'..(key_append or '')..G.GAME.round_resets.ante)
         card:set_edition(edition)
         check_for_unlock({type = 'have_edition'})
 	end
 	
-	if _type == 'Joker' and G.GAME.used_vouchers.v_mc_stamp_savvy and not card.seal then
+	if _type == 'Joker' and G.GAME.used_vouchers.v_Thac_stamp_savvy and not card.seal then
 		local odds = pseudorandom(pseudoseed('joker_seal_odds'))
 		if odds < 3/10 then
-			card:set_seal(pseudorandom_element(ÞeAutumnCircus.data.joker_stamps, pseudoseed("joker_seal")))
+			card:set_seal(pseudorandom_element(TheAutumnCircus.data.joker_stamps, pseudoseed("joker_seal")))
 		end
 	end
 	
@@ -94,7 +100,7 @@ end
 local alias__Card_set_cost = Card.set_cost;
 function Card:set_cost()
 	alias__Card_set_cost(self)
-	if self.ability.set == 'Joker' and self.cost > 0 and self.seal and G.GAME.used_vouchers.v_mc_stamp_coupon then
+	if self.ability.set == 'Joker' and self.cost > 0 and self.seal and G.GAME.used_vouchers.v_Thac_stamp_coupon then
 		self.cost = math.max(1, self.cost - 2)
 		self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
 		self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
@@ -163,11 +169,11 @@ local alias__Game_start_run = Game.start_run;
 function Game:start_run(args)
 	local ret = alias__Game_start_run(self, args)
 	
-	if not args.savetext and ÞeAutumnCircus.config.testing_kit then
+	if not args.savetext and TheAutumnCircus.config.testing_kit then
 		local testing_cards = {
 			{"Joker", "j_joker", "Jimbo"},
-			{"Joker", "j_odd_todd", "Todd"},
-			{"Joker", "j_even_steven", "Steven"},
+			{"Joker", "j_odd_todd", "Steven"},
+			{"Joker", "j_even_steven", "Todd"},
 			{"Joker", "j_chaos", "Chaos"},
 			{"Joker", "j_merry_andy", "Andy"},
 		}
@@ -180,12 +186,12 @@ function Game:start_run(args)
 			targetarea:emplace(card)
 		end
 		
-		G.GAME.used_vouchers['v_mc_stamp_savvy'] = true
+		G.GAME.used_vouchers['v_Thac_stamp_savvy'] = true
 		G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 1
-		Card.apply_to_run(nil, G.P_CENTERS['v_mc_stamp_savvy'])
-		G.GAME.used_vouchers['v_mc_stamp_coupon'] = true
+		Card.apply_to_run(nil, G.P_CENTERS['v_Thac_stamp_savvy'])
+		G.GAME.used_vouchers['v_Thac_stamp_coupon'] = true
 		G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 1
-		Card.apply_to_run(nil, G.P_CENTERS['v_mc_stamp_coupon'])
+		Card.apply_to_run(nil, G.P_CENTERS['v_Thac_stamp_coupon'])
 	end
 	return ret
 end

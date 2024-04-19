@@ -6,7 +6,7 @@ local data = {}
 data.joker_stamps = {
 }
 -- this can be done better probably
-for k, v in pairs(ÞeAutumnCircus.config.enabled_seals) do
+for k, v in pairs(TheAutumnCircus.config.enabled_seals) do
 	if v then
 		table.insert(data.joker_stamps, k:sub(1,1):upper()..k:sub(2))
 	end
@@ -25,9 +25,9 @@ data.buffer_register_funcs = {
 	Jokers = function(v)
 	end,
 	Tarots = function(v)
-		if ÞeAutumnCircus.config.enabled_tarots[v.key] and ((not v.load_check) or v.load_check()) then
-			local a = "c_"..ÞeAutumnCircus.mod_prefix..v.key
-			SMODS.Tarot:new(v.name, ÞeAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 3, v.cost_mult or 1.0, v.effect, true, true, v.atlas):register()
+		if TheAutumnCircus.config.enabled_tarots[v.key] and ((not v.load_check) or v.load_check()) then
+			local a = "c_"..TheAutumnCircus.mod_prefix..v.key
+			SMODS.Tarot:new(v.name, TheAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 3, v.cost_mult or 1.0, v.effect, true, true, v.atlas):register()
 			if v.loc_def then SMODS.Tarots[a].loc_def = v.loc_def end
 			if v.use then SMODS.Tarots[a].use = v.use end
 			if v.can_use then SMODS.Tarots[a].can_use = v.can_use end
@@ -37,9 +37,9 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Planets = function(v)
-		if ÞeAutumnCircus.config.enabled_planets[v.key] and ((not v.load_check) or v.load_check()) then
-			local a = "c_"..ÞeAutumnCircus.mod_prefix..v.key
-			SMODS.Planet:new(v.name, ÞeAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 3, v.cost_mult or 1.0, v.effect, 1, true, true, v.atlas):register()
+		if TheAutumnCircus.config.enabled_planets[v.key] and ((not v.load_check) or v.load_check()) then
+			local a = "c_"..TheAutumnCircus.mod_prefix..v.key
+			SMODS.Planet:new(v.name, TheAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 3, v.cost_mult or 1.0, v.effect, 1, true, true, v.atlas):register()
 			if v.loc_def then SMODS.Planets[a].loc_def = v.loc_def end
 			if v.use then SMODS.Planets[a].use = v.use end
 			if v.can_use then SMODS.Planets[a].can_use = v.can_use end
@@ -49,9 +49,9 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Spectrals = function(v)
-		if ÞeAutumnCircus.config.enabled_spectrals[v.key] and ((not v.load_check) or v.load_check()) then
-			local a = "c_"..ÞeAutumnCircus.mod_prefix..v.key
-			SMODS.Spectral:new(v.name, ÞeAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 4, true, true, v.atlas):register()
+		if TheAutumnCircus.config.enabled_spectrals[v.key] and ((not v.load_check) or v.load_check()) then
+			local a = "c_"..TheAutumnCircus.mod_prefix..v.key
+			SMODS.Spectral:new(v.name, TheAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 4, true, true, v.atlas):register()
 			if v.loc_def then SMODS.Spectrals[a].loc_def = v.loc_def end
 			if v.use then SMODS.Spectrals[a].use = v.use end
 			if v.can_use then SMODS.Spectrals[a].can_use = v.can_use end
@@ -61,7 +61,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Seals = function(v)
-		if ÞeAutumnCircus.config.enabled_seals[v.key] and ((not v.load_check) or v.load_check()) then
+		if TheAutumnCircus.config.enabled_seals[v.key] and ((not v.load_check) or v.load_check()) then
 			local a = string.lower(v.name)..'_seal'
 			SMODS.Seal:new(v.name, a, v.full_name, v.pos, { name = v.full_name, text = v.text }, v.atlas, true, HEX(v.color)):register()
 			if v.loc_def then SMODS.Seals[a].loc_def = v.loc_def end
@@ -72,9 +72,9 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Vouchers = function(v)
-		if ÞeAutumnCircus.config.enabled_vouchers[v.key] and ((not v.load_check) or v.load_check()) then
-			local a = "v_"..ÞeAutumnCircus.mod_prefix..v.key
-			SMODS.Voucher:new(v.name, ÞeAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 10, true, true, true, v.requires, v.atlas):register()
+		if TheAutumnCircus.config.enabled_vouchers[v.key] and ((not v.load_check) or v.load_check()) then
+			local a = "v_"..TheAutumnCircus.mod_prefix..v.key
+			SMODS.Voucher:new(v.name, TheAutumnCircus.mod_prefix..v.key, v.config, v.pos, { name = v.display_name or v.name, text = v.text }, v.cost or 10, true, true, true, v.requires, v.atlas):register()
 			if v.loc_def then SMODS.Vouchers[a].loc_def = v.loc_def end
 			if v.redeem then SMODS.Vouchers[a].redeem = v.redeem end
 			if v.set_badges then SMODS.Vouchers[a].set_badges = v.set_badges end
