@@ -1,7 +1,17 @@
-MoreConsumables for Balatro to add more consumables
+# A modularized Balatro mod adding a variety of content!
 
-Version 0.1.0 adds 5 Tarot, 5 Planets, and 3 Spectral cards
+MoreConsumables for Balatro to add more consumables  
+JokerStamps for Stamp Your Joker  
+VouchMe?  
 
-Credits
-AutumnMood - Code
-Lyman - Art and good taste
+# Changelog  
+## Version 0.1.0  
+  5 Tarot, 5 Planets, and 3 Spectral cards  
+## Version 0.2.0  
+  7 new Spectral cards  
+  Added Joker Stamps module with 5 stamps  
+  Added VouchMe module with 2 sets of vouchers
+
+# Credits  
+AutumnMood - Code  
+Lyman - Art and good taste  
