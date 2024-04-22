@@ -69,6 +69,51 @@ local vouchers = {
 			return TheAutumnCircus.config.enabled_modules.jokerstamps
 		end,
 	},
+	oddity_merchant = {
+		name = "Oddity Merchant",
+		text = {
+			"{C:oddity}Oddities{} appear",
+			"{C:attention}#1#X{} more frequently",
+			"in the shop"
+		},
+		config = {
+			extra = 9.6/4,
+			extra_disp = 2
+		},
+		pos = { x = 4, y = 0 },
+		loc_def = function(_c) return { _c.config.extra_disp } end,
+		redeem = function(center)
+			G.E_MANAGER:add_event(Event({func = function()
+				G.GAME.oddity_rate = 4*center.extra
+				return true end }))
+		end,
+		load_check = function()
+			return SMODS.INIT.OddityAPI ~= nil
+		end,
+	},
+	oddity_tycoon = {
+		name = "Oddity Tycoon",
+		text = {
+			"{C:oddity}Oddities{} appear",
+			"{C:attention}#1#X{} more frequently",
+			"in the shop"
+		},
+		config = {
+			extra = 19.2/4,
+			extra_disp = 4
+		},
+		pos = { x = 5, y = 0 },
+		requires = {'v_Thac_oddity_merchant'},
+		loc_def = function(_c) return { _c.config.extra_disp } end,
+		redeem = function(center)
+			G.E_MANAGER:add_event(Event({func = function()
+				G.GAME.oddity_rate = 4*center.extra
+				return true end }))
+		end,
+		load_check = function()
+			return SMODS.INIT.OddityAPI ~= nil
+		end,
+	},
 }
 
 local voucher_codex = {
@@ -76,6 +121,8 @@ local voucher_codex = {
 	'spectral_tycoon',
 	'stamp_savvy',
 	'stamp_coupon',
+	'oddity_merchant',
+	'oddity_tycoon',
 }
 
 

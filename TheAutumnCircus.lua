@@ -36,6 +36,9 @@ function SMODS.INIT.TheAutumnCircus()
 	if TheAutumnCircus.config.enabled_modules.vouchme then
 		TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/VouchMe.lua")()	
 	end
+	if TheAutumnCircus.config.enabled_modules.basicoddities and SMODS.INIT.OddityAPI then
+		TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
+	end
 	
 	-- Run INIT functions
 	for _, v in pairs(TheAutumnCircus.INIT) do

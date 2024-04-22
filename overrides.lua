@@ -32,6 +32,46 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 	return card
 end
 
+local alias__Card_generate_UIBox_ability_table = Card.generate_UIBox_ability_table;
+function Card:generate_UIBox_ability_table()
+	local ret = alias__Card_generate_UIBox_ability_table(self)
+	
+	local key = self.config.center.key
+	local center_obj = SMODS.Jokers[key] or SMODS.Tarots[key] or SMODS.Planets[key] or SMODS.Spectrals[key] or SMODS.Vouchers[key] or SMODS.Oddities[key]
+	
+	if center_obj and center_obj.subtitle then
+	
+		if ret.name and ret.name ~= true then
+			local text = ret.name
+			
+			for k, v in pairs(text) do
+				print(tostring(k).." ---- "..tostring(v))
+				if type(v) == 'table' then
+					for kk, vv in pairs(v.config) do
+						print(tostring(kk).." --- "..tostring(vv))
+						if type(vv) == 'table' then
+							for w, vvv in pairs(vv) do
+								print(tostring(w).." -- "..tostring(vvv))
+							end
+						end
+					end
+				end
+			end
+			
+			text[1].config.object.text_offset.y = text[1].config.object.text_offset.y - 14
+			ret.name = {{n=G.UIT.R, config={align = "cm"},nodes={
+				{n=G.UIT.R, config={align = "cm"}, nodes=text},
+				{n=G.UIT.R, config={align = "cm"}, nodes={
+					{n=G.UIT.O, config={object = DynaText({string = center_obj.subtitle, colours = {G.C.WHITE},float = true, shadow = true, offset_y = 0.1, silent = true, spacing = 1, scale = 0.33*0.7})}}
+				}}
+			}}}
+		end
+	
+	end
+	
+	return ret
+end
+
 -- Extended card api
 local alias__Card_update = Card.update;
 function Card:update(dt)
@@ -65,7 +105,7 @@ function check_for_unlock(args)
 	alias__check_for_unlock(args)
 end
 
--- Andy's Stamp's effect
+-- Mr. Bones' Stamp's effect
 local alias__new_round = new_round;
 function new_round()
 	alias__new_round()
@@ -77,7 +117,7 @@ function new_round()
 			
 			for i=1, #G.jokers.cards do
 				local card = G.jokers.cards[i]
-				if card:get_seal() == "Andy" then
+				if card:get_seal() == "Mrbones" then
 					score_mult = score_mult * 0.85
 					card:juice_up()
 				end
@@ -134,6 +174,32 @@ function Card:set_seal(_seal, silent, immediate)
 	return ret
 end
 
+-- extra perma bonuses
+local alias__Card_get_chip_mult = Card.get_chip_mult;
+function Card:get_chip_mult()
+    if self.debuff then return 0 end
+    return alias__Card_get_chip_mult(self) + (self.ability.Thac_perma_bonus_mult or 0)
+end
+
+local alias__Card_get_chip_x_mult = Card.get_chip_x_mult;
+function Card:get_chip_x_mult()
+    if self.debuff then return 0 end
+    return alias__Card_get_chip_x_mult(self) * (self.ability.Thac_perma_bonus_x_mult or 1)
+end
+
+local alias__Card_get_chip_h_mult = Card.get_chip_h_mult;
+function Card:get_chip_h_mult()
+    if self.debuff then return 0 end
+    return alias__Card_get_chip_h_mult(self) + (self.ability.Thac_perma_bonus_h_mult or 0)
+end
+
+local alias__Card_get_chip_h_x_mult = Card.get_chip_h_x_mult;
+function Card:get_chip_h_x_mult()
+    if self.debuff then return 0 end
+    return alias__Card_get_chip_h_x_mult(self) + (self.ability.Thac_perma_bonus_h_x_mult or 0)
+end
+-- end extra perma bonuses
+
 -- Extended Seal API
 local alias__Card_add_to_deck = Card.add_to_deck;
 function Card:add_to_deck(from_debuff)
@@ -175,6 +241,7 @@ function Game:start_run(args)
 			{"Joker", "j_odd_todd", "Steven"},
 			{"Joker", "j_even_steven", "Todd"},
 			{"Joker", "j_chaos", "Chaos"},
+			{"Joker", "j_mr_bones", "Mrbones"},
 			{"Joker", "j_merry_andy", "Andy"},
 		}
 		for i=1, #testing_cards do

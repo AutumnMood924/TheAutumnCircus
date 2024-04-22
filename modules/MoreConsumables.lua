@@ -515,6 +515,7 @@ local planets = {
 	},
 	dysnomia = {
 		name = "Dysnomia",
+		subtitle = "Moon of Eris",
 		text = {
 			"{C:green}Shuffle{} your poker hands' levels",
 			"{C:green}#1# in #2#{} chance to {C:green}randomly{}",

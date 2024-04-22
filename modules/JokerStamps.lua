@@ -30,7 +30,7 @@ local seals = {
 		pos = { x = 0, y = 0 },
 		color = "FDA200",
 		apply = function(card)
-			if card.ability.set ~= 'Joker' then
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
 				return stampfix(card)
 			end
 			if card.added_to_deck then
@@ -58,8 +58,7 @@ local seals = {
 		pos = { x = 1, y = 0 },
 		color = "009CFD",
 		apply = function(card)
-			print(card.ability.set)
-			if card.ability.set ~= 'Joker' then
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
 				return stampfix(card)
 			end
 			if card.added_to_deck then
@@ -91,7 +90,7 @@ local seals = {
 		pos = { x = 2, y = 0 },
 		color = "FD5F55",
 		apply = function(card)
-			if card.ability.set ~= 'Joker' then
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
 				return stampfix(card)
 			end
 			if card.added_to_deck then
@@ -123,26 +122,54 @@ local seals = {
 		pos = { x = 3, y = 0 },
 		color = "55A383",
 		apply = function(card)
-			if card.ability.set ~= 'Joker' then
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
 				return stampfix(card)
 			end
 		end,
 		-- no functions, Chaos' Stamp effect must be hardcoded atm
 	},
+	mrbones = {
+		name = "Mrbones",
+		text = {
+			"Hey there chap,","I'll make {C:attention}Blinds{}","15% weaker",
+		},
+		full_name = "Mr. Bones' Stamp",
+		pos = { x = 5, y = 0 },
+		color = "B1A485",
+		apply = function(card)
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
+				return stampfix(card)
+			end
+		end,
+		-- no functions, Andy's Stamp effect must be hardcoded atm
+	},
 	andy = {
 		name = "Andy",
 		text = {
-			"{C:purple}Hey-hey-hey!{}","{C:purple}I'll make {C:attention}Blinds{}","{C:purple}15% easier!{}",
+			"{C:purple}Hey-hey-hey!{}","{C:purple}I'll grant you{}","{C:attention}+1{C:purple} consumable slot!{}",
 		},
 		full_name = "Andy's Stamp",
 		pos = { x = 4, y = 0 },
 		color = "8F5AC1",
 		apply = function(card)
-			if card.ability.set ~= 'Joker' then
+			if card.ability.set ~= 'Joker' and not (card.area and card.area.config.collection) then
 				return stampfix(card)
 			end
+			if card.added_to_deck then
+				G.consumeables:change_size(1)
+			end
 		end,
-		-- no functions, Andy's Stamp effect must be hardcoded atm
+		unapply = function(card)
+			if card.added_to_deck then
+				G.consumeables:change_size(-1)
+			end
+		end,
+		deck_add = function()
+			G.consumeables:change_size(1)
+		end,
+		deck_remove = function()
+			G.consumeables:change_size(-1)
+		end,
 	},
 }
 
@@ -151,6 +178,7 @@ local seal_codex = {
 	'todd',
 	'steven',
 	'chaos',
+	'mrbones',
 	'andy',
 }
 
