@@ -12,9 +12,9 @@ VouchMe?
   Added Joker Stamps module with 5 stamps  
   Added VouchMe module with 2 sets of vouchers
 ## Version 0.3.0
-  +1 Joker Stamp (Mr. Bones!!!!!)
-  +2 Vouchers (Oddity Merchant & Tycoon)
-  Added Basic Oddities module with 13 oddities - requires OddityAPI mod
+  +1 Joker Stamp (Mr. Bones!!!!!)  
+  +2 Vouchers (Oddity Merchant & Tycoon)  
+  Added Basic Oddities module with 13 oddities - requires OddityAPI mod  
 
 # Credits  
 AutumnMood - Code  
