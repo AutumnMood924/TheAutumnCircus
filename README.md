@@ -18,5 +18,5 @@ VouchMe?
 
 # Credits  
 AutumnMood - Code  
-Lyman - Art and good taste 
-itayfeder - Mr. Bones stamp
+Lyman - Art and good taste  
+itayfeder - Mr. Bones stamp  
