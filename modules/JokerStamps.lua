@@ -156,19 +156,19 @@ local seals = {
 				return stampfix(card)
 			end
 			if card.added_to_deck then
-				G.consumeables:change_size(1)
+				G.consumeables.config.card_limit = G.consumeables.config.card_limit + 1
 			end
 		end,
 		unapply = function(card)
 			if card.added_to_deck then
-				G.consumeables:change_size(-1)
+				G.consumeables.config.card_limit = G.consumeables.config.card_limit - 1
 			end
 		end,
 		deck_add = function()
-			G.consumeables:change_size(1)
+			G.consumeables.config.card_limit = G.consumeables.config.card_limit + 1
 		end,
 		deck_remove = function()
-			G.consumeables:change_size(-1)
+			G.consumeables.config.card_limit = G.consumeables.config.card_limit - 1
 		end,
 	},
 }

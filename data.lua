@@ -20,6 +20,7 @@ data.BUFFERS = {
 	Seals = {},
 	Vouchers = {},
 	Oddities = {},
+	Enhancements = {},
 }
 
 data.buffer_register_funcs = {
@@ -115,6 +116,23 @@ data.buffer_register_funcs = {
 				no_pool_flag = v.no_pool_flag,
 			}:register()
 			if v.subtitle then SMODS.Oddities[a].subtitle = v.subtitle end
+		end
+	end,
+	Enhancements = function(v)
+		if SMODS.INIT.EnhanceAPI and TheAutumnCircus.config.enabled_enhancements[v.key] and ((not v.load_check) or v.load_check()) then
+			local to_reg = {vars={
+				name = v.name,
+				slug = "m_"..TheAutumnCircus.mod_prefix..v.key,
+				atlas = v.atlas,
+				config = v.config,
+				pos = v.pos,
+				loc_txt = v.loc_txt,
+				effect = v.effect,
+				label = v.display_name or v.name,
+				playing_card = not (v.playing_card == false),
+				display_face = not (v.display_face == false),
+			}}
+			newEnhancement(to_reg)
 		end
 	end,
 }

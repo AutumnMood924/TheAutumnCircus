@@ -3,7 +3,7 @@ local money_function = function(self, area, copier)
 	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 		play_sound('timpani')
 		used_tarot:juice_up(0.3, 0.5)
-		ease_dollars(math.max(0,math.min(G.GAME.dollars, self.ability.extra.dollars)), true)
+		ease_dollars(math.max(0,self.ability.extra.dollars), true)
 		return true end }))
 	delay(0.6)
 end
@@ -14,16 +14,15 @@ local chip_function = function(self, area, copier)
 		play_sound('tarot1')
 		used_tarot:juice_up(0.3, 0.5)
 		return true end }))
-	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() 
-		for i=1, #G.hand.highlighted do
-			G.hand.highlighted[i].ability.perma_bonus = G.hand.highlighted[i].ability.perma_bonus or 0
-			G.hand.highlighted[i].ability.perma_bonus = G.hand.highlighted[i].ability.perma_bonus + self.ability.extra.chips
-			G.hand.highlighted[i]:juice_up(0.5, 0.5)
-			delay(0.05)
+	for i=1, #G.hand.cards do
+		if G.hand.cards[i].highlighted == true then
+			G.hand.cards[i].ability.perma_bonus = G.hand.cards[i].ability.perma_bonus or 0
+			G.hand.cards[i].ability.perma_bonus = G.hand.cards[i].ability.perma_bonus + self.ability.extra.chips
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
+				card_eval_status_text(G.hand.cards[i], 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS, instant = true})
+			return true end}))
 		end
-	return true end }))
-	delay(0.2)
-	card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS})
+	end
 	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
 	delay(0.5)
 end
@@ -350,7 +349,7 @@ local oddity_codex = {
 
 function TheAutumnCircus.INIT.BasicOddities()
 	
-	G.localization.misc.dictionary['b_jokers'] = "Jonklers"
+	--G.localization.misc.dictionary['b_jokers'] = "Jonklers"
 	
 	SMODS.Sprite:new("Thac_BasicOddities", TheAutumnCircus.mod.path, "BasicOddities.png", 71, 95, "asset_atli"):register();
 	

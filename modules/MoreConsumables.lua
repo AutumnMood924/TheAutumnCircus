@@ -1,4 +1,5 @@
 
+
 local function stampcarduse(self, area, copier)
 	local used_tarot = copier or self
 	local conv_card = pseudorandom_element(self.eligible_strength_jokers, pseudoseed(self.ability.name))
@@ -275,10 +276,21 @@ local tarots = {
 			if context.joker_main then
 				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hee hee!', colour = G.C.PURPLE})
 				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hoo hoo!', colour = G.C.ORANGE})
-				return {
-					message = localize{type = 'variable', key = 'a_mult', vars = {self.ability.consumeable.mult}},
-					mult_mod = self.ability.consumeable.mult
-				}
+				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1000 then
+					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'It is time!', colour = G.C.RED})
+					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'For my true power!', colour = G.C.BLUE})
+					for i=1, 1000 do
+						TheAutumnCircus.func.eval_this(self, {
+							message = localize{type = 'variable', key = 'a_mult', vars = {self.ability.consumeable.mult}},
+							mult_mod = self.ability.consumeable.mult
+						})
+					end
+				else
+					return {
+						message = localize{type = 'variable', key = 'a_mult', vars = {self.ability.consumeable.mult}},
+						mult_mod = self.ability.consumeable.mult
+					}
+				end
 			end
 		end,
 	},
@@ -797,7 +809,7 @@ local spectrals = {
 		end,
 		can_use = function(self) return true end,
 		load_check = function()
-			return G.VERSION ~= '1.0.0n-FULL'
+			return not not Card.set_perishable
 		end,
 	},
 	mischief = {
@@ -814,6 +826,7 @@ local spectrals = {
 			info_queue[#info_queue+1] = {key = 'todd_seal', set = 'Other'}
 			info_queue[#info_queue+1] = {key = 'steven_seal', set = 'Other'}
 			info_queue[#info_queue+1] = {key = 'chaos_seal', set = 'Other'}
+			info_queue[#info_queue+1] = {key = 'mrbones_seal', set = 'Other'}
 			info_queue[#info_queue+1] = {key = 'andy_seal', set = 'Other'}
 			return {}
 		end,

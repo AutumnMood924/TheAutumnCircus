@@ -8,7 +8,7 @@ local config = {
 		moreconsumables = true,
 		vouchme = true,
 		jokerstamps = true,
-		enhancema = true, --requires EnhanceAPI to be loaded
+		enhancable = false, --requires EnhanceAPI to be loaded
 	},
 	enabled_tarots = {
 		universe = true,
@@ -76,7 +76,7 @@ local config = {
 		andy = true,
 	},
 	enabled_enhancements = {
-		grass = false,
+		grass = true,
 	},
 	testing_kit = false,
 }

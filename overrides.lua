@@ -1,11 +1,11 @@
 -- This file doesn't need to return anything
 
-
+--[[
 local alias__Card_Character_init = Card_Character.init;
 function Card_Character:init(args)
 	args.center = G.P_CENTERS.j_merry_andy
 	return alias__Card_Character_init(self, args)
-end
+end]]
 
 -- Hook into this to roll editions for Joker (tarot)
 -- Also roll stamps for jokers
@@ -229,6 +229,30 @@ function Card:remove_from_deck(from_debuff)
 	end
 	return alias__Card_remove_from_deck(self, from_debuff)
 end
+
+--[[ OH MY GOD IF THIS WORKS YALL ARE COOKED
+local trackerCalculateJoker = false
+
+local alias__Card_calculate_joker = Card.calculate_joker;
+function Card:calculate_joker(context)
+	if self.debuff then return nil end
+	local ret = alias__Card_calculate_joker(self, context)
+	local ret2 = nil
+	if ret and self:get_seal() == "Chaos" and not trackerCalculateJoker and not context.blueprint then
+		trackerCalculateJoker = true
+		ret2 = self:calculate_joker(context)
+		if ret.repetitions then
+			ret2.repetitions = ret2.repetitions + ret.repetitions
+		elseif context.other_card then
+			TheAutumnCircus.func.eval_this(context.other_card, {mult_mod = normalEffect.mult, chip_mod = normalEffect.chips, Xmult_mod = normalEffect.x_mult})
+		else
+			TheAutumnCircus.func.eval_this(self, ret)
+		end
+		card_eval_status_text(self, 'jokers', nil, nil, nil, {message=localize('k_again_ex'), card=self})
+		trackerCalculateJoker = false
+	end
+	return ret2 or ret
+end--]]
 
 -- overriden for testing
 local alias__Game_start_run = Game.start_run;

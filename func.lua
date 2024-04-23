@@ -20,6 +20,19 @@ function func.pseudorandom_unlocked_hand(ignore, seed)
 	return chosen_hand
 end
 
+function func.eval_this(_card, effects)
+	if effects then 
+		local extras = {mult = false, hand_chips = false}
+		if effects.mult_mod then mult = mod_mult(mult + effects.mult_mod);extras.mult = true end
+		if effects.chip_mod then hand_chips = mod_chips(hand_chips + effects.chip_mod);extras.hand_chips = true end
+		if effects.Xmult_mod then mult = mod_mult(mult*effects.Xmult_mod);extras.mult = true  end
+		update_hand_text({delay = 0}, {chips = extras.hand_chips and hand_chips, mult = extras.mult and mult})
+		if effects.message then
+			card_eval_status_text(_card, 'jokers', nil, nil, nil, effects)
+		end
+	end
+end
+
 -- again, returns the string name of the hand
 -- this handles ties the same way that Telescope does, which is to say it doesn't.
 function func.favorite_hand()

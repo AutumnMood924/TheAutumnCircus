@@ -37,7 +37,10 @@ function SMODS.INIT.TheAutumnCircus()
 		TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/VouchMe.lua")()	
 	end
 	if TheAutumnCircus.config.enabled_modules.basicoddities and SMODS.INIT.OddityAPI then
-		TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
+		TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
+	end
+	if TheAutumnCircus.config.enabled_modules.enhancable and SMODS.INIT.EnhanceAPI then
+		TheAutumnCircus.EA = NFS.load(TheAutumnCircus.mod.path.."modules/Enhancable.lua")()	
 	end
 	
 	-- Run INIT functions
