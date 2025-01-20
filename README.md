@@ -19,4 +19,6 @@ VouchMe?
 # Credits  
 AutumnMood - Code  
 Lyman - Art and good taste  
-itayfeder - Mr. Bones stamp  
+itayfeder - Mr. Bones stamp and Vampire stamp, porting stamp code
+akai - Estradiol oddity art
+Jevonn - Planet S, H, C, D art

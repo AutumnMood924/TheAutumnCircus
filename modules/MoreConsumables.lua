@@ -1,6 +1,6 @@
 
 
-local function stampcarduse(self, area, copier)
+local function stampcarduse(_, self, area, copier)
 	local used_tarot = copier or self
 	local conv_card = pseudorandom_element(self.eligible_strength_jokers, pseudoseed(self.ability.name))
 	G.E_MANAGER:add_event(Event({func = function()
@@ -15,21 +15,43 @@ local function stampcarduse(self, area, copier)
 	delay(0.5)
 end
 
-local function stampcardcanuse(self)
+local function stampcardcanuse(_, self)
     if next(self.eligible_strength_jokers) then return true end
 end
 
-local function stampcardupdate(self, dt)
-	self.eligible_strength_jokers = EMPTY(self.eligible_strength_jokers)
-	for k, v in pairs(G.jokers.cards) do
-		if v.ability.set == 'Joker' and (not v.seal) then
-			table.insert(self.eligible_strength_jokers, v)
+local function stampcardupdate(_, self, dt)
+	if G.jokers then
+		self.eligible_strength_jokers = EMPTY(self.eligible_strength_jokers)
+		for k, v in pairs(G.jokers.cards) do
+			if v.ability.set == 'Joker' and (not v.seal) then
+				table.insert(self.eligible_strength_jokers, v)
+			end
 		end
 	end
 end
 
+local suitplanettext = {
+	"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+	"{V:2}#2#",
+	"{C:mult}+#3#{} Mult and",
+	"{C:chips}+#4#{} chips"
+}
+
+local suitplanetloc_vars = function(_c, info_queue)
+	return {vars = {
+		G.GAME.thac_data.suit_levels[_c.config.level_suit].level,
+		localize(_c.config.level_suit, 'suits_plural'),
+		TheAutumnCircus.config.mechanics.suit_levels.mult,
+		TheAutumnCircus.config.mechanics.suit_levels.chips,
+		colours = {
+			(G.GAME.thac_data.suit_levels[_c.config.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.thac_data.suit_levels[_c.config.level_suit].level)]),
+			G.C.SUITS[_c.config.level_suit],
+		}
+	}}
+end
+
 local tarots = {
-	universe = {
+	'universe', universe = {
 		name = "The Universe",
 		text = {
 			'Randomly enhances {C:attention}#1#{}',
@@ -42,8 +64,8 @@ local tarots = {
 			max_highlighted = 4,
 		},
 		pos = { x = 0, y = 0 },
-		loc_def = function(_c) return { _c.config.max_highlighted } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.max_highlighted }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 				play_sound('tarot1')
@@ -65,7 +87,7 @@ local tarots = {
 			delay(0.5)
 		end,
 	},
-	void = {
+	'void', void = {
 		name = "Void",
 		text = {
 			'{C:attention}Removes{} each enhancement from',
@@ -82,8 +104,8 @@ local tarots = {
 			},
 		},
 		pos = { x = 1, y = 0 },
-		loc_def = function(_c) return { _c.config.max_highlighted, _c.config.extra.dollars } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.dollars }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local payout = 0
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -110,7 +132,7 @@ local tarots = {
             if payout > 0 then ease_dollars(payout) end
 		end,
 	},
-	happy_squirrel = {
+	'happy_squirrel', happy_squirrel = {
 		name = "The Happy Squirrel",
 		text = {
 			"Create {C:attention}#2#{} copy of",
@@ -128,8 +150,8 @@ local tarots = {
 			}
 		},
 		pos = { x = 2, y = 0 },
-		loc_def = function(_c) return { 1, _c.config.extra.copies } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { 1, _c.config.extra.copies }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 				play_sound('tarot1')
@@ -157,9 +179,9 @@ local tarots = {
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
 			delay(0.5)
 		end,
-		can_use = function(self) return #G.hand.highlighted == 1 and G.hand.highlighted[1].ability.set == "Default" end
+		can_use = function(_, self) return #G.hand.highlighted == 1 and G.hand.highlighted[1].ability.set == "Default" end
 	},
-	artist = {
+	'artist', artist = {
 		name = "The Artist",
 		text = {
 			'Select {C:attention}#1#{} card,',
@@ -175,8 +197,8 @@ local tarots = {
 			},
 		},
 		pos = { x = 3, y = 0 },
-		loc_def = function(_c) return { _c.config.max_highlighted, _c.config.extra.targets } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.targets }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local selected_card = G.hand.highlighted[1]
 			local target_cards = {}
@@ -220,7 +242,40 @@ local tarots = {
 			delay(0.5)
 		end,
 	},
-	joker = {
+	'veteran', veteran = {
+		name = "The Veteran",
+		text = {
+			'{C:inactive}Not Yet Implemented',
+		},
+		effect = 'vet',
+		config = {
+		},
+		pos = { x = 4, y = 0 },
+		yes_pool_flag = "neversetthis",
+	},
+	'juggler', juggler = {
+		name = "The Juggler",
+		text = {
+			'{C:inactive}Not Yet Implemented',
+		},
+		effect = 'jugs',
+		config = {
+		},
+		pos = { x = 5, y = 0 },
+		yes_pool_flag = "neversetthis",
+	},
+	'drunkard', drunkard = {
+		name = "The Drunkard",
+		text = {
+			'{C:inactive}Not Yet Implemented',
+		},
+		effect = 'dunk',
+		config = {
+		},
+		pos = { x = 6, y = 0 },
+		yes_pool_flag = "neversetthis",
+	},
+	'joker', joker = {
 		name = "The Joker",
 		text = {
 			'{C:red}+#1#{} Mult while in your',
@@ -234,8 +289,8 @@ local tarots = {
 			mult = 4
 		},
 		pos = { x = 0, y = 1 },
-		loc_def = function(_c) return { _c.config.mult } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.mult }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, func = function()
                 attention_text({
@@ -271,12 +326,12 @@ local tarots = {
             return true end }))
 			delay(2.5)
 		end,
-		can_use = function(self) return true end,
-		calculate = function(self, context)
+		can_use = function(_, self) return true end,
+		calculate = function(_, self, context)
 			if context.joker_main then
 				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hee hee!', colour = G.C.PURPLE})
 				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hoo hoo!', colour = G.C.ORANGE})
-				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1000 then
+				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 10000 then
 					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'It is time!', colour = G.C.RED})
 					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'For my true power!', colour = G.C.BLUE})
 					for i=1, 1000 do
@@ -294,19 +349,90 @@ local tarots = {
 			end
 		end,
 	},
-}
-
-local tarot_codex = {
-	'universe',
-	'void',
-	'happy_squirrel',
-	'artist',
-	
-	'joker',
+	'page_of_cups', page_of_cups = {
+		name = "Page of Cups",
+		text = {
+			"Converts up to",
+			"{C:attention}#1#{} selected cards",
+			"to {V:1}#2#{}"
+		},
+		pos = {x = 1, y = 1},
+		effect = "Suit Conversion",
+		config = {
+			suit_conv = "thac_Cups",
+			max_highlighted = 3,
+		},
+		loc_vars = function(_c)
+			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.cups
+		end,
+	},
+	'page_of_wands', page_of_wands = {
+		name = "Page of Wands",
+		text = {
+			"Converts up to",
+			"{C:attention}#1#{} selected cards",
+			"to {V:1}#2#{}"
+		},
+		pos = {x = 2, y = 1},
+		effect = "Suit Conversion",
+		config = {
+			suit_conv = "thac_Wands",
+			max_highlighted = 3,
+		},
+		loc_vars = function(_c)
+			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.wands
+		end,
+	},
+	'page_of_coins', page_of_coins = {
+		name = "Page of Coins",
+		text = {
+			"Converts up to",
+			"{C:attention}#1#{} selected cards",
+			"to {V:1}#2#{}"
+		},
+		pos = {x = 3, y = 1},
+		effect = "Suit Conversion",
+		config = {
+			suit_conv = "thac_Coins",
+			max_highlighted = 3,
+		},
+		loc_vars = function(_c)
+			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.coins
+		end,
+	},
+	'page_of_swords', page_of_swords = {
+		name = "Page of Swords",
+		text = {
+			"Converts up to",
+			"{C:attention}#1#{} selected cards",
+			"to {V:1}#2#{}"
+		},
+		pos = {x = 4, y = 1},
+		effect = "Suit Conversion",
+		config = {
+			suit_conv = "thac_Swords",
+			max_highlighted = 3,
+		},
+		loc_vars = function(_c)
+			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.swords
+		end,
+	},
 }
 
 local planets = {
-	comet = {
+	'comet', comet = {
 		name = "Comet",
 		text = {
 			"Upgrades a {C:green}random{}",
@@ -315,28 +441,30 @@ local planets = {
 		effect = 'Random Hand Upgrade',
 		config = {strength = 2},
 		pos = { x = 0, y = 2 },
-		loc_def = function(_c, info_queue)
+		loc_vars = function(_c, info_queue)
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_comet', set = 'Other'}
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_comet', set = 'Other'}
 			end
-			return { _c.config.strength }
+			return {vars = { _c.config.strength }}
 		end,
-		use = function(self, area, copier)
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			level_up_hand(used_tarot, chosen_hand, nil, used_tarot.ability.consumeable.strength)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 		end,
-		can_use = function(self) return true end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("Comet", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			return badges
+		can_use = function(_, self) return true end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Comet", get_type_colour(self.config.center or self.config, self), nil, 1.2)
+				return badges
+			end
 		end,
-		calculate = function(self, context)
+		calculate = function(_, self, context)
 			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'comet_observatory') then
 				local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
                 return {
@@ -349,7 +477,7 @@ local planets = {
 			} end
 		end,
 	},
-	meteor = {
+	'meteor', meteor = {
 		name = "Meteor",
 		text = {
 			"Upgrades a {C:green}random{}",
@@ -360,15 +488,15 @@ local planets = {
 		effect = 'Random Hand Upgrade And Downgrade',
 		config = {strength = 3, weakness = 1},
 		pos = { x = 1, y = 2 },
-		loc_def = function(_c, info_queue)
+		loc_vars = function(_c, info_queue)
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_meteor', set = 'Other'}
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_meteor', set = 'Other'}
 			end
-			return { _c.config.strength, _c.config.weakness }
+			return {vars = { _c.config.strength, _c.config.weakness }}
 		end,
-		use = function(self, area, copier)
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- upgrade
 			local chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
@@ -383,13 +511,15 @@ local planets = {
 			end
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 		end,
-		can_use = function(self) return true end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("Meteor", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			return badges
+		can_use = function(_, self) return true end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Meteor", get_type_colour(self.config.center or self.config, self), nil, 1.2)
+				return badges
+			end
 		end,
-		calculate = function(self, context)
+		calculate = function(_, self, context)
 			local hand_1 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
 			local hand_2 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
 			if G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_1 then
@@ -411,7 +541,7 @@ local planets = {
 			} end
 		end,
 	},
-	satellite = {
+	'satellite', satellite = {
 		name = "Satellite",
 		text = {
             "Creates up to {C:attention}2",
@@ -421,8 +551,8 @@ local planets = {
 		effect = 'Round Bonus',
 		config = {planets = 2},
 		pos = { x = 2, y = 2 },
-		loc_def = function(_c) return { _c.config.planets } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.planets }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.consumeable.planets, G.consumeables.config.card_limit - #G.consumeables.cards) do
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -437,14 +567,16 @@ local planets = {
 			end
 			delay(0.6)
 		end,
-		can_use = function(self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("Space Junk", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			return badges
+		can_use = function(_, self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Space Junk", get_type_colour(self.config.center or self.config, self), nil, 1.2)
+				return badges
+			end
 		end,
 	},
-	moon = {
+	'moon', moon = {
 		name = "Moon",
 		text = {
             "Creates #1# random",
@@ -455,8 +587,8 @@ local planets = {
 		effect = 'Random Round Bonus',
 		config = {cards = 1},
 		pos = { x = 3, y = 2 },
-		loc_def = function(_c) return { _c.config.cards } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.cards }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.consumeable.cards, G.consumeables.config.card_limit - #G.consumeables.cards) do
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -473,18 +605,19 @@ local planets = {
 			end
 			delay(0.6)
 		end,
-		can_use = function(self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("Moon", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			return badges
+		can_use = function(_, self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Moon", get_type_colour(self.config.center or self.config, self), nil, 1.2)
+				return badges
+			end
 		end,
 		load_check = function()
-			--if SMODS.INIT.SixSuit then return true end
 			return true
 		end
 	},
-	station = {
+	'station', station = {
 		name = "Space Station",
 		text = {
 			"Upgrades your most played",
@@ -494,28 +627,30 @@ local planets = {
 		effect = 'Favorite Hand Upgrade',
 		config = {strength = 1},
 		pos = { x = 4, y = 2 },
-		loc_def = function(_c, info_queue)
+		loc_vars = function(_c, info_queue)
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_station', set = 'Other'}
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_station', set = 'Other'}
 			end
-			return { _c.config.strength, TheAutumnCircus.func.favorite_hand() }
+			return {vars = { _c.config.strength, TheAutumnCircus.func.favorite_hand() }}
 		end,
-		use = function(self, area, copier)
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local chosen_hand = TheAutumnCircus.func.favorite_hand()
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
 			level_up_hand(used_tarot, chosen_hand, nil, used_tarot.ability.consumeable.strength)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 		end,
-		can_use = function(self) return true end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("Space Junk", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			return badges
+		can_use = function(_, self) return true end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Space Junk", get_type_colour(self.config.center or self.config, self), nil, 1.2)
+				return badges
+			end
 		end,
-		calculate = function(self, context)
+		calculate = function(_, self, context)
 			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.favorite_hand() then
 				local value = G.P_CENTERS.v_observatory.config.extra
                 return {
@@ -525,7 +660,7 @@ local planets = {
 			end
 		end,
 	},
-	dysnomia = {
+	'dysnomia', dysnomia = {
 		name = "Dysnomia",
 		subtitle = "Moon of Eris",
 		text = {
@@ -537,15 +672,15 @@ local planets = {
 		effect = 'The D8',
 		config = { extra = 2 },
 		pos = { x = 5, y = 2 },
-		loc_def = function(_c, info_queue)
+		loc_vars = function(_c, info_queue)
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_dysnomia', set = 'Other'}
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_dysnomia', set = 'Other'}
 			end
-			return { G.GAME.probabilities.normal, _c.config.extra }
+			return {vars = { G.GAME.probabilities.normal, _c.config.extra }}
 		end,
-		use = function(self, area, copier)
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
             local temp_hands = {{},{},{}}
             for k, v in pairs(G.GAME.hands) do
@@ -558,8 +693,8 @@ local planets = {
             pseudoshuffle(temp_hands[3], pseudoseed('dysnomia'))
 			for i=1, #temp_hands[1] do
 				G.GAME.hands[temp_hands[3][i]].level = temp_hands[2][i]
-				if pseudorandom('dysnomia_check1') > G.GAME.probabilities.normal/self.ability.extra then
-					if pseudorandom('dysnomia_check2') > 1/2 then
+				if pseudorandom(pseudoseed('dysnomia_check1')) < G.GAME.probabilities.normal/self.ability.extra then
+					if pseudorandom(pseudoseed('dysnomia_check2')) < 1/2 then
 						G.GAME.hands[temp_hands[3][i]].level = math.max(1,G.GAME.hands[temp_hands[3][i]].level - 1)
 					else
 						G.GAME.hands[temp_hands[3][i]].level = G.GAME.hands[temp_hands[3][i]].level + 1
@@ -570,7 +705,7 @@ local planets = {
 			
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                 attention_text({
-                    text = localize('k_mc_shuffle'),
+                    text = localize('k_thac_shuffle'),
                     scale = 1.3, 
                     hold = 1.4,
                     major = used_tarot,
@@ -587,24 +722,24 @@ local planets = {
 			
 			delay(0.5)
 		end,
-		can_use = function(self) return true end,
-		set_badges = function(self, badges)
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1] = create_badge("wow this is useless", get_type_colour(self.config.center or self.config, self), nil, 1.2)
-			print("attempting badge surgery")
-			badges[1].nodes[1].nodes[2].config.object:remove()
-			badges[1].nodes[1].nodes = {
-			{n=G.UIT.R, config={align = "cm"},
-				nodes = {
-					{n=G.UIT.R, config={align = "cm"},nodes={{n=G.UIT.O, config={object = DynaText({string = 'Moon', colours = {G.C.WHITE},float = true, shadow = true, offset_y = -0.05, silent = true, spacing = 1, scale = 0.33*1.2})}}}},
-					{n=G.UIT.R, config={align = "cm"},nodes={{n=G.UIT.O, config={object = DynaText({string = 'of a dwarf planet', colours = {G.C.WHITE},float = true, shadow = true, offset_y = -0.05, silent = true, spacing = 1, scale = 0.33*0.7})}}}},
+		can_use = function(_, self) return true end,
+		set_badges = function(_, self, badges)
+			if self.config.center.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("wow this is useless", get_type_colour(self.config.center or self.config, self), nil, 1.4)
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1].nodes[1].nodes = {
+				{n=G.UIT.R, config={align = "cm"},
+					nodes = {
+						{n=G.UIT.R, config={align = "cm"},nodes={{n=G.UIT.O, config={object = DynaText({string = 'Moon', colours = {G.C.WHITE},float = true, shadow = true, offset_y = -0.05, silent = true, spacing = 1, scale = 0.33*1.2})}}}},
+						{n=G.UIT.R, config={align = "cm"},nodes={{n=G.UIT.O, config={object = DynaText({string = ' of a dwarf planet ', colours = {G.C.WHITE},float = true, shadow = true, offset_y = -0.05, silent = true, spacing = 1, scale = 0.33*0.7})}}}},
+					}
+				},
 				}
-			},
-			}
-			print("badge surgery successful")
-			return badges
+				return badges
+			end
 		end,
-		calculate = function(self, context)
+		calculate = function(_, self, context)
 			if G.GAME.used_vouchers.v_observatory then
 				local value = G.P_CENTERS.v_observatory.config.extra
                 --[[return {
@@ -613,28 +748,581 @@ local planets = {
                 }]]
 			end
 		end,
-		load_check = function()
-			-- Editioned planet code makes This card screw up
-			if SMODS.INIT.JeffDeluxeConsumablesPack then
-				return false
-			else
-				return true
+	},
+	'planet_s', planet_s = {
+		name = "Planet S",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "Spades"},
+		pos = { x = 6, y = 2 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
 			end
 		end,
 	},
-}
-
-local planet_codex = {
-	'comet',
-	'meteor',
-	'satellite',
-	'moon',
-	'station',
-	'dysnomia',
+	'planet_h', planet_h = {
+		name = "Planet H",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "Hearts"},
+		pos = { x = 7, y = 2 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+	},
+	'planet_c', planet_c = {
+		name = "Planet C",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "Clubs"},
+		pos = { x = 8, y = 2 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+	},
+	'planet_d', planet_d = {
+		name = "Planet D",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "Diamonds"},
+		pos = { x = 9, y = 2 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+	},
+	'nice_planet', nice_planet = {
+		name = "Nice Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_nice', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'blaze_planet', blaze_planet = {
+		name = "Blaze Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_blaze', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'twice_nice_planet', twice_nice_planet = {
+		name = "Twice Nice Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_twice_nice', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'skeet_planet', skeet_planet = {
+		name = "Skeet Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_skeet', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'little_dog_planet', little_dog_planet = {
+		name = "Little Dog Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_little_dog', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'big_dog_planet', big_dog_planet = {
+		name = "Big Dog Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_big_dog', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'little_cat_planet', little_cat_planet = {
+		name = "Little Cat Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_little_cat', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'big_cat_planet', big_cat_planet = {
+		name = "Big Cat Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_big_cat', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'castle_planet', castle_planet = {
+		name = "Castle Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'blaze_house_planet', blaze_house_planet = {
+		name = "Blaze House Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_blaze_house', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'flushblaze_planet', flushblaze_planet = {
+		name = "Flushblaze Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_flushblaze', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'spectrumblaze_planet', spectrumblaze_planet = {
+		name = "Spectrumblaze Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_spectrumblaze', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+		load_check = function()
+			if SMODS.Mods['SpectrumFramework'] then return true end return false
+		end
+	},
+	'castle_flush_planet', castle_flush_planet = {
+		name = "Castle Flush Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_flush', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'castle_spectrum_planet', castle_spectrum_planet = {
+		name = "Castle Spectrum Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_spectrum', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+		load_check = function()
+			if SMODS.Mods['SpectrumFramework'] then return true end return false
+		end
+	},
+	'skeet_flush_planet', skeet_flush_planet = {
+		name = "Skeet Flush Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_skeet_flush', softlock = false},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'skeet_spectrum_planet', skeet_spectrum_planet = {
+		name = "Skeet Spectrum Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_skeet_spectrum', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+		load_check = function()
+			if SMODS.Mods['SpectrumFramework'] then return true end return false
+		end
+	},
+	'blaze_five_planet', blaze_five_planet = {
+		name = "Blaze Five Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_blaze_five', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'flushblaze_house_planet', flushblaze_house_planet = {
+		name = "Flushblaze House Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_flushblaze_house', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'spectrumblaze_house_planet', spectrumblaze_house_planet = {
+		name = "Spectrumblaze House Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_spectrumblaze_house', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+		load_check = function()
+			if SMODS.Mods['SpectrumFramework'] then return true end return false
+		end
+	},
+	'flushblaze_five_planet', flushblaze_five_planet = {
+		name = "Flushblaze Five Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_flushblaze_five', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'spectrumblaze_five_planet', spectrumblaze_five_planet = {
+		name = "Spectrumblaze Five Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_spectrumblaze_five', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+		load_check = function()
+			if SMODS.Mods['SpectrumFramework'] then return true end return false
+		end
+	},
+	'castle_stone_planet', castle_stone_planet = {
+		name = "Stone Castle Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_stone', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'castle_gold_planet', castle_gold_planet = {
+		name = "Gold Castle Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_gold', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'castle_steel_planet', castle_steel_planet = {
+		name = "Steel Castle Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_steel', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
+	'castle_glass_planet', castle_glass_planet = {
+		name = "Glass Castle Planet",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_castle_glass', softlock = true},
+		pos = { x = 8, y = 6 },
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		generate_ui = 0,
+	},
 }
 
 local spectrals = {
-	chance = {
+	'chance', chance = {
 		name = "Chance",
 		text = {
 			'{C:attention}COMPLETELY{} {C:green}randomizes{} each card',
@@ -644,8 +1332,8 @@ local spectrals = {
 		config = {
 		},
 		pos = { x = 0, y = 4 },
-		loc_def = function(_c) return {  } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = {  }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 				play_sound('tarot1')
@@ -655,7 +1343,11 @@ local spectrals = {
 				local percent = 1.15 - (i-0.999)/(#G.hand.cards-0.998)*0.3
 				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.cards[i]:flip();play_sound('card1', percent);G.hand.cards[i]:juice_up(0.3, 0.3);return true end }))
 			end
-			delay(0.2)
+			delay(0.2)	
+			local seal_list = {}
+			for __, v in ipairs(G.P_CENTER_POOLS['Seal']) do
+				table.insert(seal_list, v.key)
+			end
 			for i=1, #G.hand.cards do
 				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()	
 					local card = G.hand.cards[i]
@@ -664,33 +1356,28 @@ local spectrals = {
 					card:set_base(pseudorandom_element(G.P_CARDS))
 					
 					-- Enhancement (~ 80% chance)
-					if pseudorandom(pseudoseed('chancetime')) > 0.2 then
+					if pseudorandom(pseudoseed('chancetime')) < 0.8 then
 						card:set_ability(TheAutumnCircus.func.pseudorandom_enhancement())
 					else
 						card:set_ability(G.P_CENTERS['c_base'])
 					end
 					
 					-- Edition (boosted rate dont ask me for numbers)
-                    local edition_rate = 2
-					card:set_edition(poll_edition('standard_edition'..G.GAME.round_resets.ante, edition_rate, true))
+					-- 10% to apply Negative instead of polling a normal edition
+					if pseudorandom(pseudoseed('chancetime')) < 0.1 then
+						card:set_edition({negative = true})
+					else
+						local edition_rate = 2
+						card:set_edition(poll_edition('standard_edition'..G.GAME.round_resets.ante, edition_rate, true))
+					end
+
+
 					
 					-- Seal (~ 20% chance)
 					local seal_rate = 10
 					local seal_poll = pseudorandom(pseudoseed('stdseal'..G.GAME.round_resets.ante))
 					if seal_poll > 1 - 0.02*seal_rate then
 						local seal_type = pseudorandom(pseudoseed('stdsealtype'..G.GAME.round_resets.ante))
-						
-						local seal_list = {}
-						for k, _ in pairs(G.P_SEALS) do
-							local safe = true
-							for __, v in ipairs(TheAutumnCircus.data.joker_stamps) do
-								if k == v then safe = false end
-							end
-							if safe then
-								table.insert(seal_list, k)
-							end
-						end
-						
 						seal_type = math.floor(seal_type * #seal_list)
 						card:set_seal(seal_list[seal_type])
 					else card:set_seal() end
@@ -704,9 +1391,9 @@ local spectrals = {
 			end
 			delay(0.5)
 		end,
-		can_use = function(self) if #G.hand.cards > 1 then return true end end,
+		can_use = function(_, self) if #G.hand.cards > 1 then return true end end,
 	},
-	offering = {
+	'offering', offering = {
 		name = "Offering",
 		text = {
 			"Destroys half of your",
@@ -715,8 +1402,8 @@ local spectrals = {
 		},
 		config = { remove_card = true, extra = {destroy = 2, slots = 1} },
 		pos = { x = 1, y = 4 },
-		loc_def = function(_c) return { _c.config.extra.destroy, _c.config.extra.slots } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
+		use = function(_, self, area, copier)
 			local destroyed_cards = {}
 			local used_tarot = copier or self
             local temp_deck = {}
@@ -743,16 +1430,95 @@ local spectrals = {
                         end
                     end
                     return true end }))
-            delay(0.5)
+			delay(0.3)
+			for i = 1, #G.jokers.cards do
+				G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = destroyed_cards})
+			end
+            delay(0.2)
 			G.E_MANAGER:add_event(Event({func = function()
 				if G.jokers then 
 					G.jokers.config.card_limit = G.jokers.config.card_limit + self.ability.extra.slots
 				end
 				return true end }))
 		end,
-		can_use = function(self) if #G.playing_cards > 1 then return true end end,
+		can_use = function(_, self) if #G.playing_cards > 1 then return true end end,
 	},
-	scry = {
+	'tribute', tribute = {
+		name = "Tribute",
+		text = {
+			"Destroys {C:red}all{} of your {C:attention}Jokers{},",
+			"gain {C:dark_edition}+#1#{} Joker Slot",
+		},
+		config = { remove_card = true, extra = {slots = 1} },
+		pos = { x = 9, y = 6 },
+		loc_vars = function(_c) return {vars = { _c.config.extra.slots }} end,
+		use = function(_, self, area, copier)
+			local destroyed_cards = {}
+			local used_tarot = copier or self
+
+            for i = 1, #G.jokers.cards do 
+				if not G.jokers.cards[i].ability.eternal then
+					destroyed_cards[#destroyed_cards+1] = G.jokers.cards[i]
+				end
+			end
+
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                play_sound('tarot1')
+                used_tarot:juice_up(0.3, 0.5)
+                return true end }))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function() 
+                    for i=#destroyed_cards, 1, -1 do
+                        local card = destroyed_cards[i]
+                            card:start_dissolve(nil, i == #destroyed_cards)
+                    end
+                    return true end }))
+            delay(0.2)
+			G.E_MANAGER:add_event(Event({func = function()
+				if G.jokers then 
+					G.jokers.config.card_limit = G.jokers.config.card_limit + self.ability.extra.slots
+				end
+				return true end }))
+		end,
+		can_use = function(_, self) if #G.jokers.cards > 0 then return true end end,
+	},
+	'sacrifice', sacrifice = {
+		name = "Sacrifice",
+		text = {
+			"{C:dark_edition}+#1#{} Joker Slot",
+			"{C:blue}-#2# Hand{} per round"
+		},
+		config = { remove_card = true, extra = {slots = 1, hands = 1} },
+		pos = { x = 9, y = 6 },
+		loc_vars = function(_c) return {vars = { _c.config.extra.slots, _c.config.extra.hands }} end,
+		use = function(_, self, area, copier)
+			local destroyed_cards = {}
+			local used_tarot = copier or self
+
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                play_sound('tarot1')
+                used_tarot:juice_up(0.3, 0.5)
+				card_eval_status_text(self, 'extra', nil, nil, nil, {message = '-1 Hand', colour = G.C.BLUE})
+                return true end }))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function() 
+					G.GAME.round_resets.hands = G.GAME.round_resets.hands - self.ability.extra.hands
+					ease_hands_played(-self.ability.extra.hands)
+                    return true end }))
+            delay(0.2)
+			G.E_MANAGER:add_event(Event({func = function()
+				if G.jokers then 
+					G.jokers.config.card_limit = G.jokers.config.card_limit + self.ability.extra.slots
+				end
+				return true end }))
+		end,
+		can_use = function(_, self) return true end,
+	},
+	'scry', scry = {
 		name = "Scry",
 		text = {
             "Creates up to {C:attention}2",
@@ -761,8 +1527,8 @@ local spectrals = {
 		},
 		config = { extra = {spectrals = 2} },
 		pos = { x = 2, y = 4 },
-		loc_def = function(_c) return { _c.config.extra.destroy, _c.config.extra.slots } end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.extra.spectrals, G.consumeables.config.card_limit - #G.consumeables.cards) do
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -777,9 +1543,9 @@ local spectrals = {
 			end
 			delay(0.6)
 		end,
-		can_use = function(self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
+		can_use = function(_, self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
 	},
-	phantom = {
+	'phantom', phantom = {
 		name = "Phantom",
 		text = {
 			"Creates a random {C:dark_edition}Negative{}",
@@ -789,8 +1555,8 @@ local spectrals = {
 		},
 		config = {extra = {jokers = 1}},
 		pos = {x = 3, y = 4},
-		loc_def = function(_c) return {} end,
-		use = function(self, area, copier)
+		loc_vars = function(_c) return {vars = {}} end,
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local card = create_card("Joker", G.jokers, nil, nil, nil, nil, nil, 'phantom')
 			card:set_edition({negative = true})
@@ -807,12 +1573,12 @@ local spectrals = {
 				G.jokers.cards[i].sell_cost_label = G.jokers.cards[i].facing == 'back' and '?' or G.jokers.cards[i].sell_cost
 			end
 		end,
-		can_use = function(self) return true end,
+		can_use = function(_, self) return true end,
 		load_check = function()
 			return not not Card.set_perishable
 		end,
 	},
-	mischief = {
+	'mischief', mischief = {
 		name = "Mischief",
 		text = {
 			"{C:attention}Destroys{} a random {C:attention}Joker{},",
@@ -821,16 +1587,7 @@ local spectrals = {
 		},
 		config = { },
 		pos = {x = 4, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'jimbo_seal', set = 'Other'}
-			info_queue[#info_queue+1] = {key = 'todd_seal', set = 'Other'}
-			info_queue[#info_queue+1] = {key = 'steven_seal', set = 'Other'}
-			info_queue[#info_queue+1] = {key = 'chaos_seal', set = 'Other'}
-			info_queue[#info_queue+1] = {key = 'mrbones_seal', set = 'Other'}
-			info_queue[#info_queue+1] = {key = 'andy_seal', set = 'Other'}
-			return {}
-		end,
-		use = function(self, area, copier)
+		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker
 			local deletable_jokers = {}
@@ -846,228 +1603,181 @@ local spectrals = {
 			-- add stamps to the rest
 			for k, v in ipairs(G.jokers.cards) do
 				if not chosen_joker or v ~= chosen_joker then
-					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function() v:set_seal(pseudorandom_element(TheAutumnCircus.data.joker_stamps, pseudoseed("mischiefs_reward")), false, true); return true end }))
+					local keyset={}
+					local n=0
+
+					for k,v in pairs(SMODS.Stamps) do
+						n=n+1
+						keyset[n]=k
+					end
+					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function() v:set_seal(pseudorandom_element(keyset, pseudoseed("mischiefs_reward")), false, true); return true end }))
 				end
 			end
 			delay(0.5)
 		end,
-		can_use = function(self) 
+		can_use = function(_, self) 
 			return #G.jokers.cards > 1
 		end,
 		load_check = function()
 			return TheAutumnCircus.config.enabled_modules.jokerstamps
 		end,
 	},
-	comedy = {
+	'comedy', comedy = {
 		name = "Comedy",
-		text = {
-			"Add {C:blue}Todd's Stamp{}",
-			"to a random {C:attention}Joker{}"
-		},
-		config = { extra = "Todd" },
-		pos = {x = 5, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'todd_seal', set = 'Other'}
-			return {}
-		end,
-		use = stampcarduse,
-		can_use = stampcardcanuse,
-		update = stampcardupdate,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.todd
-		end,
-	},
-	tragedy = {
-		name = "Tragedy",
 		text = {
 			"Add {C:red}Steven's Stamp{}",
 			"to a random {C:attention}Joker{}"
 		},
-		config = { extra = "Steven" },
-		pos = {x = 6, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'steven_seal', set = 'Other'}
-			return {}
+		config = { extra = "thac_steven" },
+		pos = {x = 5, y = 4},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
 		end,
 		use = stampcarduse,
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.steven
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.todd
 		end,
 	},
-	whimsy = {
+	'tragedy', tragedy = {
+		name = "Tragedy",
+		text = {
+			"Add {C:blue}Todd's Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_todd" },
+		pos = {x = 6, y = 4},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.steven
+		end,
+	},
+	'whimsy', whimsy = {
 		name = "Whimsy",
 		text = {
 			"Add {C:attention}Jimbo's Stamp{}",
 			"to a random {C:attention}Joker{}"
 		},
-		config = { extra = "Jimbo" },
+		config = { extra = "thac_jimbo" },
 		pos = {x = 7, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'jimbo_seal', set = 'Other'}
-			return {}
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
 		end,
 		use = stampcarduse,
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.jimbo
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.jimbo
 		end,
 	},
-	entropy = {
+	'entropy', entropy = {
 		name = "Entropy",
 		text = {
 			"Add {C:green}Chaos' Stamp{}",
 			"to a random {C:attention}Joker{}"
 		},
-		config = { extra = "Chaos" },
+		config = { extra = "thac_chaos" },
 		pos = {x = 8, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'chaos_seal', set = 'Other'}
-			return {}
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
 		end,
 		use = stampcarduse,
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.chaos
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.chaos
 		end,
 	},
-	wonder = {
+	'wonder', wonder = {
 		name = "Wonder",
 		text = {
 			"Add {C:purple}Andy's Stamp{}",
 			"to a random {C:attention}Joker{}"
 		},
-		config = { extra = "Andy" },
+		config = { extra = "thac_andy" },
 		pos = {x = 9, y = 4},
-		loc_def = function(_c, info_queue)
-			info_queue[#info_queue+1] = {key = 'andy_seal', set = 'Other'}
-			return {}
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
 		end,
 		use = stampcarduse,
 		can_use = stampcardcanuse,
 		update = stampcardupdate,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_seals.andy
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.andy
+		end,
+	},
+	'macabre', macabre = {
+		name = "Macabre",
+		text = {
+			"Add Mr. Bones' Stamp",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_mr_bones" },
+		pos = {x = 9, y = 6},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.mr_bones
+		end,
+	},
+	'duplicity', duplicity = {
+		name = "Duplicity",
+		text = {
+			"Add {C:inactive}Sock and Buskin's Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_sock_and_buskin" },
+		pos = {x = 9, y = 6},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.sock_and_buskin
 		end,
 	},
 }
 
-local spectral_codex = {
-	'chance',
-	'offering',
-	'scry',
-	'phantom',
-	'mischief',
-	'whimsy',
-	'comedy',
-	'tragedy',
-	'entropy',
-	'wonder',
+SMODS.Atlas{
+	key = "MoreConsumables",
+	path = "MoreConsumables.png",
+	px = 71,
+	py = 95,
 }
 
-local function setup_localization()
-	G.localization.descriptions.Other["mc_obs_off_comet"] = {
-        name = "Observatory Effect",
-        text = {
-			"{s:0.8}Effect is {C:red,s:0.8}inactive{s:0.8}!",
-			"{s:0.8}Get the {C:attention,s:0.8}Observatory voucher{s:0.8} for:",
-            "{C:inactive,s:0.8}Chooses a hand at random,",
-			"{C:inactive,s:0.8}then gives {X:mult,C:white,s:0.8} X2.25 {C:inactive,s:0.8} Mult if the",
-			"{C:inactive,s:0.8}played hand is that hand"
-        }
-    }
-	G.localization.descriptions.Other["mc_obs_on_comet"] = {
-        name = "Observatory Effect",
-        text = {
-            "Chooses a hand at random,",
-			"then gives {X:mult,C:white} X2.25 {} Mult if the",
-			"played hand is that hand"
-        }
-    }
-	
-	G.localization.descriptions.Other["mc_obs_off_meteor"] = {
-        name = "Observatory Effect",
-        text = {
-			"{s:0.8}Effect is {C:red,s:0.8}inactive{s:0.8}!",
-			"{s:0.8}Get the {C:attention,s:0.8}Observatory voucher{s:0.8} for:",
-            "{C:inactive,s:0.8}Chooses two hands at random,",
-			"{C:inactive,s:0.8}then gives {X:mult,C:white,s:0.8} X3.375 {C:inactive,s:0.8} Mult if the",
-			"{C:inactive,s:0.8}played hand is the first hand,",
-			"{C:inactive,s:0.8}or gives {X:mult,C:white,s:0.8} X0.66 {C:inactive,s:0.8} Mult if the",
-			"{C:inactive,s:0.8}played hand is the second hand"
-        }
-    }
-	G.localization.descriptions.Other["mc_obs_on_meteor"] = {
-        name = "Observatory Effect",
-        text = {
-            "Chooses two hands at random,",
-			"then gives {X:mult,C:white} X3.375 {} Mult if the",
-			"played hand is the first hand,",
-			"or gives {X:mult,C:white} X0.66 {} Mult if the",
-			"played hand is the second hand"
-        }
-    }
-	
-	G.localization.descriptions.Other["mc_obs_off_station"] = {
-        name = "Observatory Effect",
-        text = {
-			"{s:0.8}Effect is {C:red,s:0.8}inactive{s:0.8}!",
-			"{s:0.8}Get the {C:attention,s:0.8}Observatory voucher{s:0.8} for:",
-            "{C:inactive,s:0.8}Gives {X:mult,C:white,s:0.8} X1.5 {C:inactive,s:0.8} Mult if the played",
-			"{C:inactive,s:0.8}hand is most played hand",
-        }
-    }
-	G.localization.descriptions.Other["mc_obs_on_station"] = {
-        name = "Observatory Effect",
-        text = {
-            "Gives {X:mult,C:white} X1.5 {} Mult if the played",
-			"hand is most played hand",
-        }
-    }
-	
-	G.localization.descriptions.Other["mc_obs_off_dysnomia"] = {
-        name = "Observatory Effect",
-        text = {
-			"{s:0.8}Effect is {C:red,s:0.8}inactive{s:0.8}!",
-			"{s:0.8}Get the {C:attention,s:0.8}Observatory voucher{s:0.8} for:",
-            "{C:inactive,s:0.8}Nothing actually...",
-        }
-    }
-	G.localization.descriptions.Other["mc_obs_on_dysnomia"] = {
-        name = "Observatory Effect",
-        text = {
-            "Nothing actually...",
-        }
-    }
-	
-	G.localization.misc.dictionary["k_mc_shuffle"] = "Shuffled!"
+--tarots
+for _, k in ipairs(tarots) do
+	local v = tarots[k]
+	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Tarot", key = k, atlas = "MoreConsumables"})
 end
 
-function TheAutumnCircus.INIT.MoreConsumables()
-	
-	setup_localization()
-	
-	SMODS.Sprite:new("Thac_MoreConsumables", TheAutumnCircus.mod.path, "MoreConsumables.png", 71, 95, "asset_atli"):register();
-	
-	--tarots
-	for _, k in ipairs(tarot_codex) do
-		local v = tarots[k]
-		TheAutumnCircus.data.buffer_insert("Tarots", v, {key = k, atlas = "Thac_MoreConsumables"})
-	end
-	
-	--planets
-	for _, k in ipairs(planet_codex) do
-		local v = planets[k]
-		TheAutumnCircus.data.buffer_insert("Planets", v, {key = k, atlas = "Thac_MoreConsumables"})
-	end
-	
-	--spectrals
-	for _, k in ipairs(spectral_codex) do
-		local v = spectrals[k]
-		TheAutumnCircus.data.buffer_insert("Spectrals", v, {key = k, atlas = "Thac_MoreConsumables"})
-	end
+--planets
+for _, k in ipairs(planets) do
+	local v = planets[k]
+	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Planet", key = k, atlas = "MoreConsumables"})
+end
 
+--spectrals
+for _, k in ipairs(spectrals) do
+	local v = spectrals[k]
+	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Spectral", key = k, atlas = "MoreConsumables"})
 end
