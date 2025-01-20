@@ -41,8 +41,8 @@ local suitplanetloc_vars = function(_c, info_queue)
 	return {vars = {
 		G.GAME.amm_data.suit_levels[_c.config.level_suit].level,
 		localize(_c.config.level_suit, 'suits_plural'),
-		TheAutumnCircus.config.mechanics.suit_levels.mult,
-		TheAutumnCircus.config.mechanics.suit_levels.chips,
+		AMM.config.suit_levels.mult,
+		AMM.config.suit_levels.chips,
 		colours = {
 			(G.GAME.amm_data.suit_levels[_c.config.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.amm_data.suit_levels[_c.config.level_suit].level)]),
 			G.C.SUITS[_c.config.level_suit],
@@ -245,13 +245,29 @@ local tarots = {
 	'veteran', veteran = {
 		name = "The Veteran",
 		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		}
 		effect = 'vet',
 		config = {
+			mod_conv = "m_thac_bounty",
+			max_highlighted = 2,
 		},
 		pos = { x = 4, y = 0 },
-		yes_pool_flag = "neversetthis",
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
 	},
 	'juggler', juggler = {
 		name = "The Juggler",
@@ -267,13 +283,56 @@ local tarots = {
 	'drunkard', drunkard = {
 		name = "The Drunkard",
 		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		}
 		effect = 'dunk',
 		config = {
+			mod_conv = "m_thac_dirt",
+			max_highlighted = 3,
 		},
 		pos = { x = 6, y = 0 },
-		yes_pool_flag = "neversetthis",
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'grass', grass = {
+		name = "The Grass",
+		text = {
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		}
+		effect = 'grass',
+		config = {
+			mod_conv = "m_thac_grass",
+			max_highlighted = 3,
+		},
+		pos = { x = 7, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
 	},
 	'joker', joker = {
 		name = "The Joker",
