@@ -1,17 +1,3 @@
---- STEAMODDED HEADER
---- MOD_NAME: The Autumn Circus
---- MOD_ID: TheAutumnCircus
---- MOD_AUTHOR: [AutumnMood (it/she/they)]
---- MOD_DESCRIPTION: Welcome to The Autumn Circus!
---- BADGE_COLOUR: 898945
---- DISPLAY_NAME: TheAutumnCircus
---- PREFIX: thac
---- PRIORITY: 42
-
-----------------------------------------------
-------------MOD CODE -------------------------
-
-
 TheAutumnCircus = {}
 TheAutumnCircus.INIT = {}
 
@@ -140,28 +126,11 @@ TheAutumnCircus.mod.process_loc_text = function()
 			"held in hand into {C:attention}Steel Cards{}",
         }
     }
-	G.localization.descriptions.Other["card_thac_suit_bonus"] = {
-		text = {
-			"{s:0.8,C:inactive}({s:0.8,V:2}#4# {s:0.8,V:1}lvl.#1#{s:0.8,C:inactive}) {s:0.8,C:white,X:chips}+#2#{s:0.4} {s:0.8}X{s:0.4} {C:white,X:mult,s:0.8}+#3#{s:0.8}",
-		}
-	}
 	
 	
-	G.localization.misc.dictionary["b_suits"] = "Suits"
 	G.localization.misc.dictionary["k_thac_shuffle"] = "Shuffled!"
 	G.localization.misc.v_dictionary["a_thac_reduced"] = "Blind -#1#%"
 	
-    G.localization.misc.dictionary["ml_stamp_explanation"] = {
-                "Jokers may each have one",
-                "Edition and Stamp"
-            }
-	
-	-- below from feder's stamps port
-    local loc_txt = {
-        b_stamps = "Stamps"
-    }
-
-    SMODS.process_loc_text(G.localization.misc.dictionary, "b_stamps", loc_txt, "b_stamps")
 end
 
 TheAutumnCircus.config = NFS.load(TheAutumnCircus.mod.path.."config.lua")()
@@ -169,9 +138,6 @@ TheAutumnCircus.config = NFS.load(TheAutumnCircus.mod.path.."config.lua")()
 NFS.load(TheAutumnCircus.mod.path.."overrides.lua")()
 TheAutumnCircus.func = NFS.load(TheAutumnCircus.mod.path.."func.lua")()
 TheAutumnCircus.data = NFS.load(TheAutumnCircus.mod.path.."data.lua")()
-
-TheAutumnCircus.api = {}
-TheAutumnCircus.api.stamps = NFS.load(TheAutumnCircus.mod.path.."api/Stamps.lua")()
 
 -- I know this can be done better but i really just don't care right now
 if TheAutumnCircus.config.enabled_modules.lookslikethejokers then
@@ -223,6 +189,3 @@ end
 
 -- Register game objects
 TheAutumnCircus.data.register_objects()
-
-----------------------------------------------
-------------MOD CODE END----------------------

@@ -96,7 +96,7 @@ local enhancements = {
 							trigger = 'before',
 							delay = 0.0,
 							func = (function()
-								MoreMechanics.mod_blind(1-card.ability.extra.reduction, nil, true)
+								AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
 								return true
 							end)}))
 					end},

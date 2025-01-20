@@ -39,12 +39,12 @@ local suitplanettext = {
 
 local suitplanetloc_vars = function(_c, info_queue)
 	return {vars = {
-		G.GAME.thac_data.suit_levels[_c.config.level_suit].level,
+		G.GAME.amm_data.suit_levels[_c.config.level_suit].level,
 		localize(_c.config.level_suit, 'suits_plural'),
 		TheAutumnCircus.config.mechanics.suit_levels.mult,
 		TheAutumnCircus.config.mechanics.suit_levels.chips,
 		colours = {
-			(G.GAME.thac_data.suit_levels[_c.config.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.thac_data.suit_levels[_c.config.level_suit].level)]),
+			(G.GAME.amm_data.suit_levels[_c.config.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.amm_data.suit_levels[_c.config.level_suit].level)]),
 			G.C.SUITS[_c.config.level_suit],
 		}
 	}}
@@ -758,7 +758,7 @@ local planets = {
 		loc_vars = suitplanetloc_vars,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			level_up_suit(used_tarot, self.config.level_suit)
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
@@ -778,7 +778,7 @@ local planets = {
 		loc_vars = suitplanetloc_vars,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			level_up_suit(used_tarot, self.config.level_suit)
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
@@ -798,7 +798,7 @@ local planets = {
 		loc_vars = suitplanetloc_vars,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			level_up_suit(used_tarot, self.config.level_suit)
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
@@ -818,7 +818,7 @@ local planets = {
 		loc_vars = suitplanetloc_vars,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			level_up_suit(used_tarot, self.config.level_suit)
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)

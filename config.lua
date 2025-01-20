@@ -242,10 +242,6 @@ local config = {
 	},
 	mechanics = {
 		minor_arcana_flush_effects = true,
-		suit_levels = {
-			chips = 5,
-			mult = 1,
-		},
 	},
 	starting_deck = {
 		allowed_suits = {

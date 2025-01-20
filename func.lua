@@ -25,38 +25,6 @@ function func.scale_nodes(t, factor, extra)
 	return t
 end
 
--- based on level_up_hand, but levels up a suit instead
-function level_up_suit(card, suit, instant, amount)
-    amount = amount or 1
-	if not instant then
-		update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(suit, 'suits_plural'),chips = G.GAME.thac_data.suit_levels[suit].chips, mult = G.GAME.thac_data.suit_levels[suit].mult, level=G.GAME.thac_data.suit_levels[suit].level})
-	end
-    G.GAME.thac_data.suit_levels[suit].level = math.max(0, G.GAME.thac_data.suit_levels[suit].level + amount)
-    G.GAME.thac_data.suit_levels[suit].mult = math.max(TheAutumnCircus.config.mechanics.suit_levels.mult*(G.GAME.thac_data.suit_levels[suit].level - 1), 0)
-    G.GAME.thac_data.suit_levels[suit].chips = math.max(TheAutumnCircus.config.mechanics.suit_levels.chips*(G.GAME.thac_data.suit_levels[suit].level - 1), 0)
-    if not instant then 
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
-            play_sound('tarot1')
-            if card then card:juice_up(0.8, 0.5) end
-            G.TAROT_INTERRUPT_PULSE = true
-            return true end }))
-        update_hand_text({delay = 0}, {mult = G.GAME.thac_data.suit_levels[suit].mult, StatusText = true})
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-            play_sound('tarot1')
-            if card then card:juice_up(0.8, 0.5) end
-            return true end }))
-        update_hand_text({delay = 0}, {chips = G.GAME.thac_data.suit_levels[suit].chips, StatusText = true})
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-            play_sound('tarot1')
-            if card then card:juice_up(0.8, 0.5) end
-            G.TAROT_INTERRUPT_PULSE = nil
-            return true end }))
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=G.GAME.thac_data.suit_levels[suit].level})
-        delay(1.3)
-    end
-	update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-end
-
 -- note this returns the string name of the hand, not the hand 'object'
 -- effectively just 'skips over' locked hands
 function func.pseudorandom_unlocked_hand(ignore, seed)
@@ -89,6 +57,7 @@ function func.count_deck_suits()
   return suit_tallies
 end
 
+--[[ preserved for historical reasons
 function func.eval_this(_card, effects)
 	if effects then 
 		local extras = {mult = false, hand_chips = false}
@@ -100,7 +69,7 @@ function func.eval_this(_card, effects)
 			card_eval_status_text(_card, 'jokers', nil, nil, nil, effects)
 		end
 	end
-end
+end--]]
 
 function func.get_card_suits(_card, bypass_debuff)
 	local ret = {}
