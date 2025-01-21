@@ -25,7 +25,7 @@ local config = {
 		gift_from_the_void = true,
 		lord_of_the_meek = true,
 		mirage_joker = true,
-		confluence = true,
+		transfusion = true,
 		placeholder_joker = true,
 	},
 	enabled_consumables = {
@@ -150,7 +150,7 @@ local config = {
 		loop = false,
 		grass = true,
 		dirt = true,
-		bounty = true,
+		star = true,
 	},
 	enabled_editions = {
 		gilded = true,

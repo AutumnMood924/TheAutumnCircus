@@ -183,7 +183,7 @@ local jokers = {
             "{C:common}Common{} {C:attention}Joker{} {C:attention}#1#{} time#2#",
         },
         config = {extra = {retriggers = 1}},
-        pos = { x = 0, y = 0 },
+        pos = { x = 2, y = 0 },
         cost = 7,
         rarity = 3,
 		loc_vars = function(self, info_queue, card)
@@ -209,7 +209,7 @@ local jokers = {
             "each {C:attention}Joker{} {C:attention}#3#{} time#4#",
         },
         config = {extra = {odds = 4, retriggers = 1}},
-        pos = { x = 0, y = 0 },
+        pos = { x = 3, y = 0 },
         cost = 6,
         rarity = 2,
 		loc_vars = function(self, info_queue, card)
@@ -228,19 +228,19 @@ local jokers = {
             end
         end,
     },
-    'confluence', confluence = {
-        name = "Confluence",
+    'transfusion', transfusion = {
+        name = "Transfusion",
         text = {
-            "{C:mult}#1#%{} of {C:chips}Chips{}",
-            "are {C:attention}converted{}",
-            "to {C:mult}Mult{}"
+            "{C:mult}#1#%{} of {C:chips}Chips{} are",
+            "{C:attention}converted{} to {C:mult}Mult{}",
+            "at a {X:mult,C:white} X#2# {} rate"
         },
-        config = {extra = {rate = 0.4, buffer = 0}},
-        pos = { x = 0, y = 0 },
+        config = {extra = {rate = 0.4, xmult = 1.25, buffer = 0}},
+        pos = { x = 4, y = 0 },
         cost = 6,
         rarity = 2,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.rate * 100}}
+            return {vars = {card.ability.extra.rate * 100, card.ability.extra.xmult}}
         end,
         calculate = function(self, card, context)
             if context.joker_main then
@@ -248,8 +248,8 @@ local jokers = {
                 local val = math.floor(card.ability.extra.rate * hchips)
                 card.ability.extra.buffer = card.ability.extra.buffer + val
                 return {
-                    chips = -val,
-                    mult_mod = val,
+                    chip_mod = -val,
+                    mult_mod = val * card.ability.extra.xmult,
                     card = card,
                     colour = G.C.PURPLE,
                     message = "Converted!" --TODO: proper localization

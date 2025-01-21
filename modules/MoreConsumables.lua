@@ -248,13 +248,40 @@ local tarots = {
 			"Enhances {C:attention}#1#",
 			"selected cards to",
 			"{C:attention}#2#s"
-		}
+		},
 		effect = 'vet',
 		config = {
-			mod_conv = "m_thac_bounty",
+			mod_conv = "m_thac_star",
 			max_highlighted = 2,
 		},
 		pos = { x = 4, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'drunkard', drunkard = {
+		name = "The Drunkard",
+		text = {
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		},
+		effect = 'dunk',
+		config = {
+			mod_conv = "m_thac_dirt",
+			max_highlighted = 3,
+		},
+		pos = { x = 5, y = 0 },
 		loc_vars = function(self, info_queue, card)
 			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
 			return {
@@ -277,35 +304,8 @@ local tarots = {
 		effect = 'jugs',
 		config = {
 		},
-		pos = { x = 5, y = 0 },
-		yes_pool_flag = "neversetthis",
-	},
-	'drunkard', drunkard = {
-		name = "The Drunkard",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		}
-		effect = 'dunk',
-		config = {
-			mod_conv = "m_thac_dirt",
-			max_highlighted = 3,
-		},
 		pos = { x = 6, y = 0 },
-		loc_vars = function(self, info_queue, card)
-			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
-			return {
-				vars = {
-					card.ability.consumeable.max_highlighted,
-					localize{
-						type = 'name_text',
-						set = 'Enhanced',
-						key = card.ability.consumeable.mod_conv
-					}
-				}
-			}
-		end,
+		yes_pool_flag = "neversetthis",
 	},
 	'grass', grass = {
 		name = "The Grass",
@@ -313,7 +313,7 @@ local tarots = {
 			"Enhances {C:attention}#1#",
 			"selected cards to",
 			"{C:attention}#2#s"
-		}
+		},
 		effect = 'grass',
 		config = {
 			mod_conv = "m_thac_grass",

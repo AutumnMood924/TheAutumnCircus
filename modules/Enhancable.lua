@@ -68,9 +68,9 @@ local enhancements = {
 			end
 		end,
 	},
-	'bounty', bounty = {
-		name = "bounty",
-		display_name = "Bounty Card",
+	'star', star = {
+		name = "star",
+		display_name = "Star Card",
 		text = {
 			'Reduces Blind requirement',
 			'by {C:attention}#1#%{} when scored'
