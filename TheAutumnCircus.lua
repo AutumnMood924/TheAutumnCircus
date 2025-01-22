@@ -126,6 +126,15 @@ TheAutumnCircus.mod.process_loc_text = function()
 			"held in hand into {C:attention}Steel Cards{}",
         }
     }
+	G.localization.descriptions.Other["thac_animal_hands"] = {
+        name = "Animal Hands",
+        text = {
+            '{C:attention}"Animal hands"{} refers to each',
+            "of the following hands:",
+            "{C:attention}Little Dog{}, {C:attention}Big Dog{},",
+            "{C:attention}Little Cat{}, {C:attention}Big Cat{}"
+        }
+    }
 	
 	
 	G.localization.misc.dictionary["k_thac_shuffle"] = "Shuffled!"

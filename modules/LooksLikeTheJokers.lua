@@ -235,12 +235,12 @@ local jokers = {
             "{C:attention}converted{} to {C:mult}Mult{}",
             "at a {X:mult,C:white} X#2# {} rate"
         },
-        config = {extra = {rate = 0.4, xmult = 1.25, buffer = 0}},
+        config = {extra = {rate = 0.4, Xmult = 1.25, buffer = 0}},
         pos = { x = 4, y = 0 },
         cost = 6,
         rarity = 2,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.rate * 100, card.ability.extra.xmult}}
+            return {vars = {card.ability.extra.rate * 100, card.ability.extra.Xmult}}
         end,
         calculate = function(self, card, context)
             if context.joker_main then
@@ -249,7 +249,7 @@ local jokers = {
                 card.ability.extra.buffer = card.ability.extra.buffer + val
                 return {
                     chip_mod = -val,
-                    mult_mod = val * card.ability.extra.xmult,
+                    mult_mod = val * card.ability.extra.Xmult,
                     card = card,
                     colour = G.C.PURPLE,
                     message = "Converted!" --TODO: proper localization
@@ -277,6 +277,73 @@ local jokers = {
         calculate = function(self, card, context)
             if context.joker_main and (pseudorandom(pseudoseed("placeholder_joker")) < G.GAME.probabilities.normal/card.ability.extra.odds) then
                 card:set_ability(G.P_CENTERS[pseudorandom_element(placeholder_jokers, pseudoseed('placeholder_joker'))])
+            end
+        end,
+    },
+    'garden', garden = {
+        name = "Garden",
+        text = {
+            "{C:attention}Retrigger{} all played",
+            "{C:attention}Grass{} and {C:attention}Dirt{} cards",
+            "{C:attention}#1#{} additional time#2#"
+        },
+        config = {extra = {retriggers = 1}},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_dirt']
+            local blah = ""
+            if card.ability.extra.retriggers > 1 then blah = "s" end
+            return {vars = {card.ability.extra.retriggers, blah}}
+        end,
+        calculate = function(self, card, context)
+            if context.repetition and context.cardarea == G.play and (context.other_card.config.center.key == "m_thac_grass" or context.other_card.config.center.key == "m_thac_dirt") then
+                return {
+                    repetitions = card.ability.extra.retriggers,
+                    card = card,
+                    message = localize('k_again_ex'),
+                    colour = G.C.ORANGE,
+                }
+            end
+        end,
+    },
+    'menagerie', menagerie = {
+        name = "The Menagerie",
+        text = {
+            "This Joker gains {X:mult,C:white} X#1# {} Mult",
+            "if played hand contains",
+            "an {C:attention}Animal hand{}",
+            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
+        },
+        config = {extra = {Xmult_mod = 0.25, xmult = 1.0}},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
+        end,
+        calculate = function(self, card, context)
+            if context.before and not context.blueprint and (
+                next(context.poker_hands['thac_little_dog']) or
+                next(context.poker_hands['thac_big_dog']) or
+                next(context.poker_hands['thac_little_cat']) or
+                next(context.poker_hands['thac_big_cat'])
+            ) then
+                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.Xmult_mod
+                return {
+                    card = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.MULT,
+                }
+            end
+            if context.joker_main and card.ability.extra.xmult > 1 then
+                return {
+                    colour = G.C.MULT,
+                    xmult = card.ability.extra.xmult
+                }
             end
         end,
     },

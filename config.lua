@@ -27,6 +27,8 @@ local config = {
 		mirage_joker = true,
 		transfusion = true,
 		placeholder_joker = true,
+		garden = true,
+		menagerie = true,
 	},
 	enabled_consumables = {
 		--tarot

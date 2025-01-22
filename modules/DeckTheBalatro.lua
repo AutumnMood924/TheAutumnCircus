@@ -1,5 +1,24 @@
 
 local decks = {
+	'wheel_of_fortune_deck', wheel_of_fortune_deck = {
+		name = "Wheel of Fortune Deck",
+		text = {
+			"Start run with the",
+			"{C:tarot}Wheel of Wheel of Fortune{}",
+			"voucher and {C:attention}2{} copies of",
+			"{C:tarot}The Wheel of Fortune{}"
+		},
+		config = {
+			voucher = 'v_thac_wheel_of_wheel_of_fortune',
+			consumables = {'c_wheel_of_fortune', 'c_wheel_of_fortune'}
+		},
+		pos = { x = 6, y = 0 },
+		loc_vars = function(self, info_queue, center)
+			--info_queue[#info_queue+1] = G.P_CENTERS[card.ability.voucher]
+			--info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumables[1]]
+			return { vars = { } }
+		end,
+	},
 	'collectors_deck', collectors_deck = {
 		name = "Collector's Deck",
 		text = {
