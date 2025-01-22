@@ -244,16 +244,32 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.joker_main then
-                local hchips = hand_chips - card.ability.extra.buffer
-                local val = math.floor(card.ability.extra.rate * hchips)
-                card.ability.extra.buffer = card.ability.extra.buffer + val
-                return {
-                    chip_mod = -val,
-                    mult_mod = val * card.ability.extra.Xmult,
-                    card = card,
-                    colour = G.C.PURPLE,
-                    message = "Converted!" --TODO: proper localization
-                }
+                if type(hand_chips) == 'table' then
+                    -- Talisman version
+                    local hchips = hand_chips:sub(card.ability.extra.buffer)
+                    hchips = hchips:mul(card.ability.extra.rate)
+                    local val = hchips:floor()
+                    card.ability.extra.buffer = val:add(card.ability.extra.buffer)
+                    return {
+                        chip_mod = val:neg(),
+                        mult_mod = val:mul(card.ability.extra.Xmult),
+                        card = card,
+                        colour = G.C.PURPLE,
+                        message = "Converted!"
+                    }
+                else
+                    -- Nontalisman version
+                    local hchips = hand_chips - card.ability.extra.buffer
+                    local val = math.floor(card.ability.extra.rate * hchips)
+                    card.ability.extra.buffer = card.ability.extra.buffer + val
+                    return {
+                        chip_mod = -val,
+                        mult_mod = val * card.ability.extra.Xmult,
+                        card = card,
+                        colour = G.C.PURPLE,
+                        message = "Converted!" --TODO: proper localization
+                    }
+                end
             end
             if context.after then
                 card.ability.extra.buffer = 0
