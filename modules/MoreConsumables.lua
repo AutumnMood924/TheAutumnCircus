@@ -565,7 +565,7 @@ local planets = {
 			-- downgrade
 			chosen_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand(chosen_hand)
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(chosen_hand, 'poker_hands'),chips = G.GAME.hands[chosen_hand].chips, mult = G.GAME.hands[chosen_hand].mult, level=G.GAME.hands[chosen_hand].level})
-			if G.GAME.hands[chosen_hand].level <= 1 then delay(1.5) else
+			if (type(G.GAME.hands[chosen_hand].level) == 'table' and G.GAME.hands[chosen_hand].level:lte(1)) or G.GAME.hands[chosen_hand].level <= 1 then delay(1.5) else
 				level_up_hand(used_tarot, chosen_hand, nil, -1 * (used_tarot.ability.consumeable.weakness or 1))
 			end
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
