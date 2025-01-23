@@ -363,6 +363,38 @@ local jokers = {
             end
         end,
     },
+    'clown_posse', clown_posse = {
+        name = "Clown Posse",
+        text = {
+            "This Joker gains {X:mult,C:white} X#1# {} Mult",
+            "whenever another {C:attention}Joker{}",
+            "is added to your joker slots",
+            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
+        },
+        config = {extra = {Xmult_mod = 0.10, xmult = 1.0}},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
+        end,
+        calculate = function(self, card, context)
+            if context.amm_added_card and context.other_card.config.center.set == "Joker" and not context.from_debuff and not context.blueprint then
+                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.Xmult_mod
+                return {
+                    card = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.MULT,
+                }
+            end
+            if context.joker_main and card.ability.extra.xmult > 1 then
+                return {
+                    colour = G.C.MULT,
+                    xmult = card.ability.extra.xmult
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
