@@ -368,7 +368,7 @@ local jokers = {
         text = {
             "This Joker gains {X:mult,C:white} X#1# {} Mult",
             "whenever another {C:attention}Joker{}",
-            "is added to your joker slots",
+            "is gained",
             "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
         },
         config = {extra = {Xmult_mod = 0.10, xmult = 1.0}},
@@ -392,6 +392,70 @@ local jokers = {
                     colour = G.C.MULT,
                     xmult = card.ability.extra.xmult
                 }
+            end
+        end,
+    },
+    'stellar_alignment', stellar_alignment = {
+        name = "Stellar Alignment",
+        text = {
+            "{C:attention}Retriggers{} each played",
+            "{C:attention}Star{} card {C:attention}#1#{} time#2# for",
+            "each level of its suit",
+            "{C:inactive}(Reminder: Suit levels",
+            "{C:inactive}start at lvl.1!)"
+        },
+        config = {extra = {retriggers = 1}},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_star']
+            local blah = ""
+            if card.ability.extra.retriggers > 1 then blah = "s" end
+            return {vars = {card.ability.extra.retriggers, blah}}
+        end,
+        calculate = function(self, card, context)
+            if context.repetition and context.cardarea == G.play and (context.other_card.config.center.key == "m_thac_star") then
+                local ret = card.ability.extra.retriggers
+                ret = ret * G.GAME.amm_data.suit_levels[context.other_card.base.suit].level
+                return {
+                    repetitions = ret,
+                    card = card,
+                    message = localize('k_again_ex'),
+                    colour = G.C.ORANGE,
+                }
+            end
+        end,
+        enhancement_gate = "m_thac_star",
+    },
+    'quantum_grass', quantum_grass = {
+        name = "Quantum Grass",
+        text = {
+            "Grass and Glass",
+            "To you my friend",
+            "These are the same thing!"
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS['m_glass']
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.config.center.key == "m_glass" then
+                    return {
+                        m_thac_grass = true
+                    }
+                end
+                if context.other_card.config.center.key == "m_thac_grass" then
+                    return {
+                        m_glass = true
+                    }
+                end
             end
         end,
     },

@@ -15,7 +15,9 @@
 		"Lovely (>=0.7.1)",
 		"amm (>=0.0.0)"
 	],
-	"conflicts": [],
+	"conflicts": [
+		"Talisman (>=0.0.0)"
+	],
 	"provides": [],
 	"dump_loc": false 
 }

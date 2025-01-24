@@ -87,6 +87,7 @@ local config = {
 		tribute = true,
 		sacrifice = true,
 		scry = true,
+		lotus = true,
 		phantom = true,
 		-- following require jokerstamps and respective stamp if applicable
 			mischief = true,

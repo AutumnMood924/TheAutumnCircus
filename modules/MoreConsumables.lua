@@ -1604,6 +1604,32 @@ local spectrals = {
 		end,
 		can_use = function(_, self) if #G.consumeables.cards < G.consumeables.config.card_limit or self.area == G.consumeables then return true end end,
 	},
+	'lotus', lotus = {
+		name = "Lotus",
+		text = {
+            "Creates {C:attention}#1# random",
+			"{C:dark_edition}Negative {C:tarot}Tarot{} cards",
+            "{C:inactive}(Must have room)"
+		},
+		config = { extra = {tarots = 3} },
+		pos = { x = 9, y = 6 },
+		loc_vars = function(_c, iq, card) return {vars = { card.ability.extra.tarots }} end,
+		use = function(_, self, area, copier)
+			local used_tarot = copier or self
+			for i = 1, self.ability.extra.tarots do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					play_sound('timpani')
+					local card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil, 'lotus')
+					card:set_edition({negative = true})
+					card:add_to_deck()
+					G.consumeables:emplace(card)
+					used_tarot:juice_up(0.3, 0.5)
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(_, self) return true end,
+	},
 	'phantom', phantom = {
 		name = "Phantom",
 		text = {

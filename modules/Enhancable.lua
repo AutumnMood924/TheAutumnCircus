@@ -22,7 +22,7 @@ local enhancements = {
 		effect = 'grass',
 		config = {
 			extra = {
-				chips = 4
+				chips = 5
 			}
 		},
 		pos = { x = 1, y = 0 },
