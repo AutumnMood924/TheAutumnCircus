@@ -386,25 +386,46 @@ local tarots = {
 			delay(2.5)
 		end,
 		can_use = function(_, self) return true end,
-		calculate = function(_, self, context)
+		calculate = function(self, card, context)
 			if context.joker_main then
-				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hee hee!', colour = G.C.PURPLE})
-				card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'Hoo hoo!', colour = G.C.ORANGE})
-				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 10000 then
-					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'It is time!', colour = G.C.RED})
-					card_eval_status_text(self, 'extra', nil, nil, nil, {message = 'For my true power!', colour = G.C.BLUE})
+				local function append_extra(ret, append)
+					if ret.extra then return append_extra(ret.extra, append) end
+					ret.extra = append
+					return ret
+				end
+				local ret = {
+					message = 'Hee hee!',
+					colour = G.C.PURPLE
+				}
+				append_extra(ret, {
+					message = 'Hoo hoo!',
+					colour = G.C.ORANGE
+				})
+				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1 then
+					append_extra(ret, {
+						message = 'It is time!',
+						colour = G.C.BLUE
+					})
+					append_extra(ret, {
+						message = 'For my true power!',
+						colour = G.C.RED
+					})
 					for i=1, 1000 do
-						TheAutumnCircus.func.eval_this(self, {
-							message = localize{type = 'variable', key = 'a_mult', vars = {self.ability.consumeable.mult}},
-							mult_mod = self.ability.consumeable.mult
+						append_extra(ret, {
+							message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.consumeable.mult}},
+							func = function()
+								percent = percent + percent_delta
+							end,
+							mult_mod = card.ability.consumeable.mult
 						})
 					end
-				else
-					return {
-						message = localize{type = 'variable', key = 'a_mult', vars = {self.ability.consumeable.mult}},
-						mult_mod = self.ability.consumeable.mult
-					}
+					return ret
 				end
+				append_extra(ret, {
+					message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.consumeable.mult}},
+					mult_mod = card.ability.consumeable.mult
+				})
+				return ret
 			end
 		end,
 	},
