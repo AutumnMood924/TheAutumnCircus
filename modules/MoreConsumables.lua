@@ -401,7 +401,7 @@ local tarots = {
 					message = 'Hoo hoo!',
 					colour = G.C.ORANGE
 				})
-				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1 then
+				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1000 then
 					append_extra(ret, {
 						message = 'It is time!',
 						colour = G.C.BLUE

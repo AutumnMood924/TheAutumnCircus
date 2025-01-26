@@ -184,15 +184,19 @@ local jokers = {
         },
         config = {extra = {retriggers = 1}},
         pos = { x = 2, y = 0 },
-        cost = 7,
+        cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             local blah = ""
             if card.ability.extra.retriggers > 1 then blah = "s" end
             return {vars = {card.ability.extra.retriggers, blah}}
         end,
         calculate = function(self, card, context)
-            if context.repetition_only or (context.retrigger_joker_check and context.other_card.config.center.rarity == 1) then
+            if (context.retrigger_joker_check and context.other_card.config.center.rarity == 1) then
                 return {
                     repetitions = card.ability.extra.retriggers,
                     card = card,
@@ -212,13 +216,17 @@ local jokers = {
         pos = { x = 3, y = 0 },
         cost = 6,
         rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             local blah = ""
             if card.ability.extra.retriggers > 1 then blah = "s" end
             return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds, card.ability.extra.retriggers, blah}}
         end,
         calculate = function(self, card, context)
-            if context.repetition_only or (context.retrigger_joker_check and context.other_card ~= card and pseudorandom(pseudoseed("mirage_joker")) < G.GAME.probabilities.normal/card.ability.extra.odds) then
+            if (context.retrigger_joker_check and context.other_card ~= card and pseudorandom(pseudoseed("mirage_joker")) < G.GAME.probabilities.normal/card.ability.extra.odds) then
                 return {
                     repetitions = card.ability.extra.retriggers,
                     card = card,
@@ -239,6 +247,10 @@ local jokers = {
         pos = { x = 4, y = 0 },
         cost = 6,
         rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.rate * 100, card.ability.extra.Xmult}}
         end,
@@ -287,6 +299,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 3,
         rarity = 1,
+        blueprint_compat = false,
+        eternal_compat = false,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds}}
         end,
@@ -307,6 +323,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
             info_queue[#info_queue+1] = G.P_CENTERS['m_thac_dirt']
@@ -337,6 +357,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
             return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
@@ -375,6 +399,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
         end,
@@ -408,6 +436,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = G.P_CENTERS['m_thac_star']
             local blah = ""
@@ -429,16 +461,21 @@ local jokers = {
         enhancement_gate = "m_thac_star",
     },
     'quantum_grass', quantum_grass = {
-        name = "Quantum Grass",
+        name = "Quantum Grass Glass",
         text = {
-            "Grass and Glass",
-            "To you my friend",
-            "These are the same thing!"
+            "{C:attention}Glass{} cards and",
+            "{C:attention}Grass{} cards are also",
+            "considered {C:attention}Grass{} cards",
+            "and {C:attention}Glass{} cards, respectively"
         },
         config = {extra = { }},
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = G.P_CENTERS['m_glass']
             info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
@@ -456,6 +493,36 @@ local jokers = {
                         m_glass = true
                     }
                 end
+            end
+        end,
+    },
+    'psychic_double_reacharound', psychic_double_reacharound = {
+        name = "Psychic Double Reacharound",
+        text = {
+            "{C:attention}Retrigger{} each {C:attention}Joker{} that {C:attention}copies{}",
+            "another {C:attention}Joker{} {C:attention}#1#{} time#2#"
+        },
+        config = {extra = { retriggers = 2 }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            local blah = ""
+            if card.ability.extra.retriggers > 1 then blah = "s" end
+            return {vars = {card.ability.extra.retriggers, blah}}
+        end,
+        calculate = function(self, card, context)
+            if context.retrigger_joker_check and context.other_card.ability.blueprint_compat_check then
+                return {
+                    repetitions = card.ability.extra.retriggers,
+                    card = card,
+                    colour = G.C.ORANGE,
+                    message = localize('k_again_ex')
+                }
             end
         end,
     },
