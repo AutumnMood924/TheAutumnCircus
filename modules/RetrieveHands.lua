@@ -716,7 +716,7 @@ local handparts = {
 				if v then
 					-- The "Base" of a Castle is comprised of three face
 					-- cards of any ranks
-					if hand[i]:is_face() and faces < 3 then
+					if hand[i]:is_face(true) and faces < 3 then
 						faces = faces + 1
 						table.insert(ret, hand[i])
 					elseif (not SMODS.has_no_rank(hand[i])) and messtarget == "" and not hand[i]:is_face() then
@@ -752,7 +752,7 @@ local handparts = {
 				if v then
 					-- The "Base" of a Castle is comprised of three face
 					-- cards of any ranks
-					if hand[i]:is_face() and faces < 3 then
+					if hand[i]:is_face(true) and faces < 3 then
 						faces = faces + 1
 						table.insert(ret, hand[i])
 					elseif (not SMODS.has_no_rank(hand[i])) and not hand[i]:is_face() then
@@ -782,7 +782,7 @@ local handparts = {
 				if v then
 					-- The "Base" of a Castle is comprised of three face
 					-- cards of any ranks
-					if hand[i]:is_face() and faces < 3 then
+					if hand[i]:is_face(true) and faces < 3 then
 						faces = faces + 1
 						table.insert(ret, hand[i])
 					else
@@ -812,7 +812,7 @@ local handparts = {
 				if v then
 					-- The "Base" of a Castle is comprised of three face
 					-- cards of any ranks
-					if hand[i]:is_face() and faces < 3 then
+					if hand[i]:is_face(true) and faces < 3 then
 						faces = faces + 1
 						table.insert(ret, hand[i])
 					elseif (not SMODS.has_no_rank(hand[i])) then
@@ -842,7 +842,7 @@ local handparts = {
 				if v then
 					-- The "Base" of a Castle is comprised of three face
 					-- cards of any ranks
-					if hand[i]:is_face() and faces < 3 then
+					if hand[i]:is_face(true) and faces < 3 then
 						faces = faces + 1
 						table.insert(ret, hand[i])
 					elseif (not SMODS.has_no_rank(hand[i])) then
