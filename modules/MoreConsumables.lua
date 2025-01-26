@@ -61,7 +61,7 @@ local tarots = {
 		},
 		effect = 'Random Enhancement',
 		config = {
-			max_highlighted = 4,
+			max_highlighted = 3,
 		},
 		pos = { x = 0, y = 0 },
 		loc_vars = function(_c) return {vars = { _c.config.max_highlighted }} end,

@@ -538,16 +538,17 @@ local jokers = {
             "{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
         },
         config = {extra = {
-            chips = 25,
+            chips = 10,
             curr_chips = 0,
-            mult = 4,
+            mult = 3,
             curr_mult = 0,
             money = 0.5,
             curr_money = 0,
-            Xmult = 0.15,
+            Xmult = 0.1,
             curr_Xmult = 1.0,
         }},
         pos = { x = 4, y = 1 },
+        soul_pos = { x = 4, y = 2 },
         cost = 20,
         rarity = 4,
         blueprint_compat = true,
@@ -674,7 +675,7 @@ local jokers = {
             return {vars = {
                 card.ability.extra.Xmult,
                 1 + card.ability.extra.Xmult * (G.vouchers and #G.vouchers.cards or 0), -- thanks voucher calc
-                G.consumeables.config.card_limit - #G.consumeables.cards
+                (G.consumeables and G.consumeables.config.card_limit - #G.consumeables.cards or 2)
             }}
         end,
         calculate = function(self, card, context)
