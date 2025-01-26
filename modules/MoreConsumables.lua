@@ -1861,6 +1861,25 @@ local spectrals = {
 			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.sock_and_buskin
 		end,
 	},
+	'banana', banana = {
+		name = "Banana",
+		text = {
+			"Add a {C:money}Gros Michel Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_gros_michel" },
+		pos = {x = 9, y = 6},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.gros_michel
+		end,
+	},
 }
 
 SMODS.Atlas{

@@ -526,6 +526,178 @@ local jokers = {
             end
         end,
     },
+    'knight_of_heart', knight_of_heart = {
+        name = "Knight of Heart",
+        text = {
+            "Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
+            "and this Joker gains the following",
+            "depending on the card's {C:attention}original suit{}:",
+            "{C:spades}Spades{}: {C:chips}+#1#{} Chips {C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+            "{C:clubs}Clubs{}: {C:mult}+#3#{} Mult {C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+            "{C:diamonds}Diamonds{}: {C:money}+$#5#{} at end of round {C:inactive}(Currently {C:money}$#6#{C:inactive})",
+            "{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
+        },
+        config = {extra = {
+            chips = 25,
+            curr_chips = 0,
+            mult = 4,
+            curr_mult = 0,
+            money = 0.5,
+            curr_money = 0,
+            Xmult = 0.15,
+            curr_Xmult = 1.0,
+        }},
+        pos = { x = 4, y = 1 },
+        cost = 20,
+        rarity = 4,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.chips,
+                card.ability.extra.curr_chips,
+                card.ability.extra.mult,
+                card.ability.extra.curr_mult,
+                card.ability.extra.money,
+                math.floor(card.ability.extra.curr_money),
+                card.ability.extra.Xmult,
+                card.ability.extra.curr_Xmult
+            }}
+        end,
+        calculate = function(self, card, context)
+            local function append_extra(ret, append)
+                if ret.extra then return append_extra(ret.extra, append) end
+                ret.extra = append
+                return ret
+            end
+            local ret = {}
+            if context.joker_main then
+                if card.ability.extra.curr_chips > 0 then
+                    append_extra(ret, {chips = card.ability.extra.curr_chips})
+                end
+                if card.ability.extra.curr_mult > 0 then
+                    append_extra(ret, {mult = card.ability.extra.curr_mult})
+                end
+                if card.ability.extra.curr_Xmult > 1 then
+                    append_extra(ret, {Xmult = card.ability.extra.curr_Xmult})
+                end
+            end
+            if context.before and not context.blueprint then
+                local state = 0
+                for k, v in ipairs(context.scoring_hand) do
+                    if v.base.suit == "Hearts" or SMODS.has_no_suit(v) then
+                    elseif v.base.suit == "Spades" then
+                        card.ability.extra.curr_chips = card.ability.extra.curr_chips + card.ability.extra.chips
+                        v:change_suit("Hearts")
+                        state = 1
+                    elseif v.base.suit == "Clubs" then
+                        card.ability.extra.curr_mult = card.ability.extra.curr_mult + card.ability.extra.mult
+                        v:change_suit("Hearts")
+                        state = 1
+                    elseif v.base.suit == "Diamonds" then
+                        card.ability.extra.curr_money = card.ability.extra.curr_money + card.ability.extra.money
+                        v:change_suit("Hearts")
+                        state = 1
+                    else
+                        card.ability.extra.curr_Xmult = card.ability.extra.curr_Xmult + card.ability.extra.Xmult
+                        v:change_suit("Hearts")
+                        state = 1
+                    end
+                end
+                if state == 1 then
+                    append_extra(ret, {
+                        message = "Hearts",
+                        colour = G.C.SUITS.Hearts,
+                        card = card,
+                        func = function()
+                            for key,val in ipairs(context.scoring_hand) do
+                                val:juice_up(0.3, 0.5)
+                            end
+                        end,
+                    })
+                end
+            end
+            if ret.extra then return ret.extra end
+        end,
+        calc_dollar_bonus = function(self, card)
+            if card.ability.extra.curr_money >= 1 then return math.floor(card.ability.extra.curr_money) end
+        end,
+    },
+    'muse_of_mind', muse_of_mind = {
+        name = "Muse of Mind",
+        text = {
+            "Rescore each scoring Joker",
+        },
+        config = {extra = {
+        }},
+        pos = { x = 5, y = 1 },
+        soul_pos = { x = 5, y = 2 },
+        cost = 20,
+        rarity = 4,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        calculate = function(self, card, context)
+            if context.joker_main and not context.muse_of_mind_repeat then
+                local ret = {}
+                context.muse_of_mind_repeat = true
+                ret = SMODS.calculate_context(context)
+                context.muse_of_mind_repeat = false
+                return ret
+            end
+        end,
+    },
+    'lord_of_void', lord_of_void = {
+        name = "Lord of Void",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult for each",
+            "{C:attention}Voucher{} redeemed this run",
+            "{C:attention}Retrigger{} this Joker once",
+            "for each empty {C:attention}consumable slot{}",
+            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult, {C:attention}#3#{C:inactive} retriggers)"
+        },
+        config = {extra = {
+            Xmult = 0.13,
+        }},
+        pos = { x = 6, y = 1 },
+        soul_pos = { x = 6, y = 2 },
+        cost = 20,
+        rarity = 4,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.Xmult,
+                1 + card.ability.extra.Xmult * (G.vouchers and #G.vouchers.cards or 0), -- thanks voucher calc
+                G.consumeables.config.card_limit - #G.consumeables.cards
+            }}
+        end,
+        calculate = function(self, card, context)
+            local vars = {
+                card.ability.extra.Xmult,
+                1 + card.ability.extra.Xmult * (G.vouchers and #G.vouchers.cards or 0), -- thanks voucher calc
+                G.consumeables.config.card_limit - #G.consumeables.cards
+            }
+            if context.joker_main then
+                if vars[2] > 1 then
+                    return {Xmult = vars[2]}
+                end
+            end
+            if context.retrigger_joker_check and context.other_card == card and vars[3] > 0 then
+                return {
+                    repetitions = vars[3],
+                    card = card,
+                    colour = G.C.ORANGE,
+                    message = localize('k_again_ex')
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

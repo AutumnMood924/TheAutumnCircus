@@ -164,11 +164,45 @@ local stamps = {
 	"gros_michel", gros_michel = {
 		name = "Gros Michel",
 		text = {
-			"{C:inactive}Not Yet Implemented"
+			"{C:mult}+15{} Mult",
+			"{C:green}1 in 40{} chance this",
+			"stamp is removed",
+			"at end of round"
 		},
-		display_name = "Gros Michel's Stamp",
+		display_name = "Gros Michel Stamp",
 		pos = { x = 9, y = 0 },
 		color = "B59A00",
+		calculate = function(self, card, context)
+			if context.joker_main then
+				return {
+					card = card,
+					focus = card,
+					mult = 15
+				}
+			end
+			if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
+				if pseudorandom('gros_michel_stamp') < G.GAME.probabilities.normal/40 then
+					return {
+						card = card,
+						focus = card,
+						message = "Removed!", -- todo: loc
+						colour = G.C.ORANGE,
+						extra = {
+							func = function()
+								card:set_seal()
+							end,
+						}
+					}
+				else
+					return {
+						card = card,
+						focus = card,
+						message = "Safe!", -- todo: loc
+						colour = G.C.ORANGE,
+					}
+				end
+			end
+		end,
 	},
 }
 

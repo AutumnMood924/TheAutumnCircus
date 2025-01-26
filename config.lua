@@ -147,7 +147,7 @@ local config = {
 		vampire = false,
 		sock_and_buskin = true,
 		hiker = false,
-		gros_michel = false,
+		gros_michel = true,
 	},
 	enabled_enhancements = {
 		loop = false,
