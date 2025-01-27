@@ -248,7 +248,7 @@ local config = {
 	},
 	mechanics = {
 		minor_arcana_flush_effects = true,
-		all_hands_are_secret = true,
+		all_hands_are_secret = false,
 	},
 	starting_deck = {
 		allowed_suits = {
