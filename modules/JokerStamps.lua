@@ -204,6 +204,37 @@ local stamps = {
 			end
 		end,
 	},
+	"blueprint", blueprint = {
+		name = "Blueprint",
+		text = {
+			"{C:green}1 in 10{} chance another of this",
+			"Joker appears in the shop",
+		},
+		display_name = "Blueprint Stamp",
+		pos = { x = 0, y = 1 },
+		color = "3E60D4",
+		calculate = function(self, card, context)
+			if context.reroll_shop then print("hi") end
+			if context.reroll_shop and not context.blueprint and card.config.center.set == "Joker" then
+				if pseudorandom('blueprint_stamp') < G.GAME.probabilities.normal/10 then
+					local temp_card = {set = "Joker", area = G.shop_jokers, key = card.config.center.key}
+					local new_card = SMODS.create_card(temp_card)
+					new_card.states.visible = false
+					G.shop_jokers:emplace(new_card)
+					new_card:set_cost()
+					new_card:start_materialize()
+					create_shop_card_ui(new_card)
+					new_card.states.visible = true
+					return {
+						card = card,
+						focus = card,
+						message = "Manufactured!", -- todo: loc
+						colour = G.C.BLUE,
+					}
+				end
+			end
+		end,
+	},
 }
 
 

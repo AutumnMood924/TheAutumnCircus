@@ -699,6 +699,59 @@ local jokers = {
             end
         end,
     },
+    'funny_fertilizer', funny_fertilizer = {
+        name = "Funny Fertilizer",
+        text = {
+            "{C:attention}Enhances{} up to {C:attention}#1#{}",
+            "unenhanced card#2# in your full",
+            "deck to {C:attention}Grass{} cards at",
+            "the end of each {C:attention}Boss Blind",
+        },
+        config = {extra = { enhancements = 3 }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            local blah = ""
+            if card.ability.extra.enhancements > 1 then blah = "s" end
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
+            return {vars = {card.ability.extra.enhancements, blah}}
+        end,
+        calculate = function(self, card, context)
+            if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind and G.GAME.blind.boss then
+                local enhanced_cards = {}
+                local used_tarot = copier or self
+                local temp_deck = {}
+                for k, v in ipairs(G.playing_cards) do 
+                    if v.config.center.set == "Default" then
+                        temp_deck[#temp_deck+1] = v
+                    end
+                end
+                table.sort(temp_deck, function (a, b) return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card end)
+                pseudoshuffle(temp_deck, pseudoseed('funny_fertilizer'))
+    
+                for i = 1, card.ability.extra.enhancements do enhanced_cards[#enhanced_cards+1] = temp_deck[i] end
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.1,
+                    func = function() 
+                        for i=#enhanced_cards, 1, -1 do
+                            local card = enhanced_cards[i]
+                            card:set_ability(G.P_CENTERS.m_thac_grass)
+                        end
+                        return true end }))
+                return {
+                    card = card,
+                    colour = G.C.ORANGE,
+                    message = "Grass"
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

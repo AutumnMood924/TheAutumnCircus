@@ -912,7 +912,7 @@ local planets = {
 	'nice_planet', nice_planet = {
 		name = "Nice Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_nice', softlock = false},
+		config = {hand_type = 'thac_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -931,7 +931,7 @@ local planets = {
 	'blaze_planet', blaze_planet = {
 		name = "Blaze Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_blaze', softlock = false},
+		config = {hand_type = 'thac_blaze', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -950,7 +950,7 @@ local planets = {
 	'twice_nice_planet', twice_nice_planet = {
 		name = "Twice Nice Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_twice_nice', softlock = false},
+		config = {hand_type = 'thac_twice_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -969,7 +969,7 @@ local planets = {
 	'skeet_planet', skeet_planet = {
 		name = "Skeet Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_skeet', softlock = false},
+		config = {hand_type = 'thac_skeet', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -988,7 +988,7 @@ local planets = {
 	'little_dog_planet', little_dog_planet = {
 		name = "Little Dog Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_little_dog', softlock = false},
+		config = {hand_type = 'thac_little_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1007,7 +1007,7 @@ local planets = {
 	'big_dog_planet', big_dog_planet = {
 		name = "Big Dog Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_big_dog', softlock = false},
+		config = {hand_type = 'thac_big_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1026,7 +1026,7 @@ local planets = {
 	'little_cat_planet', little_cat_planet = {
 		name = "Little Cat Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_little_cat', softlock = false},
+		config = {hand_type = 'thac_little_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1045,7 +1045,7 @@ local planets = {
 	'big_cat_planet', big_cat_planet = {
 		name = "Big Cat Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_big_cat', softlock = false},
+		config = {hand_type = 'thac_big_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1064,7 +1064,7 @@ local planets = {
 	'castle_planet', castle_planet = {
 		name = "Castle Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_castle', softlock = false},
+		config = {hand_type = 'thac_castle', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1184,7 +1184,7 @@ local planets = {
 	'skeet_flush_planet', skeet_flush_planet = {
 		name = "Skeet Flush Planet",
 		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_skeet_flush', softlock = false},
+		config = {hand_type = 'thac_skeet_flush', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
@@ -1878,6 +1878,25 @@ local spectrals = {
 		update = stampcardupdate,
 		load_check = function()
 			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.gros_michel
+		end,
+	},
+	'artifice', artifice = {
+		name = "Artifice",
+		text = {
+			"Add a {C:blue}Blueprint Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_blueprint" },
+		pos = {x = 9, y = 6},
+		loc_vars = function(_c, info_queue)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.blueprint
 		end,
 	},
 }

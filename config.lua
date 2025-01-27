@@ -98,6 +98,8 @@ local config = {
 			wonder = true,
 			macabre = true,
 			duplicity = true,
+			banana = true,
+			artifice = true,
 		
 		--oddities
 		-- following requires oddityapi
@@ -148,6 +150,7 @@ local config = {
 		sock_and_buskin = true,
 		hiker = false,
 		gros_michel = true,
+		blueprint = true,
 	},
 	enabled_enhancements = {
 		loop = false,
@@ -245,6 +248,7 @@ local config = {
 	},
 	mechanics = {
 		minor_arcana_flush_effects = true,
+		all_hands_are_secret = true,
 	},
 	starting_deck = {
 		allowed_suits = {
