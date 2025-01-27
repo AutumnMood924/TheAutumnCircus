@@ -752,6 +752,78 @@ local jokers = {
             end
         end,
     },
+    'highest_number', highest_number = {
+        name = "The Highest Number",
+        text = {
+            "Played {C:attention}9s{} reduce {C:attention}Blind{}",
+            "requirement by {C:attention}#1#%{}",
+            "This Joker {C:attention}improves{} at the",
+            "end of each {C:attention}Boss Blind{}"
+        },
+        config = {extra = { 
+            reduction = 0.09,
+            level_factor = 0.413,
+            level_factor_reduction = 0.612,
+         }},
+        pos = { x = 5, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['from_me_to_you'] = {
+                name = "heart, mind, and void",
+                text = {
+                    "{C:money}Mindless drone, driven by pursuit",
+                    "{C:money}Of the highest possible number",
+                    "{C:money}You know how this story ends",
+                    "{C:money}But you continue onwards towards a",
+                        "{C:dark_edition}Dark Apotheosis",
+                    "{C:money}What is it you hope to accomplish, child?{}",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 'from_me_to_you', set = 'Other'}
+            end
+            return {vars = {card.ability.extra.reduction * 100}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.repetition and context.cardarea == G.play and not context.end_of_round and context.other_card:get_id() == 9 and not SMODS.has_no_rank(context.other_card) then
+				return {
+					extra = {focus = card,
+						message = localize{type = 'variable', key = 'a_blind_minus_percent',
+							vars = {card.ability.extra.reduction*100}}, 
+						func = function()
+						G.E_MANAGER:add_event(Event({
+							trigger = 'before',
+							delay = 0.0,
+							func = (function()
+								AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
+								return true
+							end)}))
+					end},
+					card = card
+				}
+            end
+            if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind.boss and not context.blueprint then
+                card.ability.extra.reduction = card.ability.extra.reduction * (1+card.ability.extra.level_factor)
+                card.ability.extra.reduction = math.ceil(card.ability.extra.reduction*100)/100
+                card.ability.extra.reduction = math.min(card.ability.extra.reduction, 0.25)
+                card.ability.extra.level_factor = card.ability.extra.level_factor * card.ability.extra.level_factor_reduction
+                return {
+                    card = card,
+                    focus = card,
+                    message = "LV Up",
+                    colour = G.C.RED
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
