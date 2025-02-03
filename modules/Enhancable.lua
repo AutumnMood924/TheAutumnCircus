@@ -89,18 +89,17 @@ local enhancements = {
 			if context.main_scoring and context.cardarea == G.play then
 				return {
 					extra = {focus = card,
-						message = localize{type = 'variable', key = 'a_blind_minus_percent',
-							vars = {card.ability.extra.reduction*100}}, 
-						func = function()
+					message = localize{type = 'variable', key = 'a_blind_minus_percent',
+						vars = {card.ability.extra.reduction*100}}, },
+					func = function()
 						G.E_MANAGER:add_event(Event({
-							trigger = 'before',
+							trigger = 'immediate',
 							delay = 0.0,
-							func = (function()
+							func = function()
 								AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
 								return true
-							end)}))
-					end},
-					card = card
+							end}))
+					end
 				}
 			end
 		end,

@@ -214,7 +214,8 @@ local stamps = {
 		pos = { x = 0, y = 1 },
 		color = "3E60D4",
 		calculate = function(self, card, context)
-			if context.reroll_shop then print("hi") end
+			--if context.reroll_shop then print("hi") end
+			-- todo: also add to initial shop
 			if context.reroll_shop and not context.blueprint and card.config.center.set == "Joker" then
 				if pseudorandom('blueprint_stamp') < G.GAME.probabilities.normal/10 then
 					local temp_card = {set = "Joker", area = G.shop_jokers, key = card.config.center.key}

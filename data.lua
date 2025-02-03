@@ -44,7 +44,7 @@ data.buffer_register_funcs = {
 	end,
 	Consumables = function(v)
 		if not (TheAutumnCircus.config.enabled_consumables[v.key] == false) and ((not v.load_check) or v.load_check()) then
-			if v.set == "Oddity" and OddityAPI == nil then return end
+			--if v.set == "Oddity" and AMM.api.oddity == nil then return end
 			local a = "c_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then

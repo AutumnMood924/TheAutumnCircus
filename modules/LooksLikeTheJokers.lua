@@ -627,7 +627,7 @@ local jokers = {
         end,
     },
     'muse_of_mind', muse_of_mind = {
-        name = "Muse of Mind",
+        name = "Maid of Mind",
         text = {
             "Rescore each scoring Joker",
         },
@@ -777,10 +777,10 @@ local jokers = {
                 name = "heart, mind, and void",
                 text = {
                     "{C:money}Mindless drone, driven by pursuit",
-                    "{C:money}Of the highest possible number",
-                    "{C:money}You know how this story ends",
-                    "{C:money}But you continue onwards towards a",
-                        "{C:dark_edition}Dark Apotheosis",
+                    "{C:money}of the highest possible number;",
+                    "{C:money}You know how this story ends,",
+                    "{C:money}but you continue onwards towards a",
+                        "{C:dark_edition}Dark Apotheosis.",
                     "{C:money}What is it you hope to accomplish, child?{}",
                 }
             }
@@ -812,8 +812,7 @@ local jokers = {
             end
             if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind.boss and not context.blueprint then
                 card.ability.extra.reduction = card.ability.extra.reduction * (1+card.ability.extra.level_factor)
-                card.ability.extra.reduction = math.ceil(card.ability.extra.reduction*100)/100
-                card.ability.extra.reduction = math.min(card.ability.extra.reduction, 0.25)
+                card.ability.extra.reduction = math.floor(card.ability.extra.reduction*100)/100
                 card.ability.extra.level_factor = card.ability.extra.level_factor * card.ability.extra.level_factor_reduction
                 return {
                     card = card,
@@ -823,6 +822,215 @@ local jokers = {
                 }
             end
         end,
+    },
+    'daggerkind', daggerkind = {
+        name = "Daggerkind Specibus",
+        text = {
+            "When Blind is selected," 
+        },
+        config = {extra = { 
+            
+         }},
+        pos = { x = 6, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['s_chekhovs_knife'] = {
+                name = "[S] Chekhov's Knife",
+                text = {
+                    "{C:hearts}don't worry",
+                    "{C:hearts}i'm well prepared",
+                    "{C:hearts}at least,",
+                    "{C:hearts}as much as i need to be",
+                    "{C:hearts}to get rid of you"
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_chekhovs_knife', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            
+        end,
+        yes_pool_flag = "no",
+    },
+    'bladekind', bladekind = {
+        name = "Bladekind Specibus",
+        text = {
+            "e"
+        },
+        config = {extra = { 
+            
+         }},
+        pos = { x = 8, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['knight_retrieve_bladekind'] = {
+                name = "Knight: Retrieve BLADEKIND specibus",
+                text = {
+                    "{C:hearts}i dont make the rules",
+                    "{C:hearts}if you see a strife specibus",
+                    "{C:hearts}that is unowned",
+                    "{C:hearts}you now have another strife specibus",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 'knight_retrieve_bladekind', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            
+        end,
+        yes_pool_flag = "no",
+    },
+    'pokerkind', pokerkind = {
+        name = "Pokerkind Specibus",
+        text = {
+            "e"
+        },
+        config = {extra = { 
+            
+         }},
+        pos = { x = 9, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['maid_examine_pokerkind'] = {
+                name = "Maid: Examine POKERKIND specibus",
+                text = {
+                    "{C:clubs}i guess you can just put any cards in this thing",
+                    "{C:clubs}maybe someone out there plays poker with credit cards",
+                    "{C:clubs}all i need to know is i can stuff this thing full of cards",
+                    "{C:clubs}pretty useful if lacking in combat application"
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 'maid_examine_pokerkind', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            
+        end,
+        yes_pool_flag = "no",
+    },
+    'combat_capability', combat_capability = {
+        name = "Combat Capability",
+        text = {
+            "If played hand contains no enhancements,",
+            "each played card gets a random enhancement",
+        },
+        config = {extra = { 
+            
+         }},
+        pos = { x = 7, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['s_lord_provide_an_example'] = {
+                name = "[S] Lord: Provide an example",
+                text = {
+                    "{C:money}You are correct:",
+                    "{C:money}I am unarmed.",
+                    "{C:money}However,",
+                    "{C:money}You'll find that's not",
+                    "{C:money}quite as relevant as you",
+                    "{C:money}hoped it would be.",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_lord_provide_an_example', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            
+        end,
+        yes_pool_flag = "no",
+    },
+    'pseudoscratch', pseudoscratch = {
+        name = "Pseudo-Scratch Gambit",
+        text = {
+            "Prevent death, then this Joker",
+            "becomes a random Joker from among:",
+            "Knight of Heart",
+            "Maid of Mind",
+            "Lord of Void",
+        },
+        config = {},
+        pos = { x = 7, y = 1 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['s_ascend'] = {
+                name = "[S] Ascend",
+                text = {
+                    "{C:money}This is it. Everything is in place.",
+                    "{C:money}Use the slab, and the next phase will begin.",
+                    "{C:clubs}looking forward to you shutting up",
+                    "{C:hearts}right so, this will displace us temporally",
+                    "{C:hearts}each of us will be in our own timeline",
+                    "{C:hearts}this is a stupid fucking gamble",
+                    "{C:hearts}assuming this even works,",
+                    "{C:hearts}no idea which timeline won't be doomed",
+                    "{C:hearts}maybe they all will fuck if i know",
+                    "{C:money}Call it 'triple-blind', then.",
+                    "{C:clubs}please shut up",
+                    "{X:hearts,C:hearts}??????{C:clubs} just hurry up and use the slab",
+                    "{C:money}Be not afraid. Have faith. Et cetera.",
+                    "{C:money}I will aid you upon your respective ascensions.",
+                    "{C:hearts}you better not be full of shit, {X:money,C:money}????"
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_ascend', set = 'Other'}
+            end
+            info_queue[#info_queue+1] = G.P_CENTERS['j_thac_knight_of_heart']
+            info_queue[#info_queue+1] = G.P_CENTERS['j_thac_muse_of_mind']
+            info_queue[#info_queue+1] = G.P_CENTERS['j_thac_lord_of_void']
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+        end,
+        yes_pool_flag = "no",
     },
 }
 

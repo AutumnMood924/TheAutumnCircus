@@ -180,14 +180,14 @@ end
 if TheAutumnCircus.config.enabled_modules.retrievehands then
 	TheAutumnCircus.RH = NFS.load(TheAutumnCircus.mod.path.."modules/RetrieveHands.lua")()
 end
-if TheAutumnCircus.config.enabled_modules.basicoddities and OddityAPI then
+if TheAutumnCircus.config.enabled_modules.basicoddities then
 	TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.enhancable then
 	TheAutumnCircus.EA = NFS.load(TheAutumnCircus.mod.path.."modules/Enhancable.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.editiontomeetya then
-	TheAutumnCircus.EA = NFS.load(TheAutumnCircus.mod.path.."modules/EditionToMeetYa.lua")()	
+	TheAutumnCircus.ETMY = NFS.load(TheAutumnCircus.mod.path.."modules/EditionToMeetYa.lua")()	
 end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()

@@ -277,23 +277,7 @@ local oddities = {
 		rarity = 2,
 		loc_vars = function(_c) return {vars = { _c.config.extra.hands }} end,
 		keep_on_use = function(self, card)
-			if card.area == G.consumeables then
-				return true
-			end
-			if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-				G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-				G.E_MANAGER:add_event(Event({
-					trigger = 'before',
-					delay = 0.0,
-					func = (function()
-						card:add_to_deck()
-						G.consumeables:emplace(card)
-						G.GAME.consumeable_buffer = 0
-						return true
-					end)}))
-				return true
-			end
-			return false
+			return true
 		end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
