@@ -151,6 +151,7 @@ local vouchers = {
 			"{C:inactive}(If a {C:dark_edition}Negative {C:attention}The Wheel of Fortune{C:inactive} is used or sold,",
 			"{C:inactive}card creation probability is forced to be {C:green}1 in 4{C:inactive})"
 		},
+		boxes = { 2, 3, 3 },
 		config = {
 			extra = {
 				odds = 4,

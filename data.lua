@@ -36,7 +36,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -51,7 +52,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -65,7 +67,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -81,7 +84,8 @@ data.buffer_register_funcs = {
 					label = v.display_name or v.name,
 					description = {
 						name = v.display_name or v.name,
-						text = v.text
+						text = v.text,
+						boxes = v.boxes
 					}
 				}
 			end
@@ -100,7 +104,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -114,7 +119,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -128,7 +134,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -181,7 +188,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			
@@ -198,7 +206,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			SMODS.Edition(v)
@@ -209,7 +218,8 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
-					text = v.text
+					text = v.text,
+					boxes = v.boxes
 				}
 			end
 			SMODS.Tag(v)
@@ -224,7 +234,8 @@ data.buffer_register_funcs = {
 					label = v.display_name or v.name,
 					description = {
 						name = v.display_name or v.name,
-						text = v.text
+						text = v.text,
+						boxes = v.boxes
 					}
 				}
 			end

@@ -56,9 +56,10 @@ local tarots = {
 		text = {
 			'Randomly enhances {C:attention}#1#{}',
 			'selected cards',
-			--'{C:inactive}Having seen the World\'s vastness,{}',
-			--'{C:inactive}the Fool saw endless possibility{}',
+			'{C:inactive}Having seen the World\'s vastness,{}',
+			'{C:inactive}the Fool saw endless possibility{}',
 		},
+		boxes = { 2, 2, },
 		effect = 'Random Enhancement',
 		config = {
 			max_highlighted = 3,
@@ -93,9 +94,10 @@ local tarots = {
 			'{C:attention}Removes{} each enhancement from',
 			'up to {C:attention}#1#{} cards and gain {C:money}$#2#{} for',
 			'each {C:attention}removed{} enhancement',
-			--'{C:inactive}However, the Fool was unable to handle{}',
-			--'{C:inactive}this freedom, and fell to aimless despair{}',
+			'{C:inactive}However, the Fool was unable to handle{}',
+			'{C:inactive}this freedom, and fell to aimless despair{}',
 		},
+		boxes = { 3, 2, },
 		effect = 'Remove Enhancement',
 		config = {
 			max_highlighted = 5,
@@ -139,9 +141,10 @@ local tarots = {
 			"{C:attention}#1#{} selected card",
 			"without an enhancement",
 			"in your hand",
-			--'{C:inactive}Seeking meaning once again, the Fool{}',
-			--'{C:inactive}looked to nature\'s simplicity{}',
+			'{C:inactive}Seeking meaning once again, the Fool{}',
+			'{C:inactive}looked to nature\'s simplicity{}',
 		},
+		boxes = { 4, 2, },
 		effect = 'Copy Unenhanced',
 		config = {
 			--max_highlighted = 1,
@@ -345,6 +348,7 @@ local tarots = {
 			'{C:inactive}Looks like the joke\'s{}',
 			'{C:dark_edition,E:2,s:1.75}ON YOU!{}',
 		},
+		boxes = { 2, 3, },
 		effect = 'NOTHING',
 		config = {
 			mult = 4
@@ -753,6 +757,7 @@ local planets = {
 			"{C:attention}upgrade{} or {C:attention}downgrade{}",
 			"each shuffled hand",
 		},
+		boxes = { 1, 3, },
 		effect = 'The D8',
 		config = { extra = 2 },
 		pos = { x = 5, y = 2 },

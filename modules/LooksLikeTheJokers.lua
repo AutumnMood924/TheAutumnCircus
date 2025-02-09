@@ -543,6 +543,7 @@ local jokers = {
             "{C:diamonds}Diamonds{}: {C:money}+$#5#{} at end of round {C:inactive}(Currently {C:money}$#6#{C:inactive})",
             "{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
         },
+		boxes = { 3, 1, 1, 1, 1, },
         config = {extra = {
             chips = 10,
             curr_chips = 0,
@@ -667,6 +668,7 @@ local jokers = {
             "for each empty {C:attention}consumable slot{}",
             "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult, {C:attention}#3#{C:inactive} retriggers)"
         },
+		boxes = { 2, 2, 1 },
         config = {extra = {
             Xmult = 0.13,
         }},
@@ -768,6 +770,7 @@ local jokers = {
             "This Joker {C:attention}improves{} at the",
             "end of each {C:attention}Boss Blind{}"
         },
+		boxes = { 2, 2, },
         config = {extra = { 
             reduction = 0.09,
             level_factor = 0.413,
@@ -1001,6 +1004,7 @@ local jokers = {
             "Maid of Mind",
             "Lord of Void",
         },
+		boxes = { 2, 3, },
         config = {},
         pos = { x = 7, y = 1 },
         cost = 9,

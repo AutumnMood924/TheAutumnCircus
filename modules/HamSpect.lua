@@ -207,6 +207,7 @@ local aspects = {
 			'in hand that {C:attention}shares a rank{}',
 			'with this card when scored',
 		},
+		boxes = { 3, 3, },
 		effect = 'blood',
 		config = {
 			extra = {
