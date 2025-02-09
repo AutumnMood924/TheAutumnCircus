@@ -298,6 +298,7 @@ local tarots = {
 	},
 	'juggler', juggler = {
 		name = "The Juggler",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -309,6 +310,7 @@ local tarots = {
 	},
 	'grass', grass = {
 		name = "The Grass",
+		subtitle = "Work In Progress!",
 		text = {
 			"Enhances {C:attention}#1#",
 			"selected cards to",
@@ -623,6 +625,7 @@ local planets = {
 	},
 	'satellite', satellite = {
 		name = "Satellite",
+		subtitle = "(Not the Joker One)",
 		text = {
             "Creates up to {C:attention}2",
             "random {C:planet}Planet{} cards",
@@ -658,6 +661,7 @@ local planets = {
 	},
 	'moon', moon = {
 		name = "Moon",
+		subtitle = "Moon of Earth",
 		text = {
             "Creates #1# random",
             "{C:tarot}Tarot{}, {C:planet}Planet{}, or",
@@ -831,6 +835,7 @@ local planets = {
 	},
 	'planet_s', planet_s = {
 		name = "Planet S",
+		subtitle = "Spades in Spades",
 		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Spades"},
@@ -851,6 +856,7 @@ local planets = {
 	},
 	'planet_h', planet_h = {
 		name = "Planet H",
+		subtitle = "Hearty Hearts",
 		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Hearts"},
@@ -871,6 +877,7 @@ local planets = {
 	},
 	'planet_c', planet_c = {
 		name = "Planet C",
+		subtitle = "Club's Clubbin'",
 		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Clubs"},
@@ -891,6 +898,7 @@ local planets = {
 	},
 	'planet_d', planet_d = {
 		name = "Planet D",
+		subtitle = "Diamonds twice (funny somehow?)",
 		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Diamonds"},
@@ -911,6 +919,7 @@ local planets = {
 	},
 	'nice_planet', nice_planet = {
 		name = "Nice Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -930,6 +939,7 @@ local planets = {
 	},
 	'blaze_planet', blaze_planet = {
 		name = "Blaze Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_blaze', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -949,6 +959,7 @@ local planets = {
 	},
 	'twice_nice_planet', twice_nice_planet = {
 		name = "Twice Nice Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_twice_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -968,6 +979,7 @@ local planets = {
 	},
 	'skeet_planet', skeet_planet = {
 		name = "Skeet Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_skeet', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -987,6 +999,7 @@ local planets = {
 	},
 	'little_dog_planet', little_dog_planet = {
 		name = "Little Dog Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_little_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1006,6 +1019,7 @@ local planets = {
 	},
 	'big_dog_planet', big_dog_planet = {
 		name = "Big Dog Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_big_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1025,6 +1039,7 @@ local planets = {
 	},
 	'little_cat_planet', little_cat_planet = {
 		name = "Little Cat Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_little_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1044,6 +1059,7 @@ local planets = {
 	},
 	'big_cat_planet', big_cat_planet = {
 		name = "Big Cat Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_big_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1063,6 +1079,7 @@ local planets = {
 	},
 	'castle_planet', castle_planet = {
 		name = "Castle Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1082,6 +1099,7 @@ local planets = {
 	},
 	'blaze_house_planet', blaze_house_planet = {
 		name = "Blaze House Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_blaze_house', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1101,6 +1119,7 @@ local planets = {
 	},
 	'flushblaze_planet', flushblaze_planet = {
 		name = "Flushblaze Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_flushblaze', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1120,6 +1139,7 @@ local planets = {
 	},
 	'spectrumblaze_planet', spectrumblaze_planet = {
 		name = "Spectrumblaze Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_spectrumblaze', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1142,6 +1162,7 @@ local planets = {
 	},
 	'castle_flush_planet', castle_flush_planet = {
 		name = "Castle Flush Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_flush', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1161,6 +1182,7 @@ local planets = {
 	},
 	'castle_spectrum_planet', castle_spectrum_planet = {
 		name = "Castle Spectrum Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_spectrum', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1183,6 +1205,7 @@ local planets = {
 	},
 	'skeet_flush_planet', skeet_flush_planet = {
 		name = "Skeet Flush Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_skeet_flush', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 8, y = 6 },
@@ -1202,6 +1225,7 @@ local planets = {
 	},
 	'skeet_spectrum_planet', skeet_spectrum_planet = {
 		name = "Skeet Spectrum Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_skeet_spectrum', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1224,6 +1248,7 @@ local planets = {
 	},
 	'blaze_five_planet', blaze_five_planet = {
 		name = "Blaze Five Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_blaze_five', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1243,6 +1268,7 @@ local planets = {
 	},
 	'flushblaze_house_planet', flushblaze_house_planet = {
 		name = "Flushblaze House Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_flushblaze_house', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1262,6 +1288,7 @@ local planets = {
 	},
 	'spectrumblaze_house_planet', spectrumblaze_house_planet = {
 		name = "Spectrumblaze House Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_spectrumblaze_house', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1284,6 +1311,7 @@ local planets = {
 	},
 	'flushblaze_five_planet', flushblaze_five_planet = {
 		name = "Flushblaze Five Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_flushblaze_five', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1303,6 +1331,7 @@ local planets = {
 	},
 	'spectrumblaze_five_planet', spectrumblaze_five_planet = {
 		name = "Spectrumblaze Five Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_spectrumblaze_five', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1325,6 +1354,7 @@ local planets = {
 	},
 	'castle_stone_planet', castle_stone_planet = {
 		name = "Stone Castle Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_stone', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1344,6 +1374,7 @@ local planets = {
 	},
 	'castle_gold_planet', castle_gold_planet = {
 		name = "Gold Castle Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_gold', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1363,6 +1394,7 @@ local planets = {
 	},
 	'castle_steel_planet', castle_steel_planet = {
 		name = "Steel Castle Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_steel', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1382,6 +1414,7 @@ local planets = {
 	},
 	'castle_glass_planet', castle_glass_planet = {
 		name = "Glass Castle Planet",
+		subtitle = "Work In Progress!",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle_glass', softlock = true},
 		pos = { x = 8, y = 6 },
@@ -1525,6 +1558,7 @@ local spectrals = {
 	},
 	'tribute', tribute = {
 		name = "Tribute",
+		subtitle = "Work In Progress!",
 		text = {
 			"Destroys {C:red}all{} of your {C:attention}Jokers{},",
 			"gain {C:dark_edition}+#1#{} Joker Slot",
@@ -1566,6 +1600,7 @@ local spectrals = {
 	},
 	'sacrifice', sacrifice = {
 		name = "Sacrifice",
+		subtitle = "Work In Progress!",
 		text = {
 			"{C:dark_edition}+#1#{} Joker Slot",
 			"{C:blue}-#2# Hand{} per round"
@@ -1627,6 +1662,7 @@ local spectrals = {
 	},
 	'lotus', lotus = {
 		name = "Lotus",
+		subtitle = "Work In Progress!",
 		text = {
             "Creates {C:attention}#1# random",
 			"{C:dark_edition}Negative {C:tarot}Tarot{} cards",
@@ -1673,7 +1709,7 @@ local spectrals = {
 			delay(0.6)
 			for i=1, #G.jokers.cards do
 				G.jokers.cards[i].base_cost = 0
-				G.jokers.cards[i].extra_cost = 0
+				G.jokers.cards[i].ability.extra_value = 0
 				G.jokers.cards[i].cost = 0
 				G.jokers.cards[i].sell_cost = 0
 				G.jokers.cards[i].sell_cost_label = G.jokers.cards[i].facing == 'back' and '?' or G.jokers.cards[i].sell_cost
@@ -1825,6 +1861,7 @@ local spectrals = {
 	},
 	'macabre', macabre = {
 		name = "Macabre",
+		subtitle = "Work In Progress!",
 		text = {
 			"Add Mr. Bones' Stamp",
 			"to a random {C:attention}Joker{}"
@@ -1844,6 +1881,7 @@ local spectrals = {
 	},
 	'duplicity', duplicity = {
 		name = "Duplicity",
+		subtitle = "Work In Progress!",
 		text = {
 			"Add {C:inactive}Sock and Buskin's Stamp{}",
 			"to a random {C:attention}Joker{}"
@@ -1863,6 +1901,7 @@ local spectrals = {
 	},
 	'banana', banana = {
 		name = "Banana",
+		subtitle = "Work In Progress!",
 		text = {
 			"Add a {C:money}Gros Michel Stamp{}",
 			"to a random {C:attention}Joker{}"
@@ -1882,6 +1921,7 @@ local spectrals = {
 	},
 	'artifice', artifice = {
 		name = "Artifice",
+		subtitle = "Work In Progress!",
 		text = {
 			"Add a {C:blue}Blueprint Stamp{}",
 			"to a random {C:attention}Joker{}"
@@ -1897,6 +1937,59 @@ local spectrals = {
 		update = stampcardupdate,
 		load_check = function()
 			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.blueprint
+		end,
+	},
+	'quest_bed', quest_bed = {
+		name = "Quest Bed",
+		text = {
+			"{C:attention}Destroys{} 2 random {C:attention}Jokers{},",
+			"then add a {C:green}random{} {C:red}Aspect{}",
+			"to each card held in hand",
+			"{C:inactive}(Each card will receive the same {C:red}Aspect{C:inactive})"
+		},
+		config = { },
+		pos = {x = 9, y = 6},
+		use = function(_, self, area, copier)
+			local used_tarot = copier or self
+			-- destroy a random joker
+			local deletable_jokers = {}
+			for k, v in pairs(G.jokers.cards) do
+				if not v.ability.eternal then deletable_jokers[#deletable_jokers + 1] = v end
+			end
+			local chosen_joker = nil
+			local chosen_joker_2 = nil
+			if #deletable_jokers > 1 then
+				chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
+				chosen_joker_2 = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
+
+				while chosen_joker == chosen_joker_2 do
+					chosen_joker_2 = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
+				end
+
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.15, func = function() chosen_joker:start_dissolve(nil); return true end }))
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.60, func = function() chosen_joker_2:start_dissolve(nil); return true end }))
+			else
+				chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.75, func = function() chosen_joker:start_dissolve(nil); return true end }))
+			end
+			delay(0.6)
+			local keyset={}
+			local n=0
+			for k,v in pairs(AMM.Aspects) do
+				n=n+1
+				keyset[n]=k
+			end
+			local god_tier = pseudorandom_element(keyset, pseudoseed("god_tier"))
+			for k, v in ipairs(G.hand.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function() v:set_aspect(god_tier, false, true); return true end }))
+			end
+			delay(0.5)
+		end,
+		can_use = function(_, self) 
+			return #G.jokers.cards >= 2 and #G.hand.cards > 1
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.hamspect
 		end,
 	},
 }

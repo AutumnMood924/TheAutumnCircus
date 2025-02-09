@@ -25,6 +25,7 @@ data.BUFFERS = {
 	Shaders = {},
 	Editions = {},
 	Tags = {},
+	Aspects = {},
 }
 
 data.buffer_register_funcs = {
@@ -212,6 +213,31 @@ data.buffer_register_funcs = {
 				}
 			end
 			SMODS.Tag(v)
+		end
+	end,
+	Aspects = function(v)
+		if not (TheAutumnCircus.config.enabled_aspects[v.key] == false) and ((not v.load_check) or v.load_check()) then
+			local a = string.lower(v.name)..'_aspect'
+			
+			if not v.loc_txt then
+				v.loc_txt = {
+					label = v.display_name or v.name,
+					description = {
+						name = v.display_name or v.name,
+						text = v.text
+					}
+				}
+			end
+			
+			v.full_name = v.full_name or v.display_name or v.name
+			v.colour = v.colour or v.color
+			if type(v.colour) == "string" then v.colour = HEX(v.colour) end
+			v.badge_colour = v.badge_colour or v.badge_color
+			if type(v.badge_colour) == "string" then v.badge_colour = HEX(v.badge_colour) end
+			v.badge_text_colour = v.badge_text_colour or v.badge_text_color
+			if type(v.badge_text_colour) == "string" then v.badge_text_colour = HEX(v.badge_text_colour) end
+			
+			AMM.Aspect(v)
 		end
 	end,
 }

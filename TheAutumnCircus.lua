@@ -189,6 +189,9 @@ end
 if TheAutumnCircus.config.enabled_modules.editiontomeetya then
 	TheAutumnCircus.ETMY = NFS.load(TheAutumnCircus.mod.path.."modules/EditionToMeetYa.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.hamspect then
+	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
+end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
 

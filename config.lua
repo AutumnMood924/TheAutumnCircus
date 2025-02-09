@@ -14,6 +14,7 @@ local config = {
 		jokerstamps = true,
 		lookslikethejokers = true,
 		editiontomeetya = true,
+		hamspect = true,
 	},
 	enabled_jokers = {
 		wacky_joker = true,
@@ -245,6 +246,9 @@ local config = {
 	},
 	enabled_tags = {
 		gilded = true,
+	},
+	enabled_aspects = {
+		heart = true,
 	},
 	mechanics = {
 		minor_arcana_flush_effects = true,

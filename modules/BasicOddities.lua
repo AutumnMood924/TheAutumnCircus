@@ -250,6 +250,7 @@ local oddities = {
 	},
 	'silica_packet', silica_packet = {
 		name = "Silica Packet",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -330,6 +331,7 @@ local oddities = {
 	},
 	'narwhal_horn', narwhal_horn = {
 		name = "Narwhal Horn",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -342,6 +344,7 @@ local oddities = {
 	},
 	'cultist_potion', cultist_potion = {
 		name = "Cultist Potion",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -354,6 +357,7 @@ local oddities = {
 	},
 	'fire_potion', fire_potion = {
 		name = "Fire Potion",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -366,6 +370,7 @@ local oddities = {
 	},
 	'snecko_potion', snecko_potion = {
 		name = "Snecko Oil",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -378,6 +383,7 @@ local oddities = {
 	},
 	'energy_potion', energy_potion = {
 		name = "Energy Potion",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -390,6 +396,7 @@ local oddities = {
 	},
 	'vote_sticker', vote_sticker = {
 		name = "Vote For Jimbo!",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -402,6 +409,7 @@ local oddities = {
 	},
 	'cpu_memory', cpu_memory = {
 		name = "CPU Memory",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},
@@ -474,6 +482,7 @@ local oddities = {
 	},
 	'faded_voucher', faded_voucher = {
 		name = "Faded Voucher",
+		subtitle = "Work In Progress!",
 		text = {
 			'{C:inactive}Not Yet Implemented',
 		},

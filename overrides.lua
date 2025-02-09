@@ -45,7 +45,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 	
 	local card = alias__create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 	
-	if _type == 'Tarot' and card.config.center.key == 'c_Thac_joker_tarot' then
+	if _type == 'Tarot' and card.config.center.key == 'c_thac_joker' then
         local edition = poll_edition('edi'..(key_append or '')..G.GAME.round_resets.ante)
         card:set_edition(edition)
         check_for_unlock({type = 'have_edition'})
@@ -69,31 +69,6 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 	return card
 end
 
---[[
-local alias__Card_generate_UIBox_ability_table = Card.generate_UIBox_ability_table;
-function Card:generate_UIBox_ability_table()
-	local ret = alias__Card_generate_UIBox_ability_table(self)
-	
-	local center_obj = self.config.center
-	
-	if center_obj and center_obj.discovered and center_obj.subtitle then
-	
-		if ret.name and ret.name ~= true then
-			local text = ret.name
-			
-			text[1].config.object.text_offset.y = text[1].config.object.text_offset.y - 14
-			ret.name = {{n=G.UIT.R, config={align = "cm"},nodes={
-				{n=G.UIT.R, config={align = "cm"}, nodes=text},
-				{n=G.UIT.R, config={align = "cm"}, nodes={
-					{n=G.UIT.O, config={object = DynaText({string = center_obj.subtitle, colours = {G.C.WHITE},float = true, shadow = true, offset_y = 0.1, silent = true, spacing = 1, scale = 0.33*0.7})}}
-				}}
-			}}}
-		end
-	
-	end
-	
-	return ret
-end]]
 
 -- Chaos' Stamp's effect
 local alias__check_for_unlock = check_for_unlock;
