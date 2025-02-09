@@ -11,7 +11,7 @@
 	"display_name": "The Autumn Circus",
 	"version": "0.0.0a",
 	"dependencies": [
-		"Steamodded (>=1.0.0~ALPHA-1321d)",
+		"Steamodded (>=1.0.0~ALPHA-1409a)",
 		"Lovely (>=0.7.1)",
 		"amm (>=0.0.0)"
 	],
