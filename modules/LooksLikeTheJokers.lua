@@ -1089,6 +1089,44 @@ local jokers = {
             end
         end,
     },
+    'torrential', torrential = {
+        name = "Torrential Joker",
+		subtitle = "Work In Progress!",
+        text = {
+            "If discarded hand",
+            "contains a {C:attention}Flush{},",
+            "upgrade level of {C:attention}suit{}",
+            "of {C:attention}leftmost{} discarded card"
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.pre_discard then
+                local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+                if next(poker_hands['Flush']) then
+                    return {
+                        func = function()
+                            AMM.level_up_suit(context.blueprint_card or card, G.hand.highlighted[1].base.suit)
+                            update_hand_text({delay = 0}, {handname = nil, chips =  nil, mult = nil, level = nil })
+                        end,
+                        card = card,
+                        message = localize('k_level_up_ex')
+                    }
+                end
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

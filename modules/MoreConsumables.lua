@@ -1946,6 +1946,7 @@ local spectrals = {
 	},
 	'quest_bed', quest_bed = {
 		name = "Quest Bed",
+		subtitle = "Work In Progress!",
 		text = {
 			"{C:attention}Destroys{} 2 random {C:attention}Jokers{},",
 			"then add a {C:green}random{} {C:red}Aspect{}",
