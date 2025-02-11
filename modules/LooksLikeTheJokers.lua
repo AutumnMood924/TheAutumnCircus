@@ -312,6 +312,82 @@ local jokers = {
             end
         end,
     },
+    'filler_card', filler_card = {
+        name = "Filler Card",
+        text = {
+            "This Joker gains {X:chips,C:white} X#1# {} chips",
+            "for each scored card {C:attention}without any{}",
+            "Enhancement, Seal, Edition, or Aspect",
+            "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} chips)"
+        },
+        config = {extra = { Xchips_curr = 1, Xchips = 0.05 }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = { card.ability.extra.Xchips, card.ability.extra.Xchips_curr }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.repetition and not context.end_of_round and not context.blueprint and (
+                context.cardarea == G.play and
+                context.other_card.config.center.set == "Default" and
+                (not context.other_card.seal) and
+                (not context.other_card.edition) and
+                (not context.other_card.aspect)
+            ) then
+                card.ability.extra.Xchips_curr = card.ability.extra.Xchips_curr + card.ability.extra.Xchips
+                return {
+                    card = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.CHIPS,
+                }
+            end
+            if context.joker_main and card.ability.extra.Xchips_curr > 1 then
+                return {
+                    colour = G.C.CHIPS,
+                    xchips = card.ability.extra.Xchips_curr
+                }
+            end
+        end,
+    },
+    'test_print', test_print = {
+        name = "Test Print",
+        text = {
+            "Jokers with the {C:attention}same",
+            "{C:attention}art{} as this Joker",
+            "give {X:chips,C:white} X#1# {} chips"
+        },
+        config = {extra = { Xchips = 1.8 }},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = { card.ability.extra.Xchips }}
+        end,
+        calculate = function(self, card, context)
+            if context.other_joker and not context.end_of_round then
+                local do_it = false
+                for k,v in ipairs(placeholder_jokers) do
+                    if context.other_joker.config.center.key == v then do_it = true; break end
+                end
+                if do_it then
+                    return {
+                        card = context.blueprint_card or card,
+                        colour = G.C.CHIPS,
+                        xchips = card.ability.extra.Xchips
+                    }
+                end
+            end
+        end,
+    },
     'garden', garden = {
         name = "Garden",
 		subtitle = "Work In Progress!",
@@ -1122,6 +1198,83 @@ local jokers = {
                         end,
                         card = card,
                         message = localize('k_level_up_ex')
+                    }
+                end
+            end
+        end,
+    },
+    'landlord', landlord = {
+        name = "Landlord",
+		subtitle = "Work In Progress!",
+        text = {
+            "Earn {C:money}$#1#{} if discarded hand",
+            "contains a {C:attention}Full House{}",
+        },
+        config = { extra = {
+            money = 8,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 7,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.money
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.pre_discard then
+                local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+                if next(poker_hands['Full House']) then
+                    ease_dollars(card.ability.extra.money)
+                    return {
+                        message = localize('$')..card.ability.extra.money,
+                        colour = G.C.MONEY,
+                        card = card
+                    }
+                end
+            end
+        end,
+    },
+    'court_of_jokers', court_of_jokers = {
+        name = "Court of Jokers",
+		subtitle = "Work In Progress!",
+        text = {
+            "If discarded hand contains",
+            "a {C:attention}Blaze{}, each discarded",
+            "card permanently gains {C:chips}+#1#{}",
+            "chips when scored"
+        },
+        config = { extra = {
+            chips = 10,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.chips
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.pre_discard then
+                local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+                if next(poker_hands['thac_blaze']) then
+                    for k,v in ipairs(G.hand.highlighted) do
+                        v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.chips
+                        v:juice_up(0.3, 0.3)
+                    end
+                    return {
+                        message = localize('k_upgrade_ex'),
+                        colour = G.C.CHIPS,
+                        card = card
                     }
                 end
             end

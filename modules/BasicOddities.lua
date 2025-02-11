@@ -18,10 +18,16 @@ local chip_function = function(_, self, area, copier)
 		if G.hand.cards[i].highlighted == true then
 			G.hand.cards[i].ability.perma_bonus = G.hand.cards[i].ability.perma_bonus or 0
 			G.hand.cards[i].ability.perma_bonus = G.hand.cards[i].ability.perma_bonus + self.ability.extra.chips
-			--[[G.hand.cards[i].ability.perma_mult = G.hand.cards[i].ability.perma_mult or 0
+			--[[G.hand.cards[i].ability.perma_xbonus = G.hand.cards[i].ability.perma_xbonus or 1
+			G.hand.cards[i].ability.perma_xbonus = G.hand.cards[i].ability.perma_xbonus * self.ability.extra.chips
+			G.hand.cards[i].ability.perma_mult = G.hand.cards[i].ability.perma_mult or 0
 			G.hand.cards[i].ability.perma_mult = G.hand.cards[i].ability.perma_mult + self.ability.extra.chips
 			G.hand.cards[i].ability.perma_xmult = G.hand.cards[i].ability.perma_xmult or 1
 			G.hand.cards[i].ability.perma_xmult = G.hand.cards[i].ability.perma_xmult * self.ability.extra.chips
+			G.hand.cards[i].ability.perma_hbonus = G.hand.cards[i].ability.perma_hbonus or 0
+			G.hand.cards[i].ability.perma_hbonus = G.hand.cards[i].ability.perma_hbonus + self.ability.extra.chips
+			G.hand.cards[i].ability.perma_hxbonus = G.hand.cards[i].ability.perma_hxbonus or 1
+			G.hand.cards[i].ability.perma_hxbonus = G.hand.cards[i].ability.perma_hxbonus * self.ability.extra.chips
 			G.hand.cards[i].ability.perma_hmult = G.hand.cards[i].ability.perma_hmult or 0
 			G.hand.cards[i].ability.perma_hmult = G.hand.cards[i].ability.perma_hmult + self.ability.extra.chips
 			G.hand.cards[i].ability.perma_hxmult = G.hand.cards[i].ability.perma_hxmult or 1

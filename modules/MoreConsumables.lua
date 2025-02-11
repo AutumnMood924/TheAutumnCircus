@@ -551,16 +551,18 @@ local planets = {
 			end
 		end,
 		calculate = function(_, self, context)
-			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'comet_observatory') then
-				local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
-                return {
-                    message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
-                    Xmult_mod = value
-                }
+			if context.joker_main then
+				if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'comet_observatory') then
+					local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
+					return {
+						message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
+						Xmult_mod = value
+					}
+				end
+				if G.GAME.used_vouchers.v_observatory then return {
+					message = localize('k_nope_ex'),
+				} end
 			end
-			if G.GAME.used_vouchers.v_observatory then return {
-				message = localize('k_nope_ex'),
-			} end
 		end,
 	},
 	'meteor', meteor = {
@@ -606,25 +608,27 @@ local planets = {
 			end
 		end,
 		calculate = function(_, self, context)
-			local hand_1 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
-			local hand_2 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
-			if G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_1 then
-				local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
-                return {
-                    message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
-                    Xmult_mod = value
-                }
-			elseif G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_2 then
-				local value = 1 / G.P_CENTERS.v_observatory.config.extra
-				value = math.floor(value * 100) / 100 -- should round to 2 digits???
-                return {
-                    message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
-                    Xmult_mod = value
-                }
+			if context.joker_main then
+				local hand_1 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
+				local hand_2 = TheAutumnCircus.func.pseudorandom_unlocked_hand(nil, 'meteor_observatory')
+				if G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_1 then
+					local value = G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra * G.P_CENTERS.v_observatory.config.extra
+					return {
+						message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
+						Xmult_mod = value
+					}
+				elseif G.GAME.used_vouchers.v_observatory and context.scoring_name == hand_2 then
+					local value = 1 / G.P_CENTERS.v_observatory.config.extra
+					value = math.floor(value * 100) / 100 -- should round to 2 digits???
+					return {
+						message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
+						Xmult_mod = value
+					}
+				end
+				if G.GAME.used_vouchers.v_observatory then return {
+					message = localize('k_nope_ex'),
+				} end
 			end
-			if G.GAME.used_vouchers.v_observatory then return {
-				message = localize('k_nope_ex'),
-			} end
 		end,
 	},
 	'satellite', satellite = {
@@ -739,12 +743,14 @@ local planets = {
 			end
 		end,
 		calculate = function(_, self, context)
-			if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.favorite_hand() then
-				local value = G.P_CENTERS.v_observatory.config.extra
-                return {
-                    message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
-                    Xmult_mod = value
-                }
+			if context.joker_main then
+				if G.GAME.used_vouchers.v_observatory and context.scoring_name == TheAutumnCircus.func.favorite_hand() then
+					local value = G.P_CENTERS.v_observatory.config.extra
+					return {
+						message = localize{type = 'variable', key = 'a_xmult', vars = {value}},
+						Xmult_mod = value
+					}
+				end
 			end
 		end,
 	},
