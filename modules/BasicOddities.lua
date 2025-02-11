@@ -501,6 +501,29 @@ local oddities = {
 		rarity = 4,
 		yes_pool_flag = "neversetthis",
 	},
+	'empty_bottle', empty_bottle = {
+		name = "Empty Bottle",
+		text = {
+			"{C:attention}Bottles #1#{}","selected card"
+		},
+		effect = 'bottl',
+		config = {
+			max_highlighted = 1
+		},
+		pos = { x = 3, y = 2, scale_w = 49/71, scale_h = 62/95 },
+		rarity = 3,
+		cost = 7,
+		loc_vars = function(_c, iq, c) iq[#iq+1] = {key = 'bottle', set = 'Other'} return {vars = { _c.config.max_highlighted }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or self
+			local selected_card = G.hand.highlighted[1]
+			selected_card.bottle = true
+			selected_card:juice_up(0.3, 2.0)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.highlighted == 1 and not G.hand.highlighted[1].bottle
+		end
+	},
 }
 
 SMODS.Atlas{
