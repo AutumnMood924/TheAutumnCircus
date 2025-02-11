@@ -320,6 +320,7 @@ local aspects = {
 				return {
 					chips = card:get_chip_bonus(),
                     mult = card:get_chip_mult(),
+                    xchips = math.max(1, card:amm_get_chip_x_bonus()),
                     Xmult = math.max(1, card:get_chip_x_mult()),
 				}
 			end
@@ -395,8 +396,8 @@ local aspects = {
 		display_name = "Hope",
 		text = {
 			'Retrigger this card',
-            '{C:attention}1{} time for each {C:blue}Hand{}',
-            'played this round'
+            'Retriggers {C:attention}3 times instead{}',
+            'on the {C:attention}final hand{}'
 		},
 		effect = 'hope',
 		config = {
@@ -409,10 +410,11 @@ local aspects = {
 			return {vars = { }}
 		end,
 		calculate = function(self, card, context)
-			if context.cardarea == G.play and context.repetition_only then
+			if (context.repetition_only) then
 				return {
-					repetitions = G.GAME.round_resets.hands_played,
-                    message = localize('k_again_ex')
+					repetitions = (G.GAME.current_round.hands_left == 0) and 3 or 1,
+                    message = localize('k_again_ex'),
+					card = card
 				}
 			end
 		end,

@@ -609,7 +609,6 @@ local jokers = {
     },
     'knight_of_heart', knight_of_heart = {
         name = "Knight of Heart",
-		subtitle = "Work In Progress!",
         text = {
             "Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
             "and this Joker gains the following",
@@ -709,11 +708,10 @@ local jokers = {
             if card.ability.extra.curr_money >= 1 then return math.floor(card.ability.extra.curr_money) end
         end,
     },
-    'muse_of_mind', muse_of_mind = {
-        name = "Maid of Mind",
-		subtitle = "Work In Progress!",
+    'witch_of_mind', witch_of_mind = {
+        name = "Witch of Mind",
         text = {
-            "Rescore each scoring Joker",
+            "Rescore each","{C:attention}scoring Joker{}",
         },
         config = {extra = {
         }},
@@ -725,12 +723,37 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['what_are_you_wearing'] = {
+                name = "what are you wearing",
+                text = {
+                    "{C:hearts}what the hell are you wearing???",
+                    "{C:clubs}uhhhh witch of mind outfit duh",
+                    "{C:hearts}no what the hell's with the face paint",
+                    "{C:hearts}also have you finally figured your classpect out",
+                    "{C:clubs}i thought it was fun",
+                    "{C:clubs}and yea :3",
+                    "{C:clubs}i think",
+                    "{C:hearts}good grief you are insufferable",
+                    "{C:clubs}thanks you too",
+                    "{C:money}Do you two ever have conversations about",
+                    "{C:money}anything relevant without my guidance?",
+                    "{C:clubs}do we with it?",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 'what_are_you_wearing', set = 'Other'}
+            end
+        end,
         calculate = function(self, card, context)
-            if context.joker_main and not context.muse_of_mind_repeat then
+            if context.joker_main and not context.retrigger_joker_check and not context.retrigger_joker and not context.witch_of_mind_repeat then
                 local ret = {}
-                context.muse_of_mind_repeat = true
+                context.witch_of_mind_repeat = true
                 ret = SMODS.calculate_context(context)
-                context.muse_of_mind_repeat = false
+                context.witch_of_mind_repeat = false
                 return ret
             end
         end,
@@ -1006,8 +1029,8 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
         process_loc_text = function(self)
-            G.localization.descriptions.Other['maid_examine_pokerkind'] = {
-                name = "Maid: Examine POKERKIND specibus",
+            G.localization.descriptions.Other['witch_examine_pokerkind'] = {
+                name = "Witch: Examine POKERKIND specibus",
                 text = {
                     "{C:clubs}i guess you can just put any cards in this thing",
                     "{C:clubs}maybe someone out there plays poker with credit cards",
@@ -1019,7 +1042,7 @@ local jokers = {
         end,
 		loc_vars = function(self, info_queue, card)
             if math.random() < 0.01 then
-                info_queue[#info_queue+1] = {key = 'maid_examine_pokerkind', set = 'Other'}
+                info_queue[#info_queue+1] = {key = 'witch_examine_pokerkind', set = 'Other'}
             end
             return {vars = { }}
         end,
@@ -1077,7 +1100,7 @@ local jokers = {
             "Prevent death, then this Joker",
             "becomes a random Joker from among:",
             "Knight of Heart",
-            "Maid of Mind",
+            "Witch of Mind",
             "Lord of Void",
         },
 		boxes = { 2, 3, },
@@ -1117,7 +1140,7 @@ local jokers = {
                 info_queue[#info_queue+1] = {key = 's_ascend', set = 'Other'}
             end
             info_queue[#info_queue+1] = G.P_CENTERS['j_thac_knight_of_heart']
-            info_queue[#info_queue+1] = G.P_CENTERS['j_thac_muse_of_mind']
+            info_queue[#info_queue+1] = G.P_CENTERS['j_thac_witch_of_mind']
             info_queue[#info_queue+1] = G.P_CENTERS['j_thac_lord_of_void']
             return {vars = { }}
         end,
