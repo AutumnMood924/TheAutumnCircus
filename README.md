@@ -16,6 +16,7 @@ Lyman - Art and good taste
 itayfeder - Mr. Bones stamp and Vampire stamp, porting stamp code  
 akai - Estradiol oddity art  
 Jevonn - Planet S, H, C, D art
+Fritz Lancastor - Some hand planet art
 
 LocalThunk - Balatro and its assets
 Homestuck - Homestuck (as far as I know all referenced material here was made by Andrew Hussie)

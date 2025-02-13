@@ -929,11 +929,11 @@ local planets = {
 		end,
 	},
 	'nice_planet', nice_planet = {
-		name = "Nice Planet",
-		subtitle = "Work In Progress!",
+		name = "Cancer",
+		subtitle = "The Tumor",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
+		pos = { x = 0, y = 3 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -942,7 +942,7 @@ local planets = {
 		set_badges = function(self, card, badges)
 			if self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				badges[1] = create_badge("Constellation...?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
 			end
 		end,
@@ -989,11 +989,11 @@ local planets = {
 		generate_ui = 0,
 	},
 	'skeet_planet', skeet_planet = {
-		name = "Skeet Planet",
-		subtitle = "Work In Progress!",
+		name = "The Veil",
+		subtitle = "Edge of the Incipisphere",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_skeet', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
+		pos = { x = 3, y = 3 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1002,18 +1002,18 @@ local planets = {
 		set_badges = function(self, card, badges)
 			if self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				badges[1] = create_badge("Asteroid Belt", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
 			end
 		end,
 		generate_ui = 0,
 	},
 	'little_dog_planet', little_dog_planet = {
-		name = "Little Dog Planet",
-		subtitle = "Work In Progress!",
+		name = "Canis Minor",
+		subtitle = "* The dog blocks the constellation.",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_little_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
+		pos = { x = 1, y = 3 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1022,7 +1022,7 @@ local planets = {
 		set_badges = function(self, card, badges)
 			if self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				badges[1] = create_badge("Constellation...?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
 			end
 		end,
@@ -1089,11 +1089,11 @@ local planets = {
 		generate_ui = 0,
 	},
 	'castle_planet', castle_planet = {
-		name = "Castle Planet",
-		subtitle = "Work In Progress!",
+		name = "Battlefield",
+		subtitle = "Where Skaia's fate is decided",
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
+		pos = { x = 2, y = 3 },
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1102,7 +1102,7 @@ local planets = {
 		set_badges = function(self, card, badges)
 			if self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				badges[1] = create_badge("Battlefield", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
 			end
 		end,

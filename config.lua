@@ -229,16 +229,16 @@ local config = {
 		castle = true,
 		blaze_house = true,
 		flushblaze = true,
-		spectrumblaze = false,
+		spectrumblaze = true,
 		castle_flush = true,
-		castle_spectrum = false,
+		castle_spectrum = true,
 		skeet_flush = true,
-		skeet_spectrum = false,
+		skeet_spectrum = true,
 		blaze_five = true,
 		flushblaze_house = true,
-		spectrumblaze_house = false,
+		spectrumblaze_house = true,
 		flushblaze_five = true,
-		spectrumblaze_five = false,
+		spectrumblaze_five = true,
 		castle_stone = true,
 		castle_gold = true,
 		castle_steel = true,
@@ -327,7 +327,7 @@ local config = {
 	
 	
 	testing_kit = false,
-	test_hands = false,
+	test_hands = true,
 }
 
 return config
