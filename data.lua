@@ -36,9 +36,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			
 			SMODS.Joker(v)
@@ -52,9 +54,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			
 			SMODS.Consumable(v)
@@ -67,9 +71,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			
 			SMODS.Seal(v)
@@ -104,9 +110,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			
 			SMODS.Voucher(v)
@@ -119,9 +127,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			
 			SMODS.Enhancement(v)
@@ -206,9 +216,11 @@ data.buffer_register_funcs = {
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
+					subtitle = v.subtitle,
 					text = v.text,
 					boxes = v.boxes
 				}
+				v.subtitle = nil
 			end
 			SMODS.Edition(v)
 		end
