@@ -2000,7 +2000,7 @@ local spectrals = {
 			"{C:inactive}(Each card will receive the same {C:red}Aspect{C:inactive})"
 		},
 		config = { },
-		pos = {x = 9, y = 6},
+		pos = {x = 0, y = 5},
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker
