@@ -1303,6 +1303,52 @@ local jokers = {
             end
         end,
     },
+    'lost_sock', lost_sock = {
+        name = "Lost Sock",
+		subtitle = "Work In Progress!",
+        text = {
+            "This Joker gains {C:chips}+#1#{}",
+            "Chips when {C:attention}played hand{}",
+            "contains {C:attention}exactly one{}",
+            "{C:attention}unscored{} card",
+            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
+        },
+        config = { extra = {
+            chips_curr = 0,
+            chips = 13
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 3,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.chips,
+                card.ability.extra.chips_curr
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.before then
+                if #G.play.cards == #context.scoring_hand + 1 then
+                    card.ability.extra.chips_curr = card.ability.extra.chips_curr + card.ability.extra.chips
+                    return {
+                        card = card,
+                        message = localize('k_upgrade_ex'),
+                        colour = G.C.CHIPS,
+                    }
+                end
+            end
+            if context.joker_main and card.ability.extra.chips_curr > 1 then
+                return {
+                    colour = G.C.CHIPS,
+                    chips = card.ability.extra.chips_curr
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
