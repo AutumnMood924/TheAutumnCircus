@@ -1995,7 +1995,7 @@ local spectrals = {
 		subtitle = "Work In Progress!",
 		text = {
 			"{C:attention}Destroys{} 2 random {C:attention}Jokers{},",
-			"then add a {C:green}random{} {C:red}Aspect{}",
+			"then adds a random {C:red}Aspect{}",
 			"to each card held in hand",
 			"{C:inactive}(Each card will receive the same {C:red}Aspect{C:inactive})"
 		},
