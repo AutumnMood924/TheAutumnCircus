@@ -928,6 +928,54 @@ local planets = {
 			end
 		end,
 	},
+	'shooting_star', shooting_star = {
+		name = "Shooting Star",
+		subtitle = "Look out it's got a gun!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "six_Stars"},
+		pos = { x = 4, y = 3 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Star?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return next(SMODS.find_mod('SixSuits'))
+		end,
+	},
+	'chill_moon', chill_moon = {
+		name = "Chill Moon",
+		subtitle = "That moon has sunglasses on?",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "six_Moons"},
+		pos = { x = 5, y = 3 },
+		loc_vars = suitplanetloc_vars,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Moon?", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return next(SMODS.find_mod('SixSuits'))
+		end,
+	},
 	'nice_planet', nice_planet = {
 		name = "Cancer",
 		subtitle = "The Tumor",
