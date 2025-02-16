@@ -327,7 +327,7 @@ local config = {
 	
 	
 	testing_kit = false,
-	test_hands = true,
+	test_hands = false,
 }
 
 return config

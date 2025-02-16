@@ -1743,15 +1743,7 @@ local spectrals = {
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker
-			local deletable_jokers = {}
-			for k, v in pairs(G.jokers.cards) do
-				if not v.ability.eternal then deletable_jokers[#deletable_jokers + 1] = v end
-			end
-			local chosen_joker = nil
-			if #deletable_jokers > 0 then
-				chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('mischief_and_mayhem'))
-				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.75, func = function() chosen_joker:start_dissolve(nil); return true end }))
-			end
+			AMM.destroy_random_jokers(G.jokers.cards, 1)
 			delay(0.6)
 			-- add stamps to the rest
 			for k, v in ipairs(G.jokers.cards) do
@@ -1964,26 +1956,7 @@ local spectrals = {
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker
-			local deletable_jokers = {}
-			for k, v in pairs(G.jokers.cards) do
-				if not v.ability.eternal then deletable_jokers[#deletable_jokers + 1] = v end
-			end
-			local chosen_joker = nil
-			local chosen_joker_2 = nil
-			if #deletable_jokers > 1 then
-				chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
-				chosen_joker_2 = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
-
-				while chosen_joker == chosen_joker_2 do
-					chosen_joker_2 = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
-				end
-
-				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.15, func = function() chosen_joker:start_dissolve(nil); return true end }))
-				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.60, func = function() chosen_joker_2:start_dissolve(nil); return true end }))
-			else
-				chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('ascend'))
-				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.75, func = function() chosen_joker:start_dissolve(nil); return true end }))
-			end
+			AMM.destroy_random_jokers(G.jokers.cards, 2)
 			delay(0.6)
 			local keyset={}
 			local n=0
