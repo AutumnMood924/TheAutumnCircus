@@ -1429,8 +1429,8 @@ local jokers = {
             end
         end,
     },
-    'exorcism', exorcism = {
-        name = "Exorcism",
+    'exorcist', exorcist = {
+        name = "Exorcist",
 		subtitle = "Work In Progress!",
         text = {
             "When {C:attention}Blind{} is selected, remove",
@@ -1487,6 +1487,47 @@ local jokers = {
                     xmult = card.ability.extra.Xmult_curr
                 }
             end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'gallows_humor', gallows_humor = {
+        name = "Gallows Humor",
+		subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult if your",
+            "{C:attention}graveyard{} has {C:attention}#2#{} or",
+            "more cards in it",
+        },
+        config = { extra = {
+            targets = 20,
+            Xmult = 3,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            return {vars = {
+                card.ability.extra.Xmult,
+                card.ability.extra.targets,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and AMM.api.graveyard.count_cards() > card.ability.extra.targets then
+                return {
+                    colour = G.C.MULT,
+                    xmult = card.ability.extra.Xmult
+                }
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
         end,
     },
 }
