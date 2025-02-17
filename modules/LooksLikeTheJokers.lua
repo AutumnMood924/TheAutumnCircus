@@ -1496,12 +1496,13 @@ local jokers = {
         name = "Gallows Humor",
 		subtitle = "Work In Progress!",
         text = {
-            "{X:mult,C:white}X#1#{} Mult if your",
-            "{C:attention}graveyard{} has {C:attention}#2#{} or",
-            "more cards in it",
+            "{X:mult,C:white}X#1#{} Mult if there",
+            "are {C:attention}#2#{} or more cards",
+            "in your {C:attention}graveyard{}",
+            "{C:inactive}(Currently: {C:attention}#3#{C:inactive} cards)",
         },
         config = { extra = {
-            targets = 20,
+            targets = 15,
             Xmult = 3,
         }},
         pos = { x = 0, y = 0 },
@@ -1516,6 +1517,7 @@ local jokers = {
             return {vars = {
                 card.ability.extra.Xmult,
                 card.ability.extra.targets,
+                AMM.api.graveyard.count_cards()
             }}
         end,
         calculate = function(self, card, context)
