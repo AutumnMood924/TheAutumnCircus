@@ -431,7 +431,7 @@ local jokers = {
             "an {C:attention}Animal hand{}",
             "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
         },
-        config = {extra = {Xmult_mod = 0.25, xmult = 1.0}},
+        config = {extra = {Xmult_mod = 0.25, Xmult_curr = 1.0}},
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
@@ -441,7 +441,7 @@ local jokers = {
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
-            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
+            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
         end,
         calculate = function(self, card, context)
             if context.before and not context.blueprint and (
@@ -450,17 +450,17 @@ local jokers = {
                 next(context.poker_hands['thac_little_cat']) or
                 next(context.poker_hands['thac_big_cat'])
             ) then
-                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.Xmult_mod
+                card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult_mod
                 return {
                     card = card,
                     message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                 }
             end
-            if context.joker_main and card.ability.extra.xmult > 1 then
+            if context.joker_main and card.ability.extra.Xmult_curr > 1 then
                 return {
                     colour = G.C.MULT,
-                    xmult = card.ability.extra.xmult
+                    xmult = card.ability.extra.Xmult_curr
                 }
             end
         end,
@@ -473,7 +473,7 @@ local jokers = {
             "{C:attention}Joker{} is gained",
             "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
         },
-        config = {extra = {Xmult_mod = 0.10, xmult = 1.0}},
+        config = {extra = {Xmult_mod = 0.10, Xmult_curr = 1.0}},
         pos = { x = 4, y = 3 },
         cost = 6,
         rarity = 2,
@@ -482,21 +482,21 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.xmult}}
+            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
         end,
         calculate = function(self, card, context)
             if context.amm_added_card and context.other_card.ability.set == "Joker" and not context.from_debuff and not context.blueprint then
-                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.Xmult_mod
+                card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult_mod
                 return {
                     card = card,
                     message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                 }
             end
-            if context.joker_main and card.ability.extra.xmult > 1 then
+            if context.joker_main and card.ability.extra.Xmult_curr > 1 then
                 return {
                     colour = G.C.MULT,
-                    xmult = card.ability.extra.xmult
+                    xmult = card.ability.extra.Xmult_curr
                 }
             end
         end,
@@ -1345,6 +1345,146 @@ local jokers = {
                 return {
                     colour = G.C.CHIPS,
                     chips = card.ability.extra.chips_curr
+                }
+            end
+        end,
+    },
+    'the_csi', the_csi = {
+        name = "The C.S.I.",
+		subtitle = "Comedy Scene Investigators",
+        text = {
+            "{C:chips}+#1#{} Chips for",
+            "each {C:attention}face card{} in",
+            "your {C:attention}graveyard{}",
+            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
+        },
+        config = { extra = {
+            chips = 10
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            return {vars = {
+                card.ability.extra.chips,
+                card.ability.extra.chips * AMM.api.graveyard.count_faces()
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and #G.graveyard > 1 then
+                local faces = AMM.api.graveyard.count_faces()
+                if faces == 0 then return end
+                return {
+                    colour = G.C.CHIPS,
+                    chips = card.ability.extra.chips * faces
+                }
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_faces() > 0
+        end,
+    },
+    'junk_collector', junk_collector = {
+        name = "Junk Collector",
+		subtitle = "Work In Progress!",
+        text = {
+            "Create an {C:oddity}Oddity{} when","{C:attention}Blind{} is selected",
+            "{C:inactive}(Must have room)"
+        },
+        config = { extra = {
+            
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.setting_blind and not (context.blueprint_card or card).getting_sliced and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function() 
+                                local card = create_card('Oddity',G.consumeables, nil, nil, nil, nil, nil, 'junk_collector')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end}))   
+                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_oddity'), colour = G.C.PURPLE})                       
+                        return true
+                    end)}))
+            end
+        end,
+    },
+    'exorcism', exorcism = {
+        name = "Exorcism",
+		subtitle = "Work In Progress!",
+        text = {
+            "When {C:attention}Blind{} is selected, remove",
+            "{C:attention}#1#{} random playing card#2# in your",
+            "{C:attention}graveyard{} from the game and",
+            "this Joker gains {X:mult,C:white}X#3#{} Mult",
+            "for each card removed",
+            "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
+        },
+        config = { extra = {
+            targets = 2,
+            Xmult_mod = 0.25,
+            Xmult_curr = 1.0,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            return {vars = {
+                card.ability.extra.targets == 1 and "a" or card.ability.extra.targets,
+                card.ability.extra.targets == 1 and "" or "s",
+                card.ability.extra.Xmult_mod,
+                card.ability.extra.Xmult_curr,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.setting_blind and not (context.blueprint_card or card).getting_sliced and #G.graveyard > 1 then
+                local temp_gy = AMM.api.graveyard.get_cards()
+                local success = 0
+                pseudoshuffle(temp_gy, pseudoseed("exorcism"))
+                if temp_gy[2] then
+                    temp_gy[2]:remove_from_game()
+                    success = success + 1
+                end
+                if temp_gy[1] then
+                    temp_gy[1]:remove_from_game()
+                    success = success + 1
+                end
+                card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + (card.ability.extra.Xmult_mod * success)
+                return {
+                    card = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.MULT,
+                }
+            end
+            if context.joker_main and card.ability.extra.Xmult_curr > 1 then
+                return {
+                    colour = G.C.MULT,
+                    xmult = card.ability.extra.Xmult_curr
                 }
             end
         end,
