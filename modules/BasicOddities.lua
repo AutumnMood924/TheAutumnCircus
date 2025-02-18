@@ -250,7 +250,7 @@ local oddities = {
 			G.hand.config.card_limit = #G.hand.cards + self.ability.extra.cards
 			G.FUNCS.draw_from_deck_to_hand(self.ability.extra.cards)
 			G.hand.config.card_limit = remember
-			delay(0.6)
+			delay(0.2)
 		end,
 		can_use = function(_, self) return #G.hand.cards > 1 and #G.deck.cards > 1 end,
 	},

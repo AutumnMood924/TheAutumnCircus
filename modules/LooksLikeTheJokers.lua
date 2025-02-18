@@ -1532,6 +1532,58 @@ local jokers = {
             return AMM.api.graveyard.count_cards() > 0
         end,
     },
+    'common_ground', common_ground = {
+        name = "Common Ground",
+		subtitle = "We all rot in the same soil",
+        text = {
+            "{C:attention}Draw{} #1# additional card#2#",
+            "after drawing the first hand",
+            "for each {C:attention}different rank{}",
+            "among cards in your {C:attention}graveyard{}",
+            "{C:inactive}(Currently: {C:attention}#3#{C:inactive} ranks)"
+        },
+        config = { extra = {
+            cards = 1,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            return {vars = {
+                math.floor(card.ability.extra.cards) == 1 and "an" or math.floor(card.ability.extra.cards),
+                math.floor(card.ability.extra.cards) ~= 1 and "s" or "",
+                AMM.api.graveyard.count_different_ranks()
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.first_hand_drawn then
+                local remember = G.hand.config.card_limit
+                local gy_ranks = AMM.api.graveyard.count_different_ranks()
+                if gy_ranks == 0 then return end
+                local cards = math.floor(card.ability.extra.cards) * gy_ranks
+                G.hand.config.card_limit = #G.hand.cards + cards
+                -- this avoids the first_hand_drawn context from recalculating
+                -- thus avoiding drawing the entire deck infinitely
+                G.GAME.current_round.discards_used = 666
+                G.FUNCS.draw_from_deck_to_hand(cards)
+                G.hand.config.card_limit = remember
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'before',
+                    delay = 0.4,
+                    func = function()
+                        G.GAME.current_round.discards_used = 0; save_run(); return true
+                    end}))
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
 }
 
 SMODS.Atlas{
