@@ -1538,8 +1538,8 @@ local jokers = {
         text = {
             "{C:attention}Draw{} #1# additional card#2#",
             "after drawing the first hand",
-            "for each {C:attention}different rank{}",
-            "among cards in your {C:attention}graveyard{}",
+            "for each {C:attention}different rank{} among",
+            "cards in your {C:attention}graveyard{}",
             "{C:inactive}(Currently: {C:attention}#3#{C:inactive} ranks)"
         },
         config = { extra = {
