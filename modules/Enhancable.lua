@@ -83,6 +83,7 @@ local enhancements = {
 		},
 		pos = { x = 3, y = 0 },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = {card.ability.extra.reduction*100}}
 		end,
 		calculate = function(self, card, context)
@@ -100,6 +101,36 @@ local enhancements = {
 								return true
 							end}))
 					end
+				}
+			end
+		end,
+	},
+	'bone', bone = {
+		name = "bone",
+		display_name = "Bone Card",
+		text = {
+			'{C:mult}+#1#{} Mult for each',
+			'card in your {C:attention}graveyard{}',
+			'{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)',
+		},
+		effect = 'bone',
+		config = {
+			extra = {
+				mult = 1,
+			}
+		},
+		pos = { x = 0, y = 1 },
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = {card.ability.extra.mult, card.ability.extra.mult * AMM.api.graveyard.count_cards()}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				local gy_cards = AMM.api.graveyard.count_cards()
+				if gy_cards == 0 then return end
+				return {
+					mult = card.ability.extra.mult * gy_cards
 				}
 			end
 		end,

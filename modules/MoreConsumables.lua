@@ -37,16 +37,25 @@ local suitplanettext = {
 	"{C:chips}+#4#{} chips"
 }
 
-local suitplanetloc_vars = function(_c, info_queue)
+local suitplanetloc_vars = function(_c, info_queue, card)
+	local cfg = (card and card.ability) or _c.config
 	return {vars = {
-		G.GAME.amm_data.suit_levels[_c.config.level_suit].level,
-		localize(_c.config.level_suit, 'suits_plural'),
+		G.GAME.amm_data.suit_levels[cfg.level_suit].level,
+		localize(cfg.level_suit, 'suits_plural'),
 		AMM.config.suit_levels.mult,
 		AMM.config.suit_levels.chips,
 		colours = {
-			(G.GAME.amm_data.suit_levels[_c.config.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.amm_data.suit_levels[_c.config.level_suit].level)]),
-			G.C.SUITS[_c.config.level_suit],
+			(G.GAME.amm_data.suit_levels[cfg.level_suit].level<=1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.amm_data.suit_levels[cfg.level_suit].level)]),
+			G.C.SUITS[cfg.level_suit],
 		}
+	}}
+end
+
+local handplanetloc_vars = function(_c, info_queue, card)
+	local cfg = (card and card.ability) or _c.config
+	return {vars = {
+		G.GAME.hands[cfg.hand_type].level,localize(cfg.hand_type, 'poker_hands'), G.GAME.hands[cfg.hand_type].l_mult, G.GAME.hands[cfg.hand_type].l_chips,
+		colours = {(G.GAME.hands[cfg.hand_type].level==1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, G.GAME.hands[cfg.hand_type].level)])}
 	}}
 end
 
@@ -65,7 +74,9 @@ local tarots = {
 			max_highlighted = 3,
 		},
 		pos = { x = 0, y = 0 },
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -106,7 +117,9 @@ local tarots = {
 			},
 		},
 		pos = { x = 1, y = 0 },
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.dollars }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local payout = 0
@@ -153,7 +166,9 @@ local tarots = {
 			}
 		},
 		pos = { x = 2, y = 0 },
-		loc_vars = function(_c) return {vars = { 1, _c.config.extra.copies }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { 1, _c.config.extra.copies }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -200,7 +215,9 @@ local tarots = {
 			},
 		},
 		pos = { x = 3, y = 0 },
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.targets }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.targets }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local selected_card = G.hand.highlighted[1]
@@ -259,6 +276,7 @@ local tarots = {
 		},
 		pos = { x = 4, y = 0 },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
 			return {
 				vars = {
@@ -286,6 +304,7 @@ local tarots = {
 		},
 		pos = { x = 5, y = 0 },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
 			return {
 				vars = {
@@ -310,6 +329,9 @@ local tarots = {
 		},
 		pos = { x = 6, y = 0 },
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'grass', grass = {
 		name = "The Grass",
@@ -323,6 +345,34 @@ local tarots = {
 		config = {
 			mod_conv = "m_thac_grass",
 			max_highlighted = 3,
+		},
+		pos = { x = 7, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'bone', bone = {
+		name = "The Bone",
+		subtitle = "Work In Progress!",
+		text = {
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		},
+		effect = 'bone',
+		config = {
+			mod_conv = "m_thac_bone",
+			max_highlighted = 2,
 		},
 		pos = { x = 7, y = 6 },
 		loc_vars = function(self, info_queue, card)
@@ -354,7 +404,9 @@ local tarots = {
 			mult = 4
 		},
 		pos = { x = 0, y = 1 },
-		loc_vars = function(_c) return {vars = { _c.config.mult }} end,
+		loc_vars = function(_c)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.mult }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, func = function()
@@ -528,6 +580,7 @@ local planets = {
 		config = {strength = 2},
 		pos = { x = 0, y = 2 },
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_comet', set = 'Other'}
 			else
@@ -577,6 +630,7 @@ local planets = {
 		config = {strength = 3, weakness = 1},
 		pos = { x = 1, y = 2 },
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_meteor', set = 'Other'}
 			else
@@ -642,14 +696,16 @@ local planets = {
 		effect = 'Round Bonus',
 		config = {planets = 2},
 		pos = { x = 2, y = 2 },
-		loc_vars = function(_c) return {vars = { _c.config.planets }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.planets }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.consumeable.planets, G.consumeables.config.card_limit - #G.consumeables.cards) do
 				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
 					if G.consumeables.config.card_limit > #G.consumeables.cards then
 						play_sound('timpani')
-						local card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil, 'pri')
+						local card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil, 'satellite_planet')
 						card:add_to_deck()
 						G.consumeables:emplace(card)
 						used_tarot:juice_up(0.3, 0.5)
@@ -679,7 +735,9 @@ local planets = {
 		effect = 'Random Round Bonus',
 		config = {cards = 1},
 		pos = { x = 3, y = 2 },
-		loc_vars = function(_c) return {vars = { _c.config.cards }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.cards }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.consumeable.cards, G.consumeables.config.card_limit - #G.consumeables.cards) do
@@ -720,6 +778,7 @@ local planets = {
 		config = {strength = 1},
 		pos = { x = 4, y = 2 },
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_station', set = 'Other'}
 			else
@@ -768,6 +827,7 @@ local planets = {
 		config = { extra = 2 },
 		pos = { x = 5, y = 2 },
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_dysnomia', set = 'Other'}
 			else
@@ -851,7 +911,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Spades"},
 		pos = { x = 6, y = 2 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'jevonn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -872,7 +935,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Hearts"},
 		pos = { x = 7, y = 2 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'jevonn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -893,7 +959,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Clubs"},
 		pos = { x = 8, y = 2 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'jevonn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -914,7 +983,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Diamonds"},
 		pos = { x = 9, y = 2 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'jevonn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -935,7 +1007,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "six_Stars"},
 		pos = { x = 4, y = 3 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -959,7 +1034,10 @@ local planets = {
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "six_Moons"},
 		pos = { x = 5, y = 3 },
-		loc_vars = suitplanetloc_vars,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			AMM.level_up_suit(used_tarot, self.config.level_suit)
@@ -982,6 +1060,12 @@ local planets = {
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 0, y = 3 },
+		loc_vars = function(_c,info_queue,card)
+			-- ?????????????????????????????
+			-- why the hell doesn't this work im sorry fritz ill figure this out
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
+			return handplanetloc_vars(_c,info_queue,card)
+		end,
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1042,6 +1126,10 @@ local planets = {
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_skeet', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 3, y = 3 },
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
+			return handplanetloc_vars(_c,info_queue,card)
+		end,
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1062,6 +1150,10 @@ local planets = {
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_little_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 1, y = 3 },
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
+			return handplanetloc_vars(_c,info_queue,card)
+		end,
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1142,6 +1234,10 @@ local planets = {
 		effect = 'Hand Upgrade',
 		config = {hand_type = 'thac_castle', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
 		pos = { x = 2, y = 3 },
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
+			return handplanetloc_vars(_c,info_queue,card)
+		end,
 		process_loc_text = function(self)
 			local target_text = G.localization.descriptions.Planet['c_earth'].text
 			SMODS.Consumable.process_loc_text(self)
@@ -1504,7 +1600,9 @@ local spectrals = {
 		config = {
 		},
 		pos = { x = 0, y = 4 },
-		loc_vars = function(_c) return {vars = {  }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {vars = {  }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -1574,7 +1672,9 @@ local spectrals = {
 		},
 		config = { remove_card = true, extra = {destroy = 2, slots = 1} },
 		pos = { x = 1, y = 4 },
-		loc_vars = function(_c) return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
+		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
 			local destroyed_cards = {}
 			local used_tarot = copier or self
@@ -1701,7 +1801,9 @@ local spectrals = {
 		},
 		config = { extra = {spectrals = 2} },
 		pos = { x = 2, y = 4 },
-		loc_vars = function(_c) return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
+		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, math.min(self.ability.extra.spectrals, G.consumeables.config.card_limit - #G.consumeables.cards) do
@@ -1756,7 +1858,9 @@ local spectrals = {
 		},
 		config = {extra = {jokers = 1}},
 		pos = {x = 3, y = 4},
-		loc_vars = function(_c) return {vars = {}} end,
+		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {vars = {}} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			local card = create_card("Joker", G.jokers, nil, nil, nil, nil, nil, 'phantom')
@@ -1788,6 +1892,9 @@ local spectrals = {
 		},
 		config = { },
 		pos = {x = 4, y = 4},
+		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker
@@ -1824,6 +1931,7 @@ local spectrals = {
 		config = { extra = "thac_steven" },
 		pos = {x = 5, y = 4},
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -1843,6 +1951,7 @@ local spectrals = {
 		config = { extra = "thac_todd" },
 		pos = {x = 6, y = 4},
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -1862,6 +1971,7 @@ local spectrals = {
 		config = { extra = "thac_jimbo" },
 		pos = {x = 7, y = 4},
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -1881,6 +1991,7 @@ local spectrals = {
 		config = { extra = "thac_chaos" },
 		pos = {x = 8, y = 4},
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -1900,6 +2011,7 @@ local spectrals = {
 		config = { extra = "thac_andy" },
 		pos = {x = 9, y = 4},
 		loc_vars = function(_c, info_queue)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -2000,6 +2112,9 @@ local spectrals = {
 		},
 		config = { },
 		pos = {x = 0, y = 5},
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			-- destroy a random joker

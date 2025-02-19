@@ -15,7 +15,9 @@ local jokers = {
 		pos = { x = 2, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_mult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_mult }} end,
 	},
 	'court_joker', court_joker = {
 		name = "Court Joker",
@@ -31,7 +33,9 @@ local jokers = {
 		pos = { x = 1, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_mult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_mult }} end,
 	},
 	'wacky_joker', wacky_joker = {
 		name = "Wacky Joker",
@@ -47,7 +51,9 @@ local jokers = {
 		pos = { x = 0, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_mult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_mult }} end,
 	},
 	'obnoxious_joker', obnoxious_joker = {
 		name = "Obnoxious Joker",
@@ -63,7 +69,9 @@ local jokers = {
 		pos = { x = 2, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_chips }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_chips }} end,
 	},
 	'regal_joker', regal_joker = {
 		name = "Regal Joker",
@@ -79,7 +87,9 @@ local jokers = {
 		pos = { x = 1, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_chips }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_chips }} end,
 	},
 	'crass_joker', crass_joker = {
 		name = "Crass Joker",
@@ -95,7 +105,9 @@ local jokers = {
 		pos = { x = 0, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.t_chips }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.t_chips }} end,
 	},
     'funny_number', funny_number = {
         name = "The Funny Number",
@@ -111,7 +123,9 @@ local jokers = {
         pos = { x = 2, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.Xmult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.Xmult }} end,
     },
     'royal', royal = {
         name = "The Royal",
@@ -127,7 +141,9 @@ local jokers = {
         pos = { x = 1, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.Xmult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.Xmult }} end,
     },
     'bracket', bracket = {
         name = "The Bracket",
@@ -143,7 +159,9 @@ local jokers = {
         pos = { x = 0, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.Xmult }} end,
+		loc_vars = function(_c, iq, card)
+            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.Xmult }} end,
     },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
@@ -157,6 +175,7 @@ local jokers = {
         cost = 9,
         rarity = 3,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {}}
         end,
         calculate = function(self, card, context)
@@ -191,6 +210,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             local blah = ""
             if card.ability.extra.retriggers > 1 then blah = "s" end
             return {vars = {card.ability.extra.retriggers, blah}}
@@ -221,6 +241,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             local blah = ""
             if card.ability.extra.retriggers > 1 then blah = "s" end
             return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds, card.ability.extra.retriggers, blah}}
@@ -252,6 +273,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             return {vars = {card.ability.extra.rate * 100, card.ability.extra.Xmult}}
         end,
         calculate = function(self, card, context)
@@ -304,6 +326,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds}}
         end,
         calculate = function(self, card, context)
@@ -329,6 +352,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.Xchips, card.ability.extra.Xchips_curr }}
         end,
         calculate = function(self, card, context)
@@ -370,6 +394,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.Xchips }}
         end,
         calculate = function(self, card, context)
@@ -482,6 +507,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
         end,
         calculate = function(self, card, context)
@@ -638,6 +664,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {
                 card.ability.extra.chips,
                 card.ability.extra.curr_chips,
@@ -744,6 +771,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 'what_are_you_wearing', set = 'Other'}
             end
@@ -780,6 +808,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {
                 card.ability.extra.Xmult,
                 1 + card.ability.extra.Xmult * (G.vouchers and #G.vouchers.cards or 0), -- thanks voucher calc
@@ -884,7 +913,7 @@ local jokers = {
         rental_compat = true,
         process_loc_text = function(self)
             G.localization.descriptions.Other['from_me_to_you'] = {
-                name = "heart, mind, and void",
+                name = "you want me to stop? hahahaha",
                 text = {
                     "{C:money}Mindless drone, driven by pursuit",
                     "{C:money}of the highest possible number;",
@@ -897,6 +926,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 'from_me_to_you', set = 'Other'}
             end
@@ -963,6 +993,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_chekhovs_knife', set = 'Other'}
             end
@@ -1002,6 +1033,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 'knight_retrieve_bladekind', set = 'Other'}
             end
@@ -1041,6 +1073,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 'witch_examine_pokerkind', set = 'Other'}
             end
@@ -1083,6 +1116,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_lord_provide_an_example', set = 'Other'}
             end
@@ -1136,6 +1170,7 @@ local jokers = {
             SMODS.Joker.process_loc_text(self)
         end,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_ascend', set = 'Other'}
             end
@@ -1536,7 +1571,7 @@ local jokers = {
         name = "Common Ground",
 		subtitle = "We all rot in the same soil",
         text = {
-            "{C:attention}Draw{} #1# additional card#2#",
+            "Draw #1# additional card#2#",
             "after drawing the first hand",
             "for each {C:attention}different rank{} among",
             "cards in your {C:attention}graveyard{}",
@@ -1545,7 +1580,7 @@ local jokers = {
         config = { extra = {
             cards = 1,
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 5, y = 3 },
         cost = 5,
         rarity = 2,
         blueprint_compat = false,
@@ -1553,6 +1588,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
             return {vars = {
                 math.floor(card.ability.extra.cards) == 1 and "an" or math.floor(card.ability.extra.cards),
@@ -1562,26 +1598,57 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.first_hand_drawn then
-                local remember = G.hand.config.card_limit
                 local gy_ranks = AMM.api.graveyard.count_different_ranks()
                 if gy_ranks == 0 then return end
                 local cards = math.floor(card.ability.extra.cards) * gy_ranks
-                G.hand.config.card_limit = #G.hand.cards + cards
-                -- this avoids the first_hand_drawn context from recalculating
-                -- thus avoiding drawing the entire deck infinitely
-                G.GAME.current_round.discards_used = 666
-                G.FUNCS.draw_from_deck_to_hand(cards)
-                G.hand.config.card_limit = remember
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'before',
-                    delay = 0.4,
-                    func = function()
-                        G.GAME.current_round.discards_used = 0; save_run(); return true
-                    end}))
+                TheAutumnCircus.func.force_draw_cards(cards)
             end
         end,
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'tombstone', tombstone = {
+        name = "Tombstone",
+		subtitle = "Work In Progress!",
+        text = {
+            "{X:chips,C:white}X#1#{} Chips for each",
+            "{C:attention}Stone Card{} in your",
+            "{C:attention}graveyard{}",
+            "{C:inactive}(Currently: {X:chips,C:white}X#2#{C:inactive} Chips)",
+        },
+        config = { extra = {
+            Xchips = 0.4,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 7,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+            local gy_stones = AMM.api.graveyard.count_center(G.P_CENTERS.m_stone)
+            return {vars = {
+                card.ability.extra.Xchips,
+                1 + (card.ability.extra.Xchips * gy_stones)
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main then
+                local gy_stones = AMM.api.graveyard.count_center(G.P_CENTERS.m_stone)
+                if gy_stones > 0 then
+                    return {
+                        colour = G.C.CHIPS,
+                        xchips = 1 + (card.ability.extra.Xchips * gy_stones)
+                    }
+                end
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_center(G.P_CENTERS.m_stone) > 0
         end,
     },
 }

@@ -1,5 +1,47 @@
 local func = {}
 
+-- artist stuff
+G.ARGS.LOC_COLOURS['lyman'] = HEX('73FE04')
+G.ARGS.LOC_COLOURS['autumn'] = HEX('999999')
+G.ARGS.LOC_COLOURS['fritz'] = HEX('993366')
+G.ARGS.LOC_COLOURS['jevonn'] = HEX('993366')
+
+function func.artcredit(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+	localize {
+		type = 'descriptions',
+		set = 'thacmeta',
+		key = _c.key,
+		nodes = desc_nodes,
+		vars = specific_vars or _c.vars,
+	}
+	desc_nodes.name = "Art Credit"
+end
+
+-- stupid function to babyproof drawing cards on the first turn
+-- like actually this only exists because context.first_hand_drawn is irritating
+-- and goes off if you draw cards for ANY REASON while having 0 hands and discards
+-- used this round like WHY ACTUALLY THO JUST WHY AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+function func.force_draw_cards(cards, delay, nosave)
+	if #G.hand.cards > 1 then
+		local remember = G.hand.config.card_limit
+		local remember2 = G.GAME.current_round.discards_used
+		G.hand.config.card_limit = #G.hand.cards + cards
+		-- this avoids the first_hand_drawn context from recalculating
+		-- thus avoiding drawing the entire deck infinitely
+		G.GAME.current_round.discards_used = 666
+		G.FUNCS.draw_from_deck_to_hand(cards)
+		G.hand.config.card_limit = remember
+		G.E_MANAGER:add_event(Event({
+			trigger = 'after',
+			delay = delay or 0.2,
+			func = function()
+				G.GAME.current_round.discards_used = remember2; if not nosave then G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					func = function() save_run() return true end})) end; return true
+			end}))
+	end
+end
+
 -- traverses a UI table and scales all nodes i think
 function func.scale_nodes(t, factor, extra)
 	if t then

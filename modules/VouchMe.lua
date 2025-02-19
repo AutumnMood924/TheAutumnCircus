@@ -10,7 +10,9 @@ local vouchers = {
 			extra = 4.8/4,
 		},
 		pos = { x = 0, y = 0 },
-		loc_vars = function(_c) return {vars = {  }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
 		redeem = function(self, center)
 			G.E_MANAGER:add_event(Event({func = function()
 				G.GAME.spectral_rate = 4*self.config.extra
@@ -30,7 +32,9 @@ local vouchers = {
 		},
 		pos = { x = 1, y = 0 },
 		requires = {'v_thac_spectral_merchant'},
-		loc_vars = function(_c) return {vars = { _c.config.extra_disp }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)
 			G.E_MANAGER:add_event(Event({func = function()
 				G.GAME.spectral_rate = 4*self.config.extra
@@ -45,7 +49,9 @@ local vouchers = {
 		config = {
 		},
 		pos = { x = 2, y = 0 },
-		loc_vars = function(_c) return {vars = {  }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
 		redeem = function(self, center)
 		end,
 		load_check = function()
@@ -62,7 +68,9 @@ local vouchers = {
 		},
 		pos = { x = 3, y = 0 },
 		requires = {'v_thac_stamp_savvy'},
-		loc_vars = function(_c) return {vars = {  }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
 		redeem = function(self, center)
 		end,
 		load_check = function()
@@ -81,7 +89,9 @@ local vouchers = {
 			extra_disp = 2
 		},
 		pos = { x = 4, y = 0 },
-		loc_vars = function(_c) return {vars = { _c.config.extra_disp }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)
 			G.E_MANAGER:add_event(Event({func = function()
 				G.GAME.oddity_rate = OddityAPI.config.base_shop_rate*self.config.extra
@@ -104,7 +114,9 @@ local vouchers = {
 		},
 		pos = { x = 5, y = 0 },
 		requires = {'v_thac_oddity_merchant'},
-		loc_vars = function(_c) return {vars = { _c.config.extra_disp }} end,
+		loc_vars = function(_c,info_queue) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)
 			G.E_MANAGER:add_event(Event({func = function()
 				G.GAME.oddity_rate = OddityAPI.config.base_shop_rate*self.config.extra
@@ -129,6 +141,7 @@ local vouchers = {
 		},
 		pos = { x = 6, y = 0 },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS['c_wheel_of_fortune']
 			return {vars = {
 				G.GAME.probabilities.normal,
@@ -160,6 +173,7 @@ local vouchers = {
 		pos = { x = 7, y = 0 },
 		requires = {'v_thac_wheel_of_wheel_of_fortune'},
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS['v_thac_wheel_of_wheel_of_fortune']
 			return {vars = {
 				G.GAME.probabilities.normal,

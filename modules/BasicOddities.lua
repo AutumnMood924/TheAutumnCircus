@@ -55,7 +55,9 @@ local oddities = {
 		},
 		pos = { x = 0, y = 0 },
 		cost = 1,
-		loc_vars = function(_c) return {vars = { _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
 		can_use = function(_, self) return true end,
 	},
@@ -72,7 +74,9 @@ local oddities = {
 		},
 		pos = { x = 1, y = 0 },
 		cost = 2,
-		loc_vars = function(_c) return {vars = { _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
 		can_use = function(_, self) return true end,
 	},
@@ -90,7 +94,9 @@ local oddities = {
 		pos = { x = 2, y = 0 },
 		cost = 5,
 		rarity = 2,
-		loc_vars = function(_c) return {vars = { _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
 		can_use = function(_, self) return true end,
 	},
@@ -108,7 +114,9 @@ local oddities = {
 		pos = { x = 3, y = 0 },
 		cost = 10,
 		rarity = 2,
-		loc_vars = function(_c) return {vars = { _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
 		can_use = function(_, self) return true end,
 	},
@@ -126,7 +134,9 @@ local oddities = {
 		pos = { x = 4, y = 0 },
 		cost = 20,
 		rarity = 3,
-		loc_vars = function(_c) return {vars = { _c.config.extra.dollars }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
 		can_use = function(_, self) return true end,
 	},
@@ -146,7 +156,9 @@ local oddities = {
 		},
 		pos = { x = 5, y = 0, scale_h = 73/95 },
 		cost = 3,
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
 		use = chip_function,
 	},
 	'yellow_chip', yellow_chip = {
@@ -165,7 +177,9 @@ local oddities = {
 		},
 		pos = { x = 6, y = 0, scale_h = 73/95 },
 		cost = 3,
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
 		use = chip_function,
 	},
 	'red_blue_chip', red_blue_chip = {
@@ -185,7 +199,9 @@ local oddities = {
 		pos = { x = 7, y = 0, scale_h = 73/95 },
 		rarity = 2,
 		cost = 5,
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
 		use = chip_function,
 	},
 	'purple_chip', purple_chip = {
@@ -205,7 +221,9 @@ local oddities = {
 		pos = { x = 8, y = 0, scale_h = 73/95 },
 		rarity = 2,
 		cost = 5,
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
 		use = chip_function,
 	},
 	'power_chip', power_chip = {
@@ -226,7 +244,9 @@ local oddities = {
 		rarity = 3,
 		cost = 7,
 		shader = 'booster',
-		loc_vars = function(_c) return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.max_highlighted, _c.config.extra.chips }} end,
 		use = chip_function,
 	},
 	'pot_of_joker', pot_of_joker = {
@@ -243,14 +263,12 @@ local oddities = {
 		pos = { x = 0, y = 1 },
 		cost = 2,
 		rarity = 1,
-		loc_vars = function(_c) return {vars = { _c.config.extra.cards }} end,
-		use = function(_, self, area, copier)
-			local used_tarot = copier or self
-			local remember = G.hand.config.card_limit
-			G.hand.config.card_limit = #G.hand.cards + self.ability.extra.cards
-			G.FUNCS.draw_from_deck_to_hand(self.ability.extra.cards)
-			G.hand.config.card_limit = remember
-			delay(0.2)
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.cards }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			TheAutumnCircus.func.force_draw_cards(card.ability.extra.cards, nil, true)
 		end,
 		can_use = function(_, self) return #G.hand.cards > 1 and #G.deck.cards > 1 end,
 	},
@@ -266,6 +284,9 @@ local oddities = {
 		pos = { x = 1, y = 1 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'jimbobread_man', jimbobread_man = {
 		name = "Jimbobread Man",
@@ -283,7 +304,9 @@ local oddities = {
 		},
 		pos = { x = 2, y = 1 },
 		rarity = 2,
-		loc_vars = function(_c) return {vars = { _c.config.extra.hands }} end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.hands }} end,
 		keep_on_use = function(self, card)
 			return true
 		end,
@@ -325,8 +348,10 @@ local oddities = {
 		},
 		pos = { x = 3, y = 1 },
 		rarity = 1,
-		yes_pool_flag = "neversetthis",
-		loc_vars = function(_c) return {vars = { _c.config.extra.hands }} end,
+		in_pool = function() return false end,
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			 return {vars = { _c.config.extra.hands }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			ease_hands_played(self.ability.extra.hands)
@@ -349,6 +374,9 @@ local oddities = {
 		pos = { x = 4, y = 1 },
 		rarity = 2,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'cultist_potion', cultist_potion = {
 		name = "Cultist Potion",
@@ -362,6 +390,9 @@ local oddities = {
 		pos = { x = 5, y = 1, scale_h = 60/95 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'fire_potion', fire_potion = {
 		name = "Fire Potion",
@@ -375,6 +406,9 @@ local oddities = {
 		pos = { x = 6, y = 1, scale_h = 67/95 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'snecko_potion', snecko_potion = {
 		name = "Snecko Oil",
@@ -388,6 +422,9 @@ local oddities = {
 		pos = { x = 7, y = 1, scale_h = 63/95 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'energy_potion', energy_potion = {
 		name = "Energy Potion",
@@ -401,6 +438,9 @@ local oddities = {
 		pos = { x = 8, y = 1, scale_h = 63/95 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'vote_sticker', vote_sticker = {
 		name = "Vote For Jimbo!",
@@ -414,6 +454,9 @@ local oddities = {
 		pos = { x = 9, y = 1, scale_h = 69/95 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+		end,
 	},
 	'cpu_memory', cpu_memory = {
 		name = "CPU Memory",
@@ -427,6 +470,9 @@ local oddities = {
 		pos = { x = 0, y = 2 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c, info_queue, c) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		end,
 	},
 	'estradiol', estradiol = {
 		name = "Estradiol",
@@ -500,6 +546,9 @@ local oddities = {
 		pos = { x = 2, y = 2 },
 		rarity = 4,
 		yes_pool_flag = "neversetthis",
+		loc_vars = function(_c, info_queue, c) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		end,
 	},
 	'empty_bottle', empty_bottle = {
 		name = "Empty Bottle",
@@ -513,7 +562,9 @@ local oddities = {
 		pos = { x = 3, y = 2, scale_w = 49/71, scale_h = 62/95 },
 		rarity = 3,
 		cost = 7,
-		loc_vars = function(_c, iq, c) iq[#iq+1] = {key = 'bottle', set = 'Other'} return {vars = { _c.config.max_highlighted }} end,
+		loc_vars = function(_c, info_queue, c) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = {key = 'bottle', set = 'Other'} return {vars = { _c.config.max_highlighted }} end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or self
 			local selected_card = G.hand.highlighted[1]

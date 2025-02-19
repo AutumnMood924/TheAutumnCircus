@@ -136,6 +136,39 @@ TheAutumnCircus.mod.process_loc_text = function()
             "{C:attention}Little Cat{}, {C:attention}Big Cat{}"
         }
     }
+
+    G.localization.descriptions.thacmeta = {
+        lyman = {
+            name = "Art Credit",
+            text = {
+                "{X:lyman,C:dark_edition,s:1.2}Lyman{}"
+            }
+        },
+        jevonn = {
+            name = "Art Credit",
+            text = {
+                "{X:jevonn,C:dark_edition,s:1.2}Jevonn{}"
+            }
+        },
+        fritz = {
+            name = "Art Credit",
+            text = {
+                "{X:fritz,C:dark_edition,s:1.2}Fritz Lancastor{}"
+            }
+        },
+        autumn = {
+            name = "Art Credit",
+            text = {
+                "{X:autumn,C:money,s:1.2}AutumnMood{}"
+            }
+        },
+    }
+	G.localization.descriptions.Other["thac_shadercredit_lyman"] = {
+        name = "Shader Credit",
+        text = {
+            "{X:lyman,C:edition}Lyman{}"
+        }
+    }
 	
 	
 	G.localization.misc.dictionary["k_thac_shuffle"] = "Shuffled!"

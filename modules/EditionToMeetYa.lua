@@ -23,7 +23,7 @@ local editions = {
 		},
 		extra_cost = 4,
         weight = 20,
-		loc_vars = function(_c, iq, card)
+		loc_vars = function(_c, info_queue, card)
             -- i want to scream into the sun until its screams are indiscernable from my own
             -- so the desired result is
             -- jokers and consumables look like
@@ -43,6 +43,7 @@ local editions = {
             -- #4# is "a random " for pcards or "at end of round" otherwise
             -- #5# is "Joker" for pcards or "" otherwise
             -- #6# is " when scored" for pcards or "" otherwise
+            if true then info_queue[#info_queue+1] = {key = 'thac_shadercredit_lyman', set = 'Other'} end
 
             local aaaa = {}
             if card and card.ability and card.ability.set == "Default" or card.ability.set == "Enhanced" then
