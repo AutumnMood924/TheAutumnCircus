@@ -470,7 +470,7 @@ local oddities = {
 		pos = { x = 0, y = 2 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
-		loc_vars = function(_c, info_queue, c) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 		end,
 	},
@@ -546,7 +546,7 @@ local oddities = {
 		pos = { x = 2, y = 2 },
 		rarity = 4,
 		yes_pool_flag = "neversetthis",
-		loc_vars = function(_c, info_queue, c) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 		end,
 	},
@@ -562,17 +562,150 @@ local oddities = {
 		pos = { x = 3, y = 2, scale_w = 49/71, scale_h = 62/95 },
 		rarity = 3,
 		cost = 7,
-		loc_vars = function(_c, info_queue, c) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = {key = 'bottle', set = 'Other'} return {vars = { _c.config.max_highlighted }} end,
 		use = function(self, card, area, copier)
-			local used_tarot = copier or self
+			local used_tarot = copier or card
 			local selected_card = G.hand.highlighted[1]
 			selected_card.bottle = true
 			selected_card:juice_up(0.3, 2.0)
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.highlighted == 1 and not G.hand.highlighted[1].bottle
+		end
+	},
+	'box_of_rocks', box_of_rocks = {
+		name = "Box of Rocks",
+		subtitle = "They seem pretty smart, actually",
+		text = {
+			"Creates {C:attention}#1#{} random {C:attention}Stone Cards{}",
+			"and puts them in your hand"
+		},
+		effect = 'Create 2 Stone Cards Create 2 Stone Cards Create 2 Stone Cards',
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_stone}, G.hand)
+				cardmak:set_edition(poll_edition("box_of_rocks"))
+				cardmak:set_seal(SMODS.poll_seal{key = "box_of_rocks", mod = 10})
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
+	},
+	'calcium', calcium = {
+		name = "Calcium",
+		subtitle = "Grows your bones!",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}Bone Cards{} and puts",
+			"them in your hand"
+		},
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_bone}, G.hand)
+				cardmak:set_edition(poll_edition("calcium"))
+				cardmak:set_seal(SMODS.poll_seal{key = "calcium", mod = 10})
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
+	},
+	'scrap_metal', scrap_metal = {
+		name = "Scrap Metal",
+		subtitle = "Work In Progress!",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}metal Enhanced Cards{}","and puts them in","your {C:attention}graveyard{}"
+		},
+		config = {
+			extra = {
+				cards = 3
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = pseudorandom_element({
+					G.P_CENTERS.m_steel, G.P_CENTERS.m_gold,
+					G.P_CENTERS.m_ortalab_rusty or nil,
+				}, pseudoseed("scrap_metal"))}, G.deck)
+				cardmak:set_edition(poll_edition("scrap_metal"), true, true)
+				cardmak:set_seal(SMODS.poll_seal{key = "scrap_metal", mod = 10}, true, true)
+				cardmak:move_to_graveyard()
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end
+	},
+	'fossil', fossil = {
+		name = "Fossil",
+		subtitle = "Work In Progress!",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}Bone Cards{} and","puts them in","your {C:attention}graveyard{}"
+		},
+		config = {
+			extra = {
+				cards = 3
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_bone}, G.deck)
+				cardmak:set_edition(poll_edition("fossil"), true, true)
+				cardmak:set_seal(SMODS.poll_seal{key = "fossil", mod = 10}, true, true)
+				cardmak:move_to_graveyard()
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
 		end
 	},
 }

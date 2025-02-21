@@ -635,6 +635,7 @@ local jokers = {
     },
     'knight_of_heart', knight_of_heart = {
         name = "Knight of Heart",
+        subtitle = "Apotheotic Vessel",
         text = {
             "Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
             "and this Joker gains the following",
@@ -737,6 +738,7 @@ local jokers = {
     },
     'witch_of_mind', witch_of_mind = {
         name = "Witch of Mind",
+        subtitle = "Apotheotic Vessel",
         text = {
             "Rescore each","{C:attention}scoring Joker{}",
         },
@@ -788,6 +790,7 @@ local jokers = {
     },
     'lord_of_void', lord_of_void = {
         name = "Lord of Void",
+        subtitle = "Apotheotic Vessel",
         text = {
             "{X:mult,C:white} X#1# {} Mult for each",
             "{C:attention}Voucher{} redeemed this run",

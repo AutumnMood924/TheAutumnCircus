@@ -83,7 +83,7 @@ local enhancements = {
 		},
 		pos = { x = 3, y = 0 },
 		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = {card.ability.extra.reduction*100}}
 		end,
 		calculate = function(self, card, context)
@@ -121,7 +121,7 @@ local enhancements = {
 		},
 		pos = { x = 0, y = 1 },
 		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = {card.ability.extra.mult, card.ability.extra.mult * AMM.api.graveyard.count_cards()}}
 		end,
