@@ -87,18 +87,6 @@ function func.pseudorandom_unlocked_hand(ignore, seed)
 	return chosen_hand
 end
 
--- Counts how many cards of each suit are in the deck
--- Ignores wild cards and other effects
-function func.count_deck_suits()
-  local suit_tallies = {}
-  for k, v in ipairs(G.playing_cards) do
-    if v.ability.name ~= 'Stone Card' then 
-      suit_tallies[v.base.suit] = (suit_tallies[v.base.suit] or 0) + 1
-    end
-  end
-  return suit_tallies
-end
-
 --[[ preserved for historical reasons
 function func.eval_this(_card, effects)
 	if effects then 
