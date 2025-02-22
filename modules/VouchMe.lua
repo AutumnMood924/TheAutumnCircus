@@ -10,7 +10,7 @@ local vouchers = {
 			extra = 4.8/4,
 		},
 		pos = { x = 0, y = 0 },
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = {  }} end,
 		redeem = function(self, center)
@@ -32,7 +32,7 @@ local vouchers = {
 		},
 		pos = { x = 1, y = 0 },
 		requires = {'v_thac_spectral_merchant'},
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)
@@ -49,7 +49,7 @@ local vouchers = {
 		config = {
 		},
 		pos = { x = 2, y = 0 },
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = {  }} end,
 		redeem = function(self, center)
@@ -68,7 +68,7 @@ local vouchers = {
 		},
 		pos = { x = 3, y = 0 },
 		requires = {'v_thac_stamp_savvy'},
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = {  }} end,
 		redeem = function(self, center)
@@ -89,7 +89,7 @@ local vouchers = {
 			extra_disp = 2
 		},
 		pos = { x = 4, y = 0 },
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)
@@ -114,7 +114,7 @@ local vouchers = {
 		},
 		pos = { x = 5, y = 0 },
 		requires = {'v_thac_oddity_merchant'},
-		loc_vars = function(_c,info_queue) 
+		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = { _c.config.extra_disp }} end,
 		redeem = function(self, center)

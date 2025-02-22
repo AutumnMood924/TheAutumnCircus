@@ -404,7 +404,7 @@ local tarots = {
 			mult = 4
 		},
 		pos = { x = 0, y = 1 },
-		loc_vars = function(_c)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = { _c.config.mult }} end,
 		use = function(_, self, area, copier)
@@ -500,7 +500,7 @@ local tarots = {
 			suit_conv = "thac_Cups",
 			max_highlighted = 3,
 		},
-		loc_vars = function(_c)
+		loc_vars = function(_c, info_queue, card)
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
@@ -520,7 +520,7 @@ local tarots = {
 			suit_conv = "thac_Wands",
 			max_highlighted = 3,
 		},
-		loc_vars = function(_c)
+		loc_vars = function(_c, info_queue, card)
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
@@ -540,7 +540,7 @@ local tarots = {
 			suit_conv = "thac_Coins",
 			max_highlighted = 3,
 		},
-		loc_vars = function(_c)
+		loc_vars = function(_c, info_queue, card)
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
@@ -560,7 +560,7 @@ local tarots = {
 			suit_conv = "thac_Swords",
 			max_highlighted = 3,
 		},
-		loc_vars = function(_c)
+		loc_vars = function(_c, info_queue, card)
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
@@ -579,7 +579,7 @@ local planets = {
 		effect = 'Random Hand Upgrade',
 		config = {strength = 2},
 		pos = { x = 0, y = 2 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_comet', set = 'Other'}
@@ -629,7 +629,7 @@ local planets = {
 		effect = 'Random Hand Upgrade And Downgrade',
 		config = {strength = 3, weakness = 1},
 		pos = { x = 1, y = 2 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_meteor', set = 'Other'}
@@ -1672,7 +1672,7 @@ local spectrals = {
 		},
 		config = { remove_card = true, extra = {destroy = 2, slots = 1} },
 		pos = { x = 1, y = 4 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
@@ -1724,7 +1724,7 @@ local spectrals = {
 		},
 		config = { remove_card = true, extra = {slots = 1} },
 		pos = { x = 9, y = 6 },
-		loc_vars = function(_c) return {vars = { _c.config.extra.slots }} end,
+		loc_vars = function(_c, info_queue, card) return {vars = { _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
 			local destroyed_cards = {}
 			local used_tarot = copier or self
@@ -1766,7 +1766,7 @@ local spectrals = {
 		},
 		config = { remove_card = true, extra = {slots = 1, hands = 1} },
 		pos = { x = 9, y = 6 },
-		loc_vars = function(_c) return {vars = { _c.config.extra.slots, _c.config.extra.hands }} end,
+		loc_vars = function(_c, info_queue, card) return {vars = { _c.config.extra.slots, _c.config.extra.hands }} end,
 		use = function(_, self, area, copier)
 			local destroyed_cards = {}
 			local used_tarot = copier or self
@@ -1801,7 +1801,7 @@ local spectrals = {
 		},
 		config = { extra = {spectrals = 2} },
 		pos = { x = 2, y = 4 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.destroy, _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
@@ -1831,7 +1831,7 @@ local spectrals = {
 		},
 		config = { extra = {tarots = 3} },
 		pos = { x = 9, y = 6 },
-		loc_vars = function(_c, iq, card) return {vars = { card.ability.extra.tarots }} end,
+		loc_vars = function(_c, info_queue, card) return {vars = { card.ability.extra.tarots }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
 			for i = 1, self.ability.extra.tarots do
@@ -1858,7 +1858,7 @@ local spectrals = {
 		},
 		config = {extra = {jokers = 1}},
 		pos = {x = 3, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			return {vars = {}} end,
 		use = function(_, self, area, copier)
@@ -1892,7 +1892,7 @@ local spectrals = {
 		},
 		config = { },
 		pos = {x = 4, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 		end,
 		use = function(_, self, area, copier)
@@ -1930,7 +1930,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_steven" },
 		pos = {x = 5, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1950,7 +1950,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_todd" },
 		pos = {x = 6, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1970,7 +1970,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_jimbo" },
 		pos = {x = 7, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1990,7 +1990,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_chaos" },
 		pos = {x = 8, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -2010,7 +2010,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_andy" },
 		pos = {x = 9, y = 4},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -2031,7 +2031,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_mr_bones" },
 		pos = {x = 9, y = 6},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -2051,7 +2051,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_sock_and_buskin" },
 		pos = {x = 9, y = 6},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -2071,7 +2071,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_gros_michel" },
 		pos = {x = 9, y = 6},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
@@ -2091,7 +2091,7 @@ local spectrals = {
 		},
 		config = { extra = "thac_blueprint" },
 		pos = {x = 9, y = 6},
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
 		end,
