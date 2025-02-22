@@ -593,6 +593,7 @@ local oddities = {
 		cost = 3,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_stone
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
@@ -606,6 +607,75 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end
+	},
+	'jar_of_dirt', jar_of_dirt = {
+		name = "Jar of Dirt",
+		subtitle = "Work In Progress!",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}Dirt Cards{} and puts",
+			"them in your hand"
+		},
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_dirt
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_dirt}, G.hand)
+				cardmak:set_edition(poll_edition("jar_of_dirt"))
+				cardmak:set_seal(SMODS.poll_seal{key = "jar_of_dirt", mod = 10})
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
+	},
+	'bag_of_stardust', bag_of_stardust = {
+		name = "Bag of Stardust",
+		subtitle = "Pocketful of potential",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}Cosmic Cards{} and puts",
+			"them in your hand"
+		},
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_iou
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_ortalab_iou}, G.hand)
+				cardmak:set_edition(poll_edition("bag_of_stardust"))
+				cardmak:set_seal(SMODS.poll_seal{key = "bag_of_stardust", mod = 10})
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("ortalab")) then return true else return false end
+		end,
 	},
 	'calcium', calcium = {
 		name = "Calcium",
@@ -625,6 +695,7 @@ local oddities = {
 		cost = 3,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
@@ -656,16 +727,22 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+			info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+			if next(SMODS.find_mod("ortalab")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_rusty
+			end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = pseudorandom_element({
-					G.P_CENTERS.m_steel, G.P_CENTERS.m_gold,
-					G.P_CENTERS.m_ortalab_rusty or nil,
-				}, pseudoseed("scrap_metal"))}, G.deck)
+				local centers = {G.P_CENTERS.m_steel, G.P_CENTERS.m_gold}
+				if next(SMODS.find_mod("ortalab")) then
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_rusty
+				end
+				local cardmak = create_playing_card({center = pseudorandom_element(centers, pseudoseed("scrap_metal"))}, G.deck)
 				cardmak:set_edition(poll_edition("scrap_metal"), true, true)
 				cardmak:set_seal(SMODS.poll_seal{key = "scrap_metal", mod = 10}, true, true)
 				cardmak:move_to_graveyard()
@@ -692,6 +769,7 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
