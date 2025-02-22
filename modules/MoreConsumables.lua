@@ -777,7 +777,7 @@ local planets = {
 		effect = 'Favorite Hand Upgrade',
 		config = {strength = 1},
 		pos = { x = 4, y = 2 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_station', set = 'Other'}
@@ -826,7 +826,7 @@ local planets = {
 		effect = 'The D8',
 		config = { extra = 2 },
 		pos = { x = 5, y = 2 },
-		loc_vars = function(_c, info_queue)
+		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			if G.GAME.used_vouchers.v_observatory then
 				info_queue[#info_queue+1] = {key = 'mc_obs_on_dysnomia', set = 'Other'}
