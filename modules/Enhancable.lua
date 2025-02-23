@@ -166,6 +166,27 @@ local enhancements = {
 			end
 		end,
 	},
+	'soulbound', soulbound = {
+		name = "soulbound",
+		display_name = "Soulbound Card",
+		text = {
+			"Returns from your",
+			"{C:attention}graveyard{} to your",
+			"{C:attention}deck{} after each",
+			"{C:attention}Boss Blind{} is defeated",
+		},
+		effect = 'soulbound',
+		config = {
+			extra = {
+			}
+		},
+		pos = { x = 2, y = 1 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { }}
+		end,
+	},
 }
 
 SMODS.Atlas{

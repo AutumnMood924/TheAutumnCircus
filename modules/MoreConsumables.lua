@@ -417,10 +417,39 @@ local tarots = {
 			}
 		end,
 	},
+	'cycle', cycle = {
+		name = "The Cycle",
+		subtitle = "Work In Progress!",
+		text = {
+			"Enhances {C:attention}#1#",
+			"selected cards to",
+			"{C:attention}#2#s"
+		},
+		effect = 'soulbound',
+		config = {
+			mod_conv = "m_thac_soulbound",
+			max_highlighted = 3,
+		},
+		pos = { x = 7, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
 	'joker', joker = {
 		name = "The Joker",
+		subtitle = "Our gracious host!",
 		text = {
-			'{C:red}+#1#{} Mult while in your',
+			'{C:mult}+#1#{} Mult while in your',
 			'{C:attention}consumable{} area',
 			'{C:inactive}Hee hee, hoo hoo!{}',
 			'{C:inactive}Looks like the joke\'s{}',

@@ -10,6 +10,9 @@ TheAutumnCircus.mod.optional_features = function()
 	return {
 		retrigger_joker = true,
         quantum_enhancements = true,
+        cardareas = {
+            --graveyard = true,
+        },
 	}
 end
 

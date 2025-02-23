@@ -958,7 +958,7 @@ local jokers = {
 					card = card
 				}
             end
-            if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind.boss and not context.blueprint then
+            if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind.boss and context.main_eval and not context.blueprint then
                 card.ability.extra.reduction = card.ability.extra.reduction * (1+card.ability.extra.level_factor)
                 card.ability.extra.reduction = math.floor(card.ability.extra.reduction*100)/100
                 card.ability.extra.level_factor = card.ability.extra.level_factor * card.ability.extra.level_factor_reduction
@@ -1699,7 +1699,7 @@ local jokers = {
             "discarded unaspected card",
         },
         config = { extra = {
-            odds = 7,
+            odds = 12,
         }},
         pos = { x = 0, y = 0 },
         cost = 10,
@@ -1823,6 +1823,7 @@ local jokers = {
                 end
                 if no_suit then
                     if no_rank then
+                        return
                     else
                         gy_matches = AMM.api.graveyard.filter_count(rank_check)
                     end

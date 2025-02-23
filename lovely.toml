@@ -218,3 +218,21 @@ hands_played = 0,
 '''
 match_indent = true
 overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+G.FUNCS.draw_from_hand_to_discard()
+if G.GAME.blind:get_type() == 'Boss' then
+'''
+position = "after"
+payload = '''
+	for i=#G.graveyard,1,-1 do
+		if SMODS.has_enhancement(G.graveyard[i], "m_thac_soulbound") then
+			G.graveyard[i]:move_from_graveyard(G.deck)
+		end
+	end
+'''
+match_indent = true
+overwrite = false
