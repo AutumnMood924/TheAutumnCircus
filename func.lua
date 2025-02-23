@@ -5,6 +5,9 @@ G.ARGS.LOC_COLOURS['lyman'] = HEX('73FE04')
 G.ARGS.LOC_COLOURS['autumn'] = HEX('999999')
 G.ARGS.LOC_COLOURS['fritz'] = HEX('993366')
 G.ARGS.LOC_COLOURS['jevonn'] = HEX('993366')
+G.ARGS.LOC_COLOURS['lordofvoid'] = HEX('033476')
+G.ARGS.LOC_COLOURS['witchofmind'] = HEX('50B250')
+G.ARGS.LOC_COLOURS['knightofheart'] = HEX('6E0E2E')
 
 function func.artcredit(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table)
 	localize {

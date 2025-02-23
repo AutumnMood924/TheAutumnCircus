@@ -165,6 +165,7 @@ local jokers = {
     },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
+        subtitle = "I am an idea thinking of itself",
         text = {
             "At end of round, add",
             "a random {C:dark_edition}Negative {C:attention}playing",
@@ -197,6 +198,7 @@ local jokers = {
     },
     'lord_of_the_meek', lord_of_the_meek = {
         name = "Lord of the Meek",
+        subtitle = "My wish is to make this world free!",
         text = {
             "{C:attention}Retrigger{} each",
             "{C:common}Common{} {C:attention}Joker{} {C:attention}#1#{} time#2#",
@@ -312,6 +314,7 @@ local jokers = {
     },
     'placeholder_joker', placeholder_joker = {
         name = "Placeholder Joker",
+        subtitle = "TODO: this subtitle",
         text = {
             "{C:green}#1# in #2#{} chance to {C:attention}convert{}",
             "this {C:attention}Joker{} into a {C:purple}random{}",
@@ -337,6 +340,7 @@ local jokers = {
     },
     'filler_card', filler_card = {
         name = "Filler Card",
+        subtitle = "- remember to replace Filler Card",
         text = {
             "This Joker gains {X:chips,C:white} X#1# {} chips",
             "for each scored card {C:attention}without any{}",
@@ -380,6 +384,7 @@ local jokers = {
     },
     'test_print', test_print = {
         name = "Test Print",
+        subtitle = "Within parameters",
         text = {
             "Jokers with the {C:attention}same",
             "{C:attention}art{} as this Joker",
@@ -756,18 +761,18 @@ local jokers = {
             G.localization.descriptions.Other['what_are_you_wearing'] = {
                 name = "what are you wearing",
                 text = {
-                    "{C:hearts}what the hell are you wearing???",
-                    "{C:clubs}uhhhh witch of mind outfit duh",
-                    "{C:hearts}no what the hell's with the face paint",
-                    "{C:hearts}also have you finally figured your classpect out",
-                    "{C:clubs}i thought it was fun",
-                    "{C:clubs}and yea :3",
-                    "{C:clubs}i think",
-                    "{C:hearts}good grief you are insufferable",
-                    "{C:clubs}thanks you too",
+                    "{C:knightofheart}what the hell are you wearing???",
+                    "{C:witchofmind}uhhhh witch of mind outfit duh",
+                    "{C:knightofheart}no what the hell's with the face paint",
+                    "{C:knightofheart}also have you finally figured your classpect out",
+                    "{C:witchofmind}i thought it was fun",
+                    "{C:witchofmind}and yea :3",
+                    "{C:witchofmind}i think",
+                    "{C:knightofheart}good grief you are insufferable",
+                    "{C:witchofmind}thanks you too",
                     "{C:money}Do you two ever have conversations about",
                     "{C:money}anything relevant without my guidance?",
-                    "{C:clubs}do we with it?",
+                    "{C:witchofmind}do we with it?",
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -918,12 +923,12 @@ local jokers = {
             G.localization.descriptions.Other['from_me_to_you'] = {
                 name = "you want me to stop? hahahaha",
                 text = {
-                    "{C:money}Mindless drone, driven by pursuit",
-                    "{C:money}of the highest possible number;",
-                    "{C:money}You know how this story ends,",
-                    "{C:money}but you continue onwards towards a",
+                    "{C:autumn}Mindless drone, driven by pursuit",
+                    "{C:autumn}of the highest possible number;",
+                    "{C:autumn}You know how this story ends,",
+                    "{C:autumn}but you continue onwards towards a",
                         "{C:dark_edition}Dark Apotheosis.",
-                    "{C:money}What is it you hope to accomplish, child?{}",
+                    "{C:autumn}What is it you hope to accomplish, child?{}",
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -986,11 +991,8 @@ local jokers = {
             G.localization.descriptions.Other['s_chekhovs_knife'] = {
                 name = "[S] Chekhov's Knife",
                 text = {
-                    "{C:hearts}don't worry",
-                    "{C:hearts}i'm well prepared",
-                    "{C:hearts}at least,",
-                    "{C:hearts}as much as i need to be",
-                    "{C:hearts}to get rid of you"
+                    "{C:knightofheart}haha!",
+                    "{C:knightofheart}gotcha =)",
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -1027,10 +1029,10 @@ local jokers = {
             G.localization.descriptions.Other['knight_retrieve_bladekind'] = {
                 name = "Knight: Retrieve BLADEKIND specibus",
                 text = {
-                    "{C:hearts}i dont make the rules",
-                    "{C:hearts}if you see a strife specibus",
-                    "{C:hearts}that is unowned",
-                    "{C:hearts}you now have another strife specibus",
+                    "{C:knightofheart}i dont make the rules",
+                    "{C:knightofheart}if you see a strife specibus",
+                    "{C:knightofheart}that is unowned",
+                    "{C:knightofheart}you now have another strife specibus",
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -1067,10 +1069,10 @@ local jokers = {
             G.localization.descriptions.Other['witch_examine_pokerkind'] = {
                 name = "Witch: Examine POKERKIND specibus",
                 text = {
-                    "{C:clubs}i guess you can just put any cards in this thing",
-                    "{C:clubs}maybe someone out there plays poker with credit cards",
-                    "{C:clubs}all i need to know is i can stuff this thing full of cards",
-                    "{C:clubs}pretty useful if lacking in combat application"
+                    "{C:witchofmind}i guess you can just put any cards in this thing",
+                    "{C:witchofmind}maybe someone out there plays poker with credit cards",
+                    "{C:witchofmind}all i need to know is i can stuff this thing full of cards",
+                    "{C:witchofmind}pretty useful if lacking in combat application"
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -1110,7 +1112,7 @@ local jokers = {
                 text = {
                     "{C:money}You are correct:",
                     "{C:money}I am unarmed.",
-                    "{C:money}However,",
+                    "{C:lordofvoid}However,",
                     "{C:money}You'll find that's not",
                     "{C:money}quite as relevant as you",
                     "{C:money}hoped it would be.",
@@ -1652,6 +1654,191 @@ local jokers = {
         end,
         in_pool = function(self)
             return AMM.api.graveyard.count_center(G.P_CENTERS.m_stone) > 0
+        end,
+    },
+    'gem_joker', gem_joker = {
+        name = "Gem Joker",
+		subtitle = "Work In Progress!",
+        text = {
+            "{C:attention}Jewel Cards{} held in",
+            "hand give {X:chips,C:white} X#1# {} Chips",
+        },
+        config = { extra = {
+            Xchips = 1.5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_jewel
+            return {vars = {
+                card.ability.extra.Xchips,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.hand and SMODS.has_enhancement(context.other_card, "m_thac_jewel")
+                and not context.end_of_round then
+                return {
+                    card = context.other_card,
+                    xchips = card.ability.extra.Xchips
+                }
+            end
+        end,
+        enhancement_gate = "m_thac_jewel",
+    },
+    'discarded_vessel', discarded_vessel = {
+        name = "Discarded Vessel",
+		subtitle = "* It bears the curse of AMBITION",
+        text = {
+            "{C:green}#1# in #2#{} chance to add",
+            "a random {C:red}Aspect{} to each",
+            "discarded unaspected card",
+        },
+        config = { extra = {
+            odds = 7,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['s_lord_retrieve_body'] = {
+                name = "[S] Lord: Retrieve Body",
+                text = {
+                    "{C:money}I am the Lord of Void.",
+                    "{C:money}All things discarded...",
+                    "{C:money}Cast into the void...",
+                    "{C:money}They fall into my domain.",
+                    "{C:money}They are mine to claim.",
+                    "{C:money}Besides...",
+                    "{X:witchofmind,C:lordofvoid}YOU{C:lordofvoid}...",
+                    "{C:lordofvoid}HA HA HA HA HA HA HA HA HA!",
+                    "{X:witchofmind,C:lordofvoid}YOU{C:lordofvoid} CREATED ONE WITH {X:money,C:lordofvoid}MY{C:lordofvoid} {X:money,C:lordofvoid}NAME{C:lordofvoid} ON IT.",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_lord_retrieve_body', set = 'Other'}
+            end
+            return {vars = {
+                G.GAME.probabilities.normal,
+                card.ability.extra.odds,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.discard and context.other_card.aspect == nil and pseudorandom(pseudoseed("discarded_vessel")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+                local keyset={}
+                local n=0
+                for k,v in pairs(AMM.Aspects) do
+                    n=n+1
+                    keyset[n]=k
+                end
+                local god_tier = pseudorandom_element(keyset, pseudoseed("god_tier"))
+                context.other_card:set_aspect(god_tier)
+            end
+        end,
+    },
+    'afterlife_archive', afterlife_archive = {
+        name = "Afterlife Archive",
+		subtitle = "Work In Progress!",
+        text = {
+            "Earn {C:money}$#1#{} for each {C:attention}4{} or {C:attention}9{}",
+            "in your {C:attention}graveyard{}",
+            "at end of round",
+            "{C:inactive}(Currently: {C:money}$#2#{C:inactive})",
+        },
+        config = { extra = {
+            money = 1
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            local gy_4 = AMM.api.graveyard.count_rank("4")
+            local gy_9 = AMM.api.graveyard.count_rank("9")
+            return {vars = {
+                math.floor(card.ability.extra.money),
+                math.floor(card.ability.extra.money) * (gy_4 + gy_9)
+            }}
+        end,
+        calc_dollar_bonus = function(self, card)
+            local gy_4 = AMM.api.graveyard.count_rank("4")
+            local gy_9 = AMM.api.graveyard.count_rank("9")
+            return math.floor(card.ability.extra.money) * (gy_4 + gy_9)
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_rank("4") > 0 or AMM.api.graveyard.count_rank("9") > 0
+        end,
+    },
+    'jokermancer', jokermancer = {
+        name = "Jokermancer",
+		subtitle = "Work In Progress!",
+        text = {
+            "Each scored card gives",
+            "{C:mult}+#1#{} Mult for each card",
+            "in your {C:attention}graveyard{} that",
+            "shares a {C:attention}suit{} or {C:attention}rank{} with it"
+        },
+        config = { extra = {
+            mult = 1
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {card.ability.extra.mult}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round then
+                local no_suit = SMODS.has_no_suit(context.other_card)
+                local no_rank = SMODS.has_no_rank(context.other_card)
+                local gy_matches = 0
+                local suit_check = function(v)
+                    for _,k in ipairs(SMODS.Suit.obj_buffer) do
+                        if v:is_suit(k) and context.other_card:is_suit(k) then return true end
+                    end
+                    return false
+                end
+                local rank_check = function(v)
+                    if v.base.value == context.other_card.base.value and not SMODS.has_no_rank(v) then return true else return false end
+                end
+                if no_suit then
+                    if no_rank then
+                    else
+                        gy_matches = AMM.api.graveyard.filter_count(rank_check)
+                    end
+                else
+                    if no_rank then
+                        gy_matches = AMM.api.graveyard.filter_count(suit_check)
+                    else
+                        gy_matches = AMM.api.graveyard.filter_count(function(v) return rank_check(v) or suit_check(v) end)
+                    end
+                end
+                if gy_matches == 0 then return end
+                return { card = context.other_card, mult = gy_matches * card.ability.extra.mult }
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 5
         end,
     },
 }

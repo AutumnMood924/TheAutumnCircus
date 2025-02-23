@@ -135,6 +135,37 @@ local enhancements = {
 			end
 		end,
 	},
+	'jewel', jewel = {
+		name = "jewel",
+		display_name = "Jewel Card",
+		text = {
+			'Earns {C:money}$#1#{} when scored',
+			'no rank or suit',
+		},
+		effect = 'jewel',
+		config = {
+			extra = {
+				money = 7,
+			}
+		},
+		no_rank = true,
+		no_suit = true,
+		replace_base_card = true,
+		always_scores = true,
+		pos = { x = 1, y = 1 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = {card.ability.extra.money}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				return {
+					p_dollars = card.ability.extra.money
+				}
+			end
+		end,
+	},
 }
 
 SMODS.Atlas{

@@ -608,39 +608,6 @@ local oddities = {
 			return #G.hand.cards > 1
 		end
 	},
-	'jar_of_dirt', jar_of_dirt = {
-		name = "Jar of Dirt",
-		subtitle = "Work In Progress!",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}Dirt Cards{} and puts",
-			"them in your hand"
-		},
-		config = {
-			extra = {
-				cards = 2
-			}
-		},
-		pos = { x = 0, y = 4 },
-		rarity = 1,
-		cost = 3,
-		loc_vars = function(_c, info_queue, card) 
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_dirt
-			return {vars = { card.ability.extra.cards }}
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_dirt}, G.hand)
-				cardmak:set_edition(poll_edition("jar_of_dirt"))
-				cardmak:set_seal(SMODS.poll_seal{key = "jar_of_dirt", mod = 10})
-			end
-		end,
-		can_use = function(self, card, area, copier)
-			return #G.hand.cards > 1
-		end
-	},
 	'bag_of_stardust', bag_of_stardust = {
 		name = "Bag of Stardust",
 		subtitle = "Pocketful of potential",
@@ -676,6 +643,39 @@ local oddities = {
 		load_check = function()
 			if next(SMODS.find_mod("ortalab")) then return true else return false end
 		end,
+	},
+	'jar_of_dirt', jar_of_dirt = {
+		name = "Jar of Dirt",
+		subtitle = "Work In Progress!",
+		text = {
+			"Creates {C:attention}#1#{} random",
+			"{C:attention}Dirt Cards{} and puts",
+			"them in your hand"
+		},
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_dirt
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_dirt}, G.hand)
+				cardmak:set_edition(poll_edition("jar_of_dirt"))
+				cardmak:set_seal(SMODS.poll_seal{key = "jar_of_dirt", mod = 10})
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
 	},
 	'calcium', calcium = {
 		name = "Calcium",
@@ -770,7 +770,7 @@ local oddities = {
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
-            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+            --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
