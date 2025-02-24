@@ -1749,7 +1749,7 @@ local jokers = {
     },
     'afterlife_archive', afterlife_archive = {
         name = "Afterlife Archive",
-		subtitle = "Work In Progress!",
+		subtitle = "It's important to keep records",
         text = {
             "Earn {C:money}$#1#{} for each {C:attention}4{} or {C:attention}9{}",
             "in your {C:attention}graveyard{}",
@@ -1759,7 +1759,7 @@ local jokers = {
         config = { extra = {
             money = 1
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 6, y = 3 },
         cost = 6,
         rarity = 2,
         blueprint_compat = false,
@@ -1767,6 +1767,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             local gy_4 = AMM.api.graveyard.count_rank("4")
             local gy_9 = AMM.api.graveyard.count_rank("9")

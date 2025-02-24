@@ -170,9 +170,9 @@ local enhancements = {
 		name = "soulbound",
 		display_name = "Soulbound Card",
 		text = {
-			"Returns from your",
-			"{C:attention}graveyard{} to your",
-			"{C:attention}deck{} after each",
+			"Returns from your {C:attention}graveyard{}",
+			"to your {C:attention}deck{} and gains {C:mult}+2{} Mult",
+			"permanently when scored after",
 			"{C:attention}Boss Blind{} is defeated",
 		},
 		effect = 'soulbound',
