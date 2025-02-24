@@ -267,28 +267,6 @@ function Game:start_run(args)
 	end
 	return ret
 end
-
-local alias__Card_set_ability = Card.set_ability;
-function Card:set_ability(center,initial,delay_sprites)
-    alias__Card_set_ability(self,center,initial,delay_sprites)
-	
-	if center and center.pos then
-        self.T.h = self.T.h * (center.pos.scale_h or 1)
-        self.T.w = self.T.w * (center.pos.scale_w or 1)
-	end
-end
-
-local alias__Card_load = Card.load;
-function Card:load(cardTable, other_card)
-    alias__Card_load(self,cardTable,other_card)
-	
-	if center and center.pos then
-        self.T.h = G.CARD_H * (center.pos.scale_h or 1)
-        self.T.w = G.CARD_W * (center.pos.scale_w or 1)
-	end
-    self.VT.h = self.T.h
-    self.VT.w = self.T.w
-end
 --[[
 local alias__Card_set_sprites = Card.set_sprites;
 function Card:set_sprites(_center, _front)

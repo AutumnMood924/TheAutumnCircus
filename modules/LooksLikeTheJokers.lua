@@ -1999,6 +1999,99 @@ local jokers = {
             end
         end,
     },
+    'matchbook', matchbook = {
+        name = "Matchbook",
+		subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult",
+            "The first {C:red}#2#{} card#3#",
+            "played each {C:attention}Round{} are",
+            "{C:red,s:1.1,E:1}destroyed{}",
+            "{C:inactive}(Remaining: {C:red}#4#{C:inactive} card#5#)",
+        },
+        config = { extra = {
+            targets = 3,
+            targets_curr = 3,
+            Xmult = 3
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            local blah = ""
+            if math.floor(card.ability.extra.targets) ~= 1 then blah = "s" end
+            local blah2 = ""
+            if math.floor(card.ability.extra.targets_curr) ~= 1 then blah2 = "s" end
+            return {vars = {
+                card.ability.extra.Xmult,
+                math.floor(card.ability.extra.targets),
+                blah,
+                math.floor(card.ability.extra.targets_curr),
+                blah2,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main then
+                return {
+                    xmult = card.ability.extra.Xmult
+                }
+            end
+            if not context.blueprint then
+                if context.setting_blind then card.ability.extra.targets_curr = math.floor(card.ability.extra.targets) end
+                if context.destroying_card and card.ability.extra.targets_curr > 0 then
+                    card.ability.extra.targets_curr = card.ability.extra.targets_curr - 1
+                    return true
+                end
+            end
+        end,
+    },
+    'dark_hallway', dark_hallway = {
+        name = "Dark Hallway",
+		subtitle = "Twilight shines through...",
+        text = {
+            "When {C:attention}Blind{} is selected,",
+            "{C:red,E:1}destroy#1#{} #2# random card#3#",
+            "in your {C:attention}full deck{}"
+        },
+        config = { extra = {
+            targets = 2,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            local blah = ""
+            if math.floor(card.ability.extra.targets) ~= 1 then blah = "s" end
+            return {vars = {
+                blah,
+                math.floor(card.ability.extra.targets) == 1 and "a" or math.floor(card.ability.extra.targets),
+                blah,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.setting_blind then
+                local temp_deck = {}
+                for k,v in ipairs(G.playing_cards) do temp_deck[#temp_deck+1] = v end
+                pseudoshuffle(temp_deck, pseudoseed("dark_hallway"))
+                for i=#temp_deck,#temp_deck-math.floor(card.ability.extra.targets-1),-1 do
+                    temp_deck[i]:start_dissolve()
+                end
+                return true
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
