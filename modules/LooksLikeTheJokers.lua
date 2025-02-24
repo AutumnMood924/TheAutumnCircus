@@ -1894,7 +1894,7 @@ local jokers = {
         text = {
             "Cards in your {C:attention}graveyard",
             "score as if they were",
-            "in your hand",
+            "held in your hand",
         },
         config = { extra = {
         }},
@@ -2099,6 +2099,8 @@ local jokers = {
             "Create {C:attention}#1#{} cop#2# of",
             "each card put into",
             "your {C:attention}graveyard{}",
+            "{C:inactive}(Copies are created",
+            "{C:inactive}in your graveyard)",
         },
         config = { extra = {
             cards = 2,
