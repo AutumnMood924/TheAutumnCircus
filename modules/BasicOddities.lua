@@ -154,7 +154,8 @@ local oddities = {
 				chips = 10
 			}
 		},
-		pos = { x = 5, y = 0, scale_h = 73/95 },
+		pos = { x = 5, y = 0 },
+		pixel_size = { w = 71, h = 73 },
 		cost = 3,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
@@ -175,7 +176,8 @@ local oddities = {
 				chips = 5
 			}
 		},
-		pos = { x = 6, y = 0, scale_h = 73/95 },
+		pos = { x = 6, y = 0 },
+		pixel_size = { w = 71, h = 73 },
 		cost = 3,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
@@ -196,7 +198,8 @@ local oddities = {
 				chips = 20
 			}
 		},
-		pos = { x = 7, y = 0, scale_h = 73/95 },
+		pos = { x = 7, y = 0 },
+		pixel_size = { w = 71, h = 73 },
 		rarity = 2,
 		cost = 5,
 		loc_vars = function(_c,info_queue,card)
@@ -218,7 +221,8 @@ local oddities = {
 				chips = 10
 			}
 		},
-		pos = { x = 8, y = 0, scale_h = 73/95 },
+		pos = { x = 8, y = 0 },
+		pixel_size = { w = 71, h = 73 },
 		rarity = 2,
 		cost = 5,
 		loc_vars = function(_c,info_queue,card)
@@ -240,7 +244,8 @@ local oddities = {
 				chips = 50
 			}
 		},
-		pos = { x = 9, y = 0, scale_h = 73/95 },
+		pos = { x = 9, y = 0 },
+		pixel_size = { w = 71, h = 73 },
 		rarity = 3,
 		cost = 7,
 		shader = 'booster',
@@ -387,7 +392,8 @@ local oddities = {
 		effect = 'CAW CAW!!!!',
 		config = {
 		},
-		pos = { x = 5, y = 1, scale_h = 60/95 },
+		pos = { x = 5, y = 1 },
+		pixel_size = { w = 71, h = 60 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(_c,info_queue,card)
@@ -403,7 +409,8 @@ local oddities = {
 		effect = 'boom :3',
 		config = {
 		},
-		pos = { x = 6, y = 1, scale_h = 67/95 },
+		pos = { x = 6, y = 1 },
+		pixel_size = { w = 71, h = 67 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(_c,info_queue,card)
@@ -419,7 +426,8 @@ local oddities = {
 		effect = 'ssssssss',
 		config = {
 		},
-		pos = { x = 7, y = 1, scale_h = 63/95 },
+		pos = { x = 7, y = 1 },
+		pixel_size = { w = 71, h = 63 },
 		rarity = 3,
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(_c,info_queue,card)
@@ -435,7 +443,8 @@ local oddities = {
 		effect = 'I FEEL SO ENERGIZED',
 		config = {
 		},
-		pos = { x = 8, y = 1, scale_h = 63/95 },
+		pos = { x = 8, y = 1 },
+		pixel_size = { w = 71, h = 63 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(_c,info_queue,card)
@@ -451,7 +460,8 @@ local oddities = {
 		effect = 'votevotevote',
 		config = {
 		},
-		pos = { x = 9, y = 1, scale_h = 69/95 },
+		pos = { x = 9, y = 1 },
+		pixel_size = { w = 71, h = 69 },
 		rarity = 1,
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(_c,info_queue,card)
@@ -488,7 +498,8 @@ local oddities = {
 				effect = "Queen",
 			}
 		},
-		pos = { x = 1, y = 2, scale_w = 49/71 },
+		pos = { x = 1, y = 2 },
+		pixel_size = { w = 49, h = 95 },
 		rarity = 4,
 		cost = 10,
 		loc_vars = function(_c) return {vars = {}} end,
@@ -559,7 +570,8 @@ local oddities = {
 		config = {
 			max_highlighted = 1
 		},
-		pos = { x = 3, y = 2, scale_w = 49/71, scale_h = 62/95 },
+		pos = { x = 3, y = 2 },
+		pixel_size = { w = 49, h = 62 },
 		rarity = 3,
 		cost = 7,
 		loc_vars = function(_c, info_queue, card) 
@@ -784,6 +796,44 @@ local oddities = {
 		end,
 		can_use = function(self, card, area, copier)
 			return true
+		end
+	},
+	'gift_of_the_knight', gift_of_the_knight = {
+		name = "Gift of the Knight",
+		subtitle = "Your indeterminate fate shines within you",
+		text = {
+			"Creates a random",
+			"{C:dark_edition}Polychrome {C:attention}3 of {C:hearts}Hearts{}",
+			"with {C:knightofheart}Heart{C:red} Aspect",
+			"and adds it to your hand",
+		},
+		config = {
+			extra = {
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 4,
+		cost = 10,
+		loc_vars = function(_c, info_queue, card) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+			info_queue[#info_queue+1] = G.P_ASPECTS.thac_heart
+            --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+				local enhancement = G.P_CENTERS.c_base
+				if pseudorandom(pseudoseed("gift_of_the_knight")) < 0.5 then
+					enhancement = pseudorandom_element(G.P_CENTER_POOLS.Enhanced)
+				end
+				local cardmak = create_playing_card({front = G.P_CARDS.H_3, center = enhancement}, G.hand)
+				cardmak:set_edition({polychrome = true})
+				cardmak:set_seal(SMODS.poll_seal{key = "gift_of_the_knight", mod = 10})
+				cardmak:set_aspect("thac_heart")
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
 		end
 	},
 }

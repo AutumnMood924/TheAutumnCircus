@@ -4,7 +4,10 @@ local shaders = {
     },
     'virtual', virtual = {
         path = "virtual.fs"
-    }
+    },
+    'inscribed', inscribed = {
+        path = "inscribed.fs"
+    },
 }
 
 local editions = {

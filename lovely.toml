@@ -237,3 +237,26 @@ payload = '''
 '''
 match_indent = true
 overwrite = false
+
+
+# graveyard (twisted mind) calc
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = '''
+--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+--Joker Effects
+'''
+position = "before"
+payload = '''
+if next(SMODS.find_card("j_thac_twisted_mind")) then
+	delay(0.3)
+	local context = {cardarea = G.hand, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}
+	for _, card2 in ipairs(G.graveyard_area.cards) do
+		SMODS.score_card(card2, context)
+	end
+	delay(0.3)
+end
+'''
+match_indent = true
+overwrite = false

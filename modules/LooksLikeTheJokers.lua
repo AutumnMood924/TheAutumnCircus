@@ -1371,7 +1371,7 @@ local jokers = {
             }}
         end,
         calculate = function(self, card, context)
-            if context.before then
+            if context.before and not context.blueprint then
                 if #G.play.cards == #context.scoring_hand + 1 then
                     card.ability.extra.chips_curr = card.ability.extra.chips_curr + card.ability.extra.chips
                     return {
@@ -1502,7 +1502,7 @@ local jokers = {
             }}
         end,
         calculate = function(self, card, context)
-            if context.setting_blind and not (context.blueprint_card or card).getting_sliced and #G.graveyard > 1 then
+            if context.setting_blind and not context.blueprint and not card.getting_sliced and #G.graveyard > 1 then
                 local temp_gy = AMM.api.graveyard.get_cards()
                 local success = 0
                 pseudoshuffle(temp_gy, pseudoseed("exorcism"))
@@ -1842,6 +1842,161 @@ local jokers = {
         end,
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 5
+        end,
+    },
+    'gaudy_bracelet', gaudy_bracelet = {
+        name = "Gaudy Bracelet",
+		subtitle = "Work In Progress!",
+        text = {
+            "This Joker gains {C:chips}+#1#{}",
+            "Chips when a played",
+            "{C:attention}Jewel Card{} scores",
+            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
+        },
+        config = { extra = {
+            chips_curr = 0,
+            chips = 11
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 3,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.chips,
+                card.ability.extra.chips_curr
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_thac_jewel") and not context.end_of_round and not context.blueprint then
+                card.ability.extra.chips_curr = card.ability.extra.chips_curr + card.ability.extra.chips
+                return {
+                    card = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.CHIPS,
+                }
+            end
+            if context.joker_main and card.ability.extra.chips_curr > 1 then
+                return {
+                    colour = G.C.CHIPS,
+                    chips = card.ability.extra.chips_curr
+                }
+            end
+        end,
+        enhancement_gate = "m_thac_jewel",
+    },
+    'twisted_mind', twisted_mind = {
+        name = "Twisted Mind",
+		subtitle = "* do you still subscribe to LOGIC?",
+        text = {
+            "Cards in your {C:attention}graveyard",
+            "score as if they were",
+            "in your hand",
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = { }}
+        end,
+        -- effect handled in a lovely patch
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'joke_book_of_the_dead', joke_book_of_the_dead = {
+        name = "Joke Book of the Dead",
+		subtitle = "It's missing a lot of pages...",
+        text = {
+            "When {C:attention}Blind{} is selected, gain",
+            "{C:red}+#1#{} Discard#2# for every {C:attention}#3#{} cards",
+            "in your {C:attention}graveyard{}",
+            "{C:inactive}(Currently: {C:red}+#4#{C:inactive} Discards)",
+        },
+        config = { extra = {
+            discards = 1,
+            targets = 4,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            local blah = ""
+            if math.floor(card.ability.extra.discards) ~= 1 then blah = "s" end
+            return {vars = {
+                math.floor(card.ability.extra.discards),
+                blah,
+                math.floor(card.ability.extra.targets),
+                math.floor(card.ability.extra.discards) * math.floor(AMM.api.graveyard.count_cards() / math.floor(card.ability.extra.targets)),
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.setting_blind and not card.getting_sliced and not (context.blueprint_card or card).getting_sliced then
+                local gy_count = AMM.api.graveyard.count_cards()
+                local tally = math.floor(gy_count / math.floor(card.ability.extra.targets))
+                local d_rate = math.floor(card.ability.extra.discards)
+                if tally == 0 or d_rate == 0 then return end
+                ease_discard(d_rate * tally)
+                return {
+                    message = "Hee Hee Hee",
+                    colour = G.C.RED,
+                }
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'gravedigger', gravedigger = {
+        name = "Gravedigger",
+		subtitle = "Somebody's gotta do it",
+        text = {
+            "Earn {C:money}$#1#{} when a",
+            "card is put into",
+            "your {C:attention}graveyard{}",
+        },
+        config = { extra = {
+            money = 2,
+        }},
+        pos = { x = 7, y = 3 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {
+                math.floor(card.ability.extra.money),
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.amm_buried_card then
+                ease_dollars(math.floor(card.ability.extra.money))
+                return {
+                    message = "$"..math.floor(card.ability.extra.money),
+                    colour = G.C.MONEY,
+                }
+            end
         end,
     },
 }
