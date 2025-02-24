@@ -1787,7 +1787,7 @@ local jokers = {
     },
     'jokermancer', jokermancer = {
         name = "Jokermancer",
-		subtitle = "Work In Progress!",
+		subtitle = "Waste not, want not!",
         text = {
             "Each scored card gives",
             "{C:mult}+#1#{} Mult for each card",
@@ -1797,7 +1797,7 @@ local jokers = {
         config = { extra = {
             mult = 1
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 7, y = 2 },
         cost = 8,
         rarity = 3,
         blueprint_compat = true,
@@ -1805,6 +1805,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = {card.ability.extra.mult}}
         end,
