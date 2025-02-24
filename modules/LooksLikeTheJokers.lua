@@ -2092,6 +2092,49 @@ local jokers = {
             end
         end,
     },
+    'triplicate_soul', triplicate_soul = {
+        name = "Triplicate Soul",
+		subtitle = "my fate is indeterminate...",
+        text = {
+            "Create {C:attention}#1#{} cop#2# of",
+            "each card put into",
+            "your {C:attention}graveyard{}",
+        },
+        config = { extra = {
+            cards = 2,
+        }},
+        pos = { x = 8, y = 1 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        -- "Ternary System"
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {
+                math.floor(card.ability.extra.cards),
+                math.floor(card.ability.extra.cards) == 1 and "y" or "ies",
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.amm_buried_card then
+                for i=1,math.floor(card.ability.extra.cards) do
+                    local _card = copy_card(context.other_card, nil, nil, G.playing_card)
+                    G.graveyard_area:emplace(_card)
+                    table.insert(G.graveyard, _card)
+                    _card.playing_card = #G.graveyard
+                    _card.graveyard = true
+                end
+                return {
+                    message = localize("k_copied_ex"),
+                    colour = G.C.BLUE,
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
