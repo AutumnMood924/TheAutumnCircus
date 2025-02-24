@@ -1,4 +1,4 @@
-if SMODS.Mods['SixSuits'] and TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord then
+--[[if SMODS.Mods['SixSuits'] and TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord then
 	local function six_suits_center_override(self, _center, _front)
 		local center = _center or self.config.center
 		if center and center.set == "Default" then
@@ -31,4 +31,4 @@ if SMODS.Mods['SixSuits'] and TheAutumnCircus.config.enabled_modules.suitedunimp
 	end
 	SMODS.Suits['six_Moons'].center_override = six_suits_center_override
 	SMODS.Suits['six_Stars'].center_override = six_suits_center_override
-end
+end--]]

@@ -289,7 +289,7 @@ function Card:load(cardTable, other_card)
     self.VT.h = self.T.h
     self.VT.w = self.T.w
 end
-
+--[[
 local alias__Card_set_sprites = Card.set_sprites;
 function Card:set_sprites(_center, _front)
 	alias__Card_set_sprites(self, _center, _front)
@@ -303,7 +303,7 @@ function Card:set_sprites(_center, _front)
 	if suit and SMODS.Suits[suit] and SMODS.Suits[suit].center_override and type(SMODS.Suits[suit].center_override) == "function" then
 		SMODS.Suits[suit].center_override(self, _center, _front)
 	end
-end
+end--]]
 
 ------------------------------------------------------------------------
 --- Sock and Buskin Stamp

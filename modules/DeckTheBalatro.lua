@@ -52,6 +52,7 @@ local decks = {
 			G.GAME.modifiers.thac_arcane_deck = true
 		end,
 	},
+	--[[
 	'alpha_deck', alpha_deck = {
 		name = "Alpha Deck",
 		text = {
@@ -114,6 +115,7 @@ local decks = {
 			G.GAME.modifiers.thac_progenitor_deck = true
 		end,
 	},
+	---]]
 }
 
 
