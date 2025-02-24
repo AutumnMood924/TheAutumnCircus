@@ -260,3 +260,31 @@ end
 '''
 match_indent = true
 overwrite = false
+
+# patch pokermon's silver seal to not work when triggered by twisted mind
+# this is both for balance reasons and because it breaks shit lol
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "seals/seals1.lua"]'
+pattern = '''
+if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) then
+'''
+position = "before"
+payload = '''
+if card.area ~= G.graveyard_area then
+'''
+match_indent = true
+overwrite = false
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "seals/seals1.lua"]'
+pattern = '''
+  delay(0.3)
+end
+'''
+position = "after"
+payload = '''
+end
+'''
+match_indent = true
+overwrite = false
