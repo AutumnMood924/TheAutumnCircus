@@ -13,6 +13,10 @@ TheAutumnCircus.mod.optional_features = function()
         cardareas = {
             --graveyard = true,
         },
+        amm = {
+            suit_levels = true,
+            graveyard = true,
+        },
 	}
 end
 
