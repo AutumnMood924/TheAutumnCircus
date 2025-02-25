@@ -385,19 +385,60 @@ local oddities = {
 	},
 	'cultist_potion', cultist_potion = {
 		name = "Cultist Potion",
-		subtitle = "Work In Progress!",
+		subtitle = "CAW CAW!!!!",
 		text = {
-			'{C:inactive}Not Yet Implemented',
+			'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+			'{X:attention,C:white}ACTIVE:{} This Oddity gains',
+			'{X:mult,C:white}X#1#{} Mult per {C:blue}Hand{} played',
+			'{C:red,E:1}self destructs{} at end of round',
+			'{C:inactive}(Currently: {X:mult,C:white}X#2#{C:inactive} Mult)',
 		},
 		effect = 'CAW CAW!!!!',
 		config = {
+			extra = {
+				Xmult_curr = 0,
+				Xmult = 1,
+				active = false,
+			},
 		},
 		pos = { x = 5, y = 1 },
 		pixel_size = { w = 71, h = 60 },
 		rarity = 3,
-		yes_pool_flag = "neversetthis",
+		cost = 6,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {
+				vars = {
+					card.ability.extra.Xmult,
+					card.ability.extra.Xmult_curr,
+				}
+			}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or self
+			card.ability.extra.active = true
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "CAW CAW!!!!", colour = G.C.BLUE, instant = true})
+			juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
+		end,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = function(self, card, context)
+			if card.ability.extra.active then
+				if context.joker_main then
+					if not context.blueprint then
+						card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult
+					end
+					if card.ability.extra.Xmult_curr < 1 then return end
+					return {
+						xmult = card.ability.extra.Xmult_curr
+					}
+				end
+				if context.end_of_round and context.main_eval and not context.blueprint then
+					card:start_dissolve()
+				end
+			end
 		end,
 	},
 	'fire_potion', fire_potion = {
