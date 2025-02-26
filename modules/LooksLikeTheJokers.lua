@@ -2165,6 +2165,79 @@ local jokers = {
             end
         end,
     },
+    'shutin', shutin = {
+        name = "Shut-In",
+		subtitle = "Work In Progress!",
+        text = {
+            "{C:attention}Unscored{} played cards",
+            "permanently gain",
+            "{C:mult}+#1#{} Mult when scored",
+        },
+        config = { extra = {
+            mult = 5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.mult
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round then
+                context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + card.ability.extra.mult
+                return {
+                    extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
+                    colour = G.C.MULT,
+                    card = card,
+                }
+            end
+        end,
+    },
+    'ace_in_the_hole', ace_in_the_hole = {
+        name = "Ace in the Hole",
+		subtitle = "Work In Progress!",
+        text = {
+            "{C:attention}Unscored{} played {C:attention}Aces{}",
+            "earn {C:money}$#1#{} and are {C:red,E:1}destroyed",
+        },
+        config = { extra = {
+            money = 5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.money
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:get_id() == 14 then
+                ease_dollars(card.ability.extra.money)
+                return {
+                    extra = {
+                        message = localize('$')..card.ability.extra.money,
+                        colour = G.C.MONEY
+                    },
+                    card = card,
+                    colour = G.C.MONEY
+                }
+            end
+            if context.destroying_card and context.cardarea == "unscored" and context.destroying_card:get_id() == 14 then
+                return true
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
