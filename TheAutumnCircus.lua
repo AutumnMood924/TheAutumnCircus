@@ -11,6 +11,7 @@ TheAutumnCircus.mod.optional_features = function()
 		retrigger_joker = true,
         quantum_enhancements = true,
         cardareas = {
+            unscored = true,
             --graveyard = true,
         },
         amm = {

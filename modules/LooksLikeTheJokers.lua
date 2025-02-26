@@ -342,10 +342,10 @@ local jokers = {
         name = "Filler Card",
         subtitle = "- remember to replace Filler Card",
         text = {
-            "This Joker gains {X:chips,C:white} X#1# {} chips",
+            "This Joker gains {X:chips,C:white} X#1# {} Chips",
             "for each scored card {C:attention}without any{}",
             "Enhancement, Seal, Edition, or Aspect",
-            "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} chips)"
+            "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)"
         },
         config = {extra = { Xchips_curr = 1, Xchips = 0.05 }},
         pos = { x = 0, y = 0 },
@@ -388,7 +388,7 @@ local jokers = {
         text = {
             "Jokers with the {C:attention}same",
             "{C:attention}art{} as this Joker",
-            "give {X:chips,C:white} X#1# {} chips"
+            "give {X:chips,C:white} X#1# {} Chips"
         },
         config = {extra = { Xchips = 1.8 }},
         pos = { x = 0, y = 0 },
@@ -1474,10 +1474,9 @@ local jokers = {
 		subtitle = "Work In Progress!",
         text = {
             "When {C:attention}Blind{} is selected, remove",
-            "{C:attention}#1#{} random playing card#2# in your",
-            "{C:attention}graveyard{} from the game and",
-            "this Joker gains {X:mult,C:white}X#3#{} Mult",
-            "for each card removed",
+            "{C:attention}#1#{} random card#2# from your",
+            "{C:attention}graveyard{} and this Joker gains ",
+            "{X:mult,C:white}X#3#{} Mult for each removed",
             "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
         },
         config = { extra = {
@@ -1893,8 +1892,8 @@ local jokers = {
 		subtitle = "* do you still subscribe to LOGIC?",
         text = {
             "Cards in your {C:attention}graveyard",
-            "score as if they were",
-            "held in your hand",
+            "are scored as if they",
+            "were held in your hand",
         },
         config = { extra = {
         }},
@@ -2096,9 +2095,9 @@ local jokers = {
         name = "Triplicate Soul",
 		subtitle = "my fate is indeterminate...",
         text = {
-            "Create {C:attention}#1#{} cop#2# of",
-            "each card put into",
-            "your {C:attention}graveyard{}",
+            "Create {C:attention}#1#{} extra cop#2#",
+            "of each card put",
+            "into your {C:attention}graveyard{}",
             "{C:inactive}(Copies are created",
             "{C:inactive}in your graveyard)",
         },
@@ -2133,6 +2132,35 @@ local jokers = {
                 return {
                     message = localize("k_copied_ex"),
                     colour = G.C.BLUE,
+                }
+            end
+        end,
+    },
+    'grasp_of_emptiness', grasp_of_emptiness = {
+        name = "Grasp of Emptiness",
+		subtitle = "Work In Progress!",
+        text = {
+            "{C:attention}Unscored{} played cards","give {X:mult,C:white}X#1#{} Mult",
+        },
+        config = { extra = {
+            Xmult = 1.5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.Xmult
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round then
+                return {
+                    xmult = card.ability.extra.Xmult
                 }
             end
         end,
