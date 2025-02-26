@@ -2,7 +2,7 @@ local tags = {
 	"gilded", gilded = {
 		name = "Gilded Tag",
 		config = {type = "store_joker_modify"},
-		pos = {x = 0, y = 0},
+		pos = {x = 0, y = 2},
 		text = {
 			"makes a gilded joker in shop",
 			"todo: care about this description"
