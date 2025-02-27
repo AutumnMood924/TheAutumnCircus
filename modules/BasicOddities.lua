@@ -477,19 +477,63 @@ local oddities = {
 	},
 	'energy_potion', energy_potion = {
 		name = "Energy Potion",
-		subtitle = "Work In Progress!",
+		subtitle = "Gain 2 Energy",
 		text = {
-			'{C:inactive}Not Yet Implemented',
+			'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+			'{X:attention,C:white}ACTIVE:{} Retrigger each',
+			'playing card {C:attention}#1#{} time#2#',
+			'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
 		},
 		effect = 'I FEEL SO ENERGIZED',
 		config = {
+			extra = {
+				retriggers = 2,
+				active = false,
+			},
 		},
 		pos = { x = 8, y = 1 },
 		pixel_size = { w = 71, h = 63 },
-		rarity = 1,
-		yes_pool_flag = "neversetthis",
+		cost = 5,
+		rarity = 2,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {
+				vars = {
+					card.ability.extra.retriggers,
+					card.ability.extra.retriggers == 1 and "" or "s",
+				}
+			}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or self
+			card.ability.extra.active = true
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "ACTIVE!", colour = G.C.ORANGE, instant = true})
+			juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
+		end,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = function(self, card, context)
+			if card.ability.extra.active then
+				if context.repetition then
+					return {
+						repetitions = card.ability.extra.retriggers,
+						message = localize("k_again_ex"),
+						colour = G.C.ORANGE,
+					}
+				end
+				if context.after and not context.blueprint then
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0,
+						func = function()
+							card:start_dissolve()
+							return true
+						end,
+					}))
+				end
+			end
 		end,
 	},
 	'vote_sticker', vote_sticker = {
