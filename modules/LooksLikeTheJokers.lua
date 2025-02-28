@@ -1575,9 +1575,9 @@ local jokers = {
         name = "Common Ground",
 		subtitle = "We all rot in the same soil",
         text = {
-            "Draw #1# additional card#2#",
-            "after drawing the first hand",
-            "for each {C:attention}different rank{} among",
+            "When round begins, draw #1#",
+            "additional card#2# for each",
+            "{C:attention}different rank{} among",
             "cards in your {C:attention}graveyard{}",
             "{C:inactive}(Currently: {C:attention}#3#{C:inactive} ranks)"
         },
@@ -2422,6 +2422,206 @@ local jokers = {
                 for i=#gy_cards,1,-1 do
                     gy_cards[i]:remove_from_game(nil, true)
                 end
+            end
+        end,
+    },
+    'joker_of_swords', joker_of_swords = {
+        name = "Joker of Swords",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_swords}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Swords",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.suit, true) then return true end
+            end
+        end,
+    },
+    'joker_of_coins', joker_of_coins = {
+        name = "Joker of Coins",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_coins}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Coins",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.suit, true) then return true end
+            end
+        end,
+    },
+    'joker_of_wands', joker_of_wands = {
+        name = "Joker of Wands",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_wands}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Wands",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.suit, true) then return true end
+            end
+        end,
+    },
+    'joker_of_cups', joker_of_cups = {
+        name = "Joker of Cups",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_cups}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Cups",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.suit, true) then return true end
+            end
+        end,
+    },
+    'joker_of_pickaxes', joker_of_pickaxes = {
+        name = "Joker of Pickaxes",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_pickaxes}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Pickaxes",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.suit, true) then return true end
             end
         end,
     },
