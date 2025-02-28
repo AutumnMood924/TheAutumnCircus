@@ -945,17 +945,17 @@ local jokers = {
 				return {
 					extra = {focus = card,
 						message = localize{type = 'variable', key = 'a_blind_minus_percent',
-							vars = {card.ability.extra.reduction*100}}, 
-						func = function()
-						G.E_MANAGER:add_event(Event({
-							trigger = 'before',
-							delay = 0.0,
-							func = (function()
-								AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
-								return true
-							end)}))
-					end},
-					card = card
+							vars = {card.ability.extra.reduction*100}}, },
+					card = card,
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                            AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
+                            return true
+                        end)}))
+					end,
 				}
             end
             if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind.boss and context.main_eval and not context.blueprint then
@@ -2235,6 +2235,193 @@ local jokers = {
             end
             if context.destroying_card and context.cardarea == "unscored" and context.destroying_card:get_id() == 14 then
                 return true
+            end
+        end,
+    },
+    'topple_the_titans', topple_the_titans = {
+        name = "Topple the Titans",
+		subtitle = "Work In Progress!",
+        text = {
+            "If scored Chips value is at least",
+            "{X:attention,C:white}#1#X{} the Mult value, reduce",
+            "{C:attention}Blind{} requirement by {C:attention}#2#%{}",
+        },
+        config = { extra = {
+            threshold = 100,
+            reduction = 0.20,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['s_lord_witness_victory'] = {
+                name = "[S] Lord: Witness Victory",
+                text = {
+                    "{C:lordofvoid}A future that need not come to pass.",
+                    "{C:lordofvoid}...",
+                    "{C:lordofvoid}Let us not dwell here.",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_lord_witness_victory', set = 'Other'}
+            end
+            return {vars = {card.ability.extra.threshold, card.ability.extra.reduction * 100}}
+        end,
+        calculate = function(self, card, context)
+            if context.final_scoring_step and hand_chips >= mult * card.ability.extra.threshold then
+				return {
+					extra = {focus = card,
+						message = localize{type = 'variable', key = 'a_blind_minus_percent',
+							vars = {card.ability.extra.reduction*100}}, },
+					card = card,
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                            AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
+                            return true
+                        end)}))
+					end,
+				}
+            end
+        end,
+    },
+    'underdogs_secret', underdogs_secret = {
+        name = "Underdog's Secret",
+		subtitle = "Work In Progress!",
+        text = {
+            "If scored Chips value is at least",
+            "{X:attention,C:white}#1#X{} the Mult value, earn {C:money}$#2#",
+        },
+        config = { extra = {
+            threshold = 50,
+            money = 5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.threshold, card.ability.extra.money}}
+        end,
+        calculate = function(self, card, context)
+            if context.final_scoring_step and hand_chips >= mult * card.ability.extra.threshold then
+                ease_dollars(card.ability.extra.money)
+                return {
+                    message = localize('$')..card.ability.extra.money,
+                    colour = G.C.MONEY
+                }
+            end
+        end,
+    },
+    'amalgamiter', amalgamiter = {
+        name = "Amalgamiter",
+		subtitle = "using alchemiters in alchemy was a mistake",
+        text = {
+            "When round begins, if there",
+            "are at least {C:attention}#1#{} cards",
+            "in your {C:attention}graveyard{}, {C:attention}combine{}",
+            "them and put the result",
+            "into your hand",
+        },
+        config = { extra = {
+            threshold = 2,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {card.ability.extra.threshold}}
+        end,
+        calculate = function(self, card, context)
+            if context.first_hand_drawn and not context.blueprint then
+                local gy_cards = AMM.api.graveyard.get_cards()
+                if #gy_cards < card.ability.extra.threshold then return end
+                local suits = {} local ranks = {}
+                local enhancements = {} local seals = {} local editions = {}
+                local aspects = {} local bottles = {}
+                local perma = {
+                    bonus = 0,
+                    mult = 0,
+                    xbonus = 1,
+                    xmult = 1,
+                    hbonus = 0,
+                    hmult = 0,
+                    hxbonus = 1,
+                    hxmult = 1,
+                }
+                for k,v in ipairs(gy_cards) do
+                    suits[#suits+1] = v.base.suit
+                    ranks[#ranks+1] = v.base.value
+                    enhancements[#enhancements+1] = v.config.center.key
+                    seals[#seals+1] = v:get_seal(true)
+                    editions[#editions+1] = v.edition
+                    aspects[#aspects+1] = v:get_aspect(true)
+                    bottles[#bottles+1] = v.bottle
+                    perma.bonus = perma.bonus + v.ability.perma_bonus
+                    perma.bonus = perma.bonus + v.base.nominal
+                    perma.mult = perma.mult + v.ability.perma_mult
+                    perma.xbonus = perma.xbonus + (v.ability.perma_xbonus - 1)
+                    perma.xmult = perma.xmult + (v.ability.perma_xmult - 1)
+                    perma.hbonus = perma.hbonus + v.ability.perma_hbonus
+                    perma.hmult = perma.hmult + v.ability.perma_hmult
+                    perma.hxbonus = perma.hxbonus + (v.ability.perma_hxbonus - 1)
+                    perma.hxmult = perma.hxmult + (v.ability.perma_hxmult - 1)
+                end
+                -- generate and place the card
+                --   remember to remove the nominal value for the generated rank from perma.bonus
+                --   so its chip value isn't "counted twice"
+                local suit = pseudorandom_element(suits, pseudoseed("amalgamiter"))
+                local rank = pseudorandom_element(ranks, pseudoseed("amalgamiter"))
+                local enhancement = pseudorandom_element(enhancements, pseudoseed("amalgamiter"))
+                local seal = pseudorandom_element(seals, pseudoseed("amalgamiter"))
+                local edition = pseudorandom_element(editions, pseudoseed("amalgamiter"))
+                local aspect = pseudorandom_element(aspects, pseudoseed("amalgamiter"))
+                local bottle = pseudorandom_element(bottles, pseudoseed("amalgamiter"))
+
+                local new_card = create_playing_card({
+                    -- this isnt exactly obvious, but create_playing_card
+                    -- will default to creating a random playing card front if the
+                    -- front supplied is nil, so this should actually be safe even
+                    -- if for some reason certain combinations of suit and rank
+                    -- are invalid; it just won't make *much* sense
+                    front = G.P_CARDS[('%s_%s'):format(SMODS.Suits[suit].card_key, SMODS.Ranks[rank].card_key)],
+                    center = G.P_CENTERS[enhancement]
+                }, G.hand)
+
+                new_card:set_seal(seal)
+                new_card:set_edition(edition)
+                new_card:set_aspect(aspect)
+                new_card.bottle = bottle
+                new_card.ability.perma_bonus = perma.bonus - new_card.base.nominal
+                new_card.ability.perma_mult = perma.mult
+                new_card.ability.perma_xbonus = perma.xbonus
+                new_card.ability.perma_xmult = perma.xmult
+                new_card.ability.perma_hbonus = perma.hbonus
+                new_card.ability.perma_hmult = perma.hmult
+                new_card.ability.perma_hxbonus = perma.hxbonus
+                new_card.ability.perma_hxmult = perma.hxmult
+
+                -- empty the graveyard
+                for i=#gy_cards,1,-1 do
+                    gy_cards[i]:remove_from_game(nil, true)
+                end
             end
         end,
     },
