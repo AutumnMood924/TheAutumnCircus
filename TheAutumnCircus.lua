@@ -109,22 +109,23 @@ TheAutumnCircus.mod.process_loc_text = function()
         name = "Flush Effect",
         text = {
             "A {C:attention}Flush{} of {C:thac_swords}Swords{}",
-            "gives {X:red,C:white} X2 {} Mult",
+            "gives {X:red,C:white} X4 {} Mult",
         }
     }
 	G.localization.descriptions.Other["thac_wands_tooltip"] = {
         name = "Flush Effect",
         text = {
             "A {C:attention}Flush{} of {C:thac_wands}Wands{}",
-            "gains {C:blue}+10{} Chips",
-			"permanently",
+            "gains {C:mult}+7{} Mult",
+			"permanently when",
+            "scored"
         }
     }
 	G.localization.descriptions.Other["thac_coins_tooltip"] = {
         name = "Flush Effect",
         text = {
             "A {C:attention}Flush{} of {C:thac_coins}Coins{}",
-            "earns {C:money}$5{}",
+            "earns {C:money}$9{}",
         }
     }
 	G.localization.descriptions.Other["thac_pickaxes_tooltip"] = {

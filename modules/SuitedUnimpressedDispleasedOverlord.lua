@@ -19,8 +19,8 @@ local suits = {
 		color = "56a786",
 		flush_function = function(hand)
 			for i=1,#hand do
-				hand[i].ability.perma_bonus = hand[i].ability.perma_bonus or 0
-				hand[i].ability.perma_bonus = hand[i].ability.perma_bonus + 10
+				hand[i].ability.perma_mult = hand[i].ability.perma_mult or 0
+				hand[i].ability.perma_mult = hand[i].ability.perma_mult + 7
 			end
 			return { message = "Upgrade!" }
 		end,
@@ -33,8 +33,8 @@ local suits = {
 		ui_pos = {x = 2, y = 0},
 		color = "fda200",
 		flush_function = function(hand)
-			ease_dollars(5)
-			return { message = "+5 Dollars" }
+			ease_dollars(9)
+			return { message = "+9 Dollars" }
 		end,
 		--center_override = minor_arcana_center_override,
 	},
@@ -45,9 +45,9 @@ local suits = {
 		ui_pos = {x = 3, y = 0},
 		color = "fe5f55",
 		flush_function = function(hand)
-			mult = mod_mult(mult*2)
+			mult = mod_mult(mult*4)
 			update_hand_text({delay = 0}, {mult = mult})
-			return { message = "X2 Mult" }
+			return { message = "X4 Mult" }
 		end,
 		--center_override = minor_arcana_center_override,
 	},

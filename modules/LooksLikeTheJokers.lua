@@ -2791,7 +2791,7 @@ local jokers = {
             return {vars = { }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and context.scoring_name == "spectrum_Straight Spectrum" then
+            if context.joker_main and not context.blueprint and context.scoring_name == "spectrum_Straight Spectrum" then
                 local planets = G.consumeables.config.card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer)
                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + planets
                 G.E_MANAGER:add_event(Event({
@@ -2809,6 +2809,56 @@ local jokers = {
                 return {
                     message = "Planets!",
                     colour = G.C.SECONDARY_SET.Planet,
+                }
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SpectrumFramework"))
+        end,
+    },
+    'paint_mixer', paint_mixer = {
+        name = "Paint Mixer",
+		subtitle = "Work In Progress!",
+        text = {
+            "If played hand contains",
+            "a {C:attention}Spectrum{}, {C:green}randomize{}",
+            "the {C:attention}suit{} of each",
+            "scoring card"
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.before and next(context.poker_hands["spectrum_Spectrum"]) then
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        for i = 1, #context.scoring_hand do
+                            local other_card = context.scoring_hand[i]
+                            local SUITS = {}
+                            for k,v in ipairs(SMODS.Suit.obj_buffer) do
+                                if not SMODS.Suits[v] or not SMODS.Suits[v].in_pool then SUITS[#SUITS+1] = v
+                                elseif SMODS.Suits[v].in_pool and SMODS.Suits[v]:in_pool({rank=other_card.base.value}) then
+                                    SUITS[#SUITS+1] = v
+                                end
+                            end
+                            other_card:change_suit(pseudorandom_element(SUITS, pseudoseed("paint_mixer")))
+                            other_card:juice_up(0.3, 0.3)
+                        end
+                        return true
+                    end}))
+                return {
+                    message = "Randomized!",
+                    colour = G.C.GREEN,
                 }
             end
         end,
