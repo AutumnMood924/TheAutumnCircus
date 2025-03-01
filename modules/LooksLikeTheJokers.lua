@@ -16,7 +16,7 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
 	},
 	'court_joker', court_joker = {
@@ -34,7 +34,7 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
 	},
 	'wacky_joker', wacky_joker = {
@@ -52,8 +52,53 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
+	},
+	'fuzzy_joker', fuzzy_joker = {
+		name = "Fuzzy Joker",
+        subtitle = "uhhhhhhhhhhh...........",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand contains",
+            "any {C:attention}Animal hand"
+        },
+		config = {
+			extra = { mult = 12, },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.mult }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_animal(context) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+	},
+	'stoic_joker', stoic_joker = {
+		name = "Stoic Joker",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand contains",
+            "any {C:attention}Castle hand"
+        },
+		config = {
+			extra = { mult = 16, },
+		},
+		pos = { x = 3, y = 1 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, iq, card)
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
 	},
 	'obnoxious_joker', obnoxious_joker = {
 		name = "Obnoxious Joker",
@@ -70,7 +115,7 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
 	},
 	'regal_joker', regal_joker = {
@@ -88,7 +133,7 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
 	},
 	'crass_joker', crass_joker = {
@@ -106,8 +151,53 @@ local jokers = {
 		cost = 4,
         rarity = 1,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
+	},
+	'furry_joker', furry_joker = {
+		name = "Furry Joker",
+        subtitle = "ummmmmmmmmmm???????????",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand contains",
+            "any {C:attention}Animal hand"
+        },
+		config = {
+			extra = { chips = 120, },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_animal(context) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+	},
+	'stalwart_joker', stalwart_joker = {
+		name = "Stalwart Joker",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand contains",
+            "any {C:attention}Castle hand"
+        },
+		config = {
+			extra = { chips = 140, },
+		},
+		pos = { x = 3, y = 2 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, iq, card)
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.chips }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
 	},
     'funny_number', funny_number = {
         name = "The Funny Number",
@@ -124,7 +214,7 @@ local jokers = {
         cost = 8,
         rarity = 3,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
     },
     'royal', royal = {
@@ -142,7 +232,7 @@ local jokers = {
         cost = 8,
         rarity = 3,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
     },
     'bracket', bracket = {
@@ -160,9 +250,54 @@ local jokers = {
         cost = 8,
         rarity = 3,
 		loc_vars = function(_c, iq, card)
-            if #iq == 0 then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
     },
+	'pet', pet = {
+		name = "The Pet",
+        subtitle = "pet the dog (you must)",
+		text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "any {C:attention}Animal hand"
+        },
+		config = {
+			extra = { Xmult = 3.5, },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_animal(context) then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+	},
+	'bastion', bastion = {
+		name = "The Bastion",
+		text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "any {C:attention}Castle hand"
+        },
+		config = {
+			extra = { Xmult = 4.4, },
+		},
+		pos = { x = 3, y = 3 },
+		cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, iq, card)
+            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.Xmult }} end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+	},
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
         subtitle = "I am an idea thinking of itself",
@@ -474,12 +609,7 @@ local jokers = {
             return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
         end,
         calculate = function(self, card, context)
-            if context.before and not context.blueprint and (
-                next(context.poker_hands['thac_little_dog']) or
-                next(context.poker_hands['thac_big_dog']) or
-                next(context.poker_hands['thac_little_cat']) or
-                next(context.poker_hands['thac_big_cat'])
-            ) then
+            if context.before and not context.blueprint and TheAutumnCircus.func.context_check_animal(context) then
                 card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult_mod
                 return {
                     card = card,
@@ -2325,106 +2455,6 @@ local jokers = {
             end
         end,
     },
-    'amalgamiter', amalgamiter = {
-        name = "Amalgamiter",
-		subtitle = "using alchemiters in alchemy was a mistake",
-        text = {
-            "When round begins, if there",
-            "are at least {C:attention}#1#{} cards",
-            "in your {C:attention}graveyard{}, {C:attention}combine{}",
-            "them and put the result",
-            "into your hand",
-        },
-        config = { extra = {
-            threshold = 2,
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 10,
-        rarity = 3,
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            return {vars = {card.ability.extra.threshold}}
-        end,
-        calculate = function(self, card, context)
-            if context.first_hand_drawn and not context.blueprint then
-                local gy_cards = AMM.api.graveyard.get_cards()
-                if #gy_cards < card.ability.extra.threshold then return end
-                local suits = {} local ranks = {}
-                local enhancements = {} local seals = {} local editions = {}
-                local aspects = {} local bottles = {}
-                local perma = {
-                    bonus = 0,
-                    mult = 0,
-                    xbonus = 1,
-                    xmult = 1,
-                    hbonus = 0,
-                    hmult = 0,
-                    hxbonus = 1,
-                    hxmult = 1,
-                }
-                for k,v in ipairs(gy_cards) do
-                    suits[#suits+1] = v.base.suit
-                    ranks[#ranks+1] = v.base.value
-                    enhancements[#enhancements+1] = v.config.center.key
-                    seals[#seals+1] = v:get_seal(true)
-                    editions[#editions+1] = v.edition
-                    aspects[#aspects+1] = v:get_aspect(true)
-                    bottles[#bottles+1] = v.bottle
-                    perma.bonus = perma.bonus + v.ability.perma_bonus
-                    perma.bonus = perma.bonus + v.base.nominal
-                    perma.mult = perma.mult + v.ability.perma_mult
-                    perma.xbonus = perma.xbonus + (v.ability.perma_xbonus - 1)
-                    perma.xmult = perma.xmult + (v.ability.perma_xmult - 1)
-                    perma.hbonus = perma.hbonus + v.ability.perma_hbonus
-                    perma.hmult = perma.hmult + v.ability.perma_hmult
-                    perma.hxbonus = perma.hxbonus + (v.ability.perma_hxbonus - 1)
-                    perma.hxmult = perma.hxmult + (v.ability.perma_hxmult - 1)
-                end
-                -- generate and place the card
-                --   remember to remove the nominal value for the generated rank from perma.bonus
-                --   so its chip value isn't "counted twice"
-                local suit = pseudorandom_element(suits, pseudoseed("amalgamiter"))
-                local rank = pseudorandom_element(ranks, pseudoseed("amalgamiter"))
-                local enhancement = pseudorandom_element(enhancements, pseudoseed("amalgamiter"))
-                local seal = pseudorandom_element(seals, pseudoseed("amalgamiter"))
-                local edition = pseudorandom_element(editions, pseudoseed("amalgamiter"))
-                local aspect = pseudorandom_element(aspects, pseudoseed("amalgamiter"))
-                local bottle = pseudorandom_element(bottles, pseudoseed("amalgamiter"))
-
-                local new_card = create_playing_card({
-                    -- this isnt exactly obvious, but create_playing_card
-                    -- will default to creating a random playing card front if the
-                    -- front supplied is nil, so this should actually be safe even
-                    -- if for some reason certain combinations of suit and rank
-                    -- are invalid; it just won't make *much* sense
-                    front = G.P_CARDS[('%s_%s'):format(SMODS.Suits[suit].card_key, SMODS.Ranks[rank].card_key)],
-                    center = G.P_CENTERS[enhancement]
-                }, G.hand)
-
-                new_card:set_seal(seal)
-                new_card:set_edition(edition)
-                new_card:set_aspect(aspect)
-                new_card.bottle = bottle
-                new_card.ability.perma_bonus = perma.bonus - new_card.base.nominal
-                new_card.ability.perma_mult = perma.mult
-                new_card.ability.perma_xbonus = perma.xbonus
-                new_card.ability.perma_xmult = perma.xmult
-                new_card.ability.perma_hbonus = perma.hbonus
-                new_card.ability.perma_hmult = perma.hmult
-                new_card.ability.perma_hxbonus = perma.hxbonus
-                new_card.ability.perma_hxmult = perma.hxmult
-
-                -- empty the graveyard
-                for i=#gy_cards,1,-1 do
-                    gy_cards[i]:remove_from_game(nil, true)
-                end
-            end
-        end,
-    },
     'joker_of_swords', joker_of_swords = {
         name = "Joker of Swords",
 		subtitle = "Work In Progress!",
@@ -2623,6 +2653,162 @@ local jokers = {
             for k,v in ipairs(G.playing_cards) do
                 if v:is_suit(self.config.suit, true) then return true end
             end
+        end,
+    },
+    'amalgamiter', amalgamiter = {
+        name = "Amalgamiter",
+		subtitle = "using alchemiters in alchemy was a mistake",
+        text = {
+            "When round begins, if there",
+            "are at least {C:attention}#1#{} cards",
+            "in your {C:attention}graveyard{}, {C:attention}combine{}",
+            "them and put the result",
+            "into your hand",
+        },
+        config = { extra = {
+            threshold = 2,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 10,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {card.ability.extra.threshold}}
+        end,
+        calculate = function(self, card, context)
+            if context.first_hand_drawn and not context.blueprint then
+                local gy_cards = AMM.api.graveyard.get_cards()
+                if #gy_cards < card.ability.extra.threshold then return end
+                local suits = {} local ranks = {}
+                local enhancements = {} local seals = {} local editions = {}
+                local aspects = {} local bottles = {}
+                local perma = {
+                    bonus = 0,
+                    mult = 0,
+                    xbonus = 1,
+                    xmult = 1,
+                    hbonus = 0,
+                    hmult = 0,
+                    hxbonus = 1,
+                    hxmult = 1,
+                }
+                for k,v in ipairs(gy_cards) do
+                    suits[#suits+1] = v.base.suit
+                    ranks[#ranks+1] = v.base.value
+                    enhancements[#enhancements+1] = v.config.center.key
+                    seals[#seals+1] = v:get_seal(true)
+                    editions[#editions+1] = v.edition
+                    aspects[#aspects+1] = v:get_aspect(true)
+                    bottles[#bottles+1] = v.bottle
+                    perma.bonus = perma.bonus + v.ability.perma_bonus
+                    perma.bonus = perma.bonus + v.base.nominal
+                    perma.mult = perma.mult + v.ability.perma_mult
+                    perma.xbonus = perma.xbonus + (v.ability.perma_xbonus - 1)
+                    perma.xmult = perma.xmult + (v.ability.perma_xmult - 1)
+                    perma.hbonus = perma.hbonus + v.ability.perma_hbonus
+                    perma.hmult = perma.hmult + v.ability.perma_hmult
+                    perma.hxbonus = perma.hxbonus + (v.ability.perma_hxbonus - 1)
+                    perma.hxmult = perma.hxmult + (v.ability.perma_hxmult - 1)
+                end
+                -- generate and place the card
+                --   remember to remove the nominal value for the generated rank from perma.bonus
+                --   so its chip value isn't "counted twice"
+                local suit = pseudorandom_element(suits, pseudoseed("amalgamiter"))
+                local rank = pseudorandom_element(ranks, pseudoseed("amalgamiter"))
+                local enhancement = pseudorandom_element(enhancements, pseudoseed("amalgamiter"))
+                local seal = pseudorandom_element(seals, pseudoseed("amalgamiter"))
+                local edition = pseudorandom_element(editions, pseudoseed("amalgamiter"))
+                local aspect = pseudorandom_element(aspects, pseudoseed("amalgamiter"))
+                local bottle = pseudorandom_element(bottles, pseudoseed("amalgamiter"))
+
+                local new_card = create_playing_card({
+                    -- this isnt exactly obvious, but create_playing_card
+                    -- will default to creating a random playing card front if the
+                    -- front supplied is nil, so this should actually be safe even
+                    -- if for some reason certain combinations of suit and rank
+                    -- are invalid; it just won't make *much* sense
+
+                    -- you're welcome to test this though i have no idea if it works
+                    front = G.P_CARDS[('%s_%s'):format(SMODS.Suits[suit].card_key, SMODS.Ranks[rank].card_key)],
+                    center = G.P_CENTERS[enhancement]
+                }, G.hand)
+
+                new_card:set_seal(seal)
+                new_card:set_edition(edition)
+                new_card:set_aspect(aspect)
+                new_card.bottle = bottle
+                -- i remberd
+                new_card.ability.perma_bonus = perma.bonus - new_card.base.nominal
+                new_card.ability.perma_mult = perma.mult
+                new_card.ability.perma_xbonus = perma.xbonus
+                new_card.ability.perma_xmult = perma.xmult
+                new_card.ability.perma_hbonus = perma.hbonus
+                new_card.ability.perma_hmult = perma.hmult
+                new_card.ability.perma_hxbonus = perma.hxbonus
+                new_card.ability.perma_hxmult = perma.hxmult
+
+                -- empty the graveyard
+                for i=#gy_cards,1,-1 do
+                    gy_cards[i]:remove_from_game(nil, true)
+                end
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'stargazing', stargazing = {
+        name = "Stargazing",
+		subtitle = "Work In Progress!",
+        text = {
+            "If played hand is a",
+            "{C:attention}Straight Spectrum{},",
+            "fill your consumable",
+            "slots with random",
+            "{C:planet}Planet{} cards",
+            "{C:inactive}(Must have room)",
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and context.scoring_name == "spectrum_Straight Spectrum" then
+                local planets = G.consumeables.config.card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer)
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + planets
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        for i = 1, planets do
+                            if G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit then
+                                local card = create_card('Planet', G.consumeables, nil, nil, nil, nil, nil, 'stargazing')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                            end
+                        end
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end}))
+                return {
+                    message = "Planets!",
+                    colour = G.C.SECONDARY_SET.Planet,
+                }
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SpectrumFramework"))
         end,
     },
 }

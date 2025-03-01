@@ -493,8 +493,8 @@ local oddities = {
 		},
 		pos = { x = 8, y = 1 },
 		pixel_size = { w = 71, h = 63 },
-		cost = 5,
-		rarity = 2,
+		cost = 3,
+		rarity = 1,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			return {

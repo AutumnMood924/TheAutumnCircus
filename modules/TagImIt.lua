@@ -48,7 +48,8 @@ local tags = {
 				local lock = tag.ID
 				G.CONTROLLER.locks[lock] = true
 				tag:yep('+', G.C.PURPLE,function() 
-					local oddities_to_spawn = G.consumeables.config.card_limit - #G.consumeables.cards
+					local oddities_to_spawn = G.consumeables.config.card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer)
+					--G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + oddities_to_spawn
 					for i = 1, oddities_to_spawn do
 						if G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit then
 							local card = create_card('Oddity', G.consumeables, nil, nil, nil, nil, nil, 'collectorstag')

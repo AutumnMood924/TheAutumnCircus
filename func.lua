@@ -90,6 +90,39 @@ function func.pseudorandom_unlocked_hand(ignore, seed)
 	return chosen_hand
 end
 
+function func.context_check_animal(context)
+	return context.scoring_hand and (
+		next(context.poker_hands["thac_little_dog"]) or
+		next(context.poker_hands["thac_big_dog"]) or
+		next(context.poker_hands["thac_little_cat"]) or
+		next(context.poker_hands["thac_big_cat"]) --[[or
+		next(context.poker_hands["thac_little_snake"]) or
+		next(context.poker_hands["thac_big_snake"]) or
+		next(context.poker_hands["thac_little_bird"]) or
+		next(context.poker_hands["thac_big_bird"]) or
+		next(context.poker_hands["thac_little_dragon"]) or
+		next(context.poker_hands["thac_big_dragon"]) or
+		next(context.poker_hands["thac_little_griffon"]) or
+		next(context.poker_hands["thac_big_griffon"])--]]
+	)
+end
+
+function func.context_check_castle(context)
+	return context.scoring_hand and (
+		next(context.poker_hands["thac_castle"]) or
+		next(context.poker_hands["thac_castle_stone"]) or
+		next(context.poker_hands["thac_castle_glass"]) or
+		next(context.poker_hands["thac_castle_steel"]) or
+		next(context.poker_hands["thac_castle_gold"]) --[[or
+		next(context.poker_hands["thac_castle_rusty"]) or
+		next(context.poker_hands["thac_castle_sand"]) or
+		next(context.poker_hands["thac_castle_grass"]) or
+		next(context.poker_hands["thac_castle_dirt"]) or
+		next(context.poker_hands["thac_castle_bone"]) or
+		next(context.poker_hands["thac_castle_jewel"])--]]
+	)
+end
+
 --[[ preserved for historical reasons
 function func.eval_this(_card, effects)
 	if effects then 
