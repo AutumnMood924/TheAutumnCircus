@@ -2689,12 +2689,14 @@ local jokers = {
                 local perma = {
                     bonus = 0,
                     mult = 0,
-                    xbonus = 1,
-                    xmult = 1,
-                    hbonus = 0,
-                    hmult = 0,
-                    hxbonus = 1,
-                    hxmult = 1,
+                    x_chips = 0,
+                    x_mult = 0,
+                    h_chips = 0,
+                    h_mult = 0,
+                    h_x_chips = 0,
+                    h_x_mult = 0,
+                    p_dollars = 0,
+                    h_dollars = 0,
                 }
                 for k,v in ipairs(gy_cards) do
                     suits[#suits+1] = v.base.suit
@@ -2707,12 +2709,15 @@ local jokers = {
                     perma.bonus = perma.bonus + v.ability.perma_bonus
                     perma.bonus = perma.bonus + v.base.nominal
                     perma.mult = perma.mult + v.ability.perma_mult
-                    perma.xbonus = perma.xbonus + (v.ability.perma_xbonus - 1)
-                    perma.xmult = perma.xmult + (v.ability.perma_xmult - 1)
-                    perma.hbonus = perma.hbonus + v.ability.perma_hbonus
-                    perma.hmult = perma.hmult + v.ability.perma_hmult
-                    perma.hxbonus = perma.hxbonus + (v.ability.perma_hxbonus - 1)
-                    perma.hxmult = perma.hxmult + (v.ability.perma_hxmult - 1)
+                    -- fuck it we ball idfk how this shit works
+                    perma.x_chips = perma.x_chips + v.ability.perma_x_chips
+                    perma.x_mult = perma.x_mult + v.ability.perma_x_mult
+                    perma.h_chips = perma.h_chips + v.ability.perma_h_chips
+                    perma.h_mult = perma.h_mult + v.ability.perma_h_mult
+                    perma.h_x_chips = perma.h_x_chips + v.ability.perma_h_x_chips
+                    perma.h_x_mult = perma.h_x_mult + v.ability.perma_h_x_mult
+                    perma.p_dollars = perma.p_dollars + v.ability.perma_p_dollars
+                    perma.h_dollars = perma.h_dollars + v.ability.perma_h_dollars
                 end
                 -- generate and place the card
                 --   remember to remove the nominal value for the generated rank from perma.bonus
@@ -2744,12 +2749,12 @@ local jokers = {
                 -- i remberd
                 new_card.ability.perma_bonus = perma.bonus - new_card.base.nominal
                 new_card.ability.perma_mult = perma.mult
-                new_card.ability.perma_xbonus = perma.xbonus
-                new_card.ability.perma_xmult = perma.xmult
-                new_card.ability.perma_hbonus = perma.hbonus
-                new_card.ability.perma_hmult = perma.hmult
-                new_card.ability.perma_hxbonus = perma.hxbonus
-                new_card.ability.perma_hxmult = perma.hxmult
+                new_card.ability.perma_x_chips = perma.x_chips
+                new_card.ability.perma_x_mult = perma.x_mult
+                new_card.ability.perma_h_chips = perma.h_chips
+                new_card.ability.perma_h_mult = perma.h_mult
+                new_card.ability.perma_h_x_chips = perma.h_x_chips
+                new_card.ability.perma_h_x_mult = perma.h_x_mult
 
                 -- empty the graveyard
                 for i=#gy_cards,1,-1 do

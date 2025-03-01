@@ -160,7 +160,7 @@ local aspects = {
         badge_colour = "6E0E2E",
         badge_text_colour = "BD1864"
 	},
-	'rage', rage = {
+	--[['rage', rage = {
 		name = "rage",
 		display_name = "Rage",
 		text = {
@@ -186,7 +186,8 @@ local aspects = {
                     colour = G.C.MULT,
                     func = function()
                         for k,v in ipairs(G.play.cards) do
-                            v.ability.perma_xmult = v.ability.perma_xmult + 0.15
+							v.ability.perma_h_x_mult = math.max(v.ability.perma_h_x_mult, 1)
+                            v.ability.perma_h_x_mult = v.ability.perma_h_x_mult + 0.15
                             v:juice_up(0.3, 0.3)
                         end
                     end,
@@ -195,7 +196,7 @@ local aspects = {
 		end,
         badge_colour = "391E71",
         badge_text_colour = "9C4DAD"
-	},
+	},--]]
 	'blood', blood = {
 		name = "blood",
 		display_name = "Blood",
@@ -320,8 +321,8 @@ local aspects = {
 				return {
 					chips = card:get_chip_bonus(),
                     mult = card:get_chip_mult(),
-                    xchips = math.max(1, card:amm_get_chip_x_bonus()),
-                    Xmult = math.max(1, card:get_chip_x_mult()),
+                    xchips = math.max(1, card:get_chip_x_bonus()),
+                    xmult = math.max(1, card:get_chip_x_mult()),
 				}
 			end
 		end,
@@ -357,7 +358,7 @@ local aspects = {
         badge_colour = "000000",
         badge_text_colour = "FFFFFF"
 	},
-	'mind', mind = {
+	--[['mind', mind = {
 		name = "mind",
 		display_name = "Mind",
 		text = {
@@ -383,14 +384,15 @@ local aspects = {
 					message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                     func = function()
-						card.ability.perma_hxmult = card.ability.perma_hxmult + 0.2
+						card.ability.perma_h_x_mult = math.max(card.ability.perma_h_x_mult, 1)
+						card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + 0.2
                     end,
 				}
 			end
 		end,
         badge_colour = "50B250",
         badge_text_colour = "46FBC4"
-	},
+	},--]]
 	'hope', hope = {
 		name = "hope",
 		display_name = "Hope",
