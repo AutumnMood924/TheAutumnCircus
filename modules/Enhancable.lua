@@ -33,7 +33,7 @@ local enhancements = {
 			if context.cardarea == G.hand and
 				context.main_scoring then
 				card.ability.perma_bonus = card.ability.perma_bonus or 0
-				card.ability.perma_bonus = card.ability.perma_bonus + card.ability.extra.chips
+				card.ability.perma_bonus = card.ability.perma_bonus + card.ability.extra and card.ability.extra.chips or 5
 				return {
 					message = localize('k_upgrade_ex'),
 					colour = G.C.CHIPS,
@@ -63,7 +63,7 @@ local enhancements = {
 		calculate = function(self, card, context)
 			if context.discard and context.other_card == card then
 				card.ability.perma_mult = card.ability.perma_mult or 0
-				card.ability.perma_mult = card.ability.perma_mult + card.ability.extra.mult
+				card.ability.perma_mult = card.ability.perma_mult + card.ability.extra and card.ability.extra.mult or 2
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT})
 			end
 		end,
@@ -91,14 +91,14 @@ local enhancements = {
 				return {
 					extra = {focus = card,
 						message = localize{type = 'variable', key = 'a_blind_minus_percent',
-							vars = {card.ability.extra.reduction*100}}, },
+							vars = {card.ability.extra and card.ability.extra.reduction*100 or 8}}, },
 					card = card,
                     func = function()
                     G.E_MANAGER:add_event(Event({
                         trigger = 'before',
                         delay = 0.0,
                         func = (function()
-                            AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
+                            AMM.mod_blind(1-(card.ability.extra and card.ability.extra.reduction or 0.08), nil, true)
                             return true
                         end)}))
 					end,
@@ -124,14 +124,17 @@ local enhancements = {
 		loc_vars = function(self, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-			return {vars = {card.ability.extra.mult, card.ability.extra.mult * AMM.api.graveyard.count_cards()}}
+			return {vars = {
+				card.ability.extra and card.ability.extra.mult or 1,
+				(card.ability.extra and card.ability.extra.mult or 1) * AMM.api.graveyard.count_cards()
+			}}
 		end,
 		calculate = function(self, card, context)
 			if context.main_scoring and context.cardarea == G.play then
 				local gy_cards = AMM.api.graveyard.count_cards()
 				if gy_cards == 0 then return end
 				return {
-					mult = card.ability.extra.mult * gy_cards
+					mult = (card.ability.extra and card.ability.extra.mult or 1) * gy_cards
 				}
 			end
 		end,
@@ -157,12 +160,12 @@ local enhancements = {
 		loc_vars = function(self, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-			return {vars = {card.ability.extra.money}}
+			return {vars = {(card.ability.extra and card.ability.extra.money or 7)}}
 		end,
 		calculate = function(self, card, context)
 			if context.main_scoring and context.cardarea == G.play then
 				return {
-					p_dollars = card.ability.extra.money
+					p_dollars = (card.ability.extra and card.ability.extra.money or 7)
 				}
 			end
 		end,

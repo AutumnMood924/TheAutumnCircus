@@ -700,41 +700,54 @@ local jokers = {
         end,
         enhancement_gate = "m_thac_star",
     },
-    'quantum_grass', quantum_grass = {
-        name = "Quantum Grass Glass",
+    'paint_mixer', paint_mixer = {
+        name = "Paint Mixer",
 		subtitle = "Work In Progress!",
         text = {
-            "{C:attention}Glass{} cards and",
-            "{C:attention}Grass{} cards are also",
-            "considered {C:attention}Grass{} cards",
-            "and {C:attention}Glass{} cards, respectively"
+            "If played hand contains",
+            "a {C:attention}Spectrum{}, {C:green}randomize{}",
+            "the {C:attention}suit{} of each",
+            "scoring card"
         },
-        config = {extra = { }},
+        config = { extra = {
+        }},
         pos = { x = 0, y = 0 },
-        cost = 9,
-        rarity = 3,
+        cost = 5,
+        rarity = 2,
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = G.P_CENTERS['m_glass']
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = { }}
         end,
         calculate = function(self, card, context)
-            if context.check_enhancement then
-                if context.other_card.config.center.key == "m_glass" then
-                    return {
-                        m_thac_grass = true
-                    }
-                end
-                if context.other_card.config.center.key == "m_thac_grass" then
-                    return {
-                        m_glass = true
-                    }
-                end
+            if context.before and not context.blueprint and next(context.poker_hands["spectrum_Spectrum"]) then
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        for i = 1, #context.scoring_hand do
+                            local other_card = context.scoring_hand[i]
+                            local SUITS = {}
+                            for k,v in ipairs(SMODS.Suit.obj_buffer) do
+                                if not SMODS.Suits[v] or not SMODS.Suits[v].in_pool then SUITS[#SUITS+1] = v
+                                elseif SMODS.Suits[v].in_pool and SMODS.Suits[v]:in_pool({rank=other_card.base.value}) then
+                                    SUITS[#SUITS+1] = v
+                                end
+                            end
+                            other_card:change_suit(pseudorandom_element(SUITS, pseudoseed("paint_mixer")))
+                            other_card:juice_up(0.3, 0.3)
+                        end
+                        return true
+                    end}))
+                return {
+                    message = "Randomized!",
+                    colour = G.C.GREEN,
+                }
             end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SpectrumFramework"))
         end,
     },
     'psychic_double_reacharound', psychic_double_reacharound = {
@@ -2138,6 +2151,7 @@ local jokers = {
             "{C:red,s:1.1,E:1}destroyed{}",
             "{C:inactive}(Remaining: {C:red}#4#{C:inactive} card#5#)",
         },
+		boxes = { 1, 4 },
         config = { extra = {
             targets = 3,
             targets_curr = 3,
@@ -2816,62 +2830,63 @@ local jokers = {
             return next(SMODS.find_mod("SpectrumFramework"))
         end,
     },
-    'paint_mixer', paint_mixer = {
-        name = "Paint Mixer",
+    'somber_snowfall', somber_snowfall = {
+        name = "Somber Snowfall",
 		subtitle = "Work In Progress!",
         text = {
-            "If played hand contains",
-            "a {C:attention}Spectrum{}, {C:green}randomize{}",
-            "the {C:attention}suit{} of each",
-            "scoring card"
+            "{C:attention}Unscored{} played cards",
+            "give {C:chips}+#1#{} Chips for",
+            "each card in your {C:attention}graveyard{}",
+            "that shares a {C:attention}suit{} with it",
         },
         config = { extra = {
+            chips = 5,
         }},
         pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 2,
-        blueprint_compat = false,
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            return {vars = { }}
+            return {vars = {
+                card.ability.extra.chips
+            }}
         end,
         calculate = function(self, card, context)
-            if context.before and not context.blueprint and next(context.poker_hands["spectrum_Spectrum"]) then
-                G.E_MANAGER:add_event(Event({
-                    func = function() 
-                        for i = 1, #context.scoring_hand do
-                            local other_card = context.scoring_hand[i]
-                            local SUITS = {}
-                            for k,v in ipairs(SMODS.Suit.obj_buffer) do
-                                if not SMODS.Suits[v] or not SMODS.Suits[v].in_pool then SUITS[#SUITS+1] = v
-                                elseif SMODS.Suits[v].in_pool and SMODS.Suits[v]:in_pool({rank=other_card.base.value}) then
-                                    SUITS[#SUITS+1] = v
-                                end
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round then
+                if SMODS.has_any_suit(context.other_card) then
+                    return {
+                        chips = card.ability.extra.chips * AMM.api.graveyard.filter_count(function(v)
+                            if not SMODS.has_no_suit(v) then return true end
+                        end)
+                    }
+                elseif not SMODS.has_no_suit(context.other_card) then
+                    local SUITS = {}
+                    for _,k in ipairs(SMODS.Suit.obj_buffer) do
+                        if context.other_card:is_suit(k) then SUITS[#SUITS+1] = k end
+                    end
+                    return {
+                        chips = card.ability.extra.chips * AMM.api.graveyard.filter_count(function(v)
+                            if SMODS.has_no_suit(v) then return false end
+                            for _,k in ipairs(SUITS) do
+                                if v:is_suit(k) then return true end
                             end
-                            other_card:change_suit(pseudorandom_element(SUITS, pseudoseed("paint_mixer")))
-                            other_card:juice_up(0.3, 0.3)
-                        end
-                        return true
-                    end}))
-                return {
-                    message = "Randomized!",
-                    colour = G.C.GREEN,
-                }
+                        end)
+                    }
+                end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SpectrumFramework"))
-        end,
     },
+    
+    --
     'jack_of_all_trades', jack_of_all_trades = {
         name = "Jack of All Trades",
 		subtitle = "Work In Progress!",
         text = {
-            "Played {C:attention}Jacks{} are treated",
-            "as if they are each {C:attention}enhancement{}",
+            "Played {C:attention}Jacks{} are treated as",
+            "if they are each {C:attention}enhancement{}",
             "among cards held in hand",
         },
         config = {extra = { }},
@@ -2887,7 +2902,7 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.check_enhancement then
-                if context.other_card.area == G.play and context.other_card.base.value == "Jack" then
+                if context.other_card.area == G.play and context.other_card.base.value == "Jack" and not context.other_card.config.center.no_rank then
                     keys = {}
                     ret = false
                     for k,v in ipairs(G.hand.cards) do
@@ -2900,6 +2915,143 @@ local jokers = {
                 end
             end
         end,
+    },
+    'all_lucky_sevens', all_lucky_sevens = {
+        name = "All Lucky Sevens",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played {C:attention}7s{} are treated",
+            "as if they are also",
+            "{C:attention}Lucky Cards{}",
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and context.other_card.base.value == "7" and not context.other_card.config.center.no_rank then
+                    return {
+                        m_lucky = true,
+                    }
+                end
+            end
+        end,
+    },
+    'quantum_grass', quantum_grass = {
+        name = "Quantum Grass Glass",
+		subtitle = "Work In Progress!",
+        text = {
+            "{C:attention}Glass{} cards and",
+            "{C:attention}Grass{} cards are also",
+            "considered {C:attention}Grass{} cards",
+            "and {C:attention}Glass{} cards, respectively"
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS['m_glass']
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.config.center.key == "m_glass" then
+                    return {
+                        m_thac_grass = true
+                    }
+                end
+                if context.other_card.config.center.key == "m_thac_grass" then
+                    return {
+                        m_glass = true
+                    }
+                end
+            end
+        end,
+    },
+    'twin_stella', twin_stella = {
+        name = "Twin Stella",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with {C:six_stars}Star{} suit",
+            "are treated as if they are",
+            "also {C:attention}Star Cards{}",
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_star
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and
+                    (context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Stars" and not context.other_card.config.center.no_suit)) then
+                    return {
+                        m_thac_star = true,
+                    }
+                end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits"))
+        end
+    },
+    'lunar_grave', lunar_grave = {
+        name = "Lunar Grave",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with {C:six_moon}Moon{} suit",
+            "are treated as if they are",
+            "also {C:attention}Bone Cards{}",
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and
+                    (context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Moons" and not context.other_card.config.center.no_suit)) then
+                    return {
+                        m_thac_bone = true,
+                    }
+                end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits"))
+        end
     },
 }
 
@@ -2916,6 +3068,10 @@ for _, k in ipairs(jokers) do
 	if not v.rarity then v.rarity = 1 end
 	TheAutumnCircus.data.buffer_insert("Jokers", v, {key = k, atlas = "LooksLikeTheJokers"})
     if v.pos.x == 0 and v.pos.y == 0 then
-        placeholder_jokers[#placeholder_jokers+1] = "j_thac_" .. k
+        if v.load_check then
+            if v.load_check() then placeholder_jokers[#placeholder_jokers+1] = "j_thac_" .. k end
+        else
+            placeholder_jokers[#placeholder_jokers+1] = "j_thac_" .. k
+        end
     end
 end

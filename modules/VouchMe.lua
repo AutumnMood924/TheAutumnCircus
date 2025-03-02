@@ -184,6 +184,45 @@ local vouchers = {
 			G.GAME.ceaseless_wheel = true
 		end,
 	},
+	"plus_four", plus_four = {
+		name = "+4",
+		text = {
+			"{C:mult}+#1#{} Mult",
+		},
+		config = {
+			extra = {
+				mult = 4
+			},
+		},
+		pos = { x = 8, y = 0 },
+		loc_vars = function(_c, info_queue, card) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.mult }}
+		end,
+		calculate = function(self, card, context)
+			if context.joker_main then return {mult = card.ability.extra.mult} end
+		end,
+	},
+	"x_four", x_four = {
+		name = "X4",
+		text = {
+			"{X:mult,C:white}X#1#{} Mult",
+		},
+		config = {
+			extra = {
+				Xmult = 4
+			}
+		},
+		pos = { x = 9, y = 0 },
+		requires = {'v_thac_plus_four'},
+		loc_vars = function(_c, info_queue, card) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.Xmult }}
+		end,
+		calculate = function(self, card, context)
+			if context.joker_main then return {xmult = card.ability.extra.Xmult} end
+		end,
+	},
 }
 SMODS.Atlas{
 	key = "VouchMe",
