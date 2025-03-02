@@ -15,6 +15,7 @@ local config = {
 		lookslikethejokers = true,
 		editiontomeetya = true,
 		hamspect = true,
+		totallyrealzodiac = true,
 	},
 	enabled_jokers = {
 		wacky_joker = true,
@@ -249,6 +250,11 @@ local config = {
 	},
 	enabled_aspects = {
 		heart = true,
+	},
+	enabled_zodiacs = {
+		cancer_two = true,
+		jacks_belt = true,
+		double_cancer_two = true,
 	},
 	mechanics = {
 		minor_arcana_flush_effects = true,

@@ -1,4 +1,4 @@
-# A modularized Balatro mod adding a variety of content!  
+# REQUIRES https://github.com/AutumnMood924/AutumnMoodMechanics
 
 Adds Jokers, Tarots, Planets, Spectrals, Vouchers, Stamps, Poker Hands, Decks, Enhancements, Editions, Blinds, and Tags to Balatro  
 

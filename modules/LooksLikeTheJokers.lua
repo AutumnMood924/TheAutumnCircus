@@ -3091,9 +3091,9 @@ local jokers = {
         name = "Nine Lives",
 		subtitle = "Work In Progress!",
         text = {
-            "Returns all {C:attention}Soulbound Cards{} in",
-            "your {C:attention}graveyard{} to your hand if",
-            "played hand is a {C:attention}Little Cat{} or {C:attention}Big Cat{} and",
+            "Return all {C:attention}Soulbound Cards{} in",
+            "your {C:attention}graveyard{} to your hand if played",
+            "hand is a {C:attention}Little Cat{} or {C:attention}Big Cat{} and",
             "contains a scoring {C:attention}Soulbound Card{}"
         },
         config = { extra = {

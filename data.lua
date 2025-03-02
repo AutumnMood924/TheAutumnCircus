@@ -26,6 +26,7 @@ data.BUFFERS = {
 	Editions = {},
 	Tags = {},
 	Aspects = {},
+	Zodiacs = {},
 }
 
 data.buffer_register_funcs = {
@@ -261,6 +262,18 @@ data.buffer_register_funcs = {
 			if type(v.badge_text_colour) == "string" then v.badge_text_colour = HEX(v.badge_text_colour) end
 			
 			AMM.Aspect(v)
+		end
+	end,
+	Zodiacs = function(v)
+		if not (TheAutumnCircus.config.enabled_zodiacs[v.key] == false) and ((not v.load_check) or v.load_check()) then
+			if not v.loc_txt then
+				v.loc_txt = {
+					name = v.display_name or v.name,
+					text = v.text,
+					boxes = v.boxes
+				}
+			end
+			Ortalab.Zodiac(v)
 		end
 	end,
 }

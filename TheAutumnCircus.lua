@@ -234,6 +234,9 @@ end
 if TheAutumnCircus.config.enabled_modules.hamspect then
 	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.totallyrealzodiac and next(SMODS.find_mod("ortalab")) then
+	TheAutumnCircus.TRZ = NFS.load(TheAutumnCircus.mod.path.."modules/TotallyRealZodiac.lua")()	
+end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
 
