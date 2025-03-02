@@ -3053,6 +3053,88 @@ local jokers = {
             return next(SMODS.find_mod("SixSuits"))
         end
     },
+    'give_the_dog_a_bone', give_the_dog_a_bone = {
+        name = "Give the Dog a Bone",
+		subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult if played hand is",
+            "a {C:attention}Little Dog{} or {C:attention}Big Dog{} and",
+            "contains a scoring {C:attention}Bone Card{}"
+        },
+        config = { extra = {
+            Xmult = 4,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        enhancement_gate = "m_thac_bone",
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.Xmult
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and (next(context.poker_hands["thac_little_dog"]) or next(context.poker_hands["thac_big_dog"])) then
+                for k,v in ipairs(context.scoring_hand) do
+                    if SMODS.has_enhancement(v,"m_thac_bone") then
+                        return { xmult = card.ability.extra.Xmult }
+                    end
+                end
+            end
+        end,
+    },
+    'nine_lives', nine_lives = {
+        name = "Nine Lives",
+		subtitle = "Work In Progress!",
+        text = {
+            "Returns all {C:attention}Soulbound Cards{} in",
+            "your {C:attention}graveyard{} to your hand if",
+            "played hand is a {C:attention}Little Cat{} or {C:attention}Big Cat{} and",
+            "contains a scoring {C:attention}Soulbound Card{}"
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        enhancement_gate = "m_thac_soulbound",
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and (next(context.poker_hands["thac_little_cat"]) or next(context.poker_hands["thac_big_cat"])) then
+                for k,v in ipairs(context.scoring_hand) do
+                    if SMODS.has_enhancement(v,"m_thac_soulbound") then
+                        return {
+                            message = "Returned!",
+                            func = function()
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'before',
+                                delay = 0.0,
+                                func = (function()
+                                    for i=#G.graveyard,1,-1 do
+                                        if SMODS.has_enhancement(G.graveyard[i], "m_thac_soulbound") then
+                                            G.graveyard[i]:move_from_graveyard(G.hand)
+                                        end
+                                    end
+                                    return true
+                                end)}))
+                            end,
+                        }
+                    end
+                end
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

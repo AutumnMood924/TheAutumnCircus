@@ -236,7 +236,7 @@ position = "after"
 payload = '''
 	for i=#G.graveyard,1,-1 do
 		if SMODS.has_enhancement(G.graveyard[i], "m_thac_soulbound") then
-			G.graveyard[i].ability.perma_mult = G.graveyard[i].ability.perma_mult + 2
+			--G.graveyard[i].ability.perma_mult = G.graveyard[i].ability.perma_mult + 2
 			G.graveyard[i]:move_from_graveyard(G.deck)
 		end
 	end

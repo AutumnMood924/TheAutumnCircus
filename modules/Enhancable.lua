@@ -175,20 +175,25 @@ local enhancements = {
 		display_name = "Soulbound Card",
 		text = {
 			"Returns from your {C:attention}graveyard{}",
-			"to your {C:attention}deck{} and gains {C:mult}+2{} Mult",
+			"after each {C:attention}Boss Blind{}",
+			"Gains {C:mult}+#1#{} Mult",
 			"permanently when scored after",
-			"{C:attention}Boss Blind{} is defeated",
+			"returning from your {C:attention}graveyard{}",
 		},
 		effect = 'soulbound',
 		config = {
 			extra = {
+				mult = 2
 			}
 		},
 		pos = { x = 2, y = 1 },
 		loc_vars = function(self, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-			return {vars = { }}
+			return {vars = { card.ability.extra.mult }}
+		end,
+		remove_from_graveyard = function(self, card)
+			card.ability.perma_mult = card.ability.perma_mult + card.ability.extra.mult
 		end,
 	},
 }
