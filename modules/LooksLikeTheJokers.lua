@@ -2839,7 +2839,7 @@ local jokers = {
             return {vars = { }}
         end,
         calculate = function(self, card, context)
-            if context.before and next(context.poker_hands["spectrum_Spectrum"]) then
+            if context.before and not context.blueprint and next(context.poker_hands["spectrum_Spectrum"]) then
                 G.E_MANAGER:add_event(Event({
                     func = function() 
                         for i = 1, #context.scoring_hand do

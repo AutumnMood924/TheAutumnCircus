@@ -15,49 +15,55 @@ overwrite = true
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "local mod_percent = false"
-position = "before"
-payload = '''if next(poker_hands["Flush"]) then
-	local thac_flushfunc
-	local thac_suitcounts = {}
-	for i=1,#scoring_hand do
-		if (not scoring_hand[i].debuff) and scoring_hand[i].ability.effect ~= "Wild Card" and next(TheAutumnCircus.func.get_card_suits(scoring_hand[i], false)) then
-			thac_suitcounts[scoring_hand[i].base.suit] = (thac_suitcounts[scoring_hand[i].base.suit] or 0) + 1
-		end
-	end
-	local highest_suit = {"Hearts", 0}
-	for _, suit in ipairs(SMODS.Suit.obj_buffer) do
-		if thac_suitcounts[suit] then
-			if thac_suitcounts[suit] > highest_suit[2] then
-				highest_suit = {suit, thac_suitcounts[suit]}
-				--print("New highest suit! "..highest_suit[1])
+pattern = '''
+SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil)
+delay(0.3)
+'''
+position = "after"
+payload = '''
+if v == G.play then
+	if next(poker_hands["Flush"]) then
+		local thac_flushfunc
+		local thac_suitcounts = {}
+		for i=1,#scoring_hand do
+			if (not scoring_hand[i].debuff) and not SMODS.has_no_suit(scoring_hand[i]) and next(TheAutumnCircus.func.get_card_suits(scoring_hand[i], false)) then
+				thac_suitcounts[scoring_hand[i].base.suit] = (thac_suitcounts[scoring_hand[i].base.suit] or 0) + 1
 			end
 		end
-	end
-	thac_flushfunc = SMODS.Suits[highest_suit[1]].flush_function
-	if thac_flushfunc then
-		local effect = thac_flushfunc(scoring_hand)
-		G.E_MANAGER:add_event(Event({
-			trigger = 'before',
-			delay = 2.9,
-            func = (function()
-                local text = effect.message
-                play_sound('gong', 0.94, 0.3)
-                play_sound('gong', 0.94*1.5, 0.2)
-                play_sound('tarot1', 1.5)
-				if text then
-					attention_text({
-						scale = 1.4, text = text, hold = 1.7, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
-					})
+		local highest_suit = {"Hearts", 0}
+		for _, suit in ipairs(SMODS.Suit.obj_buffer) do
+			if thac_suitcounts[suit] then
+				if thac_suitcounts[suit] > highest_suit[2] then
+					highest_suit = {suit, thac_suitcounts[suit]}
+					--print("New highest suit! "..highest_suit[1])
 				end
-				if effect.func then effect.func(scoring_hand) end
-				for i=1,#scoring_hand do
-					scoring_hand[i]:juice_up()
-					delay(0.1)
-				end
-                return true
-            end)
-        }))
+			end
+		end
+		thac_flushfunc = SMODS.Suits[highest_suit[1]].flush_function
+		if thac_flushfunc then
+			local effect = thac_flushfunc(scoring_hand)
+			G.E_MANAGER:add_event(Event({
+				trigger = 'before',
+				delay = 2.9,
+				func = (function()
+					local text = effect.message
+					play_sound('gong', 0.94, 0.3)
+					play_sound('gong', 0.94*1.5, 0.2)
+					play_sound('tarot1', 1.5)
+					if text then
+						attention_text({
+							scale = 1.4, text = text, hold = 1.7, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+						})
+					end
+					if effect.func then effect.func(scoring_hand) end
+					for i=1,#scoring_hand do
+						scoring_hand[i]:juice_up()
+						--delay(0.1)
+					end
+					return true
+				end)
+			}))
+		end
 	end
 end'''
 match_indent = true

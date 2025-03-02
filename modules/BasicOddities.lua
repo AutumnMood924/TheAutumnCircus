@@ -846,7 +846,7 @@ local oddities = {
 			end
 		end,
 		can_use = function(self, card, area, copier)
-			return true
+			return card.area == G.consumeables
 		end
 	},
 	'fossil', fossil = {
@@ -880,7 +880,7 @@ local oddities = {
 			end
 		end,
 		can_use = function(self, card, area, copier)
-			return true
+			return card.area == G.consumeables
 		end
 	},
 	'gift_of_the_knight', gift_of_the_knight = {
