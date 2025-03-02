@@ -60,7 +60,7 @@ local suits = {
 		flush_function = function(hand)
 			return { message = "Mined!", func = function(hand)
 				for i=1,#G.hand.cards do
-					if G.hand.cards[i].ability.effect == "Stone Card" then
+					if SMODS.has_enhancement(G.hand.cards[i], "m_stone") then
 						G.hand.cards[i]:set_ability(G.P_CENTERS['m_steel'])
 					end
 				end
