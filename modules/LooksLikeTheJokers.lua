@@ -2866,6 +2866,41 @@ local jokers = {
             return next(SMODS.find_mod("SpectrumFramework"))
         end,
     },
+    'jack_of_all_trades', jack_of_all_trades = {
+        name = "Jack of All Trades",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played {C:attention}Jacks{} are treated",
+            "as if they are each {C:attention}enhancement{}",
+            "among cards held in hand",
+        },
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and context.other_card.base.value == "Jack" then
+                    keys = {}
+                    ret = false
+                    for k,v in ipairs(G.hand.cards) do
+                        if v.ability.set == "Enhanced" then
+                            keys[v.config.center.key] = true
+                            ret = true
+                        end
+                    end
+                    if ret then return keys end
+                end
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
