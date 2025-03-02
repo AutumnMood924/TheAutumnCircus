@@ -358,12 +358,12 @@ local aspects = {
         badge_colour = "000000",
         badge_text_colour = "FFFFFF"
 	},
-	--[['mind', mind = {
+	'mind', mind = {
 		name = "mind",
 		display_name = "Mind",
 		text = {
 			'This card permanently',
-			'gains {X:mult,C:white}X0.2{} Mult while',
+			'gains {C:mult}+5{} Mult while',
 			'held in hand each',
 			'{C:blue}Hand{} played while this',
 			'card is held in hand'
@@ -371,7 +371,7 @@ local aspects = {
 		effect = 'mind',
 		config = {
 			extra = {
-				Xmult = 0.2
+				mult = 5
 			}
 		},
 		pos = { x = 4, y = 1 },
@@ -384,15 +384,15 @@ local aspects = {
 					message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                     func = function()
-						card.ability.perma_h_x_mult = math.max(card.ability.perma_h_x_mult, 1)
-						card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + 0.2
+						card.ability.perma_h_mult = math.max(card.ability.perma_h_mult, 1)
+						card.ability.perma_h_mult = card.ability.perma_h_mult + 5
                     end,
 				}
 			end
 		end,
         badge_colour = "50B250",
         badge_text_colour = "46FBC4"
-	},--]]
+	},
 	'hope', hope = {
 		name = "hope",
 		display_name = "Hope",
