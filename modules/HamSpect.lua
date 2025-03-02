@@ -160,19 +160,18 @@ local aspects = {
         badge_colour = "6E0E2E",
         badge_text_colour = "BD1864"
 	},
-	--[['rage', rage = {
+	'rage', rage = {
 		name = "rage",
 		display_name = "Rage",
 		text = {
-			'Each played card',
-            'permanently gains',
-            '{X:mult,C:white}X0.15{} Mult when',
-            'this card is scored'
+			'{C:chips}+60{} Chips',
+			'{C:chips}+300{} Chips instead',
+			'on first hand of round',
 		},
 		effect = 'rage',
 		config = {
 			extra = {
-				Xmult = 0.15
+				chips = 60
 			}
 		},
 		pos = { x = 5, y = 0 },
@@ -180,23 +179,15 @@ local aspects = {
 			return {vars = { }}
 		end,
 		calculate = function(self, card, context)
-			if context.cardarea == G.play and context.before then
+			if context.cardarea == G.play and context.main_scoring then
 				return {
-					message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                    func = function()
-                        for k,v in ipairs(G.play.cards) do
-							v.ability.perma_h_x_mult = math.max(v.ability.perma_h_x_mult, 1)
-                            v.ability.perma_h_x_mult = v.ability.perma_h_x_mult + 0.15
-                            v:juice_up(0.3, 0.3)
-                        end
-                    end,
+					chips = G.GAME.current_round.hands_played == 0 and 300 or 60
 				}
 			end
 		end,
         badge_colour = "391E71",
         badge_text_colour = "9C4DAD"
-	},--]]
+	},
 	'blood', blood = {
 		name = "blood",
 		display_name = "Blood",
