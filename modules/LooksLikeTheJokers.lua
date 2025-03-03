@@ -776,18 +776,17 @@ local jokers = {
             end
         end,
     },
-    'chaotic', chaotic = {
-        name = "The Chaotic",
+    'nonstandard', nonstandard = {
+        name = "The Nonstandard",
         subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
-            "hand contains",
-            "a {C:attention}Spectrum{} but",
-            "{C:attention}isn't{} a {C:attention}Spectrum",
+            "hand isn't a",
+            "{C:attention}standard hand"
         },
         config = {
             extra = {
-                Xmult = 5,
+                Xmult = 3.2,
             },
         },
         pos = { x = 0, y = 0 },
@@ -795,16 +794,13 @@ local jokers = {
         rarity = 3,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
             return {vars = { card.ability.extra.Xmult }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and context.scoring_name ~= 'spectrum_Spectrum' then
+            if context.joker_main and not TheAutumnCircus.func.context_strict_standard_hands(context) then
                 return { xmult = card.ability.extra.Xmult }
             end
-        end,
-        load_check = function()
-            return next(SMODS.find_mod("SpectrumFramework"))
         end,
     },
     'joker_of_swords', joker_of_swords = {
@@ -1332,6 +1328,93 @@ local jokers = {
 		load_check = function()
 			return next(SMODS.find_mod("SixSuits"))
 		end,
+    },
+	'frivolous_joker', frivolous_joker = {
+		name = "Frivolous Joker",
+        subtitle = "Work In Progress!",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "a {C:attention}Spectrum"
+        },
+		config = {
+            extra = {
+                mult = 7
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }} end,
+        load_check = function()
+			return next(SMODS.find_mod("SpectrumFramework"))
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+	},
+	'groaning_joker', groaning_joker = {
+		name = "Groaning Joker",
+        subtitle = "Work In Progress!",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "a {C:attention}Spectrum"
+        },
+		config = {
+            extra = {
+                chips = 65
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.chips }} end,
+        load_check = function()
+			return next(SMODS.find_mod("SpectrumFramework"))
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+	},
+    'chaotic', chaotic = {
+        name = "The Chaotic",
+        subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Spectrum{} but",
+            "{C:attention}isn't{} a {C:attention}Spectrum",
+        },
+        config = {
+            extra = {
+                Xmult = 5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and context.scoring_name ~= 'spectrum_Spectrum' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SpectrumFramework"))
+        end,
     },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
