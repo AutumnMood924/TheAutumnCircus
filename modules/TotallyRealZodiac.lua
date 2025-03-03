@@ -171,15 +171,6 @@ local zodiaccards = {
             }
 		},
 	},
-	'stone_castle_zodiac', stone_castle_zodiac = {
-		name = "Stone Castle Zodiac",
-        pos = { x = 1, y = 3 },
-		config = {
-			extra = {
-                zodiac = "zodiac_thac_stone_castle_zodiac",
-            }
-		},
-	},
 	'flushblaze_five_zodiac', flushblaze_five_zodiac = {
 		name = "Flushblaze Five Zodiac",
         pos = { x = 2, y = 3 },
@@ -195,33 +186,6 @@ local zodiaccards = {
 		config = {
 			extra = {
                 zodiac = "zodiac_thac_spectrumblaze_five_zodiac",
-            }
-		},
-	},
-	'glass_castle_zodiac', glass_castle_zodiac = {
-		name = "Glass Castle Zodiac",
-        pos = { x = 4, y = 3 },
-		config = {
-			extra = {
-                zodiac = "zodiac_thac_glass_castle_zodiac",
-            }
-		},
-	},
-	'steel_castle_zodiac', steel_castle_zodiac = {
-		name = "Steel Castle Zodiac",
-        pos = { x = 5, y = 3 },
-		config = {
-			extra = {
-                zodiac = "zodiac_thac_steel_castle_zodiac",
-            }
-		},
-	},
-	'gold_castle_zodiac', gold_castle_zodiac = {
-		name = "Gold Castle Zodiac",
-        pos = { x = 0, y = 4 },
-		config = {
-			extra = {
-                zodiac = "zodiac_thac_gold_castle_zodiac",
             }
 		},
 	},
@@ -271,6 +235,9 @@ local zodiacs = {
         name = "Jack's Belt",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Turn all cards in hand",
+            "into a {C:green}random{} rank",
+            "among scored cards",
         },
         pos = { x = 1, y = 0 },
         config = {
@@ -281,6 +248,14 @@ local zodiacs = {
         },
         colour = HEX('999999'),
         pre_trigger = function(self, zodiac, context)
+            local RANKS = {}
+            for e,i in ipairs(context.scoring_hand) do
+                if not SMODS.has_no_rank(i) then RANKS[#RANKS+1] = i.base.value end
+            end
+            local rank = pseudorandom_element(RANKS, pseudoseed("jacks_belt"))
+            for k,v in ipairs(G.hand.cards) do
+                assert(SMODS.change_base(v, nil, rank))
+            end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -520,16 +495,36 @@ local zodiacs = {
         name = "Castle Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create {C:attention}#3# {C:tarot}Tarot{} cards",
+            "{C:inactive}(Must have room){}",
         },
         pos = { x = 2, y = 1 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_castle',
+                amount = 2
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for i = 1, math.min(zodiac.config.extra.amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        play_sound('timpani')
+                        local card = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, 'castle_flush_zodiac')
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        card:juice_up(0.3, 0.5)
+                    end
+                    return true end }))
+            end
+            delay(0.6)
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -539,16 +534,30 @@ local zodiacs = {
         name = "Blaze House Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create {C:attention}#3#{} copies of",
+            "{C:attention}second{} scoring card and",
+            "put them in your {C:attention}graveyard{}",
         },
         pos = { x = 3, y = 1 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_blaze_house',
+                amount = 3,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            if not card then info_queue[#info_queue + 1] = {key = "graveyard", set = "Other"} end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for i=1, zodiac.config.extra.amount do
+				local cardmak = copy_card(context.scoring_hand[2], nil, nil, context.scoring_hand[2].playing_card)
+				cardmak:move_to_graveyard()
+			end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -558,16 +567,28 @@ local zodiacs = {
         name = "Flushblaze Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Upgrade the {C:attention}level{} of the {C:attention}suit{}",
+            "of {C:attention}left-most{} scoring card",
+            "by {C:attention}#3#{} levels",
         },
         pos = { x = 4, y = 1 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_flushblaze',
+                amount = 2,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            --if not card then info_queue[#info_queue + 1] = G.P_CENTERS['m_thac_soulbound'] end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            AMM.level_up_suit(context.scoring_hand[1], context.scoring_hand[1].base.suit, nil, zodiac.config.extra.amount)
+            update_hand_text({delay = 0}, {handname = localize(zodiac.config.extra.hand_type, "poker_hands"),chips = hand_chips, mult = mult, level = nil })
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -577,16 +598,29 @@ local zodiacs = {
         name = "Spectrumblaze Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Upgrade the {C:attention}level{} of the {C:attention}suit{}",
+            "of a {C:green}random{} scoring card",
+            "by {C:attention}#3#{} levels",
         },
         pos = { x = 5, y = 1 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_spectrumblaze',
+                amount = 3,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            --if not card then info_queue[#info_queue + 1] = G.P_CENTERS['m_thac_soulbound'] end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            local leveller = pseudorandom_element(context.scoring_hand, pseudoseed("spectrumblaze_zodiac"))
+            AMM.level_up_suit(leveller, leveller.base.suit, nil, zodiac.config.extra.amount)
+            update_hand_text({delay = 0}, {handname = localize(zodiac.config.extra.hand_type, "poker_hands"),chips = hand_chips, mult = mult, level = nil })
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -596,16 +630,36 @@ local zodiacs = {
         name = "Castle Flush Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create {C:attention}#3# {C:planet}Planet{} cards",
+            "{C:inactive}(Must have room){}",
         },
         pos = { x = 0, y = 2 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_castle_flush',
+                amount = 2,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for i = 1, math.min(zodiac.config.extra.amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        play_sound('timpani')
+                        local card = create_card("Planet", G.consumeables, nil, nil, nil, nil, nil, 'castle_flush_zodiac')
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        card:juice_up(0.3, 0.5)
+                    end
+                    return true end }))
+            end
+            delay(0.6)
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -615,16 +669,36 @@ local zodiacs = {
         name = "Castle Spectrum Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create {C:attention}#3# {C:oddity}Oddities{}",
+            "{C:inactive}(Must have room){}",
         },
         pos = { x = 1, y = 2 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_castle_spectrum',
+                amount = 2,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for i = 1, math.min(zodiac.config.extra.amount, G.consumeables.config.card_limit - #G.consumeables.cards) do
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        play_sound('timpani')
+                        local card = create_card("Oddity", G.consumeables, nil, nil, nil, nil, nil, 'castle_spectrum_zodiac')
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        card:juice_up(0.3, 0.5)
+                    end
+                    return true end }))
+            end
+            delay(0.6)
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -712,6 +786,9 @@ local zodiacs = {
         name = "Blaze Five Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Turn {C:attention}all{} cards in hand into",
+            "the {C:attention}rank{} of the {C:attention}#2#{}",
+            "and give them a {C:green}random {C:blue}Seal",
         },
         pos = { x = 4, y = 2 },
         config = {
@@ -722,6 +799,10 @@ local zodiacs = {
         },
         colour = HEX('999999'),
         pre_trigger = function(self, zodiac, context)
+            for k,v in ipairs(G.hand.cards) do
+                SMODS.change_base(v, nil, context.scoring_hand[2].base.value)
+                if not v.seal then v:set_seal(SMODS.poll_seal{key = "blaze_five_zodiac", guaranteed = true}) end
+            end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -731,6 +812,9 @@ local zodiacs = {
         name = "Flushblaze House Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create a copy of {C:attention}each{}",
+            "scoring card and put them",
+            "in your {C:attention}graveyard{}",
         },
         pos = { x = 5, y = 2 },
         config = {
@@ -740,7 +824,17 @@ local zodiacs = {
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            if not card then info_queue[#info_queue + 1] = {key = "graveyard", set = "Other"} end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands')}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for i=1, #context.scoring_hand do
+				local cardmak = copy_card(context.scoring_hand[i], nil, nil, context.scoring_hand[i].playing_card)
+				cardmak:move_to_graveyard()
+			end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -750,35 +844,32 @@ local zodiacs = {
         name = "Spectrumblaze House Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create {C:attention}#3#{} copies of",
+            "{C:attention}each{} card in hand and",
+            "put them in your {C:attention}graveyard{}",
         },
         pos = { x = 0, y = 3 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_spectrumblaze_house',
+                amount = 2,
             },
         },
         colour = HEX('999999'),
-        pre_trigger = function(self, zodiac, context)
-            zodiac_reduce_level(zodiac)
-    
-            return context.mult, context.chips
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            if not card then info_queue[#info_queue + 1] = {key = "graveyard", set = "Other"} end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
         end,
-    },
-    'stone_castle_zodiac', stone_castle_zodiac = {
-        name = "Stone Castle Zodiac",
-        text = {
-            "{C:attention}+#1#{} levels to next {C:attention}#2#",
-        },
-        pos = { x = 1, y = 3 },
-        config = {
-            extra = {
-                temp_level = 4,
-                hand_type = 'thac_castle_stone',
-            },
-        },
-        colour = HEX('999999'),
         pre_trigger = function(self, zodiac, context)
+            for i=1, zodiac.config.extra.amount do
+                for ii=1, #G.hand.cards do
+                    local cardmak = copy_card(G.hand.cards[ii], nil, nil, G.hand.cards[ii].playing_card)
+                    cardmak:move_to_graveyard()
+                end
+			end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -788,16 +879,39 @@ local zodiacs = {
         name = "Flushblaze Five Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Each scoring card gains {C:mult}+#3#{} Mult",
+            "permanently and each card in",
+            "hand gains {C:chips}+#3#{} Chips permanently",
         },
         pos = { x = 2, y = 3 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_flushblaze_five',
+                amount = 5,
             },
         },
         colour = HEX('999999'),
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            --if not card then info_queue[#info_queue + 1] = {key = "graveyard", set = "Other"} end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount}}
+        end,
         pre_trigger = function(self, zodiac, context)
+            for k,v in ipairs(context.scoring_hand) do
+                v.ability.perma_mult = v.ability.perma_mult + zodiac.config.extra.amount
+                G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2,func = function()
+                    card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT, instant = true})
+                return true end}))
+            end
+            delay(0.3)
+            for kv,vk in ipairs(G.hand.cards) do
+                v.ability.perma_bonus = v.ability.perma_bonus + zodiac.config.extra.amount
+                G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2,func = function()
+                    card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS, instant = true})
+                return true end}))
+            end
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips
@@ -807,73 +921,58 @@ local zodiacs = {
         name = "Spectrumblaze Five Zodiac",
         text = {
             "{C:attention}+#1#{} levels to next {C:attention}#2#",
+            "Create a copy of {C:attention}first{} scored card",
+            "and put it into your hand",
+            "Create {C:attention}#3#{} copies of {C:attention}second{} scored card",
+            "and put them into your graveyard",
+            "Put a random {C:blue}Seal{} on {C:attention}third{} scored card",
+            "Upgrade the {C:attention}level{} of the {C:attention}suit{}",
+            "of the {C:attention}fourth{} scored card",
+            "The {C:attention}fifth{} scored card gains",
+            "{C:mult}+#4#{} Mult permanently when scored",
         },
         pos = { x = 3, y = 3 },
         config = {
             extra = {
                 temp_level = 4,
                 hand_type = 'thac_spectrumblaze_five',
+                amount = 2,
+                mult = 5,
             },
         },
         colour = HEX('999999'),
-        pre_trigger = function(self, zodiac, context)
-            zodiac_reduce_level(zodiac)
-    
-            return context.mult, context.chips
+        loc_vars = function(self, info_queue, card)
+            local zodiac = card or self
+            if not card then info_queue[#info_queue + 1] = {key = "graveyard", set = "Other"} end
+            local temp_level = (not zodiac.voucher_check and G.GAME.ortalab.zodiacs.temp_level_mod or 1) * zodiac.config.extra.temp_level + (not zodiac.voucher_check and G.GAME.ortalab.vouchers.leap_year or 0)
+            return {vars = {temp_level, localize(zodiac.config.extra.hand_type, 'poker_hands'), zodiac.config.extra.amount, zodiac.config.extra.mult}}
         end,
-    },
-    'glass_castle_zodiac', glass_castle_zodiac = {
-        name = "Glass Castle Zodiac",
-        text = {
-            "{C:attention}+#1#{} levels to next {C:attention}#2#",
-        },
-        pos = { x = 4, y = 3 },
-        config = {
-            extra = {
-                temp_level = 4,
-                hand_type = 'thac_castle_glass',
-            },
-        },
-        colour = HEX('999999'),
         pre_trigger = function(self, zodiac, context)
-            zodiac_reduce_level(zodiac)
-    
-            return context.mult, context.chips
-        end,
-    },
-    'steel_castle_zodiac', steel_castle_zodiac = {
-        name = "Steel Castle Zodiac",
-        text = {
-            "{C:attention}+#1#{} levels to next {C:attention}#2#",
-        },
-        pos = { x = 5, y = 3 },
-        config = {
-            extra = {
-                temp_level = 4,
-                hand_type = 'thac_castle_steel',
-            },
-        },
-        colour = HEX('999999'),
-        pre_trigger = function(self, zodiac, context)
-            zodiac_reduce_level(zodiac)
-    
-            return context.mult, context.chips
-        end,
-    },
-    'gold_castle_zodiac', gold_castle_zodiac = {
-        name = "Gold Castle Zodiac",
-        text = {
-            "{C:attention}+#1#{} levels to next {C:attention}#2#",
-        },
-        pos = { x = 0, y = 4 },
-        config = {
-            extra = {
-                temp_level = 4,
-                hand_type = 'thac_castle_gold',
-            },
-        },
-        colour = HEX('999999'),
-        pre_trigger = function(self, zodiac, context)
+            G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+            local card2 = copy_card(context.scoring_hand[1], nil, nil, G.playing_card)
+            card2:add_to_deck()
+            G.deck.config.card_limit = G.deck.config.card_limit + 1
+            table.insert(G.playing_cards, card2)
+            G.hand:emplace(card2)
+            card2.states.visible = nil
+
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    card2:start_materialize()
+                    return true
+                end
+            })) 
+            for i=1, zodiac.config.extra.amount do
+                local cardmak = copy_card(context.scoring_hand[2], nil, nil, context.scoring_hand[2].playing_card)
+                cardmak:move_to_graveyard()
+			end
+            context.scoring_hand[3]:set_seal(SMODS.poll_seal{key = "spectrumblaze_five_zodiac", guaranteed = true})
+            AMM.level_up_suit(context.scoring_hand[4], context.scoring_hand[4].base.suit)
+            update_hand_text({delay = 0}, {handname = localize(zodiac.config.extra.hand_type, "poker_hands"),chips = hand_chips, mult = mult, level = nil })
+            context.scoring_hand[5].ability.perma_mult = context.scoring_hand[5].ability.perma_mult + zodiac.config.extra.mult
+			G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2,func = function()
+				card_eval_status_text(context.scoring_hand[5], 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT, instant = true})
+            return true end}))
             zodiac_reduce_level(zodiac)
     
             return context.mult, context.chips

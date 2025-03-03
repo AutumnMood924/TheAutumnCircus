@@ -176,8 +176,7 @@ local enhancements = {
 		text = {
 			"Returns from your {C:attention}graveyard{}",
 			"after each {C:attention}Boss Blind{}",
-			"Gains {C:mult}+#1#{} Mult",
-			"permanently when scored after",
+			"Gains {C:mult}+#1#{} Mult permanently after",
 			"returning from your {C:attention}graveyard{}",
 		},
 		effect = 'soulbound',
