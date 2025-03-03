@@ -558,10 +558,11 @@ local tarots = {
 			max_highlighted = 3,
 		},
 		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.cups
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
 		end,
 	},
 	'page_of_wands', page_of_wands = {
@@ -578,10 +579,11 @@ local tarots = {
 			max_highlighted = 3,
 		},
 		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.wands
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
 		end,
 	},
 	'page_of_coins', page_of_coins = {
@@ -598,10 +600,11 @@ local tarots = {
 			max_highlighted = 3,
 		},
 		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.coins
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
 		end,
 	},
 	'page_of_swords', page_of_swords = {
@@ -618,10 +621,11 @@ local tarots = {
 			max_highlighted = 3,
 		},
 		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
 			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
 		end,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and TheAutumnCircus.config.enabled_suits.swords
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
 		end,
 	},
 }
