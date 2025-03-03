@@ -3073,6 +3073,7 @@ local jokers = {
         rental_compat = true,
         enhancement_gate = "m_thac_bone",
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
             return {vars = {
                 card.ability.extra.Xmult
             }}
@@ -3107,6 +3108,7 @@ local jokers = {
         rental_compat = true,
         enhancement_gate = "m_thac_soulbound",
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_soulbound
             return {vars = {
             }}
         end,
