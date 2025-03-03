@@ -946,15 +946,18 @@ local oddities = {
 			local used_tarot = copier or card
 			local rember = #G.hand.cards
 			for i=#G.hand.cards,1,-1 do
-				G.hand.cards[i]:move_to_graveyard()
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.1, func = function()
+					G.hand.cards[i]:move_to_graveyard()
+					return true end }))
 			end
-			delay(0.6)
 			G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function()
 				local gy_ = {}
 				for k,v in ipairs(G.graveyard) do gy_[#gy_+1]=v end
 				pseudoshuffle(gy_, pseudoseed('dance_with_the_dead'))
 				for i=math.min(#gy_, rember),1,-1 do
-					gy_[i]:move_from_graveyard()
+					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.1, func = function()
+						gy_[i]:move_from_graveyard()
+						return true end }))
 				end
 				return true end }))
 		end,

@@ -357,7 +357,7 @@ local jokers = {
 	},
 	'mature_joker', mature_joker = {
 		name = "Mature Joker",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand doesn't contain",
@@ -383,9 +383,9 @@ local jokers = {
             end
         end,
 	},
-	'court_virtue', court_virtue = {
-		name = "Court Virtue",
-        subtitle = "Work In Progress",
+	'simple_joker', simple_joker = {
+		name = "Simple Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand doesn't contain",
@@ -411,9 +411,9 @@ local jokers = {
             end
         end,
 	},
-	'wacky_virtue', wacky_virtue = {
-		name = "Wacky Virtue",
-        subtitle = "Work In Progress",
+	'composed_joker', composed_joker = {
+		name = "Composed Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand doesn't contain",
@@ -439,9 +439,9 @@ local jokers = {
             end
         end,
 	},
-	'fuzzy_virtue', fuzzy_virtue = {
-		name = "Fuzzy Virtue",
-        subtitle = "Work In Progress",
+	'modern_joker', modern_joker = {
+		name = "Modern Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand doesn't contain",
@@ -473,9 +473,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.big_cat == false )
         end,
 	},
-	'stoic_virtue', stoic_virtue = {
-		name = "Stoic Virtue",
-        subtitle = "Work In Progress",
+	'village_joker', village_joker = {
+		name = "Village Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand doesn't contain",
@@ -504,9 +504,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.castle == false )
         end,
 	},
-	'obnoxious_virtue', obnoxious_virtue = {
-		name = "Obnoxious Virtue",
-        subtitle = "Work In Progress",
+	'paradoxical_joker', paradoxical_joker = {
+		name = "Paradoxical Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand doesn't contain",
@@ -535,9 +535,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.nice == false )
         end,
 	},
-	'regal_virtue', regal_virtue = {
-		name = "Regal Virtue",
-        subtitle = "Work In Progress",
+	'nameless_joker', nameless_joker = {
+		name = "Nameless Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand doesn't contain",
@@ -566,9 +566,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.blaze == false )
         end,
 	},
-	'crass_virtue', crass_virtue = {
-		name = "Crass Virtue",
-        subtitle = "Work In Progress",
+	'unserious_joker', unserious_joker = {
+		name = "Unserious Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand doesn't contain",
@@ -597,9 +597,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.skeet == false )
         end,
 	},
-	'furry_virtue', furry_virtue = {
-		name = "Furry Virtue",
-        subtitle = "Work In Progress",
+	'lonely_joker', lonely_joker = {
+		name = "Lonely Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand doesn't contain",
@@ -631,9 +631,9 @@ local jokers = {
                 TheAutumnCircus.config.enabled_hands.big_cat == false )
         end,
 	},
-	'stalwart_virtue', stalwart_virtue = {
-		name = "Stalwart Virtue",
-        subtitle = "Work In Progress",
+	'local_joker', local_joker = {
+		name = "Local Joker",
+        subtitle = "Work In Progress!",
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand doesn't contain",
@@ -664,7 +664,7 @@ local jokers = {
 	},
     'standardized', standardized = {
         name = "The Standardized",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand is a",
@@ -691,7 +691,7 @@ local jokers = {
     },
     'inferno', inferno = {
         name = "The Inferno",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand contains",
@@ -712,7 +712,7 @@ local jokers = {
             return {vars = { card.ability.extra.Xmult }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['thac_blaze']) and not context.scoring_name == 'thac_blaze' then
+            if context.joker_main and next(context.poker_hands['thac_blaze']) and context.scoring_name ~= 'thac_blaze' then
                 return { xmult = card.ability.extra.Xmult }
             end
         end,
@@ -722,7 +722,7 @@ local jokers = {
     },
     'wayfarer', wayfarer = {
         name = "The Wayfarer",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand contains",
@@ -743,14 +743,14 @@ local jokers = {
             return {vars = { card.ability.extra.Xmult }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['Straight']) and not context.scoring_name == 'Straight' then
+            if context.joker_main and next(context.poker_hands['Straight']) and context.scoring_name ~= 'Straight' then
                 return { xmult = card.ability.extra.Xmult }
             end
         end,
     },
     'power_of_unity', power_of_unity = {
         name = "Power of Unity",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand contains",
@@ -771,14 +771,14 @@ local jokers = {
             return {vars = { card.ability.extra.Xmult }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['Flush']) and not context.scoring_name == 'Flush' then
+            if context.joker_main and next(context.poker_hands['Flush']) and context.scoring_name ~= 'Flush' then
                 return { xmult = card.ability.extra.Xmult }
             end
         end,
     },
     'chaotic', chaotic = {
         name = "The Chaotic",
-        subtitle = "Work In Progress",
+        subtitle = "Work In Progress!",
         text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand contains",
@@ -799,13 +799,453 @@ local jokers = {
             return {vars = { card.ability.extra.Xmult }}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and not context.scoring_name == 'Fspectrum_Spectrumlush' then
+            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and context.scoring_name ~= 'spectrum_Spectrum' then
                 return { xmult = card.ability.extra.Xmult }
             end
         end,
         load_check = function()
             return next(SMODS.find_mod("SpectrumFramework"))
         end,
+    },
+    'joker_of_swords', joker_of_swords = {
+        name = "Joker of Swords",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_swords}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Swords",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
+		end,
+    },
+    'joker_of_coins', joker_of_coins = {
+        name = "Joker of Coins",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_coins}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Coins",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
+		end,
+    },
+    'joker_of_wands', joker_of_wands = {
+        name = "Joker of Wands",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_wands}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Wands",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
+		end,
+    },
+    'joker_of_cups', joker_of_cups = {
+        name = "Joker of Cups",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_cups}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Cups",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
+		end,
+    },
+    'joker_of_pickaxes', joker_of_pickaxes = {
+        name = "Joker of Pickaxes",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_pickaxes}#2#{} suit give",
+            "{C:mult}+#1#{} Mult when scored", 
+        },
+        config = { extra = {
+            s_mult = 4,
+            suit = "thac_Pickaxes",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 5,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        mult = card.ability.extra.s_mult,
+                        colour = G.C.MULT
+                    },
+                    card = card,
+                    colour = G.C.MULT
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
+		end,
+    },
+    'jester_of_swords', jester_of_swords = {
+        name = "Jester of Swords",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_swords}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 40,
+            suit = "thac_Swords",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
+		end,
+    },
+    'jester_of_coins', jester_of_coins = {
+        name = "Jester of Coins",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_coins}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 40,
+            suit = "thac_Coins",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
+		end,
+    },
+    'jester_of_wands', jester_of_wands = {
+        name = "Jester of Wands",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_wands}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 40,
+            suit = "thac_Wands",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
+		end,
+    },
+    'jester_of_cups', jester_of_cups = {
+        name = "Jester of Cups",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_cups}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 40,
+            suit = "thac_Cups",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
+		end,
+    },
+    'jester_of_pickaxes', jester_of_pickaxes = {
+        name = "Jester of Pickaxes",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:thac_pickaxes}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 40,
+            suit = "thac_Pickaxes",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
+		end,
     },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
@@ -3008,226 +3448,6 @@ local jokers = {
             end
         end,
     },
-    'joker_of_swords', joker_of_swords = {
-        name = "Joker of Swords",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:thac_swords}#2#{} suit give",
-            "{C:mult}+#1#{} Mult when scored", 
-        },
-        config = { extra = {
-            s_mult = 4,
-            suit = "thac_Swords",
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
-            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    extra = {
-                        mult = card.ability.extra.s_mult,
-                        colour = G.C.MULT
-                    },
-                    card = card,
-                    colour = G.C.MULT
-                }
-            end
-        end,
-        in_pool = function(self)
-            for k,v in ipairs(G.playing_cards) do
-                if v:is_suit(self.config.suit, true) then return true end
-            end
-        end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
-		end,
-    },
-    'joker_of_coins', joker_of_coins = {
-        name = "Joker of Coins",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:thac_coins}#2#{} suit give",
-            "{C:mult}+#1#{} Mult when scored", 
-        },
-        config = { extra = {
-            s_mult = 4,
-            suit = "thac_Coins",
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
-            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    extra = {
-                        mult = card.ability.extra.s_mult,
-                        colour = G.C.MULT
-                    },
-                    card = card,
-                    colour = G.C.MULT
-                }
-            end
-        end,
-        in_pool = function(self)
-            for k,v in ipairs(G.playing_cards) do
-                if v:is_suit(self.config.suit, true) then return true end
-            end
-        end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
-		end,
-    },
-    'joker_of_wands', joker_of_wands = {
-        name = "Joker of Wands",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:thac_wands}#2#{} suit give",
-            "{C:mult}+#1#{} Mult when scored", 
-        },
-        config = { extra = {
-            s_mult = 4,
-            suit = "thac_Wands",
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
-            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    extra = {
-                        mult = card.ability.extra.s_mult,
-                        colour = G.C.MULT
-                    },
-                    card = card,
-                    colour = G.C.MULT
-                }
-            end
-        end,
-        in_pool = function(self)
-            for k,v in ipairs(G.playing_cards) do
-                if v:is_suit(self.config.suit, true) then return true end
-            end
-        end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
-		end,
-    },
-    'joker_of_cups', joker_of_cups = {
-        name = "Joker of Cups",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:thac_cups}#2#{} suit give",
-            "{C:mult}+#1#{} Mult when scored", 
-        },
-        config = { extra = {
-            s_mult = 4,
-            suit = "thac_Cups",
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
-            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    extra = {
-                        mult = card.ability.extra.s_mult,
-                        colour = G.C.MULT
-                    },
-                    card = card,
-                    colour = G.C.MULT
-                }
-            end
-        end,
-        in_pool = function(self)
-            for k,v in ipairs(G.playing_cards) do
-                if v:is_suit(self.config.suit, true) then return true end
-            end
-        end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
-		end,
-    },
-    'joker_of_pickaxes', joker_of_pickaxes = {
-        name = "Joker of Pickaxes",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:thac_pickaxes}#2#{} suit give",
-            "{C:mult}+#1#{} Mult when scored", 
-        },
-        config = { extra = {
-            s_mult = 4,
-            suit = "thac_Pickaxes",
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 5,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
-            return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    extra = {
-                        mult = card.ability.extra.s_mult,
-                        colour = G.C.MULT
-                    },
-                    card = card,
-                    colour = G.C.MULT
-                }
-            end
-        end,
-        in_pool = function(self)
-            for k,v in ipairs(G.playing_cards) do
-                if v:is_suit(self.config.suit, true) then return true end
-            end
-        end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
-		end,
-    },
     'amalgamiter', amalgamiter = {
         name = "Amalgamiter",
 		subtitle = "using alchemiters in alchemy was a mistake",
@@ -3690,7 +3910,6 @@ local jokers = {
                                     for i=#G.graveyard,1,-1 do
                                         if SMODS.has_enhancement(G.graveyard[i], "m_thac_soulbound") then
                                             G.graveyard[i]:move_from_graveyard(G.hand)
-                                            delay(0.1)
                                         end
                                     end
                                     return true
