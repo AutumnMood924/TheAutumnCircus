@@ -180,22 +180,6 @@ function Game:start_run(args)
 				if (v.base.suit ~= "thac_Cups" and v.base.suit ~= "thac_Swords" and v.base.suit ~= "thac_Coins" and v.base.suit ~= "thac_Wands") or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
 					table.insert(todelete, v)
 				end
-			elseif G.GAME.modifiers.thac_alpha_deck then
-				if (v.base.suit ~= "thac_Life" and v.base.suit ~= "thac_Hope" and v.base.suit ~= "thac_Void" and v.base.suit ~= "thac_Heart") or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
-					table.insert(todelete, v)
-				end
-			elseif G.GAME.modifiers.thac_beta_deck then
-				if (v.base.suit ~= "thac_Breath" and v.base.suit ~= "thac_Space" and v.base.suit ~= "thac_Light" and v.base.suit ~= "thac_Time") or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
-					table.insert(todelete, v)
-				end
-			elseif G.GAME.modifiers.thac_omega_deck then
-				if (v.base.suit ~= "thac_Blood" and v.base.suit ~= "thac_Rage" and v.base.suit ~= "thac_Doom" and v.base.suit ~= "thac_Heart") or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
-					table.insert(todelete, v)
-				end
-			elseif G.GAME.modifiers.thac_progenitor_deck then
-				if (v.base.suit ~= "thac_Time" and v.base.suit ~= "thac_Breath" and v.base.suit ~= "thac_Doom" and v.base.suit ~= "thac_Blood" and v.base.suit ~= "thac_Heart" and v.base.suit ~= "thac_Space" and v.base.suit ~= "thac_Mind" and v.base.suit ~= "thac_Light" and v.base.suit ~= "thac_Void" and v.base.suit ~= "thac_Rage" and v.base.suit ~= "thac_Hope" and v.base.suit ~= "thac_Life") or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
-					table.insert(todelete, v)
-				end
 			elseif TheAutumnCircus.config.starting_deck.allowed_suits[v.base.suit] == false or TheAutumnCircus.config.starting_deck.allowed_ranks[v.base.value] == false then
 				table.insert(todelete, v)
 			end

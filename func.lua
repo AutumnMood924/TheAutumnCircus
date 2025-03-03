@@ -109,11 +109,11 @@ end
 
 function func.context_check_castle(context)
 	return context.scoring_hand and (
-		next(context.poker_hands["thac_castle"]) or
+		next(context.poker_hands["thac_castle"]) --[[or
 		next(context.poker_hands["thac_castle_stone"]) or
 		next(context.poker_hands["thac_castle_glass"]) or
 		next(context.poker_hands["thac_castle_steel"]) or
-		next(context.poker_hands["thac_castle_gold"]) --[[or
+		next(context.poker_hands["thac_castle_gold"]) or
 		next(context.poker_hands["thac_castle_rusty"]) or
 		next(context.poker_hands["thac_castle_sand"]) or
 		next(context.poker_hands["thac_castle_grass"]) or

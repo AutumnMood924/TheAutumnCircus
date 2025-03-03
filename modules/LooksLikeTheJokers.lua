@@ -18,6 +18,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+        end,
 	},
 	'court_joker', court_joker = {
 		name = "Court Joker",
@@ -36,6 +39,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
 	},
 	'wacky_joker', wacky_joker = {
 		name = "Wacky Joker",
@@ -54,6 +60,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+        end,
 	},
 	'fuzzy_joker', fuzzy_joker = {
 		name = "Fuzzy Joker",
@@ -77,6 +86,13 @@ local jokers = {
                 return { mult = card.ability.extra.mult }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
+        end,
 	},
 	'stoic_joker', stoic_joker = {
 		name = "Stoic Joker",
@@ -99,6 +115,9 @@ local jokers = {
                 return { mult = card.ability.extra.mult }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
+        end,
 	},
 	'obnoxious_joker', obnoxious_joker = {
 		name = "Obnoxious Joker",
@@ -117,6 +136,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+        end,
 	},
 	'regal_joker', regal_joker = {
 		name = "Regal Joker",
@@ -135,6 +157,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
 	},
 	'crass_joker', crass_joker = {
 		name = "Crass Joker",
@@ -153,6 +178,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+        end,
 	},
 	'furry_joker', furry_joker = {
 		name = "Furry Joker",
@@ -176,6 +204,13 @@ local jokers = {
                 return { chips = card.ability.extra.chips }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
+        end,
 	},
 	'stalwart_joker', stalwart_joker = {
 		name = "Stalwart Joker",
@@ -198,6 +233,9 @@ local jokers = {
                 return { chips = card.ability.extra.chips }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
+        end,
 	},
     'funny_number', funny_number = {
         name = "The Funny Number",
@@ -216,6 +254,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+        end,
     },
     'royal', royal = {
         name = "The Royal",
@@ -234,6 +275,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
     },
     'bracket', bracket = {
         name = "The Bracket",
@@ -252,6 +296,9 @@ local jokers = {
 		loc_vars = function(_c, iq, card)
             if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+        end,
     },
 	'pet', pet = {
 		name = "The Pet",
@@ -275,6 +322,13 @@ local jokers = {
                 return { xmult = card.ability.extra.Xmult }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
+        end,
 	},
 	'bastion', bastion = {
 		name = "The Bastion",
@@ -296,6 +350,9 @@ local jokers = {
             if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
                 return { xmult = card.ability.extra.Xmult }
             end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
         end,
 	},
     'gift_from_the_void', gift_from_the_void = {
@@ -586,6 +643,11 @@ local jokers = {
                 }
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.enhancable and not (
+                TheAutumnCircus.config.enabled_enhancements.dirt == false and
+                TheAutumnCircus.config.enabled_enhancements.grass == false )
+        end,
     },
     'menagerie', menagerie = {
         name = "The Menagerie",
@@ -623,6 +685,13 @@ local jokers = {
                     xmult = card.ability.extra.Xmult_curr
                 }
             end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
         end,
     },
     'clown_posse', clown_posse = {
@@ -699,6 +768,9 @@ local jokers = {
             end
         end,
         enhancement_gate = "m_thac_star",
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.star == false
+        end,
     },
     'paint_mixer', paint_mixer = {
         name = "Paint Mixer",
@@ -1039,6 +1111,9 @@ local jokers = {
                     message = "Grass"
                 }
             end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.grass == false
         end,
     },
     'highest_number', highest_number = {
@@ -1485,6 +1560,9 @@ local jokers = {
                 end
             end
         end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
     },
     'lost_sock', lost_sock = {
         name = "Lost Sock",
@@ -1610,6 +1688,9 @@ local jokers = {
                         return true
                     end)}))
             end
+        end,
+        in_pool = function(self)
+            return #G.P_CENTER_POOLS.Oddity ~= 0
         end,
     },
     'exorcist', exorcist = {
@@ -1831,6 +1912,9 @@ local jokers = {
             end
         end,
         enhancement_gate = "m_thac_jewel",
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.jewel == false
+        end,
     },
     'discarded_vessel', discarded_vessel = {
         name = "Discarded Vessel",
@@ -2029,6 +2113,9 @@ local jokers = {
             end
         end,
         enhancement_gate = "m_thac_jewel",
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.jewel == false
+        end,
     },
     'twisted_mind', twisted_mind = {
         name = "Twisted Mind",
@@ -3087,6 +3174,11 @@ local jokers = {
                 end
             end
         end,
+        load_check = function()
+            return (TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and TheAutumnCircus.config.enabled_hands.big_dog == false)) and
+            (TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.bone == false)
+        end,
     },
     'nine_lives', nine_lives = {
         name = "Nine Lives",
@@ -3135,6 +3227,11 @@ local jokers = {
                     end
                 end
             end
+        end,
+        load_check = function()
+            return (TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_cat == false and TheAutumnCircus.config.enabled_hands.big_cat == false)) and
+            (TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.soulbound == false)
         end,
     },
 }

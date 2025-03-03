@@ -24,6 +24,7 @@ end
 TheAutumnCircus.mod.process_loc_text = function()
 
 	G.localization.misc.labels["thac_gilded"] = "Gilded"
+	G.localization.misc.labels["thac_etched"] = "Etched"
 
 	G.localization.descriptions.Other["mc_obs_off_comet"] = {
         name = "Observatory Effect",
@@ -171,6 +172,12 @@ TheAutumnCircus.mod.process_loc_text = function()
                 "{X:autumn,C:money,s:1.2}AutumnMood{}"
             }
         },
+    }
+	G.localization.descriptions.Other["thac_shadercredit_autumn"] = {
+        name = "Shader Credit",
+        text = {
+            "{X:autumn,C:money}AutumnMood{}"
+        }
     }
 	G.localization.descriptions.Other["thac_shadercredit_lyman"] = {
         name = "Shader Credit",

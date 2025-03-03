@@ -95,6 +95,42 @@ local editions = {
             end
         end,
 	},
+	--[['etched', etched = {
+		name = "Etched",
+        shader = 'inscribed',
+        in_shop = true,
+		text = {
+            "Gives {C:chips}+#1#{} Chips or",
+            "{C:mult}+#2#{} Mult for each",
+            "card in your {C:attention}graveyard{}",
+            "{C:inactive}(Currently between {C:chips}+#3#{C:inactive} and {C:mult}+#4#{C:inactive})",
+        },
+		config = {
+            chips = 3,
+            mult = 1,
+		},
+		extra_cost = 4,
+        weight = 13,
+		loc_vars = function(_c, info_queue, card)
+            if true then info_queue[#info_queue+1] = {key = 'thac_shadercredit_autumn', set = 'Other'} end
+
+            local gy_cards = AMM.api.graveyard.count_cards()
+            return {vars = { _c.config.chips, _c.config.mult, _c.config.chips * gy_cards, _c.config.mult * gy_cards}}
+        end,
+        calculate = function(self, card, context)
+            if context.pre_joker or (context.main_scoring and context.cardarea == G.play) then
+                local gy_cards = AMM.api.graveyard.count_cards()
+                local _chips = 0
+                local _mult = 0
+                for i=1,gy_cards do
+                    if pseudorandom(pseudoseed("inscribed")) < 0.5 then _chips = _chips + card.edition.chips else _mult = _mult + card.edition.mult end
+                end
+                return {
+                    chips = _chips, mult = _mult
+                }
+            end
+        end,
+	},--]]
 }
 
 --shaders
