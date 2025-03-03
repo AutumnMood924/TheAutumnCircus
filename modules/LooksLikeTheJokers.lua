@@ -15,8 +15,8 @@ local jokers = {
 		pos = { x = 2, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
@@ -36,8 +36,8 @@ local jokers = {
 		pos = { x = 1, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
@@ -57,8 +57,8 @@ local jokers = {
 		pos = { x = 0, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_mult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
@@ -99,7 +99,7 @@ local jokers = {
 		text = {
             "{C:mult}+#1#{} Mult if played",
             "hand contains",
-            "any {C:attention}Castle hand"
+            "a {C:attention}Castle"
         },
 		config = {
 			extra = { mult = 16, },
@@ -107,8 +107,8 @@ local jokers = {
 		pos = { x = 3, y = 1 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.mult }} end,
         calculate = function(self, card, context)
             if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
@@ -133,8 +133,8 @@ local jokers = {
 		pos = { x = 2, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
@@ -154,8 +154,8 @@ local jokers = {
 		pos = { x = 1, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
@@ -175,8 +175,8 @@ local jokers = {
 		pos = { x = 0, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.t_chips }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
@@ -217,7 +217,7 @@ local jokers = {
 		text = {
             "{C:chips}+#1#{} Chips if played",
             "hand contains",
-            "any {C:attention}Castle hand"
+            "a {C:attention}Castle"
         },
 		config = {
 			extra = { chips = 140, },
@@ -225,8 +225,8 @@ local jokers = {
 		pos = { x = 3, y = 2 },
 		cost = 4,
         rarity = 1,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.chips }} end,
         calculate = function(self, card, context)
             if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
@@ -251,8 +251,8 @@ local jokers = {
         pos = { x = 2, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
@@ -272,8 +272,8 @@ local jokers = {
         pos = { x = 1, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
@@ -293,8 +293,8 @@ local jokers = {
         pos = { x = 0, y = 3 },
         cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.Xmult }} end,
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
@@ -335,7 +335,7 @@ local jokers = {
 		text = {
             "{X:mult,C:white} X#1# {} Mult if played",
             "hand contains",
-            "any {C:attention}Castle hand"
+            "a {C:attention}Castle"
         },
 		config = {
 			extra = { Xmult = 4.4, },
@@ -343,8 +343,8 @@ local jokers = {
 		pos = { x = 3, y = 3 },
 		cost = 8,
         rarity = 3,
-		loc_vars = function(_c, iq, card)
-            if not card.fake_card then iq[#iq+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.Xmult }} end,
         calculate = function(self, card, context)
             if context.joker_main and TheAutumnCircus.func.context_check_castle(context) then
@@ -355,6 +355,458 @@ local jokers = {
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
         end,
 	},
+	'immature_virtue', immature_virtue = {
+		name = "Immature Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "a {C:attention}Nice"
+        },
+		config = {
+            extra = {
+                mult = 6
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_nice'])) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+	},
+	'court_virtue', court_virtue = {
+		name = "Court Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "a {C:attention}Blaze"
+        },
+		config = {
+            extra = {
+                mult = 8
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_blaze'])) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+	},
+	'wacky_virtue', wacky_virtue = {
+		name = "Wacky Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "a {C:attention}Skeet"
+        },
+		config = {
+            extra = {
+                mult = 10
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }} end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_skeet'])) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+	},
+	'fuzzy_virtue', fuzzy_virtue = {
+		name = "Fuzzy Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "an {C:attention}Animal hand"
+        },
+		config = {
+            extra = {
+                mult = 10
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.mult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (TheAutumnCircus.func.context_check_animal(context)) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
+        end,
+	},
+	'stoic_virtue', stoic_virtue = {
+		name = "Stoic Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:mult}+#1#{} Mult if played",
+            "hand doesn't contain",
+            "a {C:attention}Castle"
+        },
+		config = {
+            extra = {
+                mult = 7
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.mult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (TheAutumnCircus.func.context_check_castle(context)) then
+                return { mult = card.ability.extra.mult }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.castle == false )
+        end,
+	},
+	'obnoxious_virtue', obnoxious_virtue = {
+		name = "Obnoxious Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "a {C:attention}Nice"
+        },
+		config = {
+            extra = {
+                chips = 69
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_nice'])) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.nice == false )
+        end,
+	},
+	'regal_virtue', regal_virtue = {
+		name = "Regal Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "a {C:attention}Blaze"
+        },
+		config = {
+            extra = {
+                chips = 75
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_blaze'])) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.blaze == false )
+        end,
+	},
+	'crass_virtue', crass_virtue = {
+		name = "Crass Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "a {C:attention}Skeet"
+        },
+		config = {
+            extra = {
+                chips = 90
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (next(context.poker_hands['thac_skeet'])) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.skeet == false )
+        end,
+	},
+	'furry_virtue', furry_virtue = {
+		name = "Furry Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "an {C:attention}Animal hand"
+        },
+		config = {
+            extra = {
+                chips = 100
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (TheAutumnCircus.func.context_check_animal(context)) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.little_dog == false and
+                TheAutumnCircus.config.enabled_hands.big_dog == false and
+                TheAutumnCircus.config.enabled_hands.little_cat == false and
+                TheAutumnCircus.config.enabled_hands.big_cat == false )
+        end,
+	},
+	'stalwart_virtue', stalwart_virtue = {
+		name = "Stalwart Virtue",
+        subtitle = "Work In Progress",
+		text = {
+            "{C:chips}+#1#{} Chips if played",
+            "hand doesn't contain",
+            "a {C:attention}Castle"
+        },
+		config = {
+            extra = {
+                chips = 55
+            },
+		},
+		pos = { x = 0, y = 0 },
+		cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_animal_hands', set = 'Other'}
+            return {vars = { card.ability.extra.chips }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not (TheAutumnCircus.func.context_check_castle(context)) then
+                return { chips = card.ability.extra.chips }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not (
+                TheAutumnCircus.config.enabled_hands.castle == false )
+        end,
+	},
+    'standardized', standardized = {
+        name = "The Standardized",
+        subtitle = "Work In Progress",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand is a",
+            "{C:attention}standard hand"
+        },
+        config = {
+            extra = {
+                Xmult = 2.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_strict_standard_hands(context) then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
+    'inferno', inferno = {
+        name = "The Inferno",
+        subtitle = "Work In Progress",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Blaze{} but",
+            "{C:attention}isn't{} a {C:attention}Blaze",
+        },
+        config = {
+            extra = {
+                Xmult = 4,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['thac_blaze']) and not context.scoring_name == 'thac_blaze' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+        load_check = function()
+            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+        end,
+    },
+    'wayfarer', wayfarer = {
+        name = "The Wayfarer",
+        subtitle = "Work In Progress",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Straight{} but",
+            "{C:attention}isn't{} a {C:attention}Straight",
+        },
+        config = {
+            extra = {
+                Xmult = 4.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['Straight']) and not context.scoring_name == 'Straight' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
+    'power_of_unity', power_of_unity = {
+        name = "Power of Unity",
+        subtitle = "Work In Progress",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Flush{} but",
+            "{C:attention}isn't{} a {C:attention}Flush",
+        },
+        config = {
+            extra = {
+                Xmult = 3.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['Flush']) and not context.scoring_name == 'Flush' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
+    'chaotic', chaotic = {
+        name = "The Chaotic",
+        subtitle = "Work In Progress",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Spectrum{} but",
+            "{C:attention}isn't{} a {C:attention}Spectrum",
+        },
+        config = {
+            extra = {
+                Xmult = 5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and not context.scoring_name == 'Fspectrum_Spectrumlush' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SpectrumFramework"))
+        end,
+    },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
         subtitle = "I am an idea thinking of itself",

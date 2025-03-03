@@ -123,6 +123,21 @@ function func.context_check_castle(context)
 	)
 end
 
+function func.context_strict_standard_hands(context)
+	return context.scoring_hand and (
+		context.scoring_name == "High Card" or
+		context.scoring_name == "Pair" or
+		context.scoring_name == "Two Pair" or
+		context.scoring_name == "Three of a Kind" or
+		context.scoring_name == "Straight" or
+		context.scoring_name == "Flush" or
+		context.scoring_name == "Full House" or
+		context.scoring_name == "Four of a Kind" or
+		context.scoring_name == "Straight Flush" or
+		context.scoring_name == "Royal Flush" -- just in case
+	)
+end
+
 --[[ preserved for historical reasons
 function func.eval_this(_card, effects)
 	if effects then 
