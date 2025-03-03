@@ -2576,6 +2576,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
             return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
         calculate = function(self, card, context)
@@ -2595,6 +2596,9 @@ local jokers = {
                 if v:is_suit(self.config.suit, true) then return true end
             end
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
+		end,
     },
     'joker_of_coins', joker_of_coins = {
         name = "Joker of Coins",
@@ -2616,6 +2620,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
             return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
         calculate = function(self, card, context)
@@ -2635,6 +2640,9 @@ local jokers = {
                 if v:is_suit(self.config.suit, true) then return true end
             end
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
+		end,
     },
     'joker_of_wands', joker_of_wands = {
         name = "Joker of Wands",
@@ -2656,6 +2664,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
             return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
         calculate = function(self, card, context)
@@ -2675,6 +2684,9 @@ local jokers = {
                 if v:is_suit(self.config.suit, true) then return true end
             end
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
+		end,
     },
     'joker_of_cups', joker_of_cups = {
         name = "Joker of Cups",
@@ -2696,6 +2708,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
             return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
         calculate = function(self, card, context)
@@ -2715,6 +2728,9 @@ local jokers = {
                 if v:is_suit(self.config.suit, true) then return true end
             end
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
+		end,
     },
     'joker_of_pickaxes', joker_of_pickaxes = {
         name = "Joker of Pickaxes",
@@ -2736,6 +2752,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
             return {vars = {card.ability.extra.s_mult, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
         calculate = function(self, card, context)
@@ -2755,6 +2772,9 @@ local jokers = {
                 if v:is_suit(self.config.suit, true) then return true end
             end
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
+		end,
     },
     'amalgamiter', amalgamiter = {
         name = "Amalgamiter",

@@ -52,6 +52,18 @@ local decks = {
 			G.GAME.modifiers.thac_arcane_deck = true
 		end,
 	},
+	'undying_deck', undying_deck = {
+		name = "Undying Deck",
+		text = {
+			"All cards return from your",
+			"{C:attention}graveyard{} after defeating",
+			"each {C:attention}Boss Blind{}",
+		},
+		pos = { x = 0, y = 1 },
+		apply = function(self)
+			G.GAME.modifiers.thac_undying_deck = true
+		end,
+	},
 	--[[
 	'alpha_deck', alpha_deck = {
 		name = "Alpha Deck",

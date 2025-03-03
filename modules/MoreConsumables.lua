@@ -628,6 +628,27 @@ local tarots = {
 			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
 		end,
 	},
+	'page_of_pickaxes', page_of_pickaxes = {
+		name = "Page of Pickaxes",
+		text = {
+			"Converts up to",
+			"{C:attention}#1#{} selected cards",
+			"to {V:1}#2#{}"
+		},
+		pos = {x = 7, y = 6},
+		effect = "Suit Conversion",
+		config = {
+			suit_conv = "thac_Pickaxes",
+			max_highlighted = 3,
+		},
+		loc_vars = function(_c, info_queue, card)
+            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
+			return {vars = { _c.config.max_highlighted, localize(_c.config.suit_conv, 'suits_plural'), colours = { G.C.SUITS[_c.config.suit_conv] } }}
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
+		end,
+	},
 }
 
 local planets = {
@@ -1113,6 +1134,146 @@ local planets = {
 		end,
 		load_check = function()
 			return next(SMODS.find_mod('SixSuits'))
+		end,
+	},
+	'sword_planet', sword_planet = {
+		name = "Sword Planet",
+		subtitle = "Work In Progress!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "thac_Swords"},
+		pos = { x = 8, y = 6 },
+		loc_vars = function(_c,info_queue,card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
+		end,
+	},
+	'coin_planet', coin_planet = {
+		name = "Coin Planet",
+		subtitle = "Work In Progress!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "thac_Coin"},
+		pos = { x = 8, y = 6 },
+		loc_vars = function(_c,info_queue,card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
+		end,
+	},
+	'wand_planet', wand_planet = {
+		name = "Wand Planet",
+		subtitle = "Work In Progress!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "thac_Wands"},
+		pos = { x = 8, y = 6 },
+		loc_vars = function(_c,info_queue,card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
+		end,
+	},
+	'cup_planet', cup_planet = {
+		name = "Cup Planet",
+		subtitle = "Work In Progress!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "thac_Cups"},
+		pos = { x = 8, y = 6 },
+		loc_vars = function(_c,info_queue,card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
+		end,
+	},
+	'pickaxe_planet', pickaxe_planet = {
+		name = "Pickaxe Planet",
+		subtitle = "Work In Progress!",
+		text = suitplanettext,
+		effect = 'Suit Level Upgrade',
+		config = {level_suit = "thac_Pickaxes"},
+		pos = { x = 8, y = 6 },
+		loc_vars = function(_c,info_queue,card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
+			return suitplanetloc_vars(_c,info_queue,card)
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			AMM.level_up_suit(used_tarot, self.config.level_suit)
+		end,
+		can_use = function(self, card) return true end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
 		end,
 	},
 	'nice_planet', nice_planet = {
