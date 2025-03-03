@@ -8,6 +8,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_cancer_two",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+		end,
 	},
 	'jacks_belt', jacks_belt = {
 		name = "Jack's Belt",
@@ -17,6 +20,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_jacks_belt",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+		end,
 	},
 	'double_cancer_two', double_cancer_two = {
 		name = "Double Cancer II",
@@ -26,6 +32,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_double_cancer_two",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.twice_nice == false
+		end,
 	},
 	'bowling_pin', bowling_pin = {
 		name = "Bowling Pin?",
@@ -35,6 +44,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_bowling_pin",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+		end,
 	},
 	'pupper', pupper = {
 		name = "Pupper!",
@@ -44,6 +56,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_pupper",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_dog == false
+		end,
 	},
 	'doggo', doggo = {
 		name = "Doggo!",
@@ -53,6 +68,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_doggo",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_dog == false
+		end,
 	},
 	'kitteh', kitteh = {
 		name = "Kitteh!",
@@ -62,6 +80,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_kitteh",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_cat == false
+		end,
 	},
 	'catto', catto = {
 		name = "Catto!",
@@ -71,6 +92,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_catto",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_cat == false
+		end,
 	},
 	'castle_zodiac', castle_zodiac = {
 		name = "Castle Zodiac",
@@ -80,6 +104,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_castle_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
+		end,
 	},
 	'blaze_house_zodiac', blaze_house_zodiac = {
 		name = "Blaze House Zodiac",
@@ -89,6 +116,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_blaze_house_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_house == false
+		end,
 	},
 	'flushblaze_zodiac', flushblaze_zodiac = {
 		name = "Flushblaze Zodiac",
@@ -98,6 +128,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_flushblaze_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze == false
+		end,
 	},
 	'spectrumblaze_zodiac', spectrumblaze_zodiac = {
 		name = "Spectrumblaze Zodiac",
@@ -107,6 +140,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_spectrumblaze_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
 	},
 	'castle_flush_zodiac', castle_flush_zodiac = {
 		name = "Castle Flush Zodiac",
@@ -116,6 +152,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_castle_flush_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_flush == false
+		end,
 	},
 	'castle_spectrum_zodiac', castle_spectrum_zodiac = {
 		name = "Castle Spectrum Zodiac",
@@ -125,6 +164,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_castle_spectrum_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_spectrum == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
 	},
 	'skeet_flush_zodiac', skeet_flush_zodiac = {
 		name = "Skeet Flush Zodiac",
@@ -134,6 +176,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_skeet_flush_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_flush == false
+		end,
 	},
 	'skeet_spectrum_zodiac', skeet_spectrum_zodiac = {
 		name = "Skeet Spectrum Zodiac",
@@ -143,6 +188,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_skeet_spectrum_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_spectrum == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
 	},
 	'blaze_five_zodiac', blaze_five_zodiac = {
 		name = "Blaze Five Zodiac",
@@ -152,6 +200,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_blaze_five_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_five == false
+		end,
 	},
 	'flushblaze_house_zodiac', flushblaze_house_zodiac = {
 		name = "Flushblaze House Zodiac",
@@ -161,6 +212,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_flushblaze_house_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_house == false
+		end,
 	},
 	'spectrumblaze_house_zodiac', spectrumblaze_house_zodiac = {
 		name = "Spectrumblaze House Zodiac",
@@ -170,6 +224,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_spectrumblaze_house_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_house == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
 	},
 	'flushblaze_five_zodiac', flushblaze_five_zodiac = {
 		name = "Flushblaze Five Zodiac",
@@ -179,6 +236,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_flushblaze_five_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_five == false
+		end,
 	},
 	'spectrumblaze_five_zodiac', spectrumblaze_five_zodiac = {
 		name = "Spectrumblaze Five Zodiac",
@@ -188,6 +248,9 @@ local zodiaccards = {
                 zodiac = "zodiac_thac_spectrumblaze_five_zodiac",
             }
 		},
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_five == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
 	},
 }
 
@@ -230,6 +293,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+		end,
     },
     'jacks_belt', jacks_belt = {
         name = "Jack's Belt",
@@ -260,6 +326,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+		end,
     },
     'double_cancer_two', double_cancer_two = {
         name = "Double Cancer II",
@@ -309,6 +378,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.twice_nice == false
+		end,
     },
     'bowling_pin', bowling_pin = {
         name = "Bowling Pin?",
@@ -348,6 +420,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+		end,
     },
     'pupper', pupper = {
         name = "Pupper!",
@@ -387,6 +462,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_dog == false
+		end,
     },
     'doggo', doggo = {
         name = "Doggo!",
@@ -419,6 +497,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_dog == false
+		end,
     },
     'kitteh', kitteh = {
         name = "Kitteh!",
@@ -458,6 +539,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_cat == false
+		end,
     },
     'catto', catto = {
         name = "Catto!",
@@ -490,6 +574,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_cat == false
+		end,
     },
     'castle_zodiac', castle_zodiac = {
         name = "Castle Zodiac",
@@ -529,6 +616,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
+		end,
     },
     'blaze_house_zodiac', blaze_house_zodiac = {
         name = "Blaze House Zodiac",
@@ -562,6 +652,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_house == false
+		end,
     },
     'flushblaze_zodiac', flushblaze_zodiac = {
         name = "Flushblaze Zodiac",
@@ -593,6 +686,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze == false
+		end,
     },
     'spectrumblaze_zodiac', spectrumblaze_zodiac = {
         name = "Spectrumblaze Zodiac",
@@ -625,6 +721,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
     },
     'castle_flush_zodiac', castle_flush_zodiac = {
         name = "Castle Flush Zodiac",
@@ -664,6 +763,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_flush == false
+		end,
     },
     'castle_spectrum_zodiac', castle_spectrum_zodiac = {
         name = "Castle Spectrum Zodiac",
@@ -703,6 +805,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_spectrum == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
     },
     'skeet_flush_zodiac', skeet_flush_zodiac = {
         name = "Skeet Flush Zodiac",
@@ -742,6 +847,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_flush == false
+		end,
     },
     'skeet_spectrum_zodiac', skeet_spectrum_zodiac = {
         name = "Skeet Spectrum Zodiac",
@@ -781,6 +889,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_spectrum == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
     },
     'blaze_five_zodiac', blaze_five_zodiac = {
         name = "Blaze Five Zodiac",
@@ -807,6 +918,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_five == false
+		end,
     },
     'flushblaze_house_zodiac', flushblaze_house_zodiac = {
         name = "Flushblaze House Zodiac",
@@ -839,6 +953,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_house == false
+		end,
     },
     'spectrumblaze_house_zodiac', spectrumblaze_house_zodiac = {
         name = "Spectrumblaze House Zodiac",
@@ -874,6 +991,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_house == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
     },
     'flushblaze_five_zodiac', flushblaze_five_zodiac = {
         name = "Flushblaze Five Zodiac",
@@ -916,6 +1036,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_five == false
+		end,
     },
     'spectrumblaze_five_zodiac', spectrumblaze_five_zodiac = {
         name = "Spectrumblaze Five Zodiac",
@@ -977,6 +1100,9 @@ local zodiacs = {
     
             return context.mult, context.chips
         end,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_five == false and next(SMODS.find_mod("SpectrumFramework"))
+		end,
     },
 }
 

@@ -1136,6 +1136,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
+		end,
 	},
 	'blaze_planet', blaze_planet = {
 		name = "Blaze Planet",
@@ -1156,6 +1159,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
+		end,
 	},
 	'twice_nice_planet', twice_nice_planet = {
 		name = "Twice Nice Planet",
@@ -1176,6 +1182,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.twice_nice == false
+		end,
 	},
 	'skeet_planet', skeet_planet = {
 		name = "The Veil",
@@ -1200,6 +1209,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
+		end,
 	},
 	'little_dog_planet', little_dog_planet = {
 		name = "Canis Minor",
@@ -1224,6 +1236,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_dog == false
+		end,
 	},
 	'big_dog_planet', big_dog_planet = {
 		name = "Big Dog Planet",
@@ -1244,6 +1259,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_dog == false
+		end,
 	},
 	'little_cat_planet', little_cat_planet = {
 		name = "Little Cat Planet",
@@ -1264,6 +1282,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_cat == false
+		end,
 	},
 	'big_cat_planet', big_cat_planet = {
 		name = "Big Cat Planet",
@@ -1284,6 +1305,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_cat == false
+		end,
 	},
 	'castle_planet', castle_planet = {
 		name = "Battlefield",
@@ -1308,6 +1332,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
+		end,
 	},
 	'blaze_house_planet', blaze_house_planet = {
 		name = "Blaze House Planet",
@@ -1328,6 +1355,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_house == false
+		end,
 	},
 	'flushblaze_planet', flushblaze_planet = {
 		name = "Flushblaze Planet",
@@ -1348,6 +1378,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze == false
+		end,
 	},
 	'spectrumblaze_planet', spectrumblaze_planet = {
 		name = "Spectrumblaze Planet",
@@ -1369,8 +1402,8 @@ local planets = {
 		end,
 		generate_ui = 0,
 		load_check = function()
-			if SMODS.Mods['SpectrumFramework'] then return true end return false
-		end
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze == false and next(SMODS.find_mod('SpectrumFramework'))
+		end,
 	},
 	'castle_flush_planet', castle_flush_planet = {
 		name = "Castle Flush Planet",
@@ -1391,6 +1424,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_flush == false
+		end,
 	},
 	'castle_spectrum_planet', castle_spectrum_planet = {
 		name = "Castle Spectrum Planet",
@@ -1412,8 +1448,8 @@ local planets = {
 		end,
 		generate_ui = 0,
 		load_check = function()
-			if SMODS.Mods['SpectrumFramework'] then return true end return false
-		end
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_spectrum == false and next(SMODS.find_mod('SpectrumFramework'))
+		end,
 	},
 	'skeet_flush_planet', skeet_flush_planet = {
 		name = "Skeet Flush Planet",
@@ -1434,6 +1470,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_flush == false
+		end,
 	},
 	'skeet_spectrum_planet', skeet_spectrum_planet = {
 		name = "Skeet Spectrum Planet",
@@ -1455,8 +1494,8 @@ local planets = {
 		end,
 		generate_ui = 0,
 		load_check = function()
-			if SMODS.Mods['SpectrumFramework'] then return true end return false
-		end
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_spectrum == false and next(SMODS.find_mod('SpectrumFramework'))
+		end,
 	},
 	'blaze_five_planet', blaze_five_planet = {
 		name = "Blaze Five Planet",
@@ -1477,6 +1516,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_five == false
+		end,
 	},
 	'flushblaze_house_planet', flushblaze_house_planet = {
 		name = "Flushblaze House Planet",
@@ -1497,6 +1539,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_house == false
+		end,
 	},
 	'spectrumblaze_house_planet', spectrumblaze_house_planet = {
 		name = "Spectrumblaze House Planet",
@@ -1518,8 +1563,8 @@ local planets = {
 		end,
 		generate_ui = 0,
 		load_check = function()
-			if SMODS.Mods['SpectrumFramework'] then return true end return false
-		end
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_house == false and next(SMODS.find_mod('SpectrumFramework'))
+		end,
 	},
 	'flushblaze_five_planet', flushblaze_five_planet = {
 		name = "Flushblaze Five Planet",
@@ -1540,6 +1585,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_five == false
+		end,
 	},
 	'spectrumblaze_five_planet', spectrumblaze_five_planet = {
 		name = "Spectrumblaze Five Planet",
@@ -1561,8 +1609,8 @@ local planets = {
 		end,
 		generate_ui = 0,
 		load_check = function()
-			if SMODS.Mods['SpectrumFramework'] then return true end return false
-		end
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_five == false and next(SMODS.find_mod('SpectrumFramework'))
+		end,
 	},
 	'castle_stone_planet', castle_stone_planet = {
 		name = "Stone Castle Planet",
@@ -1583,6 +1631,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_stone == false
+		end,
 	},
 	'castle_gold_planet', castle_gold_planet = {
 		name = "Gold Castle Planet",
@@ -1603,6 +1654,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_gold == false
+		end,
 	},
 	'castle_steel_planet', castle_steel_planet = {
 		name = "Steel Castle Planet",
@@ -1623,6 +1677,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_steel == false
+		end,
 	},
 	'castle_glass_planet', castle_glass_planet = {
 		name = "Glass Castle Planet",
@@ -1643,6 +1700,9 @@ local planets = {
 			end
 		end,
 		generate_ui = 0,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_glass == false
+		end,
 	},
 }
 
