@@ -140,8 +140,8 @@ TheAutumnCircus.mod.process_loc_text = function()
 	G.localization.descriptions.Other["thac_standard_hands"] = {
         name = "Standard Hands",
         text = {
-            '{C:attention}"Standard hands"{} refers to each',
-            "of the following hands:",
+            '{C:attention}"Standard hands"{} refers to',
+            "each of the following hands:",
             "{C:attention}High Card{}, {C:attention}Pair{}, {C:attention}Two Pair{},",
             "{C:attention}Three of a Kind{}, {C:attention}Straight{},",
             "{C:attention}Flush{}, {C:attention}Full House{},",

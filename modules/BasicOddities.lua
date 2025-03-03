@@ -921,6 +921,47 @@ local oddities = {
 			return #G.hand.cards > 1
 		end
 	},
+	'dance_with_the_dead', dance_with_the_dead = {
+		name = "Dance with the Dead",
+		subtitle = "We all fall down!",
+		text = {
+			"Put each card in your hand",
+			"into your {C:attention}graveyard{}, then",
+			"return {C:attention}that many{} random cards",
+			"from your {C:attention}graveyard{} to your hand",
+		},
+		config = {
+			extra = {
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+			return {vars = {  }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local rember = #G.hand.cards
+			for i=#G.hand.cards,1,-1 do
+				G.hand.cards[i]:move_to_graveyard()
+			end
+			delay(0.6)
+			G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function()
+				local gy_ = {}
+				for k,v in ipairs(G.graveyard) do gy_[#gy_+1]=v end
+				pseudoshuffle(gy_, pseudoseed('dance_with_the_dead'))
+				for i=math.min(#gy_, rember),1,-1 do
+					gy_[i]:move_from_graveyard()
+				end
+				return true end }))
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
+	},
 }
 
 SMODS.Atlas{

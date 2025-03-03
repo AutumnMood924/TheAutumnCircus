@@ -355,8 +355,8 @@ local jokers = {
             return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
         end,
 	},
-	'immature_virtue', immature_virtue = {
-		name = "Immature Virtue",
+	'mature_joker', mature_joker = {
+		name = "Mature Joker",
         subtitle = "Work In Progress",
 		text = {
             "{C:mult}+#1#{} Mult if played",
@@ -3690,6 +3690,7 @@ local jokers = {
                                     for i=#G.graveyard,1,-1 do
                                         if SMODS.has_enhancement(G.graveyard[i], "m_thac_soulbound") then
                                             G.graveyard[i]:move_from_graveyard(G.hand)
+                                            delay(0.1)
                                         end
                                     end
                                     return true
