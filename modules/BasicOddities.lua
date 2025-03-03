@@ -965,6 +965,50 @@ local oddities = {
 			return #G.hand.cards > 1
 		end
 	},
+	'stareater', stareater = {
+		name = "Stareater",
+		subtitle = "Into the maw of the void",
+		text = {
+			"Lose {C:attention}each{} of your {C:Zodiac}Zodiac{}",
+			"levels, and gain {C:money}$#1#{} for",
+			"each {C:attention}unique{C:Zodiac} Zodiac{} lost",
+			"{C:inactive}(Max of {C:money}$#2#{C:inactive})",
+            "{C:inactive}(Currently {C:money}$#3#{C:inactive})"
+		},
+		config = {
+			extra = {
+				dollars = 5,
+				max_dollars = 60,
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 3,
+		cost = 7,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			--info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+			return {vars = { card.ability.extra.dollars, card.ability.extra.max_dollars,
+				math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * #G.HUD_zodiacs)}} -- TECHNICALLY a dirty solution. TECHNICALLY works.
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('timpani')
+				used_tarot:juice_up(0.3, 0.5)
+				ease_dollars(math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * #G.HUD_zodiacs), true)
+				for k,v in pairs(G.ZODIACS) do
+					if G.zodiacs[k] then G.zodiacs[k].triggered = true end
+				end
+				return true end }))
+			delay(0.6)
+		end,
+		can_use = function(self, card, area, copier)
+			return card.area == G.consumeables
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("Ortalab"))
+		end,
+	},
 }
 
 SMODS.Atlas{

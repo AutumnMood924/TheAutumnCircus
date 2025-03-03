@@ -1247,6 +1247,92 @@ local jokers = {
 			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
 		end,
     },
+    'helpful_joker', helpful_joker = {
+        name = "Helpful Joker",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:six_stars}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 30,
+            suit = "six_Stars",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("SixSuits"))
+		end,
+    },
+    'dutiful_joker', dutiful_joker = {
+        name = "Dutiful Joker",
+		subtitle = "Work In Progress!",
+        text = {
+            "Played cards with",
+            "{C:six_moons}#2#{} suit give",
+            "{C:chips}+#1#{} Chips when scored", 
+        },
+        config = { extra = {
+            s_chips = 30,
+            suit = "six_Moons",
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.end_of_round and not context.repetition and context.other_card:is_suit(card.ability.extra.suit) then
+                return {
+                    extra = {
+                        chips = card.ability.extra.s_chips,
+                        colour = G.C.CHIPS
+                    },
+                    card = card,
+                    colour = G.C.CHIPS
+                }
+            end
+        end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.extra.suit, true) then return true end
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("SixSuits"))
+		end,
+    },
     'gift_from_the_void', gift_from_the_void = {
         name = "Gift from the Void",
         subtitle = "I am an idea thinking of itself",
@@ -3559,8 +3645,8 @@ local jokers = {
             return AMM.api.graveyard.count_cards() > 0
         end,
     },
-    'stargazing', stargazing = {
-        name = "Stargazing",
+    'celestial_awe', celestial_awe = {
+        name = "Celestial Awe",
 		subtitle = "Work In Progress!",
         text = {
             "If played hand is a",
