@@ -52,7 +52,7 @@ local blinds = {
 		boss_colour = HEX('DAB772'),
 		debuff = {},
 		recalc_debuff = function(self, card, from_blind)
-			if card:is_suit("Cups", true) or card:is_suit("Wands", true) or card:is_suit("Coins", true) or card:is_suit("Swords", true) then
+			if card:is_suit("thac_Cups", true) or card:is_suit("thac_Wands", true) or card:is_suit("thac_Coins", true) or card:is_suit("thac_Swords", true) then
 				card:set_debuff(true)
 				return
 			end
@@ -61,7 +61,12 @@ local blinds = {
 			return "All Cup, Wand, Coin, and Sword cards are debuffed"
 		end,
 		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and (TheAutumnCircus.config.enabled_suits.cups or TheAutumnCircus.config.enabled_suits.wands or TheAutumnCircus.config.enabled_suits.coins or TheAutumnCircus.config.enabled_suits.swords)
+			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and (
+				TheAutumnCircus.config.enabled_suits.Cups or
+				TheAutumnCircus.config.enabled_suits.Wands or
+				TheAutumnCircus.config.enabled_suits.Coins or
+				TheAutumnCircus.config.enabled_suits.Swords
+			)
 		end,
 	},
 }
