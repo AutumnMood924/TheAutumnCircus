@@ -1169,7 +1169,7 @@ local planets = {
 		subtitle = "Work In Progress!",
 		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Coin"},
+		config = {level_suit = "thac_Coins"},
 		pos = { x = 8, y = 6 },
 		loc_vars = function(_c,info_queue,card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end

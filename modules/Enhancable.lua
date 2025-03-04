@@ -33,7 +33,7 @@ local enhancements = {
 			if context.cardarea == G.hand and
 				context.main_scoring then
 				card.ability.perma_bonus = card.ability.perma_bonus or 0
-				card.ability.perma_bonus = card.ability.perma_bonus + card.ability.extra and card.ability.extra.chips or 10
+				card.ability.perma_bonus = card.ability.perma_bonus + (card.ability.extra and card.ability.extra.chips or 10)
 				return {
 					message = localize('k_upgrade_ex'),
 					colour = G.C.CHIPS,
@@ -63,7 +63,7 @@ local enhancements = {
 		calculate = function(self, card, context)
 			if context.discard and context.other_card == card then
 				card.ability.perma_mult = card.ability.perma_mult or 0
-				card.ability.perma_mult = card.ability.perma_mult + card.ability.extra and card.ability.extra.mult or 3
+				card.ability.perma_mult = card.ability.perma_mult + (card.ability.extra and card.ability.extra.mult or 3)
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT})
 			end
 		end,
