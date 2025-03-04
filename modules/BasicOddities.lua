@@ -972,8 +972,7 @@ local oddities = {
 			"Lose {C:attention}all{} of your {C:Zodiac}Zodiac{}",
 			"levels, and gain {C:money}$#1#{} for",
 			"each {C:attention}unique{C:Zodiac} Zodiac{} lost",
-			"{C:inactive}(Max of {C:money}$#2#{C:inactive})",
-            "{C:inactive}(Currently {C:money}$#3#{C:inactive})"
+			"{C:inactive}(Max of {C:money}$#2#{C:inactive}; Currently {C:money}$#3#{C:inactive})"
 		},
 		config = {
 			extra = {
@@ -988,16 +987,17 @@ local oddities = {
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			--info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
 			return {vars = { card.ability.extra.dollars, card.ability.extra.max_dollars,
-				math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * #G.HUD_zodiac)}} -- TECHNICALLY a dirty solution. TECHNICALLY works.
+				math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * (G.HUD_zodiac and #G.HUD_zodiac or 0))}} -- TECHNICALLY a dirty solution. TECHNICALLY works.
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			local remer = #G.HUD_zodiac
+			local remer = G.HUD_zodiac and #G.HUD_zodiac or 0
 			for k,v in pairs(G.ZODIACS) do
-				if G.zodiacs[k] then G.zodiacs[k]:remove_zodiac("=0")
+				if G.zodiacs[k] then
 					G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.0, func = function()
 						used_tarot:juice_up(0.3, 0.5)
 						return true end }))
+					G.zodiacs[k]:remove_zodiac("=0")
 				end
 			end
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -1008,10 +1008,46 @@ local oddities = {
 			delay(0.6)
 		end,
 		can_use = function(self, card, area, copier)
-			return card.area == G.consumeables
+			return card.area == G.consumeables and G.HUD_zodiac and #G.HUD_zodiac > 0
 		end,
 		load_check = function()
 			return next(SMODS.find_mod("ortalab"))
+		end,
+	},
+	'memorial_ticket', memorial_ticket = {
+		name = "Memorial Ticket",
+		subtitle = "Work In Progress!",
+		text = {
+			"Gain {C:money}$#1#{} for each card in",
+			"your {C:attention}graveyard{} {C:inactive}(Max of {C:money}$#2#{C:inactive})",
+            "{C:inactive}(Currently {C:money}$#3#{C:inactive})"
+		},
+		config = {
+			extra = {
+				dollars = 1,
+				max_dollars = 40,
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+			return {vars = { card.ability.extra.dollars, card.ability.extra.max_dollars,
+				math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * AMM.api.graveyard.count_cards())}} -- TECHNICALLY a dirty solution. TECHNICALLY works.
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('timpani')
+				used_tarot:juice_up(0.3, 0.5)
+				ease_dollars(math.max(0,math.min(card.ability.extra.max_dollars, card.ability.extra.dollars * AMM.api.graveyard.count_cards())), true)
+				return true end }))
+			delay(0.6)
+		end,
+		can_use = function(self, card, area, copier)
+			return card.area == G.consumeables
 		end,
 	},
 }
