@@ -185,28 +185,28 @@ function Game:start_run(args)
 			end
 			if easy_spectra and type(easy_spectra) == 'function' and easy_spectra() then
 				if TheAutumnCircus.config.enabled_hands.spectrumblaze then
-					G.GAME.hands["thac_spectrumblaze"].visible = true
+					G.GAME.hands["thac_spectrumblaze"].visible = not TheAutumnCircus.config.mechanics.all_hands_are_secret
 					G.GAME.hands["thac_spectrumblaze"].mult = 3
 					G.GAME.hands["thac_spectrumblaze"].chips = 30
 					G.GAME.hands["thac_spectrumblaze"].l_mult = 3
 					G.GAME.hands["thac_spectrumblaze"].l_chips = 20
 				end
 				if TheAutumnCircus.config.enabled_hands.skeet_spectrum then
-					G.GAME.hands["thac_skeet_spectrum"].visible = true
+					G.GAME.hands["thac_skeet_spectrum"].visible = not TheAutumnCircus.config.mechanics.all_hands_are_secret
 					G.GAME.hands["thac_skeet_spectrum"].mult = 5
 					G.GAME.hands["thac_skeet_spectrum"].chips = 35
 					G.GAME.hands["thac_skeet_spectrum"].l_mult = 4
 					G.GAME.hands["thac_skeet_spectrum"].l_chips = 30
 				end
 				if TheAutumnCircus.config.enabled_hands.spectrumblaze_house then
-					G.GAME.hands["thac_spectrumblaze_house"].visible = true
+					G.GAME.hands["thac_spectrumblaze_house"].visible = not TheAutumnCircus.config.mechanics.all_hands_are_secret
 					G.GAME.hands["thac_spectrumblaze_house"].mult = 8
 					G.GAME.hands["thac_spectrumblaze_house"].chips = 85
 					G.GAME.hands["thac_spectrumblaze_house"].l_mult = 4
 					G.GAME.hands["thac_spectrumblaze_house"].l_chips = 40
 				end
 				if TheAutumnCircus.config.enabled_hands.spectrumblaze_five then
-					G.GAME.hands["thac_spectrumblaze_five"].visible = true
+					G.GAME.hands["thac_spectrumblaze_five"].visible = not TheAutumnCircus.config.mechanics.all_hands_are_secret
 					G.GAME.hands["thac_spectrumblaze_five"].mult = 15
 					G.GAME.hands["thac_spectrumblaze_five"].chips = 130
 					G.GAME.hands["thac_spectrumblaze_five"].l_mult = 3

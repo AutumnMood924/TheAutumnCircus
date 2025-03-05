@@ -1,3 +1,14 @@
+local function allow_suits(self, args)
+    if args and args.initial_deck then
+        return true
+    end
+	if not G.playing_cards then return true end
+	for k,v in ipairs(G.playing_cards) do
+		if v:is_suit("thac_"..self.key) then return true end
+	end
+    return false
+end
+
 local suits = {
 	"cups", cups = {
 		name = "Cups",
@@ -9,6 +20,7 @@ local suits = {
 			ease_hands_played(1)
 			return { message = "+1 Hand" }
 		end,
+		in_pool = allow_suits,
 		--center_override = minor_arcana_center_override,
 	},
 	"wands", wands = {
@@ -24,6 +36,7 @@ local suits = {
 			end
 			return { message = "Upgrade!" }
 		end,
+		in_pool = allow_suits,
 		--center_override = minor_arcana_center_override,
 	},
 	"coins", coins = {
@@ -36,6 +49,7 @@ local suits = {
 			ease_dollars(9)
 			return { message = "+9 Dollars" }
 		end,
+		in_pool = allow_suits,
 		--center_override = minor_arcana_center_override,
 	},
 	"swords", swords = {
@@ -49,6 +63,7 @@ local suits = {
 			update_hand_text({delay = 0}, {mult = mult})
 			return { message = "X4 Mult" }
 		end,
+		in_pool = allow_suits,
 		--center_override = minor_arcana_center_override,
 	},
 	"pickaxes", pickaxes = {
@@ -66,6 +81,7 @@ local suits = {
 				end
 			end}
 		end,
+		in_pool = allow_suits,
 		--center_override = stone_center_override
 	},
 }

@@ -3621,11 +3621,10 @@ local jokers = {
         name = "Amalgamiter",
 		subtitle = "using alchemiters in alchemy was a mistake",
         text = {
-            "When round begins, if there",
-            "are at least {C:attention}#1#{} cards",
-            "in your {C:attention}graveyard{}, {C:attention}combine{}",
-            "them and put the result",
-            "into your hand",
+            "When round begins, if there are",
+            "at least {C:attention}#1#{} cards in your {C:attention}graveyard{},",
+            "{C:attention}combine{} all of them and put",
+            "the result into your hand",
         },
         config = { extra = {
             threshold = 2,
@@ -4095,6 +4094,48 @@ local jokers = {
             (TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.soulbound == false)
         end,
     },
+    --[['paradoxic_prophecy', paradoxic_prophecy = {
+        name = "Paradoxic Prophecy",
+		subtitle = "Work In Progress!",
+        text = {
+            "",
+        },
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+        process_loc_text = function(self)
+            G.localization.descriptions.Other['witch_read_note'] = {
+                name = "Witch: Read Note",
+                text = {
+                    "{C:lordofvoid}Hello, child.",
+                    "{C:lordofvoid}You, the one who carries me.",
+                    "{C:lordofvoid}...",
+                    "{C:lordofvoid}I'd say to keep this between us,",
+                    "{C:lordofvoid}But we know how that goes.",
+                    "{C:lordofvoid}Hello to you as well, outsider.",
+                    "{C:lordofvoid}I hope you find all this to be Fun.",
+                }
+            }
+            SMODS.Joker.process_loc_text(self)
+        end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 'witch_read_note', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+
+        end,
+        yes_pool_flag = "no",
+    },--]]
 }
 
 SMODS.Atlas{
