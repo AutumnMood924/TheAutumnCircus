@@ -225,9 +225,6 @@ end
 if TheAutumnCircus.config.enabled_modules.deckthebalatro then
 	TheAutumnCircus.DTB = NFS.load(TheAutumnCircus.mod.path.."modules/DeckTheBalatro.lua")()	
 end
-if TheAutumnCircus.config.enabled_modules.skinmeadeck then
-	TheAutumnCircus.SMAD = NFS.load(TheAutumnCircus.mod.path.."modules/SkinMeADeck.lua")()	
-end
 if TheAutumnCircus.config.enabled_modules.blindtoallbutthevideo then
 	TheAutumnCircus.BTABTV = NFS.load(TheAutumnCircus.mod.path.."modules/BlindToAllButTheVideo.lua")()	
 end

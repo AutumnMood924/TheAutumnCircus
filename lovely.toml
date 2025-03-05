@@ -3,63 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = '''
-SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil)
-delay(0.3)
-'''
-position = "after"
-payload = '''
-if v == G.play then
-	if next(poker_hands["Flush"]) then
-		local thac_flushfunc
-		local thac_suitcounts = {}
-		for i=1,#scoring_hand do
-			if (not scoring_hand[i].debuff) and not SMODS.has_no_suit(scoring_hand[i]) and next(TheAutumnCircus.func.get_card_suits(scoring_hand[i], false)) then
-				thac_suitcounts[scoring_hand[i].base.suit] = (thac_suitcounts[scoring_hand[i].base.suit] or 0) + 1
-			end
-		end
-		local highest_suit = {"Hearts", 0}
-		for _, suit in ipairs(SMODS.Suit.obj_buffer) do
-			if thac_suitcounts[suit] then
-				if thac_suitcounts[suit] > highest_suit[2] then
-					highest_suit = {suit, thac_suitcounts[suit]}
-					--print("New highest suit! "..highest_suit[1])
-				end
-			end
-		end
-		thac_flushfunc = SMODS.Suits[highest_suit[1]].flush_function
-		if thac_flushfunc then
-			local effect = thac_flushfunc(scoring_hand)
-			G.E_MANAGER:add_event(Event({
-				trigger = 'before',
-				delay = 2.9,
-				func = (function()
-					local text = effect.message
-					play_sound('gong', 0.94, 0.3)
-					play_sound('gong', 0.94*1.5, 0.2)
-					play_sound('tarot1', 1.5)
-					if text then
-						attention_text({
-							scale = 1.4, text = text, hold = 1.7, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
-						})
-					end
-					if effect.func then effect.func(scoring_hand) end
-					for i=1,#scoring_hand do
-						scoring_hand[i]:juice_up()
-						--delay(0.1)
-					end
-					return true
-				end)
-			}))
-		end
-	end
-end'''
-match_indent = true
-overwrite = false
-
 # Need to improve this
 [[patches]]
 [patches.pattern]
@@ -80,30 +23,6 @@ payload = '''if G.GAME.modifiers.consumables_all_oddities and (_type == "Tarot_P
 _type = "Oddity"
 forced_key = nil
 end'''
-match_indent = true
-overwrite = false
-
-# Minor Arcana tooltips
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''if _c.set == 'Other' then'''
-position = "before"
-payload = '''
-if card and card.base and card.base.suit and not SMODS.has_no_suit(card) then
-	if card.base.suit == "thac_Cups" then
-		info_queue[#info_queue+1] = {key = 'thac_cups_tooltip', set = 'Other'}
-	elseif card.base.suit == "thac_Wands" then
-		info_queue[#info_queue+1] = {key = 'thac_wands_tooltip', set = 'Other'}
-	elseif card.base.suit == "thac_Coins" then
-		info_queue[#info_queue+1] = {key = 'thac_coins_tooltip', set = 'Other'}
-	elseif card.base.suit == "thac_Swords" then
-		info_queue[#info_queue+1] = {key = 'thac_swords_tooltip', set = 'Other'}
-	elseif card.base.suit == "thac_Pickaxes" then
-		info_queue[#info_queue+1] = {key = 'thac_pickaxes_tooltip', set = 'Other'}
-	end
-end
-'''
 match_indent = true
 overwrite = false
 
