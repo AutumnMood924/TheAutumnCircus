@@ -37,21 +37,6 @@ local decks = {
 			G.GAME.modifiers.consumables_all_oddities = true
 		end,
 	},
-	'arcane_deck', arcane_deck = {
-		name = "Arcane Deck",
-		text = {
-			"Start run with",
-			"{C:thac_cups}Cups{}, {C:thac_coins}Coins{}, {C:thac_wands}Wands{},",
-			"and {C:thac_swords}Swords{} in deck",
-		},
-		pos = { x = 1, y = 0 },
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord ~= false
-		end,
-		apply = function(self)
-			G.GAME.modifiers.thac_arcane_deck = true
-		end,
-	},
 	'undying_deck', undying_deck = {
 		name = "Undying Deck",
 		text = {
