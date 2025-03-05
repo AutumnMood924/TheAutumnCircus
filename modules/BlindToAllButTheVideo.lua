@@ -41,34 +41,6 @@ local blinds = {
 			return G.GAME.probabilities.normal.." in 4 chance to copy played cards"
 		end,
 	},
-	"mannaz", mannaz = {
-		name = "Mannaz",
-		text = {
-			"All Cup, Wand, Coin, and",
-			"Sword cards are debuffed"
-		},
-		pos = { x = 0, y = 19 },
-		boss = {min = 2, max = 9000},
-		boss_colour = HEX('DAB772'),
-		debuff = {},
-		recalc_debuff = function(self, card, from_blind)
-			if card:is_suit("thac_Cups", true) or card:is_suit("thac_Wands", true) or card:is_suit("thac_Coins", true) or card:is_suit("thac_Swords", true) then
-				card:set_debuff(true)
-				return
-			end
-		end,
-		get_loc_debuff_text = function(self)
-			return "All Cup, Wand, Coin, and Sword cards are debuffed"
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and (
-				TheAutumnCircus.config.enabled_suits.Cups or
-				TheAutumnCircus.config.enabled_suits.Wands or
-				TheAutumnCircus.config.enabled_suits.Coins or
-				TheAutumnCircus.config.enabled_suits.Swords
-			)
-		end,
-	},
 }
 
 SMODS.Atlas{
