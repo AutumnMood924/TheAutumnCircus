@@ -1009,6 +1009,11 @@ local planets = {
 				return badges
 			end
 		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 	'planet_h', planet_h = {
 		name = "Planet H",
@@ -1033,6 +1038,11 @@ local planets = {
 				return badges
 			end
 		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 	'planet_c', planet_c = {
 		name = "Planet C",
@@ -1057,6 +1067,11 @@ local planets = {
 				return badges
 			end
 		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 	'planet_d', planet_d = {
 		name = "Planet D",
@@ -1081,6 +1096,11 @@ local planets = {
 				return badges
 			end
 		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 	'shooting_star', shooting_star = {
 		name = "Shooting Star",
@@ -1108,6 +1128,11 @@ local planets = {
 		load_check = function()
 			return next(SMODS.find_mod('SixSuits'))
 		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 	'chill_moon', chill_moon = {
 		name = "Chill Moon",
@@ -1135,647 +1160,11 @@ local planets = {
 		load_check = function()
 			return next(SMODS.find_mod('SixSuits'))
 		end,
-	},
-	'sword_planet', sword_planet = {
-		name = "Sword Planet",
-		subtitle = "Work In Progress!",
-		text = suitplanettext,
-		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Swords"},
-		pos = { x = 8, y = 6 },
-		loc_vars = function(_c,info_queue,card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = {key = "thac_swords_tooltip", set = "Other"}
-			return suitplanetloc_vars(_c,info_queue,card)
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			AMM.level_up_suit(used_tarot, self.config.level_suit)
-		end,
-		can_use = function(self, card) return true end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Swords == false
-		end,
-	},
-	'coin_planet', coin_planet = {
-		name = "Coin Planet",
-		subtitle = "Work In Progress!",
-		text = suitplanettext,
-		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Coins"},
-		pos = { x = 8, y = 6 },
-		loc_vars = function(_c,info_queue,card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = {key = "thac_coins_tooltip", set = "Other"}
-			return suitplanetloc_vars(_c,info_queue,card)
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			AMM.level_up_suit(used_tarot, self.config.level_suit)
-		end,
-		can_use = function(self, card) return true end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Coins == false
-		end,
-	},
-	'wand_planet', wand_planet = {
-		name = "Wand Planet",
-		subtitle = "Work In Progress!",
-		text = suitplanettext,
-		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Wands"},
-		pos = { x = 8, y = 6 },
-		loc_vars = function(_c,info_queue,card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = {key = "thac_wands_tooltip", set = "Other"}
-			return suitplanetloc_vars(_c,info_queue,card)
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			AMM.level_up_suit(used_tarot, self.config.level_suit)
-		end,
-		can_use = function(self, card) return true end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Wands == false
-		end,
-	},
-	'cup_planet', cup_planet = {
-		name = "Cup Planet",
-		subtitle = "Work In Progress!",
-		text = suitplanettext,
-		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Cups"},
-		pos = { x = 8, y = 6 },
-		loc_vars = function(_c,info_queue,card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = {key = "thac_cups_tooltip", set = "Other"}
-			return suitplanetloc_vars(_c,info_queue,card)
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			AMM.level_up_suit(used_tarot, self.config.level_suit)
-		end,
-		can_use = function(self, card) return true end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Cups == false
-		end,
-	},
-	'pickaxe_planet', pickaxe_planet = {
-		name = "Pickaxe Planet",
-		subtitle = "Work In Progress!",
-		text = suitplanettext,
-		effect = 'Suit Level Upgrade',
-		config = {level_suit = "thac_Pickaxes"},
-		pos = { x = 8, y = 6 },
-		loc_vars = function(_c,info_queue,card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            info_queue[#info_queue+1] = {key = "thac_pickaxes_tooltip", set = "Other"}
-			return suitplanetloc_vars(_c,info_queue,card)
-		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or card
-			AMM.level_up_suit(used_tarot, self.config.level_suit)
-		end,
-		can_use = function(self, card) return true end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord and not TheAutumnCircus.config.enabled_suits.Pickaxes == false
-		end,
-	},
-	'nice_planet', nice_planet = {
-		name = "Cancer",
-		subtitle = "The Tumor",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 0, y = 3 },
-		loc_vars = function(_c,info_queue,card)
-			-- ?????????????????????????????
-			-- why the hell doesn't this work im sorry fritz ill figure this out
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
-			return handplanetloc_vars(_c,info_queue,card)
-		end,
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("Constellation...?", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.nice == false
-		end,
-	},
-	'blaze_planet', blaze_planet = {
-		name = "Blaze Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_blaze', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
-		end,
-	},
-	'twice_nice_planet', twice_nice_planet = {
-		name = "Twice Nice Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_twice_nice', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.twice_nice == false
-		end,
-	},
-	'skeet_planet', skeet_planet = {
-		name = "The Veil",
-		subtitle = "Edge of the Incipisphere",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_skeet', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 3, y = 3 },
-		loc_vars = function(_c,info_queue,card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
-			return handplanetloc_vars(_c,info_queue,card)
-		end,
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("Asteroid Belt", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet == false
-		end,
-	},
-	'little_dog_planet', little_dog_planet = {
-		name = "Canis Minor",
-		subtitle = "* The dog blocks the constellation.",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_little_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 1, y = 3 },
-		loc_vars = function(_c,info_queue,card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
-			return handplanetloc_vars(_c,info_queue,card)
-		end,
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("Constellation...?", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_dog == false
-		end,
-	},
-	'big_dog_planet', big_dog_planet = {
-		name = "Big Dog Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_big_dog', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_dog == false
-		end,
-	},
-	'little_cat_planet', little_cat_planet = {
-		name = "Little Cat Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_little_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.little_cat == false
-		end,
-	},
-	'big_cat_planet', big_cat_planet = {
-		name = "Big Cat Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_big_cat', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.big_cat == false
-		end,
-	},
-	'castle_planet', castle_planet = {
-		name = "Battlefield",
-		subtitle = "Where Skaia's fate is decided",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_castle', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 2, y = 3 },
-		loc_vars = function(_c,info_queue,card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
-			return handplanetloc_vars(_c,info_queue,card)
-		end,
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("Battlefield", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle == false
-		end,
-	},
-	'blaze_house_planet', blaze_house_planet = {
-		name = "Blaze House Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_blaze_house', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_house == false
-		end,
-	},
-	'flushblaze_planet', flushblaze_planet = {
-		name = "Flushblaze Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_flushblaze', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze == false
-		end,
-	},
-	'spectrumblaze_planet', spectrumblaze_planet = {
-		name = "Spectrumblaze Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_spectrumblaze', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze == false and next(SMODS.find_mod('SpectrumFramework'))
-		end,
-	},
-	'castle_flush_planet', castle_flush_planet = {
-		name = "Castle Flush Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_castle_flush', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_flush == false
-		end,
-	},
-	'castle_spectrum_planet', castle_spectrum_planet = {
-		name = "Castle Spectrum Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_castle_spectrum', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.castle_spectrum == false and next(SMODS.find_mod('SpectrumFramework'))
-		end,
-	},
-	'skeet_flush_planet', skeet_flush_planet = {
-		name = "Skeet Flush Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_skeet_flush', softlock = TheAutumnCircus.config.mechanics.all_hands_are_secret},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_flush == false
-		end,
-	},
-	'skeet_spectrum_planet', skeet_spectrum_planet = {
-		name = "Skeet Spectrum Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_skeet_spectrum', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.skeet_spectrum == false and next(SMODS.find_mod('SpectrumFramework'))
-		end,
-	},
-	'blaze_five_planet', blaze_five_planet = {
-		name = "Blaze Five Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_blaze_five', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze_five == false
-		end,
-	},
-	'flushblaze_house_planet', flushblaze_house_planet = {
-		name = "Flushblaze House Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_flushblaze_house', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_house == false
-		end,
-	},
-	'spectrumblaze_house_planet', spectrumblaze_house_planet = {
-		name = "Spectrumblaze House Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_spectrumblaze_house', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_house == false and next(SMODS.find_mod('SpectrumFramework'))
-		end,
-	},
-	'flushblaze_five_planet', flushblaze_five_planet = {
-		name = "Flushblaze Five Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_flushblaze_five', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.flushblaze_five == false
-		end,
-	},
-	'spectrumblaze_five_planet', spectrumblaze_five_planet = {
-		name = "Spectrumblaze Five Planet",
-		subtitle = "Work In Progress!",
-		effect = 'Hand Upgrade',
-		config = {hand_type = 'thac_spectrumblaze_five', softlock = true},
-		pos = { x = 8, y = 6 },
-		process_loc_text = function(self)
-			local target_text = G.localization.descriptions.Planet['c_earth'].text
-			SMODS.Consumable.process_loc_text(self)
-			G.localization.descriptions.Planet[self.key].text = target_text
-		end,
-		set_badges = function(self, card, badges)
-			if self.discovered then
-				badges[1].nodes[1].nodes[2].config.object:remove()
-				badges[1] = create_badge("ERROR", get_type_colour(self or card.config, card), nil, 1.2)
-				return badges
-			end
-		end,
-		generate_ui = 0,
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.spectrumblaze_five == false and next(SMODS.find_mod('SpectrumFramework'))
-		end,
+        in_pool = function(self)
+            for k,v in ipairs(G.playing_cards) do
+                if v:is_suit(self.config.level_suit, true) then return true end
+            end
+        end,
 	},
 }
 

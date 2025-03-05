@@ -225,9 +225,6 @@ end
 if TheAutumnCircus.config.enabled_modules.deckthebalatro then
 	TheAutumnCircus.DTB = NFS.load(TheAutumnCircus.mod.path.."modules/DeckTheBalatro.lua")()	
 end
-if TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord then
-	TheAutumnCircus.SUDO = NFS.load(TheAutumnCircus.mod.path.."modules/SuitedUnimpressedDispleasedOverlord.lua")()	
-end
 if TheAutumnCircus.config.enabled_modules.skinmeadeck then
 	TheAutumnCircus.SMAD = NFS.load(TheAutumnCircus.mod.path.."modules/SkinMeADeck.lua")()	
 end
@@ -236,9 +233,6 @@ if TheAutumnCircus.config.enabled_modules.blindtoallbutthevideo then
 end
 if TheAutumnCircus.config.enabled_modules.tagimit then
 	TheAutumnCircus.TII = NFS.load(TheAutumnCircus.mod.path.."modules/TagImIt.lua")()	
-end
-if TheAutumnCircus.config.enabled_modules.retrievehands then
-	TheAutumnCircus.RH = NFS.load(TheAutumnCircus.mod.path.."modules/RetrieveHands.lua")()
 end
 if TheAutumnCircus.config.enabled_modules.basicoddities then
 	TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
@@ -251,9 +245,6 @@ if TheAutumnCircus.config.enabled_modules.editiontomeetya then
 end
 if TheAutumnCircus.config.enabled_modules.hamspect then
 	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
-end
-if TheAutumnCircus.config.enabled_modules.totallyrealzodiac and next(SMODS.find_mod("ortalab")) then
-	TheAutumnCircus.TRZ = NFS.load(TheAutumnCircus.mod.path.."modules/TotallyRealZodiac.lua")()	
 end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
