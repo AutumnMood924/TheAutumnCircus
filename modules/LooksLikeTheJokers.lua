@@ -2816,6 +2816,59 @@ local jokers = {
         end,
         yes_pool_flag = "no",
     },--]]
+    'grave_legion', grave_legion = {
+        name = "Grave Legion",
+		subtitle = "Work In Progress",
+        text = {
+            "{C:green}#1# in #2#{} chance to create",
+            "a copy of each played card",
+            "and put it into your",
+            "{C:attention}graveyard{} when scored",
+        },
+        config = { extra = {
+            cards = 1,
+            odds = 4,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                G.GAME.probabilities.normal,
+                card.ability.extra.odds,
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.repetition and not context.end_of_round
+            and pseudorandom(pseudoseed("grave_legion")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+                local card_ = context.other_card
+                return {
+                    extra = {
+                        message = localize("k_copied_ex"),
+                        colour = G.C.JOKER_GREY,
+                    },
+                    card = card,
+                    func = function()
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'immediate',
+                            func = function() 
+                                for i=1,math.floor(card.ability.extra.cards) do
+                                    local _card = copy_card(card_, nil, nil, G.playing_card)
+                                    _card:move_to_graveyard()
+                                end
+                                return true
+                            end
+                        }))
+                    end,
+                    colour = G.C.JOKER_GREY
+                }
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{
