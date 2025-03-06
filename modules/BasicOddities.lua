@@ -300,7 +300,6 @@ local oddities = {
 			'{C:inactive}Looks big enough{}',
 			'{C:inactive}for two sittings!{}',
 		},
-		boxes = { 1, 2, },
 		effect = 'tasty...',
 		config = {
 			extra = {
@@ -344,7 +343,6 @@ local oddities = {
 			'{C:inactive}Just one bite{}',
 			'{C:inactive}left, now{}',
 		},
-		boxes = { 1, 2, },
 		effect = 'tasty...',
 		config = {
 			extra = {

@@ -6,9 +6,6 @@ local data = {}
 data.joker_stamps = {
 }
 
-data.flush_functions = {
-}
-
 data.BUFFERS = {
 	Jokers = {},
 	Consumables = {},
@@ -17,10 +14,6 @@ data.BUFFERS = {
 	Vouchers = {},
 	Enhancements = {},
 	Decks = {},
-	HandParts = {},
-	Hands = {},
-	Suits = {},
-	DeckSkins = {},
 	Blinds = {},
 	Shaders = {},
 	Editions = {},
@@ -151,45 +144,6 @@ data.buffer_register_funcs = {
 			end
 			
 			SMODS.Back(v)
-		end
-	end,
-	HandParts = function(v)
-		if (not v.load_check) or v.load_check() then			
-			SMODS.PokerHandPart(v)
-		end
-	end,
-	Hands = function(v)
-		if not (TheAutumnCircus.config.enabled_hands[v.key] == false) and ((not v.load_check) or v.load_check()) then			
-			if not v.loc_txt then
-				v.loc_txt = {
-					name = v.display_name or v.name,
-					description = v.text
-				}
-			end
-			
-			SMODS.PokerHand(v)
-		end
-	end,
-	Suits = function(v)
-		if not (TheAutumnCircus.config.enabled_suits[v.key] == false) and ((not v.load_check) or v.load_check()) then
-			if not v.lc_atlas then v.lc_atlas = v.atlas end
-			if not v.hc_atlas then v.hc_atlas = v.atlas end
-			if not v.lc_ui_atlas then v.lc_ui_atlas = v.ui_atlas end
-			if not v.hc_ui_atlas then v.hc_ui_atlas = v.ui_atlas end
-			if not v.colour then v.colour = v.color end
-			if not v.lc_colour then v.lc_colour = v.colour end
-			if not v.hc_colour then v.hc_colour = v.colour end
-			if not v.pos then v.pos = {y = v.row} end
-			if not v.loc_txt then v.loc_txt = {name = v.name, plural = v.name, singular = v.name:sub(1,-1)} end
-			SMODS.Suit(v)
-		end
-	end,
-	DeckSkins = function(v)
-		if not (TheAutumnCircus.config.enabled_deckskins[v.key] == false) and ((not v.load_check) or v.load_check()) then
-			if not v.lc_atlas then v.lc_atlas = v.atlas end
-			if not v.posStyle then v.posStyle = 'suit' end
-			if not v.loc_txt then v.loc_txt = v.name end
-			SMODS.DeckSkin(v)
 		end
 	end,
 	Blinds = function(v)
