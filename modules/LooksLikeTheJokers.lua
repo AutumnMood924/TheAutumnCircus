@@ -143,6 +143,62 @@ local jokers = {
             end
         end,
 	},
+    'wayfarer', wayfarer = {
+        name = "The Wayfarer",
+        subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Straight{} but",
+            "{C:attention}isn't{} a {C:attention}Straight",
+        },
+        config = {
+            extra = {
+                Xmult = 4.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['Straight']) and context.scoring_name ~= 'Straight' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
+    'power_of_unity', power_of_unity = {
+        name = "Power of Unity",
+        subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand contains",
+            "a {C:attention}Flush{} but",
+            "{C:attention}isn't{} a {C:attention}Flush",
+        },
+        config = {
+            extra = {
+                Xmult = 3.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and next(context.poker_hands['Flush']) and context.scoring_name ~= 'Flush' then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
     'chaotic', chaotic = {
         name = "The Chaotic",
         subtitle = "Work In Progress!",
@@ -172,6 +228,60 @@ local jokers = {
         end,
         load_check = function()
             return next(SMODS.find_mod("SpectrumFramework"))
+        end,
+    },
+    'standardized', standardized = {
+        name = "The Standardized",
+        subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand is a",
+            "{C:attention}standard hand"
+        },
+        config = {
+            extra = {
+                Xmult = 2.5,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and TheAutumnCircus.func.context_strict_standard_hands(context) then
+                return { xmult = card.ability.extra.Xmult }
+            end
+        end,
+    },
+    'nonstandard', nonstandard = {
+        name = "The Nonstandard",
+        subtitle = "Work In Progress!",
+        text = {
+            "{X:mult,C:white} X#1# {} Mult if played",
+            "hand isn't a",
+            "{C:attention}standard hand"
+        },
+        config = {
+            extra = {
+                Xmult = 3.2,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main and not TheAutumnCircus.func.context_strict_standard_hands(context) then
+                return { xmult = card.ability.extra.Xmult }
+            end
         end,
     },
     'gift_from_the_void', gift_from_the_void = {
@@ -1292,50 +1402,6 @@ local jokers = {
                     }
                 end
             end
-        end,
-    },
-    'court_of_jokers', court_of_jokers = {
-        name = "Court of Jokers",
-		subtitle = "Work In Progress!",
-        text = {
-            "If discarded hand contains",
-            "a {C:attention}Blaze{}, each discarded",
-            "card permanently gains {C:chips}+#1#{}",
-            "chips when scored"
-        },
-        config = { extra = {
-            chips = 10,
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 4,
-        rarity = 1,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            return {vars = {
-                card.ability.extra.chips
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.pre_discard then
-                local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-                if next(poker_hands['thac_blaze']) then
-                    for k,v in ipairs(G.hand.highlighted) do
-                        v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.chips
-                        v:juice_up(0.3, 0.3)
-                    end
-                    return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.CHIPS,
-                        card = card
-                    }
-                end
-            end
-        end,
-        load_check = function()
-            return TheAutumnCircus.config.enabled_modules.retrievehands and not TheAutumnCircus.config.enabled_hands.blaze == false
         end,
     },
     'lost_sock', lost_sock = {

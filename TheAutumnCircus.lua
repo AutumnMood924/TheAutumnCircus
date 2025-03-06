@@ -24,7 +24,6 @@ end
 TheAutumnCircus.mod.process_loc_text = function()
 
 	G.localization.misc.labels["thac_gilded"] = "Gilded"
-	G.localization.misc.labels["thac_etched"] = "Etched"
 
 	G.localization.descriptions.Other["mc_obs_off_comet"] = {
         name = "Observatory Effect",
@@ -99,44 +98,6 @@ TheAutumnCircus.mod.process_loc_text = function()
             "Nothing actually...",
         }
     }
-	G.localization.descriptions.Other["thac_cups_tooltip"] = {
-        name = "Flush Effect",
-        text = {
-            "A {C:attention}Flush{} of {C:cups}Cups{}",
-            "gives {C:blue}+1{} Hand",
-        }
-    }
-	G.localization.descriptions.Other["thac_swords_tooltip"] = {
-        name = "Flush Effect",
-        text = {
-            "A {C:attention}Flush{} of {C:thac_swords}Swords{}",
-            "gives {X:red,C:white} X4 {} Mult",
-        }
-    }
-	G.localization.descriptions.Other["thac_wands_tooltip"] = {
-        name = "Flush Effect",
-        text = {
-            "A {C:attention}Flush{} of {C:thac_wands}Wands{}",
-            "gains {C:mult}+7{} Mult",
-			"permanently when",
-            "scored"
-        }
-    }
-	G.localization.descriptions.Other["thac_coins_tooltip"] = {
-        name = "Flush Effect",
-        text = {
-            "A {C:attention}Flush{} of {C:thac_coins}Coins{}",
-            "earns {C:money}$9{}",
-        }
-    }
-	G.localization.descriptions.Other["thac_pickaxes_tooltip"] = {
-        name = "Flush Effect",
-        text = {
-            "A {C:attention}Flush{} of {C:thac_pickaxes}Pickaxes{}",
-            "converts all {C:attention}Stone Cards{}",
-			"held in hand into {C:attention}Steel Cards{}",
-        }
-    }
 	G.localization.descriptions.Other["thac_standard_hands"] = {
         name = "Standard Hands",
         text = {
@@ -146,15 +107,6 @@ TheAutumnCircus.mod.process_loc_text = function()
             "{C:attention}Three of a Kind{}, {C:attention}Straight{},",
             "{C:attention}Flush{}, {C:attention}Full House{},",
             "{C:attention}Four of a Kind{}, {C:attention}Straight Flush{}",
-        }
-    }
-	G.localization.descriptions.Other["thac_animal_hands"] = {
-        name = "Animal Hands",
-        text = {
-            '{C:attention}"Animal hands"{} refers to each',
-            "of the following hands:",
-            "{C:attention}Little Dog{}, {C:attention}Big Dog{},",
-            "{C:attention}Little Cat{}, {C:attention}Big Cat{}"
         }
     }
 

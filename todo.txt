@@ -5,31 +5,7 @@ Vampire Stamp(ire) - Removes seals from cards, cards get X0.25 additional permam
 
 Loop Card (Enhancement) - Returns to the deck after being played
 
-??? Joker - +?? Mult if played hand contains a Castle
-??? Joker - +??? Chips if played hand contains a Castle
-The Fortress - X? Mult if played hand contains a Castle
--- Slight inconsistency with these jokers; they should also
--- trigger for the enhancement Castle variants, even though
--- those do not (as a rule) include the base Castle hand
--- This might require each of them to have a custom
--- implementation
-
--- ortalab style jokers/virtues
-??? Joker - +6 Mult if played hand doesn't contain a Nice
-??? Joker - +?? Mult if played hand doesn't contain a Blaze
-??? Joker - +?? Mult if played hand doesn't contain a Skeet
-??? Joker - +?? Mult if played hand doesn't contain a Castle
-??? Joker - +69 Chips if played hand doesn't contain a Nice
-??? Joker - +??? Chips if played hand doesn't contain a Blaze
-??? Joker - +??? Chips if played hand doesn't contain a Skeet
-??? Joker - +??? Chips if played hand doesn't contain a Castle
-The ??? - X5 Mult if played hand is a Nice
-The ??? - skeet
-The ??? - blaze
-The ??? - castle
-
 ??? - If the first played hand each round has only 1 card, it becomes Negative
 ??? - Retrigger the leftmost Rare Joker 2 times
 ??? - Retrigger the leftmost Joker 1 time for each other Joker (including this one)
-??? - 60% of Mult is converted to Chips at a X2 rate
 Prototype Joker - Retrigger Jokers with the same art 1 time
