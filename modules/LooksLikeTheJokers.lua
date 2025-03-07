@@ -2195,10 +2195,7 @@ local jokers = {
                     _card.playing_card = #G.graveyard
                     _card.graveyard = true
                 end
-                return {
-                    message = localize("k_copied_ex"),
-                    colour = G.C.BLUE,
-                }
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_copied_ex"), colour = G.C.JOKER_GREY, instant = true})
             end
         end,
     },
@@ -2304,6 +2301,37 @@ local jokers = {
             end
         end,
     },
+    'underdogs_secret', underdogs_secret = {
+        name = "Underdog's Secret",
+		subtitle = "Work In Progress!",
+        text = {
+            "If scored Chips value is at least",
+            "{X:attention,C:white}#1#X{} the Mult value, earn {C:money}$#2#",
+        },
+        config = { extra = {
+            threshold = 50,
+            money = 5,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.threshold, card.ability.extra.money}}
+        end,
+        calculate = function(self, card, context)
+            if context.final_scoring_step and hand_chips >= mult * card.ability.extra.threshold then
+                ease_dollars(card.ability.extra.money)
+                return {
+                    message = localize('$')..card.ability.extra.money,
+                    colour = G.C.MONEY
+                }
+            end
+        end,
+    },
     'topple_the_titans', topple_the_titans = {
         name = "Topple the Titans",
 		subtitle = "Work In Progress!",
@@ -2360,34 +2388,52 @@ local jokers = {
             end
         end,
     },
-    'underdogs_secret', underdogs_secret = {
-        name = "Underdog's Secret",
+    'autoapotheosis', autoapotheosis = {
+        name = "Autoapotheosis",
 		subtitle = "Work In Progress!",
         text = {
             "If scored Chips value is at least",
-            "{X:attention,C:white}#1#X{} the Mult value, earn {C:money}$#2#",
+            "{X:attention,C:white}#1#X{} the Mult value, each scoring",
+            "unaspected card gets a random {C:red}Aspect{}",
         },
         config = { extra = {
-            threshold = 50,
-            money = 5,
+            threshold = 300,
         }},
         pos = { x = 0, y = 0 },
-        cost = 4,
-        rarity = 1,
+        cost = 10,
+        rarity = 3,
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.threshold, card.ability.extra.money}}
+            return {vars = {card.ability.extra.threshold}}
         end,
         calculate = function(self, card, context)
             if context.final_scoring_step and hand_chips >= mult * card.ability.extra.threshold then
-                ease_dollars(card.ability.extra.money)
-                return {
-                    message = localize('$')..card.ability.extra.money,
-                    colour = G.C.MONEY
-                }
+                local keyset={}
+                local n=0
+                for k,v in pairs(AMM.Aspects) do
+                    n=n+1
+                    keyset[n]=k
+                end n = 0
+                for k,v in ipairs(context.scoring_hand) do
+                    if v.aspect == nil then
+                        local god_tier = pseudorandom_element(keyset, pseudoseed("god_tier"))
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'immediate',
+                            func = function() 
+                                v:set_aspect(god_tier,nil,true)
+                                return true
+                            end
+                        }))
+                        n = 1
+                    end
+                end
+                if n ~= 0 then delay(0.6) return {
+                    message = "God Tier!",
+                    colour = G.C.RED
+                } end
             end
         end,
     },
@@ -2667,7 +2713,7 @@ local jokers = {
             end
         end,
     },
-    'quantum_grass', quantum_grass = {
+    --[['quantum_grass', quantum_grass = {
         name = "Quantum Grass Glass",
 		subtitle = "Work In Progress!",
         text = {
@@ -2703,7 +2749,7 @@ local jokers = {
                 end
             end
         end,
-    },
+    },--]]
     'twin_stella', twin_stella = {
         name = "Twin Stella",
 		subtitle = "Work In Progress!",
@@ -2821,8 +2867,8 @@ local jokers = {
 		subtitle = "Work In Progress",
         text = {
             "{C:green}#1# in #2#{} chance to create",
-            "a copy of each played card",
-            "and put it into your",
+            "{C:attention}#3# cop#4#{} of each played card",
+            "and put #5# into your",
             "{C:attention}graveyard{} when scored",
         },
         config = { extra = {
@@ -2840,6 +2886,9 @@ local jokers = {
             return {vars = {
                 G.GAME.probabilities.normal,
                 card.ability.extra.odds,
+                card.ability.extra.cards == 1 and "a" or math.floor(card.ability.extra.cards),
+                card.ability.extra.cards == 1 and "y" or "ies",
+                card.ability.extra.cards == 1 and "it" or "them",
             }}
         end,
         calculate = function(self, card, context)
