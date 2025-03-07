@@ -2864,7 +2864,7 @@ local jokers = {
     },--]]
     'grave_legion', grave_legion = {
         name = "Grave Legion",
-		subtitle = "Work In Progress",
+		subtitle = "Work In Progress!",
         text = {
             "{C:green}#1# in #2#{} chance to create",
             "{C:attention}#3# cop#4#{} of each played card",
