@@ -13,12 +13,6 @@ local enhancements = {
 	},              This effect requires too much jank rn]]
 	'grass', grass = {
 		name = "grass",
-		display_name = "Grass Card",
-		text = {
-			'This card permanently gains',
-			'{C:chips}+#1#{} chips each hand played',
-			'while it stays in hand'
-		},
 		effect = 'grass',
 		config = {
 			extra = {
@@ -44,12 +38,6 @@ local enhancements = {
 	},
 	'dirt', dirt = {
 		name = "dirt",
-		display_name = "Dirt Card",
-		text = {
-			'This card permanently',
-			'gains {C:mult}+#1#{} Mult when',
-			'it is discarded'
-		},
 		effect = 'dirt',
 		config = {
 			extra = {
@@ -70,11 +58,6 @@ local enhancements = {
 	},
 	'star', star = {
 		name = "star",
-		display_name = "Star Card",
-		text = {
-			'Reduces Blind requirement',
-			'by {C:attention}#1#%{} when scored'
-		},
 		effect = 'bounty',
 		config = {
 			extra = {
@@ -108,12 +91,6 @@ local enhancements = {
 	},
 	'bone', bone = {
 		name = "bone",
-		display_name = "Bone Card",
-		text = {
-			'{C:mult}+#1#{} Mult for each',
-			'card in your {C:attention}graveyard{}',
-			'{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)',
-		},
 		effect = 'bone',
 		config = {
 			extra = {
@@ -141,11 +118,6 @@ local enhancements = {
 	},
 	'jewel', jewel = {
 		name = "jewel",
-		display_name = "Jewel Card",
-		text = {
-			'Earns {C:money}$#1#{} when scored',
-			'no rank or suit',
-		},
 		effect = 'jewel',
 		config = {
 			extra = {
@@ -172,13 +144,6 @@ local enhancements = {
 	},
 	'soulbound', soulbound = {
 		name = "soulbound",
-		display_name = "Soulbound Card",
-		text = {
-			"Returns from your {C:attention}graveyard{}",
-			"after each {C:attention}Boss Blind{}",
-			"Gains {C:mult}+#1#{} Mult permanently after",
-			"returning from your {C:attention}graveyard{}",
-		},
 		effect = 'soulbound',
 		config = {
 			extra = {

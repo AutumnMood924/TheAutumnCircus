@@ -194,3 +194,32 @@ SMODS.calculate_retriggers = function(card, context, _ret)
 	end
     return retriggers
 end
+
+-------------- main menu
+
+
+local alias__Game_main_menu = Game.main_menu
+function Game:main_menu(ctx)
+    local r = alias__Game_main_menu(self,ctx)
+    if self.title_top then
+        local tg = self.title_top
+        local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS['j_thac_triplicate_soul'])
+        card.bypass_discovery_center = true
+        card.T.w = card.T.w * 1.4
+        card.T.h = card.T.h * 1.4
+		if math.random() < 1/8192 then
+			card:set_edition("e_thac_gilded")
+		end
+		card:set_seal("thac_blueprint", true, true)
+        G.title_top.T.w = G.title_top.T.w * 1.7675
+        G.title_top.T.x = G.title_top.T.x - 0.8
+        card:set_sprites(card.config.center)
+        card.no_ui = true
+        card.states.visible = true
+        self.title_top:emplace(card)
+        self.title_top:align_cards()
+		self.title_top.cards[1]:set_aspect("thac_void", true, true)
+		self.title_top.cards[1].bottle = true
+    end
+    return r
+end

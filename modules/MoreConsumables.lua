@@ -516,7 +516,7 @@ local tarots = {
 					message = 'Hoo hoo!',
 					colour = G.C.ORANGE
 				})
-				if pseudorandom(pseudoseed('joker_tarot_secret')) < G.GAME.probabilities.normal / 1000 then
+				if pseudorandom(pseudoseed('joker_tarot_secret')) < 1 / 100000 then
 					append_extra(ret, {
 						message = 'It is time!',
 						colour = G.C.BLUE
@@ -1093,11 +1093,11 @@ local spectrals = {
 				table.insert(seal_list, v.key)
 			end
 			for i=1, #G.hand.cards do
-				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()	
+				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
 					local card = G.hand.cards[i]
 					
 					-- Suit and Rank randomized
-					card:set_base(pseudorandom_element(G.P_CARDS))
+					card:set_base(pseudorandom_element(G.P_CARDS, "chancetime"))
 					
 					-- Enhancement (~ 80% chance)
 					if pseudorandom(pseudoseed('chancetime')) < 0.8 then
@@ -1125,6 +1125,11 @@ local spectrals = {
 						seal_type = math.floor(seal_type * #seal_list)
 						card:set_seal(seal_list[seal_type])
 					else card:set_seal() end
+					
+					if aiko_alphabets then
+						--alphabet (guaranteed if possible)
+						card.ability.aikoyori_letters_stickers = pseudorandom_element(aiko_alphabets, 'chancetime')
+					end
 					
 					return true 
 				end }))

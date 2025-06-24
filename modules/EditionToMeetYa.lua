@@ -12,13 +12,8 @@ local shaders = {
 
 local editions = {
 	'gilded', gilded = {
-		name = "Gilded",
         shader = 'gilded',
         in_shop = true,
-		text = {
-            "#2# {C:money}$#1#{} of {C:attention}sell value{}#3#",
-            "#4#{C:attention}#5#{}#6#"
-        },
 		config = {
 			extra = {
                 gold = 3,

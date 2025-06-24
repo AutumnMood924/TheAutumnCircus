@@ -1,10 +1,6 @@
 
 local blinds = {
 	"jera", jera = {
-		name = "Jera",
-		text = {
-			"1 in 4 chance to","copy played cards",
-		},
 		pos = { x = 0, y = 11 },
 		boss = {min = 1, max = 9000},
 		boss_colour = HEX('FDA200'),

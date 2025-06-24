@@ -20,6 +20,8 @@ data.BUFFERS = {
 	Tags = {},
 	Aspects = {},
 	Zodiacs = {},
+	Materials = {},
+	Recipes = {},
 }
 
 data.buffer_register_funcs = {
@@ -228,6 +230,30 @@ data.buffer_register_funcs = {
 				}
 			end
 			Ortalab.Zodiac(v)
+		end
+	end,
+	Materials = function(v)
+		if not (BUB.config.enabled_materials[v.key] == false) and ((not v.load_check) or v.load_check()) then
+			if not v.loc_txt then
+				v.loc_txt = {
+					name = v.display_name or v.name,
+					text = v.text,
+					boxes = v.boxes
+				}
+			end
+			Yggdrasil.Material(v)
+		end
+	end,
+	Recipes = function(v)
+		if not (BUB.config.enabled_recipes[v.key] == false) and ((not v.load_check) or v.load_check()) then
+			local m = {}
+			m.recipe = {}
+			for i=1,#v.recipe do
+				m.recipe[i] = v.recipe[i]
+			end
+			m.config = v.config
+			m.card_key = v.card_key
+			YggCraftingRecipes[#YggCraftingRecipes+1] = m
 		end
 	end,
 }

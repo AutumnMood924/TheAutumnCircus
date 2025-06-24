@@ -1,13 +1,6 @@
 
 local decks = {
 	'wheel_of_fortune_deck', wheel_of_fortune_deck = {
-		name = "Wheel of Fortune Deck",
-		text = {
-			"Start run with the",
-			"{C:tarot}Wheel of Wheel of Fortune{}",
-			"voucher and {C:attention}2{} copies of",
-			"{C:tarot}The Wheel of Fortune{}"
-		},
 		config = {
 			voucher = 'v_thac_wheel_of_wheel_of_fortune',
 			consumables = {'c_wheel_of_fortune', 'c_wheel_of_fortune'}
@@ -20,11 +13,6 @@ local decks = {
 		end,
 	},
 	'collectors_deck', collectors_deck = {
-		name = "Collector's Deck",
-		text = {
-			"{C:attention}+2{} consumable slots",
-			"All {C:attention}consumables{} are {C:attention}replaced{} with {C:oddity}oddities{}",
-		},
 		config = {
 			all_oddities = true,
 			consumable_slot = 2,
@@ -38,12 +26,6 @@ local decks = {
 		end,
 	},
 	'undying_deck', undying_deck = {
-		name = "Undying Deck",
-		text = {
-			"All cards return from your",
-			"{C:attention}graveyard{} after defeating",
-			"each {C:attention}Boss Blind{}",
-		},
 		pos = { x = 0, y = 1 },
 		apply = function(self)
 			G.GAME.modifiers.thac_undying_deck = true
@@ -113,6 +95,123 @@ local decks = {
 		end,
 	},
 	---]]
+	"duality", duality = {
+		pos = {x = 1, y = 1},
+		config = {
+			hands = -1,
+			discards = -1,
+			consumable_slot = 1,
+			joker_slot = 1,
+		},
+	},
+	"gambling", gambling = {
+		pos = {x = 2, y = 1},
+		config = {
+		},
+		apply = function(self)
+			G.GAME.probabilities.normal = G.GAME.probabilities.normal * 2
+		end,
+	},
+	"purple", purple = {
+		pos = {x = 3, y = 1},
+		config = {
+		},
+		apply = function(self)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+					SMODS.change_play_limit(1)
+					SMODS.change_discard_limit(1)
+                return true
+                end
+            }))
+		end,
+	},
+	"teal", teal = {
+		pos = {x = 4, y = 1},
+		config = {
+			hand_size = -1,
+		},
+		apply = function(self)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+					SMODS.change_play_limit(2)
+					SMODS.change_discard_limit(2)
+                return true
+                end
+            }))
+		end,
+	},
+	"pink", pink = {
+		pos = {x = 5, y = 1},
+		config = {
+			hand_size = 2,
+		},
+		apply = function(self)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+					SMODS.change_play_limit(-1)
+					SMODS.change_discard_limit(-1)
+                return true
+                end
+            }))
+		end,
+	},
+	"cyan", cyan = {
+		pos = {x = 6, y = 1},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"fuchsia", fuchsia = {
+		pos = {x = 0, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"orange", orange = {
+		pos = {x = 1, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"lime", lime = {
+		pos = {x = 2, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"violet", violet = {
+		pos = {x = 3, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"grey", grey = {
+		pos = {x = 4, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"pale", pale = {
+		pos = {x = 5, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
+	"lavender", lavender = {
+		pos = {x = 6, y = 2},
+		config = {
+		},
+		apply = function(self)
+		end,
+	},
 }
 
 

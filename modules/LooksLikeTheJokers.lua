@@ -2,13 +2,6 @@ local placeholder_jokers = { }
 
 local jokers = {
     'helpful_joker', helpful_joker = {
-        name = "Helpful Joker",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:six_stars}#2#{} suit give",
-            "{C:chips}+#1#{} Chips when scored", 
-        },
         config = { extra = {
             s_chips = 30,
             suit = "six_Stars",
@@ -45,13 +38,6 @@ local jokers = {
 		end,
     },
     'dutiful_joker', dutiful_joker = {
-        name = "Dutiful Joker",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with",
-            "{C:six_moons}#2#{} suit give",
-            "{C:chips}+#1#{} Chips when scored", 
-        },
         config = { extra = {
             s_chips = 30,
             suit = "six_Moons",
@@ -88,13 +74,6 @@ local jokers = {
 		end,
     },
 	'frivolous_joker', frivolous_joker = {
-		name = "Frivolous Joker",
-        subtitle = "Work In Progress!",
-		text = {
-            "{C:mult}+#1#{} Mult if played",
-            "hand doesn't contain",
-            "a {C:attention}Spectrum"
-        },
 		config = {
             extra = {
                 mult = 7
@@ -103,6 +82,10 @@ local jokers = {
 		pos = { x = 0, y = 0 },
 		cost = 4,
         rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.mult }} end,
@@ -116,13 +99,6 @@ local jokers = {
         end,
 	},
 	'groaning_joker', groaning_joker = {
-		name = "Groaning Joker",
-        subtitle = "Work In Progress!",
-		text = {
-            "{C:chips}+#1#{} Chips if played",
-            "hand doesn't contain",
-            "a {C:attention}Spectrum"
-        },
 		config = {
             extra = {
                 chips = 65
@@ -131,6 +107,10 @@ local jokers = {
 		pos = { x = 0, y = 0 },
 		cost = 4,
         rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.chips }} end,
@@ -144,14 +124,6 @@ local jokers = {
         end,
 	},
     'wayfarer', wayfarer = {
-        name = "The Wayfarer",
-        subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult if played",
-            "hand contains",
-            "a {C:attention}Straight{} but",
-            "{C:attention}isn't{} a {C:attention}Straight",
-        },
         config = {
             extra = {
                 Xmult = 4.5,
@@ -160,6 +132,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -172,14 +148,6 @@ local jokers = {
         end,
     },
     'power_of_unity', power_of_unity = {
-        name = "Power of Unity",
-        subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult if played",
-            "hand contains",
-            "a {C:attention}Flush{} but",
-            "{C:attention}isn't{} a {C:attention}Flush",
-        },
         config = {
             extra = {
                 Xmult = 3.5,
@@ -188,6 +156,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -200,14 +172,6 @@ local jokers = {
         end,
     },
     'chaotic', chaotic = {
-        name = "The Chaotic",
-        subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult if played",
-            "hand contains",
-            "a {C:attention}Spectrum{} but",
-            "{C:attention}isn't{} a {C:attention}Spectrum",
-        },
         config = {
             extra = {
                 Xmult = 5,
@@ -216,6 +180,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -231,21 +199,18 @@ local jokers = {
         end,
     },
     'standardized', standardized = {
-        name = "The Standardized",
-        subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult if played",
-            "hand is a",
-            "{C:attention}standard hand"
-        },
         config = {
             extra = {
-                Xmult = 2.5,
+                Xmult = 1.7,
             },
         },
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -258,13 +223,6 @@ local jokers = {
         end,
     },
     'nonstandard', nonstandard = {
-        name = "The Nonstandard",
-        subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult if played",
-            "hand isn't a",
-            "{C:attention}standard hand"
-        },
         config = {
             extra = {
                 Xmult = 3.2,
@@ -273,6 +231,10 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -285,17 +247,14 @@ local jokers = {
         end,
     },
     'gift_from_the_void', gift_from_the_void = {
-        name = "Gift from the Void",
-        subtitle = "I am an idea thinking of itself",
-        text = {
-            "At end of round, add",
-            "a random {C:dark_edition}Negative {C:attention}playing",
-            "{C:attention}card{} to your deck"
-        },
         config = { },
         pos = { x = 1, y = 0 },
         cost = 9,
         rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {}}
@@ -318,12 +277,6 @@ local jokers = {
         end,
     },
     'lord_of_the_meek', lord_of_the_meek = {
-        name = "Lord of the Meek",
-        subtitle = "My wish is to make this world free!",
-        text = {
-            "{C:attention}Retrigger{} each",
-            "{C:common}Common{} {C:attention}Joker{} {C:attention}#1#{} time#2#",
-        },
         config = {extra = {retriggers = 1}},
         pos = { x = 2, y = 0 },
         cost = 8,
@@ -350,11 +303,6 @@ local jokers = {
         end,
     },
     'mirage_joker', mirage_joker = {
-        name = "Mirage Joker",
-        text = {
-            "{C:green}#1# in #2#{} chance to {C:attention}retrigger{}",
-            "each {C:attention}Joker{} {C:attention}#3#{} time#4#",
-        },
         config = {extra = {odds = 4, retriggers = 1}},
         pos = { x = 3, y = 0 },
         cost = 6,
@@ -381,12 +329,6 @@ local jokers = {
         end,
     },
     'transfusion', transfusion = {
-        name = "Transfusion",
-        text = {
-            "{C:mult}#1#%{} of {C:chips}Chips{} are",
-            "{C:attention}converted{} to {C:mult}Mult{}",
-            "at a {X:mult,C:white} X#2# {} rate"
-        },
         config = {extra = {rate = 0.4, Xmult = 1.25, buffer = 0}},
         pos = { x = 4, y = 0 },
         cost = 6,
@@ -424,7 +366,7 @@ local jokers = {
                         mult_mod = val * card.ability.extra.Xmult,
                         card = card,
                         colour = G.C.PURPLE,
-                        message = "Converted!" --TODO: proper localization
+                        message = localize("k_thac_converted")
                     }
                 end
             end
@@ -434,13 +376,6 @@ local jokers = {
         end,
     },
     'placeholder_joker', placeholder_joker = {
-        name = "Placeholder Joker",
-        subtitle = "TODO: this subtitle",
-        text = {
-            "{C:green}#1# in #2#{} chance to {C:attention}convert{}",
-            "this {C:attention}Joker{} into a {C:purple}random{}",
-            "other {C:attention}Joker{} with the same art"
-        },
         config = {extra = {odds = 3}},
         pos = { x = 0, y = 0 },
         cost = 3,
@@ -460,14 +395,6 @@ local jokers = {
         end,
     },
     'filler_card', filler_card = {
-        name = "Filler Card",
-        subtitle = "- remember to replace Filler Card",
-        text = {
-            "This Joker gains {X:chips,C:white} X#1# {} Chips",
-            "for each scored card {C:attention}without any{}",
-            "Enhancement, Seal, Edition, or Aspect",
-            "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)"
-        },
         config = {extra = { Xchips_curr = 1, Xchips = 0.05 }},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -491,6 +418,7 @@ local jokers = {
                 card.ability.extra.Xchips_curr = card.ability.extra.Xchips_curr + card.ability.extra.Xchips
                 return {
                     card = card,
+					focus = card,
                     message = localize('k_upgrade_ex'),
                     colour = G.C.CHIPS,
                 }
@@ -504,13 +432,6 @@ local jokers = {
         end,
     },
     'test_print', test_print = {
-        name = "Test Print",
-        subtitle = "Within parameters",
-        text = {
-            "Jokers with the {C:attention}same",
-            "{C:attention}art{} as this Joker",
-            "give {X:chips,C:white} X#1# {} Chips"
-        },
         config = {extra = { Xchips = 1.8 }},
         pos = { x = 0, y = 0 },
         cost = 9,
@@ -539,14 +460,81 @@ local jokers = {
             end
         end,
     },
+    'sans', sans = {
+        config = {extra = {  }},
+        pos = { x = 0, y = 0 },
+        cost = 20,
+        rarity = 4,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = {  }}
+        end,
+        calculate = function(self, card, context)
+            if context.retrigger_joker_check then
+                local do_it = false
+                for k,v in ipairs(placeholder_jokers) do
+                    if context.other_card.config.center.key == v then do_it = true; break end
+                end
+                if do_it then
+                    return {
+                        card = context.blueprint_card or card,
+                        colour = G.C.BLUE,
+                        repetitions = 1,
+						message = localize('k_again_ex')
+                    }
+                end
+            end
+        end,
+    },
+    'null', null = {
+        config = {extra = {  }},
+        pos = { x = 0, y = 0 },
+        cost = 20,
+        rarity = 4,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+            return {vars = {  }}
+        end,
+        calculate = function(self, card, context)
+            if context.setting_blind and not (context.blueprint_card or card).getting_sliced then
+				local do_anything = false
+				local candidates = {}
+				for i=1, #G.jokers.cards do
+					local do_it = false
+					local card2 = G.jokers.cards[i]
+					for k,v in ipairs(placeholder_jokers) do
+						if card2.config.center.key == v and (not card2.edition or not card2.edition.negative) then do_it = true; do_anything = true; break end
+					end
+					if do_it then
+						candidates[#candidates+1] = card2
+					end
+				end
+				if do_anything then
+                    return {
+                        card = context.blueprint_card or card,
+                        colour = G.C.JOKER_GREY,
+						extra = {
+							func = function()
+								pseudoshuffle(candidates, pseudoseed("null"))
+								candidates[1]:set_edition({negative = true})
+							end,
+						},
+						message = localize("k_thac_negative")
+                    }
+				end
+            end
+        end,
+    },
     'garden', garden = {
-        name = "Garden",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Retrigger{} all played",
-            "{C:attention}Grass{} and {C:attention}Dirt{} cards",
-            "{C:attention}#1#{} additional time#2#"
-        },
         config = {extra = {retriggers = 1}},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -579,13 +567,6 @@ local jokers = {
         end,
     },
     'clown_posse', clown_posse = {
-        name = "Clown Posse",
-        text = {
-            "This Joker gains {X:mult,C:white} X#1# {}",
-            "Mult whenever another",
-            "{C:attention}Joker{} is gained",
-            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"
-        },
         config = {extra = {Xmult_mod = 0.10, Xmult_curr = 1.0}},
         pos = { x = 4, y = 3 },
         cost = 6,
@@ -616,15 +597,6 @@ local jokers = {
         end,
     },
     'stellar_alignment', stellar_alignment = {
-        name = "Stellar Alignment",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Retriggers{} each played",
-            "{C:attention}Star{} card {C:attention}#1#{} time#2# for",
-            "each level of its suit",
-            "{C:inactive}(Reminder: Suit levels",
-            "{C:inactive}start at lvl.1!)"
-        },
         config = {extra = {retriggers = 1}},
         pos = { x = 0, y = 0 },
         cost = 9,
@@ -657,14 +629,6 @@ local jokers = {
         end,
     },
     'paint_mixer', paint_mixer = {
-        name = "Paint Mixer",
-		subtitle = "Work In Progress!",
-        text = {
-            "If played hand contains",
-            "a {C:attention}Spectrum{}, {C:green}randomize{}",
-            "the {C:attention}suit{} of each",
-            "scoring card"
-        },
         config = { extra = {
         }},
         pos = { x = 0, y = 0 },
@@ -707,12 +671,6 @@ local jokers = {
         end,
     },
     'psychic_double_reacharound', psychic_double_reacharound = {
-        name = "Psychic Double Reacharound",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Retrigger{} each {C:attention}Joker{} that {C:attention}copies{}",
-            "another {C:attention}Joker{} {C:attention}#1#{} time#2#"
-        },
         config = {extra = { retriggers = 2 }},
         pos = { x = 0, y = 0 },
         cost = 10,
@@ -738,17 +696,6 @@ local jokers = {
         end,
     },
     'knight_of_heart', knight_of_heart = {
-        name = "Knight of Heart",
-        subtitle = "Apotheotic Vessel",
-        text = {
-            "Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
-            "and this Joker gains the following",
-            "depending on the card's {C:attention}original suit{}:",
-            "{C:spades}Spades{}: {C:chips}+#1#{} Chips {C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
-            "{C:clubs}Clubs{}: {C:mult}+#3#{} Mult {C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-            "{C:diamonds}Diamonds{}: {C:money}+$#5#{} at end of round {C:inactive}(Currently {C:money}$#6#{C:inactive})",
-            "{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
-        },
         config = {extra = {
             chips = 10,
             curr_chips = 0,
@@ -840,11 +787,6 @@ local jokers = {
         end,
     },
     'witch_of_mind', witch_of_mind = {
-        name = "Witch of Mind",
-        subtitle = "Apotheotic Vessel",
-        text = {
-            "Rescore each","{C:attention}scoring Joker{}",
-        },
         config = {extra = {
         }},
         pos = { x = 5, y = 1 },
@@ -855,26 +797,6 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
-        process_loc_text = function(self)
-            G.localization.descriptions.Other['what_are_you_wearing'] = {
-                name = "what are you wearing",
-                text = {
-                    "{C:knightofheart}what the hell are you wearing???",
-                    "{C:witchofmind}uhhhh witch of mind outfit duh",
-                    "{C:knightofheart}no what the hell's with the face paint",
-                    "{C:knightofheart}also have you finally figured your classpect out",
-                    "{C:witchofmind}i thought it was fun",
-                    "{C:witchofmind}and yea :3",
-                    "{C:witchofmind}i think",
-                    "{C:knightofheart}good grief you are insufferable",
-                    "{C:witchofmind}thanks you too",
-                    "{C:money}Do you two ever have conversations about",
-                    "{C:money}anything relevant without my guidance?",
-                    "{C:witchofmind}do we with it?",
-                }
-            }
-            SMODS.Joker.process_loc_text(self)
-        end,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
@@ -892,15 +814,6 @@ local jokers = {
         end,
     },
     'lord_of_void', lord_of_void = {
-        name = "Lord of Void",
-        subtitle = "Apotheotic Vessel",
-        text = {
-            "{X:mult,C:white} X#1# {} Mult for each",
-            "{C:attention}Voucher{} redeemed this run",
-            "{C:attention}Retrigger{} this Joker once",
-            "for each empty {C:attention}consumable slot{}",
-            "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult, {C:attention}#3#{C:inactive} retriggers)"
-        },
         config = {extra = {
             Xmult = 0.13,
         }},
@@ -942,14 +855,6 @@ local jokers = {
         end,
     },
     'funny_fertilizer', funny_fertilizer = {
-        name = "Funny Fertilizer",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Enhances{} up to {C:attention}#1#{}",
-            "unenhanced card#2# in your full",
-            "deck to {C:attention}Grass{} cards at",
-            "the end of each {C:attention}Boss Blind",
-        },
         config = {extra = { enhancements = 3 }},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -961,6 +866,7 @@ local jokers = {
 		loc_vars = function(self, info_queue, card)
             local blah = ""
             if card.ability.extra.enhancements > 1 then blah = "s" end
+            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_dirt']
             info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
             return {vars = {card.ability.extra.enhancements, blah}}
         end,
@@ -970,7 +876,7 @@ local jokers = {
                 local used_tarot = copier or self
                 local temp_deck = {}
                 for k, v in ipairs(G.playing_cards) do 
-                    if v.config.center.set == "Default" then
+                    if v.config.center.set == "Default" or v.config.center.key == "m_thac_dirt" then
                         temp_deck[#temp_deck+1] = v
                     end
                 end
@@ -999,13 +905,6 @@ local jokers = {
         end,
     },
     'highest_number', highest_number = {
-        name = "The Highest Number",
-        text = {
-            "Played {C:attention}9s{} reduce {C:attention}Blind{}",
-            "requirement by {C:attention}#1#%{}",
-            "This Joker {C:attention}improves{} at the",
-            "end of each {C:attention}Boss Blind{}"
-        },
         config = {extra = { 
             reduction = 0.09,
             level_factor = 0.413,
@@ -1018,20 +917,6 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
-        process_loc_text = function(self)
-            G.localization.descriptions.Other['from_me_to_you'] = {
-                name = "you want me to stop? hahahaha",
-                text = {
-                    "{C:autumn}Mindless drone, driven by pursuit",
-                    "{C:autumn}of the highest possible number;",
-                    "{C:autumn}You know how this story ends,",
-                    "{C:autumn}but you continue onwards towards a",
-                        "{C:dark_edition}Dark Apotheosis.",
-                    "{C:autumn}What is it you hope to accomplish, child?{}",
-                }
-            }
-            SMODS.Joker.process_loc_text(self)
-        end,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             if math.random() < 0.01 then
@@ -1064,7 +949,7 @@ local jokers = {
                 return {
                     card = card,
                     focus = card,
-                    message = "LV Up",
+                    message = localize("k_thac_lvup"),
                     colour = G.C.RED
                 }
             end
@@ -1168,10 +1053,10 @@ local jokers = {
             G.localization.descriptions.Other['witch_examine_pokerkind'] = {
                 name = "Witch: Examine POKERKIND specibus",
                 text = {
-                    "{C:witchofmind}i guess you can just put any cards in this thing",
-                    "{C:witchofmind}maybe someone out there plays poker with credit cards",
-                    "{C:witchofmind}all i need to know is i can stuff this thing full of cards",
-                    "{C:witchofmind}pretty useful if lacking in combat application"
+                    "{C:witchofmind}i gu3ss you can just put any cards in this thing",
+                    "{C:witchofmind}mayb3 som3on3 out th3r3 plays pok3r with cr3dit cards",
+                    "{C:witchofmind}all i n33d to know is i can stuff this thing 3ndl3ssly with cards",
+                    "{C:witchofmind}pretty us3ful if lacking in combat application"
                 }
             }
             SMODS.Joker.process_loc_text(self)
@@ -1263,8 +1148,8 @@ local jokers = {
                     "{C:hearts}no idea which timeline won't be doomed",
                     "{C:hearts}maybe they all will fuck if i know",
                     "{C:money}Call it 'triple-blind', then.",
-                    "{C:clubs}please shut up",
-                    "{X:hearts,C:hearts}??????{C:clubs} just hurry up and use the slab",
+                    "{C:clubs}pl3as3 shut up",
+                    "{X:hearts,C:hearts}??????{C:clubs} just hurry up and us3 the slab",
                     "{C:money}Be not afraid. Have faith. Et cetera.",
                     "{C:money}I will aid you upon your respective ascensions.",
                     "{C:hearts}you better not be full of shit, {X:money,C:money}????"
@@ -1285,16 +1170,8 @@ local jokers = {
         calculate = function(self, card, context)
         end,
         yes_pool_flag = "no",
-    },
+    },--]]
     'astront', astront = {
-        name = "Astron't Joker",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:green}#1# in #2#{} chance to",
-            "upgrade level of",
-            "{C:attention}suit{} of {C:attention}first{} card",
-            "used in scoring"
-        },
         config = { extra = {
             odds = 4,
         }},
@@ -1327,14 +1204,6 @@ local jokers = {
         end,
     },
     'torrential', torrential = {
-        name = "Torrential Joker",
-		subtitle = "Work In Progress!",
-        text = {
-            "If discarded hand",
-            "contains a {C:attention}Flush{},",
-            "upgrade level of {C:attention}suit{}",
-            "of {C:attention}leftmost{} discarded card"
-        },
         config = { extra = {
         }},
         pos = { x = 0, y = 0 },
@@ -1365,12 +1234,6 @@ local jokers = {
         end,
     },
     'landlord', landlord = {
-        name = "Landlord",
-		subtitle = "Work In Progress!",
-        text = {
-            "Earn {C:money}$#1#{} if discarded hand",
-            "contains a {C:attention}Full House{}",
-        },
         config = { extra = {
             money = 8,
         }},
@@ -1401,15 +1264,6 @@ local jokers = {
         end,
     },
     'lost_sock', lost_sock = {
-        name = "Lost Sock",
-		subtitle = "Work In Progress!",
-        text = {
-            "This Joker gains {C:chips}+#1#{}",
-            "Chips when {C:attention}played hand{}",
-            "contains {C:attention}exactly one{}",
-            "{C:attention}unscored{} card",
-            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
-        },
         config = { extra = {
             chips_curr = 0,
             chips = 13
@@ -1447,14 +1301,6 @@ local jokers = {
         end,
     },
     'the_csi', the_csi = {
-        name = "The C.S.I.",
-		subtitle = "Comedy Scene Investigators",
-        text = {
-            "{C:chips}+#1#{} Chips for",
-            "each {C:attention}face card{} in",
-            "your {C:attention}graveyard{}",
-            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
-        },
         config = { extra = {
             chips = 10
         }},
@@ -1487,12 +1333,6 @@ local jokers = {
         end,
     },
     'junk_collector', junk_collector = {
-        name = "Junk Collector",
-		subtitle = "Work In Progress!",
-        text = {
-            "Create an {C:oddity}Oddity{} when","{C:attention}Blind{} is selected",
-            "{C:inactive}(Must have room)"
-        },
         config = { extra = {
             
         }},
@@ -1530,15 +1370,6 @@ local jokers = {
         end,
     },
     'exorcist', exorcist = {
-        name = "Exorcist",
-		subtitle = "Work In Progress!",
-        text = {
-            "When {C:attention}Blind{} is selected, remove",
-            "{C:attention}#1#{} random card#2# from your",
-            "{C:attention}graveyard{} and this Joker gains ",
-            "{X:mult,C:white}X#3#{} Mult for each removed",
-            "{C:inactive}(Currently {X:mult,C:white}X#4#{C:inactive} Mult)",
-        },
         config = { extra = {
             targets = 2,
             Xmult_mod = 0.25,
@@ -1592,14 +1423,6 @@ local jokers = {
         end,
     },
     'gallows_humor', gallows_humor = {
-        name = "Gallows Humor",
-		subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white}X#1#{} Mult if there",
-            "are {C:attention}#2#{} or more cards",
-            "in your {C:attention}graveyard{}",
-            "{C:inactive}(Currently: {C:attention}#3#{C:inactive} cards)",
-        },
         config = { extra = {
             targets = 15,
             Xmult = 3,
@@ -1632,15 +1455,6 @@ local jokers = {
         end,
     },
     'common_ground', common_ground = {
-        name = "Common Ground",
-		subtitle = "We all rot in the same soil",
-        text = {
-            "When round begins, draw #1#",
-            "additional card#2# for each",
-            "{C:attention}different rank{} among",
-            "cards in your {C:attention}graveyard{}",
-            "{C:inactive}(Currently: {C:attention}#3#{C:inactive} ranks)"
-        },
         config = { extra = {
             cards = 1,
         }},
@@ -1673,14 +1487,6 @@ local jokers = {
         end,
     },
     'tombstone', tombstone = {
-        name = "Tombstone",
-		subtitle = "Work In Progress!",
-        text = {
-            "{X:chips,C:white}X#1#{} Chips for each",
-            "{C:attention}Stone Card{} in your",
-            "{C:attention}graveyard{}",
-            "{C:inactive}(Currently: {X:chips,C:white}X#2#{C:inactive} Chips)",
-        },
         config = { extra = {
             Xchips = 0.4,
         }},
@@ -1716,12 +1522,6 @@ local jokers = {
         end,
     },
     'gem_joker', gem_joker = {
-        name = "Gem Joker",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Jewel Cards{} held in",
-            "hand give {X:chips,C:white} X#1# {} Chips",
-        },
         config = { extra = {
             Xchips = 1.5,
         }},
@@ -1753,13 +1553,6 @@ local jokers = {
         end,
     },
     'discarded_vessel', discarded_vessel = {
-        name = "Discarded Vessel",
-		subtitle = "* It bears the curse of AMBITION",
-        text = {
-            "{C:green}#1# in #2#{} chance to add",
-            "a random {C:red}Aspect{} to each",
-            "discarded unaspected card",
-        },
         config = { extra = {
             odds = 12,
         }},
@@ -1770,23 +1563,6 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
-        process_loc_text = function(self)
-            G.localization.descriptions.Other['s_lord_retrieve_body'] = {
-                name = "[S] Lord: Retrieve Body",
-                text = {
-                    "{C:money}I am the Lord of Void.",
-                    "{C:money}All things discarded...",
-                    "{C:money}Cast into the void...",
-                    "{C:money}They fall into my domain.",
-                    "{C:money}They are mine to claim.",
-                    "{C:money}Besides...",
-                    "{X:witchofmind,C:lordofvoid}YOU{C:lordofvoid}...",
-                    "{C:lordofvoid}HA HA HA HA HA HA HA HA HA!",
-                    "{X:witchofmind,C:lordofvoid}YOU{C:lordofvoid} CREATED ONE WITH {X:money,C:lordofvoid}MY{C:lordofvoid} {X:money,C:lordofvoid}NAME{C:lordofvoid} ON IT.",
-                }
-            }
-            SMODS.Joker.process_loc_text(self)
-        end,
 		loc_vars = function(self, info_queue, card)
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_lord_retrieve_body', set = 'Other'}
@@ -1810,14 +1586,6 @@ local jokers = {
         end,
     },
     'afterlife_archive', afterlife_archive = {
-        name = "Afterlife Archive",
-		subtitle = "It's important to keep records",
-        text = {
-            "Earn {C:money}$#1#{} for each {C:attention}4{} or {C:attention}9{}",
-            "in your {C:attention}graveyard{}",
-            "at end of round",
-            "{C:inactive}(Currently: {C:money}$#2#{C:inactive})",
-        },
         config = { extra = {
             money = 1
         }},
@@ -1848,14 +1616,6 @@ local jokers = {
         end,
     },
     'jokermancer', jokermancer = {
-        name = "Jokermancer",
-		subtitle = "Waste not, want not!",
-        text = {
-            "Each scored card gives",
-            "{C:mult}+#1#{} Mult for each card",
-            "in your {C:attention}graveyard{} that",
-            "shares a {C:attention}suit{} or {C:attention}rank{} with it"
-        },
         config = { extra = {
             mult = 1
         }},
@@ -1907,14 +1667,6 @@ local jokers = {
         end,
     },
     'gaudy_bracelet', gaudy_bracelet = {
-        name = "Gaudy Bracelet",
-		subtitle = "Work In Progress!",
-        text = {
-            "This Joker gains {C:chips}+#1#{}",
-            "Chips when a played",
-            "{C:attention}Jewel Card{} scores",
-            "{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
-        },
         config = { extra = {
             chips_curr = 0,
             chips = 11
@@ -1954,13 +1706,6 @@ local jokers = {
         end,
     },
     'twisted_mind', twisted_mind = {
-        name = "Twisted Mind",
-		subtitle = "* do you still subscribe to LOGIC?",
-        text = {
-            "Cards in your {C:attention}graveyard",
-            "are scored as if they",
-            "were held in your hand",
-        },
         config = { extra = {
         }},
         pos = { x = 0, y = 0 },
@@ -1981,14 +1726,6 @@ local jokers = {
         end,
     },
     'joke_book_of_the_dead', joke_book_of_the_dead = {
-        name = "Joke Book of the Dead",
-		subtitle = "It's missing a lot of pages...",
-        text = {
-            "When {C:attention}Blind{} is selected, gain",
-            "{C:red}+#1#{} Discard#2# for every {C:attention}#3#{} cards",
-            "in your {C:attention}graveyard{}",
-            "{C:inactive}(Currently: {C:red}+#4#{C:inactive} Discards)",
-        },
         config = { extra = {
             discards = 1,
             targets = 4,
@@ -2020,7 +1757,7 @@ local jokers = {
                 if tally == 0 or d_rate == 0 then return end
                 ease_discard(d_rate * tally)
                 return {
-                    message = "Hee Hee Hee",
+                    message = localize("k_thac_heeheehee"),
                     colour = G.C.RED,
                 }
             end
@@ -2030,13 +1767,6 @@ local jokers = {
         end,
     },
     'gravedigger', gravedigger = {
-        name = "Gravedigger",
-		subtitle = "Somebody's gotta do it",
-        text = {
-            "Earn {C:money}$#1#{} when a",
-            "card is put into",
-            "your {C:attention}graveyard{}",
-        },
         config = { extra = {
             money = 2,
         }},
@@ -2065,15 +1795,6 @@ local jokers = {
         end,
     },
     'matchbook', matchbook = {
-        name = "Matchbook",
-		subtitle = "Work In Progress!",
-        text = {
-            "{X:mult,C:white}X#1#{} Mult",
-            "The first {C:red}#2#{} card#3#",
-            "played each {C:attention}Round{} are",
-            "{C:red,s:1.1,E:1}destroyed{}",
-            "{C:inactive}(Remaining: {C:red}#4#{C:inactive} card#5#)",
-        },
         config = { extra = {
             targets = 3,
             targets_curr = 3,
@@ -2117,13 +1838,6 @@ local jokers = {
         end,
     },
     'dark_hallway', dark_hallway = {
-        name = "Dark Hallway",
-		subtitle = "Twilight shines through...",
-        text = {
-            "When {C:attention}Blind{} is selected,",
-            "{C:red,E:1}destroy#1#{} #2# random card#3#",
-            "in your {C:attention}full deck{}"
-        },
         config = { extra = {
             targets = 2,
         }},
@@ -2148,25 +1862,32 @@ local jokers = {
         calculate = function(self, card, context)
             if context.setting_blind then
                 local temp_deck = {}
+				local destroyed_cards = {}
                 for k,v in ipairs(G.playing_cards) do temp_deck[#temp_deck+1] = v end
                 pseudoshuffle(temp_deck, pseudoseed("dark_hallway"))
                 for i=#temp_deck,#temp_deck-math.floor(card.ability.extra.targets-1),-1 do
-                    temp_deck[i]:start_dissolve()
+					destroyed_cards[#destroyed_cards+1] = temp_deck[i]
                 end
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					delay = 0.1,
+					func = function() 
+                    for i=#destroyed_cards, 1, -1 do
+                        local card = destroyed_cards[i]
+                        if SMODS.shatters(card) then
+                            card:shatter()
+                        else
+                            card:start_dissolve(nil, i == #destroyed_cards)
+                        end
+                    end
+                    return true end }))
+				delay(0.3)
+				SMODS.calculate_context({ remove_playing_cards = true, removed = destroyed_cards })
                 return true
             end
         end,
     },
     'triplicate_soul', triplicate_soul = {
-        name = "Triplicate Soul",
-		subtitle = "my fate is indeterminate...",
-        text = {
-            "Create {C:attention}#1#{} extra cop#2#",
-            "of each card put",
-            "into your {C:attention}graveyard{}",
-            "{C:inactive}(Copies are created",
-            "{C:inactive}in your graveyard)",
-        },
         config = { extra = {
             cards = 2,
         }},
@@ -2200,11 +1921,6 @@ local jokers = {
         end,
     },
     'grasp_of_emptiness', grasp_of_emptiness = {
-        name = "Grasp of Emptiness",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Unscored{} played cards","give {X:mult,C:white}X#1#{} Mult",
-        },
         config = { extra = {
             Xmult = 1.5,
         }},
@@ -2229,13 +1945,6 @@ local jokers = {
         end,
     },
     'shutin', shutin = {
-        name = "Shut-In",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Unscored{} played cards",
-            "permanently gain",
-            "{C:mult}+#1#{} Mult when scored",
-        },
         config = { extra = {
             mult = 5,
         }},
@@ -2263,12 +1972,6 @@ local jokers = {
         end,
     },
     'ace_in_the_hole', ace_in_the_hole = {
-        name = "Ace in the Hole",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Unscored{} played {C:attention}Aces{}",
-            "earn {C:money}$#1#{} and are {C:red,E:1}destroyed",
-        },
         config = { extra = {
             money = 5,
         }},
@@ -2302,12 +2005,6 @@ local jokers = {
         end,
     },
     'underdogs_secret', underdogs_secret = {
-        name = "Underdog's Secret",
-		subtitle = "Work In Progress!",
-        text = {
-            "If scored Chips value is at least",
-            "{X:attention,C:white}#1#X{} the Mult value, earn {C:money}$#2#",
-        },
         config = { extra = {
             threshold = 50,
             money = 5,
@@ -2333,13 +2030,6 @@ local jokers = {
         end,
     },
     'topple_the_titans', topple_the_titans = {
-        name = "Topple the Titans",
-		subtitle = "Work In Progress!",
-        text = {
-            "If scored Chips value is at least",
-            "{X:attention,C:white}#1#X{} the Mult value, reduce",
-            "{C:attention}Blind{} requirement by {C:attention}#2#%{}",
-        },
         config = { extra = {
             threshold = 100,
             reduction = 0.20,
@@ -2351,17 +2041,6 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
-        process_loc_text = function(self)
-            G.localization.descriptions.Other['s_lord_witness_victory'] = {
-                name = "[S] Lord: Witness Victory",
-                text = {
-                    "{C:lordofvoid}A future that need not come to pass.",
-                    "{C:lordofvoid}...",
-                    "{C:lordofvoid}Let us not dwell here.",
-                }
-            }
-            SMODS.Joker.process_loc_text(self)
-        end,
 		loc_vars = function(self, info_queue, card)
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_lord_witness_victory', set = 'Other'}
@@ -2389,13 +2068,6 @@ local jokers = {
         end,
     },
     'autoapotheosis', autoapotheosis = {
-        name = "Autoapotheosis",
-		subtitle = "Work In Progress!",
-        text = {
-            "If scored Chips value is at least",
-            "{X:attention,C:white}#1#X{} the Mult value, each scoring",
-            "unaspected card gets a random {C:red}Aspect{}",
-        },
         config = { extra = {
             threshold = 300,
         }},
@@ -2431,21 +2103,13 @@ local jokers = {
                     end
                 end
                 if n ~= 0 then delay(0.6) return {
-                    message = "God Tier!",
+                    message = localize("k_thac_godtier"),
                     colour = G.C.RED
                 } end
             end
         end,
     },
     'amalgamiter', amalgamiter = {
-        name = "Amalgamiter",
-		subtitle = "using alchemiters in alchemy was a mistake",
-        text = {
-            "When round begins, if there are",
-            "at least {C:attention}#1#{} cards in your {C:attention}graveyard{},",
-            "{C:attention}combine{} all of them and put",
-            "the result into your hand",
-        },
         config = { extra = {
             threshold = 2,
         }},
@@ -2548,16 +2212,6 @@ local jokers = {
         end,
     },
     'celestial_awe', celestial_awe = {
-        name = "Celestial Awe",
-		subtitle = "Work In Progress!",
-        text = {
-            "If played hand is a",
-            "{C:attention}Straight Spectrum{},",
-            "fill your consumable",
-            "slots with random",
-            "{C:planet}Planet{} cards",
-            "{C:inactive}(Must have room)",
-        },
         config = { extra = {
         }},
         pos = { x = 0, y = 0 },
@@ -2588,7 +2242,7 @@ local jokers = {
                         return true
                     end}))
                 return {
-                    message = "Planets!",
+                    message = localize("k_thac_planets"),
                     colour = G.C.SECONDARY_SET.Planet,
                 }
             end
@@ -2598,14 +2252,6 @@ local jokers = {
         end,
     },
     'somber_snowfall', somber_snowfall = {
-        name = "Somber Snowfall",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Unscored{} played cards",
-            "give {C:chips}+#1#{} Chips for",
-            "each card in your {C:attention}graveyard{}",
-            "that shares a {C:attention}suit{} with it",
-        },
         config = { extra = {
             chips = 5,
         }},
@@ -2617,6 +2263,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
             return {vars = {
                 card.ability.extra.chips
             }}
@@ -2649,13 +2296,6 @@ local jokers = {
     
     --
     'jack_of_all_trades', jack_of_all_trades = {
-        name = "Jack of All Trades",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played {C:attention}Jacks{} are treated as",
-            "if they are each {C:attention}enhancement{}",
-            "among cards held in hand",
-        },
         config = {extra = { }},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -2669,7 +2309,8 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.check_enhancement then
-                if context.other_card.area == G.play and context.other_card.base.value == "Jack" and not context.other_card.config.center.no_rank then
+                if context.other_card.area == G.play and context.other_card.base.value == "Jack" and not
+				context.other_card.config.center.key == "m_stone" and not context.other_card.config.center.no_rank then
                     keys = {}
                     ret = false
                     for k,v in ipairs(G.hand.cards) do
@@ -2684,13 +2325,6 @@ local jokers = {
         end,
     },
     'all_lucky_sevens', all_lucky_sevens = {
-        name = "All Lucky Sevens",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played {C:attention}7s{} are treated",
-            "as if they are also",
-            "{C:attention}Lucky Cards{}",
-        },
         config = {extra = { }},
         pos = { x = 0, y = 0 },
         cost = 5,
@@ -2705,7 +2339,8 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.check_enhancement then
-                if context.other_card.area == G.play and context.other_card.base.value == "7" and not context.other_card.config.center.no_rank then
+                if context.other_card.area == G.play and context.other_card.base.value == "7" and not
+				context.other_card.config.center.key == "m_stone" and not context.other_card.config.center.no_rank then
                     return {
                         m_lucky = true,
                     }
@@ -2750,14 +2385,38 @@ local jokers = {
             end
         end,
     },--]]
+    'celestial_crossing', celestial_crossing = {
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_iou
+            if math.random() < 0.01 then
+                info_queue[#info_queue+1] = {key = 's_lord_continue', set = 'Other'}
+            end
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and
+                    (context.other_card.config.center.key == "m_wild" or context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Stars" and not (context.other_card.config.center.key == "m_stone" or context.other_card.config.center.no_suit))) then
+                    return {
+                        m_ortalab_iou = true,
+                    }
+                end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
+        end
+    },
     'twin_stella', twin_stella = {
-        name = "Twin Stella",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with {C:six_stars}Star{} suit",
-            "are treated as if they are",
-            "also {C:attention}Star Cards{}",
-        },
         config = {extra = { }},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -2773,8 +2432,8 @@ local jokers = {
         calculate = function(self, card, context)
             if context.check_enhancement then
                 if context.other_card.area == G.play and
-                    (context.other_card.config.center.any_suit or 
-                    (context.other_card.base.suit == "six_Stars" and not context.other_card.config.center.no_suit)) then
+                    (context.other_card.config.center.key == "m_wild" or context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Stars" and not (context.other_card.config.center.key == "m_stone" or context.other_card.config.center.no_suit))) then
                     return {
                         m_thac_star = true,
                     }
@@ -2786,13 +2445,6 @@ local jokers = {
         end
     },
     'lunar_grave', lunar_grave = {
-        name = "Lunar Grave",
-		subtitle = "Work In Progress!",
-        text = {
-            "Played cards with {C:six_moon}Moon{} suit",
-            "are treated as if they are",
-            "also {C:attention}Bone Cards{}",
-        },
         config = {extra = { }},
         pos = { x = 0, y = 0 },
         cost = 6,
@@ -2808,8 +2460,8 @@ local jokers = {
         calculate = function(self, card, context)
             if context.check_enhancement then
                 if context.other_card.area == G.play and
-                    (context.other_card.config.center.any_suit or 
-                    (context.other_card.base.suit == "six_Moons" and not context.other_card.config.center.no_suit)) then
+                    (context.other_card.config.center.key == "m_wild" or context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Moons" and not (context.other_card.config.center.key == "m_stone" or context.other_card.config.center.no_suit))) then
                     return {
                         m_thac_bone = true,
                     }
@@ -2860,17 +2512,8 @@ local jokers = {
         calculate = function(self, card, context)
 
         end,
-        yes_pool_flag = "no",
     },--]]
     'grave_legion', grave_legion = {
-        name = "Grave Legion",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:green}#1# in #2#{} chance to create",
-            "{C:attention}#3# cop#4#{} of each played card",
-            "and put #5# into your",
-            "{C:attention}graveyard{} when scored",
-        },
         config = { extra = {
             cards = 1,
             odds = 4,
@@ -2918,6 +2561,613 @@ local jokers = {
             end
         end,
     },
+    'scrapper', scrapper = {
+        config = { extra = {
+            cards = 1,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+			info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+			if next(SMODS.find_mod("ortalab")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_rusty
+			end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {
+				card.ability.extra.cards == 1 and "a" or card.ability.extra.cards,
+				card.ability.extra.cards == 1 and "" or "s",
+				card.ability.extra.cards == 1 and "it" or "them"
+			}}
+        end,
+        calculate = function(self, card, context)
+            if context.first_hand_drawn and not context.blueprint then
+				local centers = {G.P_CENTERS.m_steel, G.P_CENTERS.m_gold}
+				if next(SMODS.find_mod("ortalab")) then
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_rusty
+				end
+				
+                local gy_cards = AMM.api.graveyard.get_cards()
+                if #gy_cards < 1 then return end
+				
+				local metals = {}
+				
+				for i=1, #gy_cards do
+					local gy_card = gy_cards[i]
+					for ii=1, #centers do
+						if centers[ii].key == gy_card.config.center.key then
+							metals[#metals+1] = gy_card
+						end
+					end
+				end
+				if #metals < 1 then return end
+                pseudoshuffle(metals, pseudoseed("scrapper"))
+                metals[1]:remove_from_game()
+
+                -- actually make cards
+                for i=1, card.ability.extra.cards do
+					local cardmak = create_playing_card({center = pseudorandom_element(centers, pseudoseed("scrapper"))}, G.hand)
+					cardmak:set_edition(poll_edition("scrapper"), true, true)
+					cardmak:set_seal(SMODS.poll_seal{key = "scrapper", mod = 10}, true, true)
+                end
+				
+				return {
+                    card = card,
+                    message = localize("k_thac_scrapped"),
+                    colour = G.C.JOKER_GREY,
+                }
+            end
+        end,
+        in_pool = function(self)
+            return AMM.api.graveyard.count_cards() > 0
+        end,
+    },
+    'snecko_eye', snecko_eye = {
+        config = { h_size = 2, extra = {
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 7,
+        rarity = 3,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+				card.ability.h_size,
+			}}
+        end,
+        calculate = function(self, card, context)
+			local temp_drawn = context.hand_drawn or context.other_drawn
+            if temp_drawn and #temp_drawn > 0 and not context.blueprint then
+				return {
+					colour = G.C.GREEN,
+					func = function()
+						G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+							play_sound('tarot1')
+							card:juice_up(0.3, 0.5)
+							return true end }))
+						for i=1, #temp_drawn do
+							local percent = 1.15 - (i-0.999)/(#temp_drawn-0.998)*0.3
+							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('card1', percent);temp_drawn[i]:juice_up(0.3, 0.3);return true end }))
+						end
+						for i=1, #temp_drawn do
+							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
+								local card = temp_drawn[i]
+								
+								SMODS.change_base(card, nil, pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('snecko')))
+								
+								return true 
+							end }))
+						end
+						for i=1, #temp_drawn do
+							local percent = 0.85 + (i-0.999)/(#temp_drawn-0.998)*0.3
+							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('tarot2', percent, 0.6);temp_drawn[i]:juice_up(0.3, 0.3);return true end }))
+						end
+						delay(0.1)
+						return true
+					end
+				}
+            end
+        end,
+    },
+    'hardlyquin', hardlyquin = {
+        config = { extra = {
+			odds = 3,
+			mult = 15,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 3,
+        rarity = 1,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+				G.GAME.probabilities.normal,
+				card.ability.extra.odds,
+				card.ability.extra.mult
+			}}
+        end,
+        calculate = function(self, card, context)
+			if context.joker_main then
+				if pseudorandom(pseudoseed("hardlyquin")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+					return { mult = card.ability.extra.mult }
+				else
+					return { message = localize('k_nope_ex'), colour = G.C.ORANGE }
+				end
+			end
+        end,
+    },
+    'penumbra_phantasm', penumbra_phantasm = {
+        config = {extra = { cards = 1 }},
+        pos = { x = 0, y = 0 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+            return {vars = { card.ability.extra.cards == 1 and "a" or card.ability.extra.cards, card.ability.extra.cards == 1 and "" or "s" }}
+        end,
+        calculate = function(self, card, context)
+            if context.amm_buried_card then
+                if context.other_card:is_suit("six_Moons") and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+					for i=1, card.ability.extra.cards do
+						if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+							G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+							G.E_MANAGER:add_event(Event({
+								trigger = 'before',
+								delay = 0.0,
+								func = (function()
+										local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'penumbra_phantasm')
+										card:add_to_deck()
+										G.consumeables:emplace(card)
+										G.GAME.consumeable_buffer = 0
+									return true
+								end)}))
+						end
+					end
+					return {
+						message = localize('k_plus_spectral'),
+						colour = G.C.SECONDARY_SET.Spectral,
+						card = card
+					}
+                end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits"))
+        end
+    },
+	"golden_ratio", golden_ratio = {
+        config = {extra = { Xmult = 1.618033988749894 }},
+        pos = { x = 8, y = 2 },
+        cost = 8,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			--info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+            return {vars = { card.ability.extra.Xmult }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and not context.repetition and not context.end_of_round then
+                if context.other_card.base.value == "Ace" or context.other_card.base.value == "2" or context.other_card.base.value == "3" or context.other_card.base.value == "5" or context.other_card.base.value == "8" then
+					return { xmult = card.ability.extra.Xmult }
+                end
+            end
+        end,
+	},
+	"whispers_of_beyond", whispers_of_beyond = {
+        config = {extra = { retriggers = 2 }},
+        pos = { x = 9, y = 2 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			--info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+            return {vars = { card.ability.extra.retriggers == 1 and "once" or card.ability.extra.retriggers, card.ability.extra.retriggers == 1 and "" or " times" }}
+        end,
+        calculate = function(self, card, context)
+            if context.retrigger_joker_check then
+				if #G.jokers.cards < 6 then return end
+                if context.other_card == G.jokers.cards[6] then
+                    return {
+                        card = context.blueprint_card or card,
+                        colour = G.C.ORANGE,
+                        repetitions = card.ability.extra.retriggers,
+						message = localize('k_again_ex')
+                    }
+                end
+            end
+        end,
+	},
+    'jet_worldmage', jet_worldmage = {
+        config = { extra = {
+            Xchips = 1.6,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.Xchips
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("Spades") then
+                return {
+                    xchips = card.ability.extra.Xchips
+                }
+            end
+        end,
+    },
+    'ruby_sunmage', ruby_sunmage = {
+        config = { extra = {
+            mult = 12,
+			mult_curr = 0
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.mult,
+				card.ability.extra.mult_curr
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("Hearts") then
+				card.ability.extra.mult_curr = card.ability.extra.mult_curr + card.ability.extra.mult
+                return {
+                    card = context.other_card,
+					focus = card,
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.MULT,
+                }
+            end
+			if context.joker_main and card.ability.extra.mult_curr > 0 then
+				return { mult = card.ability.extra.mult_curr }
+			end
+			if context.end_of_round and not context.repetition and not context.individual and context.cardarea == G.jokers then
+				card.ability.extra.mult_curr = 0
+                return {
+                    card = card,
+					focus = card,
+                    message = localize('k_reset'),
+                    colour = G.C.MULT,
+                }
+			end
+        end,
+    },
+    'opal_moonmage', opal_moonmage = {
+        config = { extra = {
+			temp_cardlist = {},
+			
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+            }}
+        end,
+        calculate = function(self, card, context)
+			-- so the interesting thing here is
+			-- *screams unintelligibly*
+			if context.before then
+				card.ability.extra.temp_cardlist = {}
+				for i=1,#G.play.cards do
+					if G.play.cards[i]:is_suit("Clubs") then
+						local do_it = true
+						for ii=1,#context.scoring_hand do
+							if context.scoring_hand[ii] == G.play.cards[i] then do_it = false; break end
+						end
+						if do_it then
+							card.ability.extra.temp_cardlist[#card.ability.extra.temp_cardlist+1] = {G.play.cards[i], i}
+						end
+					end
+				end
+			end
+            if context.repetition and not context.end_of_round then
+                -- find the card in the hand
+				local index = 0
+				for i=1,#G.play.cards do
+					if G.play.cards[i] == context.other_card then
+						index = i
+						break -- no need
+					end
+				end
+				-- check if any unscored clubs are in temp_cardlist in positions +/-1
+				local ret = {}
+				for i=1,#card.ability.extra.temp_cardlist do
+					if card.ability.extra.temp_cardlist[i][2] == index-1 or card.ability.extra.temp_cardlist[i][2] == index+1 then
+						if not ret.focus then
+							-- first one
+							ret = {
+								focus = card.ability.extra.temp_cardlist[i][1],
+								card = card,
+								repetitions = 1,
+								colour = G.C.ORANGE,
+								message = localize("k_again_ex"),
+							}
+						else
+							-- second one
+							ret.extra = {
+								focus = card.ability.extra.temp_cardlist[i][1],
+								card = card,
+								repetitions = 1,
+								colour = G.C.ORANGE,
+								message = localize("k_again_ex"),
+							}
+						end
+					end
+				end
+				if ret.focus then
+					return ret
+				end
+            end
+			if context.after then
+				card.ability.extra.temp_cardlist = {}
+			end
+        end,
+    },
+    'topaz_starmage', topaz_starmage = {
+        config = { extra = {
+            odds = 2,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                G.GAME.probabilities.normal,
+				card.ability.extra.odds
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("Diamonds") then
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+					if pseudorandom(pseudoseed("topaz_starmage")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+						return {
+							extra = {func = function() 
+                                local card = create_card('Oddity',G.consumeables, nil, nil, nil, nil, nil, 'topaz_starmage')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end},
+							message = localize("k_plus_oddity"),
+							card = card,
+							focus = context.other_card,
+							colour = G.C.PURPLE,
+						}
+					else
+						return {
+							message = localize('k_nope_ex'),
+							card = card,
+							focus = context.other_card,
+							colour = G.C.PURPLE
+						}
+					end
+				end
+            end
+        end,
+    },
+    'amethyst_starmage', amethyst_starmage = {
+        config = { extra = {
+            odds = 3,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                G.GAME.probabilities.normal,
+				card.ability.extra.odds
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("six_Stars") then
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+					if pseudorandom(pseudoseed("amethyst_starmage")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+						return {
+							extra = {func = function() 
+                                local card = create_card('Zodiac',G.consumeables, nil, nil, nil, nil, nil, 'amethyst_starmage')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end},
+							message = localize("ortalab_zodiac_add"),
+							card = card,
+							focus = context.other_card,
+							colour = G.C.RED,
+						}
+					else
+						return {
+							message = localize('k_nope_ex'),
+							card = card,
+							focus = context.other_card,
+							colour = G.C.RED
+						}
+					end
+				end
+            end
+        end,
+		load_check = function(self)
+			return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
+		end,
+    },
+    'onyx_moonmage', onyx_moonmage = {
+        config = { extra = {
+            chips = 1,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            return {vars = {
+                card.ability.extra.chips,
+				card.ability.extra.chips*((G.deck and G.deck.cards) and #G.deck.cards or 78)
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("six_Moons") then
+                return {
+					chips = card.ability.extra.chips * #G.deck.cards
+				}
+            end
+        end,
+		load_check = function(self)
+			return next(SMODS.find_mod("SixSuits"))
+		end,
+    },
+	'coven', coven = {
+        config = {
+            extra = {
+                mult = 15,
+            },
+        },
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = { card.ability.extra.mult }}
+        end,
+        calculate = function(self, card, context)
+            if context.joker_main then
+				local ranks = {}
+				local ranknum = 0
+				for i=1,#G.play.cards do
+					if not ranks[G.play.cards[i].base.value] and not SMODS.has_no_rank(G.play.cards[i]) then
+						ranks[G.play.cards[i].base.value] = true
+						ranknum = ranknum + 1
+					end
+				end
+				if ranknum >= 3 then
+					return { mult = card.ability.extra.mult }
+				end
+            end
+        end,
+    },
+	'meteorite', meteorite = {
+        config = { extra = {
+			odds = 4,
+			level_up = 2,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --info_queue[#info_queue+1] = G.P_CENTERS.m_thac_jewel
+            return {vars = {
+				G.GAME.probabilities.normal,
+                card.ability.extra.odds,
+				card.ability.extra.level_up
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.before then
+				for i=1, #G.hand.cards do
+					if G.hand.cards[i]:is_suit("six_Stars") and pseudorandom(pseudoseed("meteorite")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+						G.GAME.ortalab.temp_levels = G.GAME.ortalab.temp_levels + card.ability.extra.level_up
+						G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
+							card_eval_status_text(G.hand.cards[i], 'extra', nil, nil, nil, {message = localize('ortalab_level_up'), colour = G.C.PURPLE, instant = true})
+						return true end}))
+					end
+				end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
+        end,
+    },
+	'olivine', olivine = {
+        config = { extra = {
+			reduction = 0.04,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --info_queue[#info_queue+1] = G.P_CENTERS.m_thac_jewel
+            return {vars = {card.ability.extra.reduction * 100}}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.hand and context.other_card:is_suit("six_Moons") and not context.end_of_round then
+				return {
+					extra = {focus = context.other_card,
+						message = localize{type = 'variable', key = 'a_blind_minus_percent',
+							vars = {card.ability.extra.reduction*100}}, },
+					card = card,
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                            AMM.mod_blind(1-card.ability.extra.reduction, nil, true)
+                            return true
+                        end)}))
+					end,
+				}
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits"))
+        end,
+	},
 }
 
 SMODS.Atlas{

@@ -8,6 +8,11 @@ local money_function = function(_, self, area, copier)
 	delay(0.6)
 end
 
+local money_update = function(self, card, dt)
+	card.sell_cost = card.ability.extra.dollars
+	card.sell_cost_label = card.ability.extra.dollars
+end
+
 local chip_function = function(_, self, area, copier)
 	local used_tarot = copier or self
 	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -41,12 +46,40 @@ local chip_function = function(_, self, area, copier)
 	delay(0.5)
 end
 
+local activate_oddity = function(self, card, area, copier)
+	local used_tarot = copier or self
+	card.ability.extra.active = true
+	card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_thac_active"), colour = G.C.ORANGE, instant = true})
+	juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
+end
+
+local enhancement_potion = function(self, card, context)
+	if card.ability.extra.active then
+		if context.check_enhancement then
+			temp = {}
+			temp[card.ability.extra.card_type] = true
+			return temp
+		end
+		if context.after and not context.blueprint then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0,
+				func = function()
+					card:start_dissolve()
+					return true
+				end,
+			}))
+		end
+	end
+end
+
+local enhancement_potion_lv = function(_c,info_queue,card)
+	info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.card_type]
+	return {vars = {}}
+end
+
 local oddities = {
 	'one_jollar', one_jollar = {
-		name = "$1",
-		text = {
-			'Redeemable for {C:money}$#1#{}',
-		},
 		effect = 'MONIE',
 		config = {
 			extra = {
@@ -59,13 +92,10 @@ local oddities = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
+		update = money_update,
 		can_use = function(_, self) return true end,
 	},
 	'two_jollar', two_jollar = {
-		name = "$2",
-		text = {
-			'Redeemable for {C:money}$#1#{}',
-		},
 		effect = 'MONIE',
 		config = {
 			extra = {
@@ -78,13 +108,10 @@ local oddities = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
+		update = money_update,
 		can_use = function(_, self) return true end,
 	},
 	'five_jollar', five_jollar = {
-		name = "$5",
-		text = {
-			'Redeemable for {C:money}$#1#{}',
-		},
 		effect = 'MONIE',
 		config = {
 			extra = {
@@ -98,13 +125,10 @@ local oddities = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
+		update = money_update,
 		can_use = function(_, self) return true end,
 	},
 	'ten_jollar', ten_jollar = {
-		name = "$10",
-		text = {
-			'Redeemable for {C:money}$#1#{}',
-		},
 		effect = 'MONIE',
 		config = {
 			extra = {
@@ -118,13 +142,10 @@ local oddities = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
+		update = money_update,
 		can_use = function(_, self) return true end,
 	},
 	'twenty_jollar', twenty_jollar = {
-		name = "$20",
-		text = {
-			'Redeemable for {C:money}$#1#{}',
-		},
 		effect = 'MONIE',
 		config = {
 			extra = {
@@ -138,20 +159,15 @@ local oddities = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 			 return {vars = { _c.config.extra.dollars }} end,
 		use = money_function,
+		update = money_update,
 		can_use = function(_, self) return true end,
 	},
 	'green_chip', green_chip = {
-		name = "Green Chip",
-		text = {
-			'Up to {C:attention}#1#{} selected',
-			'cards permanently gain',
-			'{C:chips}+#2#{} Chips when scored',
-		},
 		effect = 'CHIP',
 		config = {
 			max_highlighted = 2,
 			extra = {
-				chips = 10
+				chips = 15
 			}
 		},
 		pos = { x = 5, y = 0 },
@@ -163,17 +179,11 @@ local oddities = {
 		use = chip_function,
 	},
 	'yellow_chip', yellow_chip = {
-		name = "Yellow Chip",
-		text = {
-			'Up to {C:attention}#1#{} selected',
-			'cards permanently gain',
-			'{C:chips}+#2#{} Chips when scored',
-		},
 		effect = 'CHIP',
 		config = {
 			max_highlighted = 4,
 			extra = {
-				chips = 5
+				chips = 10
 			}
 		},
 		pos = { x = 6, y = 0 },
@@ -185,17 +195,11 @@ local oddities = {
 		use = chip_function,
 	},
 	'red_blue_chip', red_blue_chip = {
-		name = "Red-Blue Chip",
-		text = {
-			'Up to {C:attention}#1#{} selected',
-			'cards permanently gain',
-			'{C:chips}+#2#{} Chips when scored',
-		},
 		effect = 'CHIP',
 		config = {
 			max_highlighted = 2,
 			extra = {
-				chips = 20
+				chips = 30
 			}
 		},
 		pos = { x = 7, y = 0 },
@@ -208,17 +212,11 @@ local oddities = {
 		use = chip_function,
 	},
 	'purple_chip', purple_chip = {
-		name = "Purple Chip",
-		text = {
-			'Up to {C:attention}#1#{} selected',
-			'cards permanently gain',
-			'{C:chips}+#2#{} Chips when scored',
-		},
 		effect = 'CHIP',
 		config = {
 			max_highlighted = 4,
 			extra = {
-				chips = 10
+				chips = 15
 			}
 		},
 		pos = { x = 8, y = 0 },
@@ -231,17 +229,11 @@ local oddities = {
 		use = chip_function,
 	},
 	'power_chip', power_chip = {
-		name = "Power Chip",
-		text = {
-			'{C:attention}#1#{} selected',
-			'card permanently gains',
-			'{C:chips}+#2#{} Chips when scored',
-		},
 		effect = 'CHIP',
 		config = {
 			max_highlighted = 1,
 			extra = {
-				chips = 50
+				chips = 75
 			}
 		},
 		pos = { x = 9, y = 0 },
@@ -255,10 +247,6 @@ local oddities = {
 		use = chip_function,
 	},
 	'pot_of_joker', pot_of_joker = {
-		name = "Pot of Joker",
-		text = {
-			'Draw #1# cards',
-		},
 		effect = 'BUT WHAT DOES POT OF GREED DO',
 		config = {
 			extra = {
@@ -277,7 +265,7 @@ local oddities = {
 		end,
 		can_use = function(_, self) return #G.hand.cards > 1 and #G.deck.cards > 1 end,
 	},
-	'silica_packet', silica_packet = {
+	--[['silica_packet', silica_packet = {
 		name = "Silica Packet",
 		subtitle = "Work In Progress!",
 		text = {
@@ -292,14 +280,8 @@ local oddities = {
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 		end,
-	},
+	},--]]
 	'jimbobread_man', jimbobread_man = {
-		name = "Jimbobread Man",
-		text = {
-			'Gain {C:blue}+#1#{} hand',
-			'{C:inactive}Looks big enough{}',
-			'{C:inactive}for two sittings!{}',
-		},
 		effect = 'tasty...',
 		config = {
 			extra = {
@@ -336,13 +318,6 @@ local oddities = {
 		end,
 	},
 	'jimbobread_man_half', jimbobread_man_half = {
-		name = "Jimbobread Man",
-		subtitle = "Half-Eaten",
-		text = {
-			'Gain {C:blue}+#1#{} hand',
-			'{C:inactive}Just one bite{}',
-			'{C:inactive}left, now{}',
-		},
 		effect = 'tasty...',
 		config = {
 			extra = {
@@ -365,7 +340,7 @@ local oddities = {
 			return TheAutumnCircus.config.enabled_consumables.jimbobread_man
 		end,
 	},
-	'narwhal_horn', narwhal_horn = {
+	--[['narwhal_horn', narwhal_horn = {
 		name = "Narwhal Horn",
 		subtitle = "Work In Progress!",
 		text = {
@@ -380,17 +355,8 @@ local oddities = {
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 		end,
-	},
+	},--]]
 	'cultist_potion', cultist_potion = {
-		name = "Cultist Potion",
-		subtitle = "CAW CAW!!!!",
-		text = {
-			'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
-			'{X:attention,C:white}ACTIVE:{} This Oddity gains',
-			'{X:mult,C:white}X#1#{} Mult per {C:blue}Hand{} played',
-			'{C:red,E:1}self destructs{} at end of round',
-			'{C:inactive}(Currently: {X:mult,C:white}X#2#{C:inactive} Mult)',
-		},
 		effect = 'CAW CAW!!!!',
 		config = {
 			extra = {
@@ -415,7 +381,7 @@ local oddities = {
 		use = function(self, card, area, copier)
 			local used_tarot = copier or self
 			card.ability.extra.active = true
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "CAW CAW!!!!", colour = G.C.BLUE, instant = true})
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_thac_cawcaw"), colour = G.C.BLUE, instant = true})
 			juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
 		end,
 		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
@@ -440,48 +406,96 @@ local oddities = {
 		end,
 	},
 	'fire_potion', fire_potion = {
-		name = "Fire Potion",
-		subtitle = "Work In Progress!",
-		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
 		effect = 'boom :3',
 		config = {
+			extra = {
+				mult = 20,
+				active = false
+			},
 		},
 		pos = { x = 6, y = 1 },
 		pixel_size = { w = 71, h = 67 },
 		rarity = 1,
-		yes_pool_flag = "neversetthis",
+		cost = 3,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {vars = {card.ability.extra.mult}}
+		end,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = function(self, card, context)
+			if card.ability.extra.active then
+				if context.joker_main then
+					return {
+						mult = card.ability.extra.mult
+					}
+				end
+				if context.after and not context.blueprint then
+					G.E_MANAGER:add_event(Event({
+						trigger = 'after',
+						delay = 0,
+						func = function()
+							card:start_dissolve()
+							return true
+						end,
+					}))
+				end
+			end
 		end,
 	},
 	'snecko_potion', snecko_potion = {
-		name = "Snecko Oil",
-		subtitle = "Work In Progress!",
-		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
 		effect = 'ssssssss',
 		config = {
+			extra = {
+				cards = 5,
+			},
 		},
 		pos = { x = 7, y = 1 },
 		pixel_size = { w = 71, h = 63 },
 		rarity = 3,
-		yes_pool_flag = "neversetthis",
+		cost = 7,
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+			return {vars = {card.ability.extra.cards}}
 		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			TheAutumnCircus.func.force_draw_cards(card.ability.extra.cards, nil, true)
+			
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+			
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					play_sound('tarot1')
+					used_tarot:juice_up(0.3, 0.5)
+					return true end }))
+				for i=1, #G.hand.cards do
+					local percent = 1.15 - (i-0.999)/(#G.hand.cards-0.998)*0.3
+					G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() G.hand.cards[i]:flip();play_sound('card1', percent);G.hand.cards[i]:juice_up(0.3, 0.3);return true end }))
+				end
+				for i=1, #G.hand.cards do
+					G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
+						local card = G.hand.cards[i]
+						
+						SMODS.change_base(card, nil, pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('snecko')))
+						
+						return true 
+					end }))
+				end
+				for i=1, #G.hand.cards do
+					local percent = 0.85 + (i-0.999)/(#G.hand.cards-0.998)*0.3
+					G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() G.hand.cards[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.cards[i]:juice_up(0.3, 0.3);return true end }))
+				end
+				delay(0.1)
+				return true
+			end}))
+			
+		end,
+		can_use = function(_, self) return #G.hand.cards > 1 and #G.deck.cards > 1 end,
 	},
 	'energy_potion', energy_potion = {
-		name = "Energy Potion",
-		subtitle = "Gain 2 Energy",
-		text = {
-			'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
-			'{X:attention,C:white}ACTIVE:{} Retrigger each',
-			'playing card {C:attention}#1#{} time#2#',
-			'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
-		},
 		effect = 'I FEEL SO ENERGIZED',
 		config = {
 			extra = {
@@ -502,12 +516,7 @@ local oddities = {
 				}
 			}
 		end,
-		use = function(self, card, area, copier)
-			local used_tarot = copier or self
-			card.ability.extra.active = true
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "ACTIVE!", colour = G.C.ORANGE, instant = true})
-			juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
-		end,
+		use = activate_oddity,
 		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
 		keep_on_use = function(self, card)
 			return true
@@ -534,7 +543,7 @@ local oddities = {
 			end
 		end,
 	},
-	'vote_sticker', vote_sticker = {
+	--[['vote_sticker', vote_sticker = {
 		name = "Vote For Jimbo!",
 		subtitle = "Work In Progress!",
 		text = {
@@ -550,8 +559,8 @@ local oddities = {
 		loc_vars = function(_c,info_queue,card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
 		end,
-	},
-	'cpu_memory', cpu_memory = {
+	},--]]
+	--[['cpu_memory', cpu_memory = {
 		name = "CPU Memory",
 		subtitle = "Work In Progress!",
 		text = {
@@ -566,14 +575,8 @@ local oddities = {
 		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 		end,
-	},
+	},--]]
 	'estradiol', estradiol = {
-		name = "Estradiol",
-		text = {
-			'Converts {C:attention}all{} {C:attention}Kings{}',
-			'and {C:attention}Jacks{} in your {C:attention}full{}',
-			'{C:attention}deck{} into {C:attention}Queens{}',
-		},
 		effect = 'TASTY',
 		config = {
 			extra = {
@@ -629,26 +632,45 @@ local oddities = {
 		can_use = function(_, self) return true end,
 	},
 	'faded_voucher', faded_voucher = {
-		name = "Faded Voucher",
-		subtitle = "Work In Progress!",
-		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
 		effect = 'uhhhh funny joke or something',
 		config = {
+			extra = {
+				vouchers = 1,
+			},
 		},
 		pos = { x = 2, y = 2 },
 		rarity = 4,
-		yes_pool_flag = "neversetthis",
+		cost = 10,
 		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            return {vars = {
+                card.ability.extra.vouchers == 1 and "a" or math.floor(card.ability.extra.vouchers),
+                card.ability.extra.vouchers == 1 and "" or "s",
+            }}
 		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			
+			local voucher_key = get_next_voucher_key(true)
+			
+			local new_card = create_card("Voucher", G.play, nil, nil, nil, nil, voucher_key, nil)
+			new_card:start_materialize()
+			new_card.cost = 0
+			new_card.from_tag = true
+			new_card:redeem()
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.2,
+				func = (function()
+					new_card:start_dissolve()                    
+					return true
+				end)}))
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end
 	},
 	'empty_bottle', empty_bottle = {
-		name = "Empty Bottle",
-		text = {
-			"{C:attention}Bottles #1#{}","selected card"
-		},
 		effect = 'bottl',
 		config = {
 			max_highlighted = 1
@@ -670,13 +692,57 @@ local oddities = {
 			return #G.hand.highlighted == 1 and not G.hand.highlighted[1].bottle
 		end
 	},
-	'box_of_rocks', box_of_rocks = {
-		name = "Box of Rocks",
-		subtitle = "They seem pretty smart, actually",
-		text = {
-			"Creates {C:attention}#1#{} random {C:attention}Stone Cards{}",
-			"and puts them in your hand"
+	'trick_deck', trick_deck = {
+		effect = 'immaterial',
+		config = {
+			extra = {
+				cards = 4
+			}
 		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_bonus
+			info_queue[#info_queue+1] = G.P_CENTERS.m_mult
+			info_queue[#info_queue+1] = G.P_CENTERS.m_wild
+			info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
+			if next(SMODS.find_mod("ortalab")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_post
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_bent
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_index
+				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_iou
+			end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_star
+			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_soulbound
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local centers = {G.P_CENTERS.m_bonus, G.P_CENTERS.m_mult, G.P_CENTERS.m_wild, G.P_CENTERS.m_lucky}
+				if next(SMODS.find_mod("ortalab")) then
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_post
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_bent
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_index
+					centers[#centers+1] = G.P_CENTERS.m_ortalab_iou
+				end
+				centers[#centers+1] = G.P_CENTERS.m_thac_star
+				centers[#centers+1] = G.P_CENTERS.m_thac_soulbound
+				local cardmak = create_playing_card({center = pseudorandom_element(centers, pseudoseed("trick_deck"))}, G.hand)
+				cardmak:set_edition(poll_edition("trick_deck"))
+				cardmak:set_seal(SMODS.poll_seal{key = "trick_deck", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end
+	},
+	'box_of_rocks', box_of_rocks = {
 		effect = 'Create 2 Stone Cards Create 2 Stone Cards Create 2 Stone Cards',
 		config = {
 			extra = {
@@ -693,24 +759,52 @@ local oddities = {
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
+			local cards = {}
 			for i=1,card.ability.extra.cards do
 				local cardmak = create_playing_card({center = G.P_CENTERS.m_stone}, G.hand)
 				cardmak:set_edition(poll_edition("box_of_rocks"))
 				cardmak:set_seal(SMODS.poll_seal{key = "box_of_rocks", mod = 10})
+				cards[#cards+1] = cardmak
 			end
+			playing_card_joker_effects(cards)
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end
 	},
-	'bag_of_stardust', bag_of_stardust = {
-		name = "Bag of Stardust",
-		subtitle = "Pocketful of potential",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}Cosmic Cards{} and puts",
-			"them in your hand"
+	'pouch_of_sand', pouch_of_sand = {
+		config = {
+			extra = {
+				cards = 2
+			}
 		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_sand
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_ortalab_sand}, G.hand)
+				cardmak:set_edition(poll_edition("pouch_of_sand"))
+				cardmak:set_seal(SMODS.poll_seal{key = "pouch_of_sand", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("ortalab")) then return true else return false end
+		end,
+	},
+	'bag_of_stardust', bag_of_stardust = {
 		config = {
 			extra = {
 				cards = 2
@@ -726,11 +820,14 @@ local oddities = {
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
+			local cards = {}
 			for i=1,card.ability.extra.cards do
 				local cardmak = create_playing_card({center = G.P_CENTERS.m_ortalab_iou}, G.hand)
 				cardmak:set_edition(poll_edition("bag_of_stardust"))
 				cardmak:set_seal(SMODS.poll_seal{key = "bag_of_stardust", mod = 10})
+				cards[#cards+1] = cardmak
 			end
+			playing_card_joker_effects(cards)
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
@@ -740,13 +837,6 @@ local oddities = {
 		end,
 	},
 	'jar_of_dirt', jar_of_dirt = {
-		name = "Jar of Dirt",
-		subtitle = "Work In Progress!",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}Dirt Cards{} and puts",
-			"them in your hand"
-		},
 		config = {
 			extra = {
 				cards = 2
@@ -762,24 +852,20 @@ local oddities = {
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
+			local cards = {}
 			for i=1,card.ability.extra.cards do
 				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_dirt}, G.hand)
 				cardmak:set_edition(poll_edition("jar_of_dirt"))
 				cardmak:set_seal(SMODS.poll_seal{key = "jar_of_dirt", mod = 10})
+				cards[#cards+1] = cardmak
 			end
+			playing_card_joker_effects(cards)
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end
 	},
 	'calcium', calcium = {
-		name = "Calcium",
-		subtitle = "Grows your bones!",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}Bone Cards{} and puts",
-			"them in your hand"
-		},
 		config = {
 			extra = {
 				cards = 2
@@ -795,23 +881,20 @@ local oddities = {
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
+			local cards = {}
 			for i=1,card.ability.extra.cards do
 				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_bone}, G.hand)
 				cardmak:set_edition(poll_edition("calcium"))
 				cardmak:set_seal(SMODS.poll_seal{key = "calcium", mod = 10})
+				cards[#cards+1] = cardmak
 			end
+			playing_card_joker_effects(cards)
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end
 	},
 	'scrap_metal', scrap_metal = {
-		name = "Scrap Metal",
-		subtitle = "Work In Progress!",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}metal Enhanced Cards{}","and puts them in","your {C:attention}graveyard{}"
-		},
 		config = {
 			extra = {
 				cards = 3
@@ -848,12 +931,6 @@ local oddities = {
 		end
 	},
 	'fossil', fossil = {
-		name = "Fossil",
-		subtitle = "Work In Progress!",
-		text = {
-			"Creates {C:attention}#1#{} random",
-			"{C:attention}Bone Cards{} and","puts them in","your {C:attention}graveyard{}"
-		},
 		config = {
 			extra = {
 				cards = 3
@@ -882,14 +959,6 @@ local oddities = {
 		end
 	},
 	'gift_of_the_knight', gift_of_the_knight = {
-		name = "Gift of the Knight",
-		subtitle = "Your indeterminate fate shines within you",
-		text = {
-			"Creates a random",
-			"{C:dark_edition}Polychrome {C:attention}3 of {C:hearts}Hearts{}",
-			"with {C:knightofheart}Heart{C:red} Aspect",
-			"and adds it to your hand",
-		},
 		config = {
 			extra = {
 			}
@@ -914,20 +983,13 @@ local oddities = {
 				cardmak:set_edition({polychrome = true})
 				cardmak:set_seal(SMODS.poll_seal{key = "gift_of_the_knight", mod = 10})
 				cardmak:set_aspect("thac_heart")
+			playing_card_joker_effects({cardmak})
 		end,
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end
 	},
 	'dance_with_the_dead', dance_with_the_dead = {
-		name = "Dance with the Dead",
-		subtitle = "We all fall down!",
-		text = {
-			"Put each card in your hand",
-			"into your {C:attention}graveyard{}, then",
-			"return {C:attention}that many{} random cards",
-			"from your {C:attention}graveyard{} to your hand",
-		},
 		config = {
 			extra = {
 			}
@@ -964,14 +1026,6 @@ local oddities = {
 		end
 	},
 	'stareater', stareater = {
-		name = "Stareater",
-		subtitle = "Into the maw of the void",
-		text = {
-			"Lose {C:attention}all{} of your {C:Zodiac}Zodiac{}",
-			"levels, and gain {C:money}$#1#{} for",
-			"each {C:attention}unique{C:Zodiac} Zodiac{} lost",
-			"{C:inactive}(Max of {C:money}$#2#{C:inactive}; Currently {C:money}$#3#{C:inactive})"
-		},
 		config = {
 			extra = {
 				dollars = 5,
@@ -1013,13 +1067,6 @@ local oddities = {
 		end,
 	},
 	'memorial_ticket', memorial_ticket = {
-		name = "Memorial Ticket",
-		subtitle = "Work In Progress!",
-		text = {
-			"Gain {C:money}$#1#{} for each card in",
-			"your {C:attention}graveyard{} {C:inactive}(Max of {C:money}$#2#{C:inactive})",
-            "{C:inactive}(Currently {C:money}$#3#{C:inactive})"
-		},
 		config = {
 			extra = {
 				dollars = 1,
@@ -1047,6 +1094,25 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return card.area == G.consumeables
 		end,
+	},
+	'ironskin_potion', ironskin_potion = {
+		effect = 'steelify',
+		config = {
+			extra = {
+				card_type = "m_steel",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
 	},
 }
 

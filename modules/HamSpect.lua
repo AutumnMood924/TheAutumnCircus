@@ -1,10 +1,6 @@
 local aspects = {
 	'breath', breath = {
 		name = "breath",
-		display_name = "Breath",
-		text = {
-			'{X:chips,C:white} X3 {} chips'
-		},
 		effect = 'breath',
 		config = {
 			extra = {
@@ -13,7 +9,7 @@ local aspects = {
 		},
 		pos = { x = 0, y = 0 },
 		loc_vars = function(self, info_queue, card)
-			return {vars = {card.ability.extra.Xmult}}
+			return {vars = {self.config.extra.Xchips}}
 		end,
 		calculate = function(self, card, context)
 			if context.cardarea == G.play and context.main_scoring then
@@ -27,12 +23,6 @@ local aspects = {
 	},
 	'life', life = {
 		name = "life",
-		display_name = "Life",
-		text = {
-			'{C:green}1 in 3{} chance',
-            'to gain {C:blue}+2 Hands{}',
-            'when scored'
-		},
 		effect = 'life',
 		config = {
 			extra = {
@@ -60,13 +50,6 @@ local aspects = {
 	},
 	'light', light = {
 		name = "light",
-		display_name = "Light",
-		text = {
-			'Earn {C:money}$5{} and each',
-            '{C:attention}Joker{} and {C:attention}consumable{}',
-            'gains {C:money}$2{} of sell value',
-            'when this card scores'
-		},
 		effect = 'light',
 		config = {
 			extra = {
@@ -105,11 +88,6 @@ local aspects = {
 	},
 	'time', time = {
 		name = "time",
-		display_name = "Time",
-		text = {
-			'{C:red}+1 Discard{} when',
-            'discarded or scored'
-		},
 		effect = 'time',
 		config = {
 			extra = {
@@ -136,10 +114,6 @@ local aspects = {
 	},
 	'heart', heart = {
 		name = "heart",
-		display_name = "Heart",
-		text = {
-			'{X:mult,C:white}X3{C:mult} Mult'
-		},
 		effect = 'heart',
 		config = {
 			extra = {
@@ -162,12 +136,6 @@ local aspects = {
 	},
 	'rage', rage = {
 		name = "rage",
-		display_name = "Rage",
-		text = {
-			'{C:chips}+60{} Chips',
-			'{C:chips}+300{} Chips instead',
-			'on first hand of round',
-		},
 		effect = 'rage',
 		config = {
 			extra = {
@@ -190,15 +158,6 @@ local aspects = {
 	},
 	'blood', blood = {
 		name = "blood",
-		display_name = "Blood",
-		text = {
-			'{C:chips}+80 chips{} for each card held',
-			'in hand that {C:attention}shares a suit{}',
-			'with this card when scored',
-			'{C:mult}+25 Mult{} for each card held',
-			'in hand that {C:attention}shares a rank{}',
-			'with this card when scored',
-		},
 		boxes = { 3, 3, },
 		effect = 'blood',
 		config = {
@@ -253,11 +212,6 @@ local aspects = {
 	},
 	'doom', doom = {
 		name = "doom",
-		display_name = "Doom",
-		text = {
-			'Blind requirement',
-            '{C:attention}-25%{} when scored'
-		},
 		effect = 'doom',
 		config = {
 			extra = {
@@ -322,13 +276,6 @@ local aspects = {
 	},
 	'space', space = {
 		name = "space",
-		display_name = "Space",
-		text = {
-			'{X:mult,C:white}X0.5{} Mult for',
-			'each card held in',
-			'hand when scored',
-			'{C:inactive}(Starts at {X:mult,C:white}X1{C:inactive} Mult)'
-		},
 		effect = 'space',
 		config = {
 			extra = {
@@ -337,7 +284,7 @@ local aspects = {
 		},
 		pos = { x = 3, y = 1 },
 		loc_vars = function(self, info_queue, card)
-			return {vars = {card.ability.extra.Xmult}}
+			return {vars = {self.config.extra.Xmult}}
 		end,
 		calculate = function(self, card, context)
 			if context.cardarea == G.play and context.main_scoring then
@@ -351,14 +298,6 @@ local aspects = {
 	},
 	'mind', mind = {
 		name = "mind",
-		display_name = "Mind",
-		text = {
-			'This card permanently',
-			'gains {C:mult}+5{} Mult while',
-			'held in hand each',
-			'{C:blue}Hand{} played while this',
-			'card is held in hand'
-		},
 		effect = 'mind',
 		config = {
 			extra = {
@@ -367,7 +306,7 @@ local aspects = {
 		},
 		pos = { x = 4, y = 1 },
 		loc_vars = function(self, info_queue, card)
-			return {vars = {card.ability.extra.Xmult}}
+			return {vars = {self.config.extra.mult}}
 		end,
 		calculate = function(self, card, context)
 			if context.cardarea == G.hand and context.before then
@@ -375,7 +314,7 @@ local aspects = {
 					message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                     func = function()
-						card.ability.perma_h_mult = math.max(card.ability.perma_h_mult, 1)
+						card.ability.perma_h_mult = math.max(card.ability.perma_h_mult, 0)
 						card.ability.perma_h_mult = card.ability.perma_h_mult + 5
                     end,
 				}
@@ -386,12 +325,6 @@ local aspects = {
 	},
 	'hope', hope = {
 		name = "hope",
-		display_name = "Hope",
-		text = {
-			'Retrigger this card',
-            'Retriggers {C:attention}3 times instead{}',
-            'on the {C:attention}final hand{}'
-		},
 		effect = 'hope',
 		config = {
 			extra = {

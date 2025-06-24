@@ -28,59 +28,51 @@ local stamps = {
 	"todd", todd = {
 		name = "Todd",
 		text = {
-			"{C:blue}I give you{}","{C:blue}+1 Hand{}","{C:blue}my friend!{}",
+			"{C:blue}I give you{}","{C:blue}+1 Hand selection{}","{C:blue}limit my friend!{}",
 		},
 		display_name = "Todd's Stamp",
 		pos = { x = 1, y = 0 },
 		color = "009CFD",
 		apply = function(card)
 			if card.added_to_deck then
-				G.GAME.round_resets.hands = G.GAME.round_resets.hands + 1
-				ease_hands_played(1)
+				SMODS.change_play_limit(1)
 			end
 		end,
 		unapply = function(card)
 			if card.added_to_deck then
-				G.GAME.round_resets.hands = G.GAME.round_resets.hands - 1
-				ease_hands_played(-1)
+				SMODS.change_play_limit(-1)
 			end
 		end,
 		deck_add = function()
-			G.GAME.round_resets.hands = G.GAME.round_resets.hands + 1
-			ease_hands_played(1)
+			SMODS.change_play_limit(1)
 		end,
 		deck_remove = function()
-			G.GAME.round_resets.hands = G.GAME.round_resets.hands - 1
-			ease_hands_played(-1)
+			SMODS.change_play_limit(-1)
 		end,
 	},
 	"steven", steven = {
 		name = "Steven",
 		text = {
-			"{C:red}+1 additional Discard{}","{C:red}at your disposal!{}",
+			"{C:red}+1 additional Discard selection{}","{C:red}limit at your disposal!{}",
 		},
 		display_name = "Steven's Stamp",
 		pos = { x = 2, y = 0 },
 		color = "FD5F55",
 		apply = function(card)
 			if card.added_to_deck then
-				G.GAME.round_resets.discards = G.GAME.round_resets.discards + 1
-				ease_discard(1)
+				SMODS.change_discard_limit(1)
 			end
 		end,
 		unapply = function(card)
 			if card.added_to_deck then
-				G.GAME.round_resets.discards = G.GAME.round_resets.discards - 1
-				ease_discard(-1)
+				SMODS.change_discard_limit(-1)
 			end
 		end,
 		deck_add = function()
-			G.GAME.round_resets.discards = G.GAME.round_resets.discards + 1
-			ease_discard(1)
+			SMODS.change_discard_limit(1)
 		end,
 		deck_remove = function()
-			G.GAME.round_resets.discards = G.GAME.round_resets.discards - 1
-			ease_discard(-1)
+			SMODS.change_discard_limit(-1)
 		end,
 	},
 	"chaos", chaos = {
@@ -92,6 +84,7 @@ local stamps = {
 		pos = { x = 3, y = 0 },
 		color = "55A383",
 		-- no functions, Chaos' Stamp effect must be hardcoded atm
+		-- todo: prove this false
 	},
 	"andy", andy = {
 		name = "Andy",

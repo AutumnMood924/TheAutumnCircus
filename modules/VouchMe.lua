@@ -1,11 +1,6 @@
 
 local vouchers = {
 	"spectral_merchant", spectral_merchant = {
-		name = "Spectral Merchant",
-		text = {
-			"{C:spectral}Spectral{} cards appear",
-			"in the shop"
-		},
 		config = {
 			extra = 4.8/4,
 		},
@@ -20,12 +15,6 @@ local vouchers = {
 		end,
 	},
 	"spectral_tycoon", spectral_tycoon = {
-		name = "Spectral Tycoon",
-		text = {
-			"{C:spectral}Spectral{} cards appear",
-			"{C:attention}#1#X{} more frequently",
-			"in the shop"
-		},
 		config = {
 			extra = 9.6/4,
 			extra_disp = 2
@@ -42,10 +31,6 @@ local vouchers = {
 		end,
 	},
 	"stamp_savvy", stamp_savvy = {
-		name = "Stamp Savvy",
-		text = {
-			"{C:attention}Jokers{} can appear","with special {C:attention}stamps{}",
-		},
 		config = {
 		},
 		pos = { x = 2, y = 0 },
@@ -59,11 +44,6 @@ local vouchers = {
 		end,
 	},
 	"stamp_coupon", stamp_coupon = {
-		name = "Stamp Coupon",
-		text = {
-			"{C:attention}Jokers{} with special {C:attention}stamps{}",
-			"cost up to {C:money}$2{} less",
-		},
 		config = {
 		},
 		pos = { x = 3, y = 0 },
@@ -78,12 +58,6 @@ local vouchers = {
 		end,
 	},
 	"oddity_merchant", oddity_merchant = {
-		name = "Oddity Merchant",
-		text = {
-			"{C:oddity}Oddities{} appear",
-			"{C:attention}#1#X{} more frequently",
-			"in the shop"
-		},
 		config = {
 			extra = 9.6/4,
 			extra_disp = 2
@@ -102,12 +76,6 @@ local vouchers = {
 		end,
 	},
 	"oddity_tycoon", oddity_tycoon = {
-		name = "Oddity Tycoon",
-		text = {
-			"{C:oddity}Oddities{} appear",
-			"{C:attention}#1#X{} more frequently",
-			"in the shop"
-		},
 		config = {
 			extra = 19.2/4,
 			extra_disp = 4
@@ -127,13 +95,6 @@ local vouchers = {
 		end,
 	},
 	"wheel_of_wheel_of_fortune", wheel_of_wheel_of_fortune = {
-		name = "Wheel of Wheel of Fortune",
-		text = {
-			"{C:green}#1# in #2#{} chance to create",
-			"{C:attention}The Wheel of Fortune{}",
-			"when {C:attention}Blind{} is selected",
-			"{C:inactive}(Must have room)"
-		},
 		config = {
 			extra = {
 				odds = 4
@@ -153,17 +114,6 @@ local vouchers = {
 		end,
 	},
 	"ceaseless_wheel", ceaseless_wheel = {
-		name = "Ceaseless Wheel",
-		text = {
-			"{C:green}#1# in #2#{} chance to create {C:attention}The Wheel of Fortune{}",
-			"whenever {C:attention}The Wheel of Fortune{} is used or sold",
-			"{C:attention}The Wheel of Fortune{} cards created by this",
-			"Voucher or by {C:attention}Wheel of Wheel of Fortune{} have",
-			"a {C:green}#1# in #2#{} chance to be {C:dark_edition}Negative{}",
-			"{C:inactive}(Must have room if not creating a {C:dark_edition}Negative{C:inactive} card)",
-			"{C:inactive}(If a {C:dark_edition}Negative {C:attention}The Wheel of Fortune{C:inactive} is used or sold,",
-			"{C:inactive}card creation probability is forced to be {C:green}1 in 4{C:inactive})"
-		},
 		boxes = { 2, 3, 3 },
 		config = {
 			extra = {
@@ -185,10 +135,6 @@ local vouchers = {
 		end,
 	},
 	"plus_four", plus_four = {
-		name = "+4",
-		text = {
-			"{C:mult}+#1#{} Mult",
-		},
 		config = {
 			extra = {
 				mult = 4
@@ -204,10 +150,6 @@ local vouchers = {
 		end,
 	},
 	"x_four", x_four = {
-		name = "X4",
-		text = {
-			"{X:mult,C:white}X#1#{} Mult",
-		},
 		config = {
 			extra = {
 				Xmult = 4
@@ -221,6 +163,37 @@ local vouchers = {
 		end,
 		calculate = function(self, card, context)
 			if context.joker_main then return {xmult = card.ability.extra.Xmult} end
+		end,
+	},
+	"limit_breaker", limit_breaker = {
+		config = {
+			extra = {
+				limit = 1,
+			},
+		},
+		pos = { x = 0, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+			return {vars = {card.ability.extra.limit}}
+		end,
+		redeem = function(self, card)
+			SMODS.change_play_limit(card.ability.extra.limit)
+			SMODS.change_discard_limit(card.ability.extra.limit)
+		end,
+	},
+	"transcendant", transcendant = {
+		config = {
+			extra = {
+				limit = 1,
+			},
+		},
+		pos = { x = 1, y = 1 },
+		requires = {'v_thac_limit_breaker'},
+		loc_vars = function(_c, info_queue, card)
+			return {vars = {card.ability.extra.limit}}
+		end,
+		redeem = function(self, card)
+			SMODS.change_play_limit(card.ability.extra.limit)
+			SMODS.change_discard_limit(card.ability.extra.limit)
 		end,
 	},
 }

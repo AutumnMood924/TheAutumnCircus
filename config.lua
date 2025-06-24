@@ -259,6 +259,10 @@ local config = {
 		mind = true,
 		hope = true,
 	},
+	enabled_materials = {
+	},
+	enabled_recipes = {
+	},
 	mechanics = {
 	},
 }
