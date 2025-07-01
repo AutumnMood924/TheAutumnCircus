@@ -117,13 +117,10 @@ function new_round()
 			play_sound('chips2')
 			
 			if G.GAME.wheel_of_wheel_of_fortune == true then
-				local probability = G.GAME.probabilities.normal
-				local odds = pseudorandom(pseudoseed('wheel_of_wheel_of_fortune'))
-				if odds < probability/4 then
+				if SMODS.pseudorandom_probability(self, 'wheel_of_wheel', 1, 4) then
 					local negative = false
 					if G.GAME.ceaseless_wheel == true then
-						odds = pseudorandom(pseudoseed('ceaseless_wheel'))
-						if odds < probability/4 then
+						if SMODS.pseudorandom_probability(self, 'wheel_of_wheel', 1, 4) then
 							negative = true
 						end
 					end
@@ -189,7 +186,7 @@ end--]]
 local alias__SMODS_calculate_retriggers = SMODS.calculate_retriggers
 SMODS.calculate_retriggers = function(card, context, _ret)
     local retriggers = alias__SMODS_calculate_retriggers(card, context, _ret)
-	if card:get_seal() == "thac_sock_and_buskin" then
+	if card.get_seal and card:get_seal() == "thac_sock_and_buskin" then
 		retriggers[#retriggers+1] = {repetitions = 1, colour = G.C.ORANGE, message = localize('k_again_ex')}
 	end
     return retriggers

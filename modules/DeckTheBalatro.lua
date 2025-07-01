@@ -108,8 +108,12 @@ local decks = {
 		pos = {x = 2, y = 1},
 		config = {
 		},
-		apply = function(self)
-			G.GAME.probabilities.normal = G.GAME.probabilities.normal * 2
+		calculate = function(self, card, context)
+			if context.mod_probability then
+				return {
+					numerator = context.numerator * 2
+				}
+			end
 		end,
 	},
 	"purple", purple = {

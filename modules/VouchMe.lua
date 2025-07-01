@@ -104,9 +104,7 @@ local vouchers = {
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS['c_wheel_of_fortune']
-			return {vars = {
-				G.GAME.probabilities.normal,
-				card.ability.extra.odds,
+			return {vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)
 			}}
 		end,
 		redeem = function(self)
@@ -125,9 +123,7 @@ local vouchers = {
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS['v_thac_wheel_of_wheel_of_fortune']
-			return {vars = {
-				G.GAME.probabilities.normal,
-				card.ability.extra.odds,
+			return {vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)
 			}}
 		end,
 		redeem = function(self)

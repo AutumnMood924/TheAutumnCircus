@@ -35,7 +35,7 @@ local aspects = {
 			return {vars = { }}
 		end,
 		calculate = function(self, card, context)
-			if context.cardarea == G.play and context.main_scoring and pseudorandom('life_aspect') < G.GAME.probabilities.normal / 3 then
+			if context.cardarea == G.play and context.main_scoring and SMODS.pseudorandom_probability(card, 'life_aspect', 1, 3) then
 				return {
                     message = "+2 Hands",
                     colour = G.C.BLUE,

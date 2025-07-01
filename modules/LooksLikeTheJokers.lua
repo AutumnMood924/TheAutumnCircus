@@ -315,10 +315,11 @@ local jokers = {
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             local blah = ""
             if card.ability.extra.retriggers > 1 then blah = "s" end
-            return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds, card.ability.extra.retriggers, blah}}
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2], card.ability.extra.retriggers, blah}}
         end,
         calculate = function(self, card, context)
-            if (context.retrigger_joker_check and context.other_card ~= card and pseudorandom(pseudoseed("mirage_joker")) < G.GAME.probabilities.normal/card.ability.extra.odds) then
+            if (context.retrigger_joker_check and context.other_card ~= card and SMODS.pseudorandom_probability(card, 'mirage_joker', 1, card.ability.extra.odds)) then
                 return {
                     repetitions = card.ability.extra.retriggers,
                     card = card,
@@ -386,10 +387,11 @@ local jokers = {
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            return {vars = {G.GAME.probabilities.normal, card.ability.extra.odds}}
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2]}}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and (pseudorandom(pseudoseed("placeholder_joker")) < G.GAME.probabilities.normal/card.ability.extra.odds) then
+            if context.joker_main and SMODS.pseudorandom_probability(card, 'placeholder_joker', 1, card.ability.extra.odds) then
                 card:set_ability(G.P_CENTERS[pseudorandom_element(placeholder_jokers, pseudoseed('placeholder_joker'))])
             end
         end,
@@ -1170,7 +1172,7 @@ local jokers = {
         calculate = function(self, card, context)
         end,
         yes_pool_flag = "no",
-    },--]]
+    },
     'astront', astront = {
         config = { extra = {
             odds = 4,
@@ -1183,13 +1185,12 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {
-                G.GAME.probabilities.normal,
-                card.ability.extra.odds
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
             }}
         end,
         calculate = function(self, card, context)
-            if context.before and pseudorandom('astront') < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if context.before and SMODS.pseudorandom_probability(card, 'astront', 1, card.ability.extra.odds) then
                 if not SMODS.has_no_suit(context.scoring_hand[1]) then
                     return {
                         func = function()
@@ -1567,13 +1568,12 @@ local jokers = {
             if math.random() < 0.01 then
                 info_queue[#info_queue+1] = {key = 's_lord_retrieve_body', set = 'Other'}
             end
-            return {vars = {
-                G.GAME.probabilities.normal,
-                card.ability.extra.odds,
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
             }}
         end,
         calculate = function(self, card, context)
-            if context.discard and context.other_card.aspect == nil and pseudorandom(pseudoseed("discarded_vessel")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if context.discard and context.other_card.aspect == nil and SMODS.pseudorandom_probability(card, 'discarded_vessel', 1, card.ability.extra.odds) then
                 local keyset={}
                 local n=0
                 for k,v in pairs(AMM.Aspects) do
@@ -2348,7 +2348,7 @@ local jokers = {
             end
         end,
     },
-    --[['quantum_grass', quantum_grass = {
+    'quantum_grass', quantum_grass = {
         name = "Quantum Grass Glass",
 		subtitle = "Work In Progress!",
         text = {
@@ -2384,7 +2384,7 @@ local jokers = {
                 end
             end
         end,
-    },--]]
+    },
     'celestial_crossing', celestial_crossing = {
         config = {extra = { }},
         pos = { x = 0, y = 0 },
@@ -2526,9 +2526,8 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {
-                G.GAME.probabilities.normal,
-                card.ability.extra.odds,
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
                 card.ability.extra.cards == 1 and "a" or math.floor(card.ability.extra.cards),
                 card.ability.extra.cards == 1 and "y" or "ies",
                 card.ability.extra.cards == 1 and "it" or "them",
@@ -2536,7 +2535,7 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == G.play and not context.repetition and not context.end_of_round
-            and pseudorandom(pseudoseed("grave_legion")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            and SMODS.pseudorandom_probability(card, 'grave_legion', 1, card.ability.extra.odds) then
                 local card_ = context.other_card
                 return {
                     extra = {
@@ -2578,6 +2577,9 @@ local jokers = {
 			if next(SMODS.find_mod("ortalab")) then
 				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_rusty
 			end
+			if next(SMODS.find_mod("MoreFluff")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_brass
+			end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = {
 				card.ability.extra.cards == 1 and "a" or card.ability.extra.cards,
@@ -2590,6 +2592,9 @@ local jokers = {
 				local centers = {G.P_CENTERS.m_steel, G.P_CENTERS.m_gold}
 				if next(SMODS.find_mod("ortalab")) then
 					centers[#centers+1] = G.P_CENTERS.m_ortalab_rusty
+				end
+				if next(SMODS.find_mod("MoreFluff")) then
+					centers[#centers+1] = G.P_CENTERS.m_mf_brass
 				end
 				
                 local gy_cards = AMM.api.graveyard.get_cards()
@@ -2655,7 +2660,7 @@ local jokers = {
 						for i=1, #temp_drawn do
 							local percent = 1.15 - (i-0.999)/(#temp_drawn-0.998)*0.3
 							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('card1', percent);temp_drawn[i]:juice_up(0.3, 0.3);return true end }))
-						end
+							end
 						for i=1, #temp_drawn do
 							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
 								local card = temp_drawn[i]
@@ -2689,15 +2694,14 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {
-				G.GAME.probabilities.normal,
-				card.ability.extra.odds,
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
 				card.ability.extra.mult
 			}}
         end,
         calculate = function(self, card, context)
 			if context.joker_main then
-				if pseudorandom(pseudoseed("hardlyquin")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+				if SMODS.pseudorandom_probability(card, 'hardlyquin', 1, card.ability.extra.odds) then
 					return { mult = card.ability.extra.mult }
 				else
 					return { message = localize('k_nope_ex'), colour = G.C.ORANGE }
@@ -2952,15 +2956,14 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {
-                G.GAME.probabilities.normal,
-				card.ability.extra.odds
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
             }}
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("Diamonds") then
                 if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-					if pseudorandom(pseudoseed("topaz_starmage")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+					if SMODS.pseudorandom_probability(card, 'topaz_starmage', 1, card.ability.extra.odds) then
 						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 						return {
 							extra = {func = function() 
@@ -2999,15 +3002,14 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            return {vars = {
-                G.GAME.probabilities.normal,
-				card.ability.extra.odds
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
             }}
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("six_Stars") then
                 if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-					if pseudorandom(pseudoseed("amethyst_starmage")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+					if SMODS.pseudorandom_probability(card, 'amethyst_starmage', 1, card.ability.extra.odds) then
 						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 						return {
 							extra = {func = function() 
@@ -3108,16 +3110,15 @@ local jokers = {
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
             --info_queue[#info_queue+1] = G.P_CENTERS.m_thac_jewel
-            return {vars = {
-				G.GAME.probabilities.normal,
-                card.ability.extra.odds,
+			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
+            return {vars = {probvars[1], probvars[2],
 				card.ability.extra.level_up
             }}
         end,
         calculate = function(self, card, context)
             if context.before then
 				for i=1, #G.hand.cards do
-					if G.hand.cards[i]:is_suit("six_Stars") and pseudorandom(pseudoseed("meteorite")) < G.GAME.probabilities.normal / card.ability.extra.odds then
+					if G.hand.cards[i]:is_suit("six_Stars") and SMODS.pseudorandom_probability(card, 'meteorite', 1, card.ability.extra.odds) then
 						G.GAME.ortalab.temp_levels = G.GAME.ortalab.temp_levels + card.ability.extra.level_up
 						G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
 							card_eval_status_text(G.hand.cards[i], 'extra', nil, nil, nil, {message = localize('ortalab_level_up'), colour = G.C.PURPLE, instant = true})
@@ -3166,6 +3167,88 @@ local jokers = {
         end,
         load_check = function()
             return next(SMODS.find_mod("SixSuits"))
+        end,
+	},
+	'cartowomancer', cartowomancer = {
+        config = { extra = {
+        }},
+        pos = { x = 8, y = 3 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'astro'} end
+			info_queue[#info_queue+1] = { key = "petting", set = "Other" }
+            return {vars = {}}
+        end,
+		func_cartowo = function(cardkey, direction)
+			local ret = nil
+			local table = {
+				["clockwise"] = {
+					["c_fool"] = "c_mf_rot_fool",
+					["c_magician"] = "c_mf_rot_magician",
+					["c_high_priestess"] = "c_mf_rot_high_priestess",
+					["c_empress"] = "c_mf_rot_empress",
+					["c_emperor"] = "c_mf_rot_emperor",
+					["c_heirophant"] = "c_mf_rot_heirophant",
+					["c_lovers"] = "c_mf_rot_lovers",
+					["c_chariot"] = "c_mf_rot_chariot",
+					["c_justice"] = "c_mf_rot_justice",
+					["c_hermit"] = "c_mf_rot_hermit",
+					["c_wheel_of_fortune"] = "c_mf_rot_wheel",
+					["c_strength"] = "c_mf_rot_strength",
+					["c_hanged_man"] = "c_mf_rot_hanged_man",
+					["c_death"] = "c_mf_rot_death",
+					["c_temperance"] = "c_mf_rot_temperance",
+					["c_devil"] = "c_mf_rot_devil",
+					["c_tower"] = "c_mf_rot_tower",
+					["c_star"] = "c_mf_rot_star",
+					["c_moon"] = "c_mf_rot_moon",
+					["c_sun"] = "c_mf_rot_sun",
+					["c_judgement"] = "c_mf_rot_judgement",
+					["c_world"] = "c_mf_rot_world",
+					
+					["c_thac_universe"] = "c_thac_rot_universe",
+					["c_thac_void"] = "c_thac_rot_void",
+					["c_thac_happy_squirrel"] = "c_thac_rot_happy_squirrel",
+					["c_thac_artist"] = "c_thac_rot_artist",
+					["c_thac_veteran"] = "c_thac_rot_veteran",
+					["c_thac_drunkard"] = "c_thac_rot_drunkard",
+					["c_thac_juggler"] = "c_thac_rot_juggler",
+					["c_thac_joker"] = "c_thac_rot_joker",
+					
+					["c_six_star_q"] = "c_thac_rotflip_star",
+					["c_six_moon_q"] = "c_thac_rotflip_moon",
+				},
+				["counter-clockwise"] = {
+				},
+			}
+			for k, v in pairs(table["clockwise"]) do
+				table["counter-clockwise"][v] = k
+			end
+			if table[direction][cardkey] then ret = table[direction][cardkey] end
+			return ret
+		end,
+        calculate = function(self, card, context)
+            if context.amm_pet_card and self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction) and G.P_CENTERS[self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction)] then
+				return {
+					message = localize("k_thac_owo"),
+					card = context.amm_pet_card,
+					focus = context.amm_pet_card,
+					colour = G.C.GREEN,
+                    func = function()
+						context.amm_pet_card:set_ability(G.P_CENTERS[self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction)])
+						context.amm_pet_card:set_cost()
+						context.amm_pet_card:set_sprites(context.amm_pet_card.config.center)
+					end,
+				}
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("MoreFluff"))
         end,
 	},
 }

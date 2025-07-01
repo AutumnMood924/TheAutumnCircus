@@ -44,7 +44,7 @@ local editions = {
             if true then info_queue[#info_queue+1] = {key = 'thac_shadercredit_lyman', set = 'Other'} end
 
             local aaaa = {}
-            if card and card.ability and card.ability.set == "Default" or card.ability.set == "Enhanced" then
+            if card and (not card.fake_card) and card.ability and type(card.ability) == "table" and (card.ability.set == "Default" or card.ability.set == "Enhanced") then
                 return {vars = { _c.config.extra.gold, "Add", " to", "a random ", "Joker", " when scored" }}
             end
             return {vars = { _c.config.extra.gold, "Gain", "", "at end of round", "", "" }}

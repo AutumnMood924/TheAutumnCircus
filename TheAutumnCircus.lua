@@ -135,6 +135,12 @@ TheAutumnCircus.mod.process_loc_text = function()
                 "{X:autumn,C:money,s:1.2}AutumnMood{}"
             }
         },
+        astro = {
+            name = "Art Credit",
+            text = {
+                "{X:black,C:astro,s:1.2}Astro{}"
+            }
+        },
     }
 	G.localization.descriptions.Other["thac_shadercredit_autumn"] = {
         name = "Shader Credit",

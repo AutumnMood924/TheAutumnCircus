@@ -714,6 +714,12 @@ local oddities = {
 				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_index
 				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_iou
 			end
+			if next(SMODS.find_mod("MoreFluff")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_monus
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_cult
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_styled
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_teal
+			end
 			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_star
 			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_soulbound
 			return {vars = { card.ability.extra.cards }}
@@ -728,6 +734,12 @@ local oddities = {
 					centers[#centers+1] = G.P_CENTERS.m_ortalab_bent
 					centers[#centers+1] = G.P_CENTERS.m_ortalab_index
 					centers[#centers+1] = G.P_CENTERS.m_ortalab_iou
+				end
+				if next(SMODS.find_mod("MoreFluff")) then
+					centers[#centers+1] = G.P_CENTERS.m_mf_monus
+					centers[#centers+1] = G.P_CENTERS.m_mf_cult
+					centers[#centers+1] = G.P_CENTERS.m_mf_styled
+					centers[#centers+1] = G.P_CENTERS.m_mf_teal
 				end
 				centers[#centers+1] = G.P_CENTERS.m_thac_star
 				centers[#centers+1] = G.P_CENTERS.m_thac_soulbound
@@ -910,6 +922,9 @@ local oddities = {
 			if next(SMODS.find_mod("ortalab")) then
 				info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_rusty
 			end
+			if next(SMODS.find_mod("MoreFluff")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_brass
+			end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
@@ -919,6 +934,9 @@ local oddities = {
 				local centers = {G.P_CENTERS.m_steel, G.P_CENTERS.m_gold}
 				if next(SMODS.find_mod("ortalab")) then
 					centers[#centers+1] = G.P_CENTERS.m_ortalab_rusty
+				end
+				if next(SMODS.find_mod("MoreFluff")) then
+					centers[#centers+1] = G.P_CENTERS.m_mf_brass
 				end
 				local cardmak = create_playing_card({center = pseudorandom_element(centers, pseudoseed("scrap_metal"))}, G.deck)
 				cardmak:set_edition(poll_edition("scrap_metal"), true, true)

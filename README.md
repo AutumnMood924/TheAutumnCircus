@@ -8,6 +8,7 @@ As such, the full intended experience of the mod will only be present if the fol
 ⁠Spectrum Framework https://github.com/wingedcatgirl/SpectrumFramework  
 ⁠Six Suits https://github.com/Aurelius7309/SixSuits  
 Ortalab https://github.com/Eremel/Ortalab/  
+MoreFluff https://github.com/notmario/MoreFluff  
   
 # README BODY  
   
@@ -27,7 +28,8 @@ Lyman - Art and good taste
 itayfeder - Mr. Bones stamp and Vampire stamp, porting stamp code  
 akai - Estradiol oddity art  
 Jevonn - Planet S, H, C, D art  
-Fritz Lancastor - Some hand planet art  
+Fritz Lancastor - Some hand planet art
+Astro - Cartowomancer art
   
 Eremel, Gappie, Crimson Heart, and the rest of Ortalab's crew - Ortalab :)  
   

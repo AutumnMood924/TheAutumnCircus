@@ -261,7 +261,9 @@ data.buffer_register_funcs = {
 function data.buffer_insert(buffer, object, extra)
 	if extra then
 		for k, v in pairs(extra) do
-			object[k] = v
+			if not object[k] then
+				object[k] = v
+			end
 		end
 	end
 	table.insert(data.BUFFERS[buffer], object)

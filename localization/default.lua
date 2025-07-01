@@ -10,6 +10,7 @@ return {
 			k_thac_converted = "Converted!",
 			k_thac_cawcaw = "CAW CAW!!!!",
 			k_thac_active = "ACTIVE!",
+			k_thac_owo = "owo",
 		},
 		labels = {
 			thac_breath_aspect = "Breath",
@@ -29,8 +30,10 @@ return {
 	descriptions = {
 		Joker = {
 			j_thac_helpful_joker = {
-				name = "Helpful Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Helpful Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Played cards with",
 					"{C:six_stars}#2#{} suit give",
@@ -38,8 +41,10 @@ return {
 				},
 			},
 			j_thac_dutiful_joker = {
-				name = "Dutiful Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Dutiful Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Played cards with",
 					"{C:six_moons}#2#{} suit give",
@@ -47,8 +52,10 @@ return {
 				},
 			},
 			j_thac_frivolous_joker = {
-				name = "Frivolous Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Frivolous Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:mult}+#1#{} Mult if played",
 					"hand doesn't contain",
@@ -56,8 +63,10 @@ return {
 				},
 			},
 			j_thac_groaning_joker = {
-				name = "Groaning Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Groaning Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:chips}+#1#{} Chips if played",
 					"hand doesn't contain",
@@ -65,8 +74,10 @@ return {
 				},
 			},
 			j_thac_wayfarer = {
-				name = "The Wayfarer",
-				subtitle = "Work In Progress!",
+				name = {
+					"The Wayfarer",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult if played",
 					"hand contains",
@@ -75,8 +86,10 @@ return {
 				},
 			},
 			j_thac_power_of_unity = {
-				name = "Power of Unity",
-				subtitle = "Work In Progress!",
+				name = {
+					"Power of Unity",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult if played",
 					"hand contains",
@@ -85,8 +98,10 @@ return {
 				},
 			},
 			j_thac_chaotic = {
-				name = "The Chaotic",
-				subtitle = "Work In Progress!",
+				name = {
+					"The Chaotic",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult if played",
 					"hand contains",
@@ -95,8 +110,10 @@ return {
 				},
 			},
 			j_thac_standardized = {
-				name = "The Standardized",
-				subtitle = "Work In Progress!",
+				name = {
+					"The Standardized",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult if played",
 					"hand is a",
@@ -104,8 +121,10 @@ return {
 				},
 			},
 			j_thac_nonstandard = {
-				name = "The Nonstandard",
-				subtitle = "Work In Progress!",
+				name = {
+					"The Nonstandard",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult if played",
 					"hand isn't a",
@@ -113,8 +132,10 @@ return {
 				},
 			},
 			j_thac_gift_from_the_void = {
-				name = "Gift from the Void",
-				subtitle = "Value in emptiness",
+				name = {
+					"Gift from the Void",
+					"{C:lordofvoidw,s:0.5}Value in emptiness.",
+				},
 				text = {
 					"At end of round, add",
 					"a random {C:dark_edition}Negative {C:attention}playing",
@@ -122,8 +143,10 @@ return {
 				},
 			},
 			j_thac_lord_of_the_meek = {
-				name = "Lord of the Meek",
-				subtitle = "Power to the people",
+				name = {
+					"Lord of the Meek",
+					"{C:autumn,s:0.5}Power to the people",
+				},
 				text = {
 					"{C:attention}Retrigger{} each",
 					"{C:common}Common{} {C:attention}Joker{} {C:attention}#1#{} time#2#",
@@ -145,8 +168,10 @@ return {
 				},
 			},
 			j_thac_placeholder_joker = {
-				name = "Placeholder Joker",
-				subtitle = "TODO: this subtitle",
+				name = {
+					"Placeholder Joker",
+					"{C:autumn,s:0.5}TODO: this subtitle",
+				},
 				text = {
 					"{C:green}#1# in #2#{} chance to {C:attention}convert{}",
 					"this {C:attention}Joker{} into a {C:purple}random{}",
@@ -154,8 +179,10 @@ return {
 				},
 			},
 			j_thac_filler_card = {
-				name = "Filler Card",
-				subtitle = "- remember to replace Filler Card",
+				name = {
+					"Filler Card",
+					"{C:autumn,s:0.5}- remember to replace Filler Card",
+				},
 				text = {
 					"This {C:attention}Joker{} gains {X:chips,C:white} X#1# {} Chips",
 					"for each scored card {C:attention}without any{}",
@@ -164,8 +191,10 @@ return {
 				},
 			},
 			j_thac_test_print = {
-				name = "Test Print",
-				subtitle = "Within parameters",
+				name = {
+					"Test Print",
+					"{C:autumn,s:0.5}Within parameters",
+				},
 				text = {
 					"{C:attention}Jokers with the same",
 					"{C:attention}art{} as this {C:attention}Joker",
@@ -173,16 +202,20 @@ return {
 				},
 			},
 			j_thac_sans = {
-				name = "sans",
-				subtitle = "sans",
+				name = {
+					"sans",
+					"{C:autumn,s:0.5}sans",
+				},
 				text = {
 					"{C:attention}Retrigger{} each {C:attention}Joker with the",
 					"{C:attention}same art{} as this {C:attention}Joker",
 				},
 			},
 			j_thac_null = {
-				name = "▯▯▯▯▯▯ ▯▯▯▯▯▯",
-				subtitle = "▯▯▯▯ ▯▯ ▯▯▯▯",
+				name = {
+					"▯▯▯▯▯▯ ▯▯▯▯▯▯",
+					"{s:0.5}▯▯▯▯ ▯▯ ▯▯▯▯",
+				},
 				text = {
 					"When {C:attention}Blind{} is selected,",
 					"a random {C:attention}Joker with the",
@@ -191,8 +224,10 @@ return {
 				},
 			},
 			j_thac_garden = {
-				name = "Garden",
-				subtitle = "Work In Progress!",
+				name = {
+					"Garden",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Retrigger{} all played",
 					"{C:attention}Grass{} and {C:attention}Dirt{} cards",
@@ -209,8 +244,10 @@ return {
 				},
 			},
 			j_thac_stellar_alignment = {
-				name = "Stellar Alignment",
-				subtitle = "Work In Progress!",
+				name = {
+					"Stellar Alignment",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Retriggers{} each played",
 					"{C:attention}Star{} card {C:attention}#1#{} time#2# for",
@@ -220,8 +257,10 @@ return {
 				},
 			},
 			j_thac_paint_mixer = {
-				name = "Paint Mixer",
-				subtitle = "Work In Progress!",
+				name = {
+					"Paint Mixer",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If played hand contains",
 					"a {C:attention}Spectrum{}, {C:green}randomize{}",
@@ -230,16 +269,20 @@ return {
 				},
 			},
 			j_thac_psychic_double_reacharound = {
-				name = "Psychic Double Reacharound",
-				subtitle = "Work In Progress!",
+				name = {
+					"Psychic Double Reacharound",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Retrigger{} each {C:attention}Joker{} that {C:attention}copies{}",
 					"another {C:attention}Joker{} {C:attention}#1#{} time#2#"
 				},
 			},
 			j_thac_knight_of_heart = {
-				name = "Knight of Heart",
-				subtitle = "Apotheotic Vessel",
+				name = {
+					"Knight of Heart",
+					"{C:knightofheartw,s:0.5}apotheotic vessel",
+				},
 				text = {
 					"Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
 					"and this Joker gains the following",
@@ -251,16 +294,20 @@ return {
 				},
 			},
 			j_thac_witch_of_mind = {
-				name = "Witch of Mind",
-				subtitle = "Apotheotic Vessel",
+				name = {
+					"Witch of Mind",
+					"{C:witchofmindw,s:0.5}apoÞ3otic v3ss3l",
+				},
 				text = {
 					"Rescore each",
 					"{C:attention}scoring Joker{}",
 				},
 			},
 			j_thac_lord_of_void = {
-				name = "Lord of Void",
-				subtitle = "Apotheotic Vessel",
+				name = {
+					"Lord of Void",
+					"{C:lordofvoidw,s:0.5}Apotheotic Vessel",
+				},
 				text = {
 					"{X:mult,C:white} X#1# {} Mult for each",
 					"{C:attention}Voucher{} redeemed this run",
@@ -270,8 +317,10 @@ return {
 				},
 			},
 			j_thac_funny_fertilizer = {
-				name = "Funny Fertilizer",
-				subtitle = "Work In Progress!",
+				name = {
+					"Funny Fertilizer",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Enhances{} up to {C:attention}#1#{} unenhanced",
 					"or {C:attention}Dirt{} card#2# in your full",
@@ -280,7 +329,10 @@ return {
 				},
 			},
 			j_thac_highest_number = {
-				name = "The Highest Number",
+				name = {
+					"The Highest Number",
+					"{C:knightofheartw,s:0.5}there's nothing higher...",
+				},
 				text = {
 					"Played {C:attention}9s{} reduce {C:attention}Blind{}",
 					"requirement by {C:attention}#1#%{}",
@@ -289,8 +341,10 @@ return {
 				},
 			},
 			j_thac_astront = {
-				name = "Astron't Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Astron't Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:green}#1# in #2#{} chance to",
 					"upgrade level of",
@@ -299,8 +353,10 @@ return {
 				},
 			},
 			j_thac_torrential = {
-				name = "Torrential Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Torrential Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If discarded hand",
 					"contains a {C:attention}Flush{},",
@@ -309,16 +365,20 @@ return {
 				},
 			},
 			j_thac_landlord = {
-				name = "Landlord",
-				subtitle = "Work In Progress!",
+				name = {
+					"Landlord",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Earn {C:money}$#1#{} if discarded hand",
 					"contains a {C:attention}Full House{}",
 				},
 			},
 			j_thac_lost_sock = {
-				name = "Lost Sock",
-				subtitle = "Work In Progress!",
+				name = {
+					"Lost Sock",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"This Joker gains {C:chips}+#1#{}",
 					"Chips when {C:attention}played hand{}",
@@ -328,8 +388,10 @@ return {
 				},
 			},
 			j_thac_the_csi = {
-				name = "The C.S.I.",
-				subtitle = "Comedy Scene Investigators",
+				name = {
+					"The C.S.I.",
+					"{C:autumn,s:0.5}Comedy Scene Investigators",
+				},
 				text = {
 					"{C:chips}+#1#{} Chips for",
 					"each {C:attention}face card{} in",
@@ -338,8 +400,10 @@ return {
 				},
 			},
 			j_thac_junk_collector = {
-				name = "Junk Collector",
-				subtitle = "Work In Progress!",
+				name = {
+					"Junk Collector",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Create an {C:oddity}Oddity{} when",
 					"{C:attention}Blind{} is selected",
@@ -347,8 +411,10 @@ return {
 				},
 			},
 			j_thac_exorcist = {
-				name = "Exorcist",
-				subtitle = "Work In Progress!",
+				name = {
+					"Exorcist",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"When {C:attention}Blind{} is selected, remove",
 					"{C:attention}#1#{} random card#2# from your",
@@ -358,8 +424,10 @@ return {
 				},
 			},
 			j_thac_gallows_humor = {
-				name = "Gallows Humor",
-				subtitle = "Work In Progress!",
+				name = {
+					"Gallows Humor",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white}X#1#{} Mult if there",
 					"are {C:attention}#2#{} or more cards",
@@ -368,8 +436,10 @@ return {
 				},
 			},
 			j_thac_common_ground = {
-				name = "Common Ground",
-				subtitle = "We all rot in the same soil",
+				name = {
+					"Common Ground",
+					"{C:autumn,s:0.5}We all rot in the same soil",
+				},
 				text = {
 					"When round begins, draw #1#",
 					"additional card#2# for each",
@@ -379,8 +449,10 @@ return {
 				},
 			},
 			j_thac_tombstone = {
-				name = "Tombstone",
-				subtitle = "Work In Progress!",
+				name = {
+					"Tombstone",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:chips,C:white}X#1#{} Chips for each",
 					"{C:attention}Stone Card{} in your",
@@ -389,16 +461,20 @@ return {
 				},
 			},
 			j_thac_gem_joker = {
-				name = "Gem Joker",
-				subtitle = "Work In Progress!",
+				name = {
+					"Gem Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Jewel Cards{} held in",
 					"hand give {X:chips,C:white} X#1# {} Chips",
 				},
 			},
 			j_thac_discarded_vessel = {
-				name = "Discarded Vessel",
-				subtitle = "* It bears the curse of AMBITION.",
+				name = {
+					"Discarded Vessel",
+					"{C:lordofvoidw,s:0.5}* It bears the curse of AMBITION.",
+				},
 				text = {
 					"{C:green}#1# in #2#{} chance to add",
 					"a random {C:red}Aspect{} to each",
@@ -406,8 +482,10 @@ return {
 				},
 			},
 			j_thac_afterlife_archive = {
-				name = "Afterlife Archive",
-				subtitle = "It's important to keep records",
+				name = {
+					"Afterlife Archive",
+					"{C:autumn,s:0.5}It's important to keep records",
+				},
 				text = {
 					"Earn {C:money}$#1#{} for each {C:attention}4{} or {C:attention}9{}",
 					"in your {C:attention}graveyard{}",
@@ -416,8 +494,10 @@ return {
 				},
 			},
 			j_thac_jokermancer = {
-				name = "Jokermancer",
-				subtitle = "Waste not, want not!",
+				name = {
+					"Jokermancer",
+					"{C:autumn,s:0.5}Waste not, want not!",
+				},
 				text = {
 					"Each scored card gives",
 					"{C:mult}+#1#{} Mult for each card",
@@ -426,8 +506,10 @@ return {
 				},
 			},
 			j_thac_gaudy_bracelet = {
-				name = "Gaudy Bracelet",
-				subtitle = "Work In Progress!",
+				name = {
+					"Gaudy Bracelet",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"This Joker gains {C:chips}+#1#{}",
 					"Chips when a played",
@@ -436,8 +518,10 @@ return {
 				},
 			},
 			j_thac_twisted_mind = {
-				name = "Twisted Mind",
-				subtitle = "* do you still subscrib3 to LOGIC?",
+				name = {
+					"Twisted Mind",
+					"{C:witchofmindw,s:0.5}* do you still subscrib3 to LOGIC?",
+				},
 				text = {
 					"Cards in your {C:attention}graveyard",
 					"are scored as if they",
@@ -445,8 +529,10 @@ return {
 				},
 			},
 			j_thac_joke_book_of_the_dead = {
-				name = "Joke Book of the Dead",
-				subtitle = "It's missing a lot of pages...",
+				name = {
+					"Joke Book of the Dead",
+					"{C:autumn,s:0.5}It's missing a lot of pages...",
+				},
 				text = {
 					"When {C:attention}Blind{} is selected, gain",
 					"{C:red}+#1#{} Discard#2# for every {C:attention}#3#{} cards",
@@ -455,8 +541,10 @@ return {
 				},
 			},
 			j_thac_gravedigger = {
-				name = "Gravedigger",
-				subtitle = "Somebody's gotta do it",
+				name = {
+					"Gravedigger",
+					"{C:autumn,s:0.5}Somebody's gotta do it",
+				},
 				text = {
 					"Earn {C:money}$#1#{} when a",
 					"card is put into",
@@ -464,8 +552,10 @@ return {
 				},
 			},
 			j_thac_matchbook = {
-				name = "Matchbook",
-				subtitle = "Work In Progress!",
+				name = {
+					"Matchbook",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{X:mult,C:white}X#1#{} Mult",
 					"The first {C:red}#2#{} card#3#",
@@ -475,8 +565,10 @@ return {
 				},
 			},
 			j_thac_dark_hallway = {
-				name = "Dark Hallway",
-				subtitle = "Twilight shines through...",
+				name = {
+					"Dark Hallway",
+					"{C:autumn,s:0.5}Twilight shines through...",
+				},
 				text = {
 					"When {C:attention}Blind{} is selected,",
 					"{C:red,E:1}destroy#1#{} #2# random card#3#",
@@ -484,8 +576,10 @@ return {
 				},
 			},
 			j_thac_triplicate_soul = {
-				name = "Triplicate Soul",
-				subtitle = "* my soul glows with POWER...",
+				name = {
+					"Triplicate Soul",
+					"{C:knightofheartw,s:0.5}* my soul shines with POWER...",
+				},
 				text = {
 					"Create {C:attention}#1#{} extra cop#2#",
 					"of each card put",
@@ -495,16 +589,20 @@ return {
 				},
 			},
 			j_thac_grasp_of_emptiness = {
-				name = "Grasp of Emptiness",
-				subtitle = "Work In Progress!",
+				name = {
+					"Grasp of Emptiness",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Unscored{} played cards",
 					"give {X:mult,C:white}X#1#{} Mult",
 				},
 			},
 			j_thac_shutin = {
-				name = "Shut-In",
-				subtitle = "Work In Progress!",
+				name = {
+					"Shut-In",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Unscored{} played cards",
 					"permanently gain",
@@ -512,24 +610,30 @@ return {
 				},
 			},
 			j_thac_ace_in_the_hole = {
-				name = "Ace in the Hole",
-				subtitle = "Work In Progress!",
+				name = {
+					"Ace in the Hole",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:attention}Unscored{} played {C:attention}Aces{}",
 					"earn {C:money}$#1#{} and are {C:red,E:1}destroyed",
 				},
 			},
 			j_thac_underdogs_secret = {
-				name = "Underdog's Secret",
-				subtitle = "Work In Progress!",
+				name = {
+					"Underdog's Secret",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If scored Chips value is at least",
 					"{X:attention,C:white}#1#X{} the Mult value, earn {C:money}$#2#",
 				},
 			},
 			j_thac_topple_the_titans = {
-				name = "Topple the Titans",
-				subtitle = "Work In Progress!",
+				name = {
+					"Topple the Titans",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If scored Chips value is at least",
 					"{X:attention,C:white}#1#X{} the Mult value, reduce",
@@ -537,8 +641,10 @@ return {
 				},
 			},
 			j_thac_autoapotheosis = {
-				name = "Autoapotheosis",
-				subtitle = "Work In Progress!",
+				name = {
+					"Autoapotheosis",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If scored Chips value is at least",
 					"{X:attention,C:white}#1#X{} the Mult value, each scoring",
@@ -546,8 +652,10 @@ return {
 				},
 			},
 			j_thac_amalgamiter = {
-				name = "Amalgamiter",
-				subtitle = "using alchemiters in alchemy was a mistake",
+				name = {
+					"Amalgamiter",
+					"{C:autumn,s:0.5}using alchemiters in alchemy was a mistake",
+				},
 				text = {
 					"When round begins, if there are",
 					"at least {C:attention}#1#{} cards in your {C:attention}graveyard{},",
@@ -556,8 +664,10 @@ return {
 				},
 			},
 			j_thac_celestial_awe = {
-				name = "Celestial Awe",
-				subtitle = "Work In Progress!",
+				name = {
+					"Celestial Awe",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"If played hand is a",
 					"{C:attention}Straight Spectrum{},",
@@ -568,8 +678,10 @@ return {
 				},
 			},
 			j_thac_somber_snowfall = {
-				name = "Somber Snowfall",
-				subtitle = "Work In Progress!",
+				name = {
+					"Somber Snowfall",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Each {C:attention}unscored{} played card",
 					"gives {C:chips}+#1#{} Chips for each",
@@ -578,8 +690,10 @@ return {
 				},
 			},
 			j_thac_jack_of_all_trades = {
-				name = "Jack of All Trades",
-				subtitle = "Work In Progress!",
+				name = {
+					"Jack of All Trades",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Played {C:attention}Jacks{} are treated as",
 					"if they are each {C:attention}enhancement{}",
@@ -587,8 +701,10 @@ return {
 				},
 			},
 			j_thac_all_lucky_sevens = {
-				name = "All Lucky Sevens",
-				subtitle = "Work In Progress!",
+				name = {
+					"All Lucky Sevens",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Played {C:attention}7s{} are treated",
 					"as if they are also",
@@ -596,8 +712,10 @@ return {
 				},
 			},
 			j_thac_celestial_crossing = {
-				name = "Celestial Crossing",
-				subtitle = "Work in progress!",
+				name = {
+					"Celestial Crossing",
+					"{C:autumn,s:0.5}Work in progress!",
+				},
 				text = {
 					"Played cards with {C:six_stars}Star{} suit",
 					"are treated as if they are",
@@ -605,8 +723,10 @@ return {
 				},
 			},
 			j_thac_twin_stella = {
-				name = "Twin Stella",
-				subtitle = "hey how come Star gets two?",
+				name = {
+					"Twin Stella",
+					"{C:autumn,s:0.5}hey how come Star gets two?",
+				},
 				text = {
 					"Played cards with {C:six_stars}Star{} suit",
 					"are treated as if they are",
@@ -614,8 +734,10 @@ return {
 				},
 			},
 			j_thac_lunar_grave = {
-				name = "Lunar Grave",
-				subtitle = "Work In Progress!",
+				name = {
+					"Lunar Grave",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Played cards with {C:six_moon}Moon{} suit",
 					"are treated as if they are",
@@ -623,8 +745,10 @@ return {
 				},
 			},
 			j_thac_grave_legion = {
-				name = "Grave Legion",
-				subtitle = "Work In Progress!",
+				name = {
+					"Grave Legion",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"{C:green}#1# in #2#{} chance to create",
 					"{C:attention}#3# cop#4#{} of each played card",
@@ -633,8 +757,10 @@ return {
 				},
 			},
 			j_thac_scrapper = {
-				name = "Scrapper",
-				subtitle = "*grinding noises intensify*",
+				name = {
+					"Scrapper",
+					"{C:autumn,s:0.5}*grinding noises intensify*",
+				},
 				text = {
 					"When round begins, remove a {C:attention}metal",
 					"{C:attention}Enhanced Card{} from your {C:attention}graveyard{},",
@@ -643,8 +769,10 @@ return {
 				},
 			},
 			j_thac_snecko_eye = {
-				name = "Snecko Eye",
-				subtitle = "Confused!",
+				name = {
+					"Snecko Eye",
+					"{C:autumn,s:0.5}Confused!",
+				},
 				text = {
 					"{C:attention}+#1#{} hand size",
 					"{C:green}Randomize{} the {C:attention}rank{} of",
@@ -652,16 +780,20 @@ return {
 				},
 			},
 			j_thac_hardlyquin = {
-				name = "Hardlyquin",
-				subtitle = "Work in Progress!",
+				name = {
+					"Hardlyquin",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
 				text = {
 					"{C:green}#1# in #2#{} chance",
 					"for {C:mult}+#3# Mult",
 				},
 			},
 			j_thac_penumbra_phantasm = {
-				name = "Penumbra Phantasm",
-				subtitle = "Work In Progress!",
+				name = {
+					"Penumbra Phantasm",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
 				text = {
 					"Whenever a card with {C:six_moon}Moon{} suit",
 					"is put into your {C:attention}graveyard{},",
@@ -680,7 +812,7 @@ return {
 			j_thac_whispers_of_beyond = {
 				name = {
 					"Whispers of Beyond",
-					"{C:witchofmind,s:0.5}almost ind3ciph3rabl3",
+					"{C:witchofmindw,s:0.5}almost ind3ciph3rabl3",
 				},
 				text = {
 					"{C:attention}Retrigger{} your {C:attention}6th",
@@ -796,14 +928,14 @@ return {
 					"{C:attention}-#1#%{} Blind requirement",
 				},
 			},
-			j_thac_shadow_mantle = {
+			j_thac_cartowomancer = {
 				name = {
-					"Shadow Mantle",
-					"{C:autumn,s:0.5}Work In Progress!",
+					"Cartowomancer",
 				},
 				text = {
-					"Automatically {C:red}discards{} each",
-					"card drawn with {C:six_stars}Star{} or {C:six_moons}Moon{} suit"
+					"Rotate {C:tarot}Tarot{} cards to {C:tarot}45 Degree",
+					"{C:tarot}Rotated Tarot{} cards and vice versa",
+					"by {C:green}petting them {C:inactive}({C:attention}Direction{C:inactive} matters)",
 				},
 			},
 		},
@@ -812,6 +944,77 @@ return {
 		Planet = {
 		},
 		Spectral = {
+		},
+		Rotarot = {
+			c_thac_rot_universe = {
+				name = "The Universe!",
+				text = {
+					"{C:inactive}Sorry nothing",
+				},
+			},
+			c_thac_rot_void = {
+				name = "Void!",
+				text = {
+					"{C:inactive}Sorry nothing",
+				},
+			},
+			c_thac_rot_happy_squirrel = {
+				name = "The Happy Squirrel!",
+				text = {
+					"{C:inactive}Sorry nothing",
+				},
+			},
+			c_thac_rot_artist = {
+				name = "The Artist!",
+				text = {
+					"{C:inactive}Sorry nothing",
+				},
+			},
+			c_thac_rot_veteran = {
+				name = "The Veteran!",
+				text = {
+					"{C:inactive}Sorry nothing",
+				},
+			},
+			c_thac_rot_drunkard = {
+				name = "The Drunkard!",
+				text = {
+					"Creates a {C:attention}Drunkard",
+					"{C:inactive}(Must have room)",
+				},
+			},
+			c_thac_rot_juggler = {
+				name = "The Juggler!",
+				text = {
+					"Creates a {C:attention}Juggler",
+					"{C:inactive}(Must have room)",
+				},
+			},
+			c_thac_rot_joker = {
+				name = "The Joker!",
+				text = {
+					"Creates a {C:attention}The Joker",
+					"{C:inactive}(Must have room)",
+					"{s:0.15} ",
+					'{C:inactive}Hoo hoo, hee hee!{}',
+					'{C:inactive}This time the joke\'s{}',
+					'{C:dark_edition,E:2,s:1.75}ON ME!{}',
+				},
+			},
+			c_thac_rotflip_star = {
+				name = "The Star?!",
+				text = {
+					"Add {C:attention}#1#{} random {C:attention}Enhanced",
+					"{C:six_stars}Stars{} to your hand",
+				},
+			},
+			c_thac_rotflip_moon = {
+				name = "The Moon?!",
+				text = {
+					"Add {C:attention}#1#{} random {C:attention}Enhanced",
+					"{C:six_moons}Moons{} to your hand",
+				},
+			},
 		},
 		Oddity = {
 			c_thac_one_jollar = {
@@ -1519,10 +1722,8 @@ return {
                 text = {
                     "{C:knightofheart}what the hell are you wearing???",
                     "{C:witchofmind}uhhhh witch of mind outfit duh",
-                    "{C:knightofheart}no what the hell's with the face paint",
-                    "{C:knightofheart}also have you finally figured your classpect out",
-                    "{C:witchofmind}i thought it was fun",
-                    "{C:witchofmind}and y3a :3",
+                    "{C:knightofheart}have you finally figured your classpect out",
+                    "{C:witchofmind}y3a :3",
                     "{C:witchofmind}i think",
                     "{C:knightofheart}good grief you are insufferable",
                     "{C:witchofmind}thanks you too",

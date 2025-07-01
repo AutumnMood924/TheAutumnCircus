@@ -48,15 +48,9 @@ pattern = "local temp_pool =   (self.ability.name == 'The Wheel of Fortune' and 
 position = "before"
 payload = '''
 	if G.GAME.ceaseless_wheel then
-		local probability = G.GAME.probabilities.normal
-		if self.edition and self.edition.negative then
-			probability = 1
-		end
-		local odds = pseudorandom(pseudoseed('ceaseless_wheel_unceasing'))
-		if odds < probability/4 then
+		if SMODS.pseudorandom_probability(self, 'ceaseless_wheel', 1, 4) then
 			local negative = false
-			odds = pseudorandom(pseudoseed('ceaseless_wheel'))
-			if odds < probability/4 then
+			if SMODS.pseudorandom_probability(self, 'ceaseless_wheel', 1, 4) then
 				negative = true
 			end
 			if negative or #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -84,15 +78,9 @@ pattern = "local eval, post = eval_card(self, {selling_self = true})"
 position = "before"
 payload = '''
 	if G.GAME.ceaseless_wheel and self.config.center.key == "c_wheel_of_fortune" then
-		local probability = G.GAME.probabilities.normal
-		if self.edition and self.edition.negative then
-			probability = 1
-		end
-		local odds = pseudorandom(pseudoseed('ceaseless_wheel_unceasing'))
-		if odds < probability/4 then
+		if SMODS.pseudorandom_probability(self, 'ceaseless_wheel', 1, 4) then
 			local negative = false
-			odds = pseudorandom(pseudoseed('ceaseless_wheel'))
-			if odds < probability/4 then
+			if SMODS.pseudorandom_probability(self, 'ceaseless_wheel', 1, 4) then
 				negative = true
 			end
 			if negative or #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -183,7 +171,7 @@ overwrite = false
 [patches.pattern]
 target = '=[SMODS Pokermon "seals/seals1.lua"]'
 pattern = '''
-if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) then
+if context.cardarea == G.hand and not context.repetition_only and context.scoring_hand and not card.ability.discarded and check_main_scoring(context.main_scoring) and not card.destroyed then
 '''
 position = "before"
 payload = '''
@@ -236,6 +224,20 @@ end
 position = "after"
 payload = '''
 --]]
+'''
+match_indent = true
+overwrite = false
+
+# also fix smods
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = '''
+ret_string = ret_string.. (i ~= 1 and " " or "")..line
+'''
+position = "after"
+payload = '''
+break
 '''
 match_indent = true
 overwrite = false

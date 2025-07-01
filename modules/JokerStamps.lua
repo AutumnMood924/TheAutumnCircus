@@ -174,7 +174,7 @@ local stamps = {
 				}
 			end
 			if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
-				if pseudorandom('gros_michel_stamp') < G.GAME.probabilities.normal/40 then
+				if SMODS.pseudorandom_probability(card, 'gros_michel_stamp', 1, 40) then
 					return {
 						card = card,
 						focus = card,
@@ -210,7 +210,7 @@ local stamps = {
 			--if context.reroll_shop then print("hi") end
 			-- todo: also add to initial shop
 			if context.reroll_shop and not context.blueprint and card.config.center.set == "Joker" then
-				if pseudorandom('blueprint_stamp') < G.GAME.probabilities.normal/10 then
+				if SMODS.pseudorandom_probability(card, 'blueprint_stamp', 1, 10) then
 					local temp_card = {set = "Joker", area = G.shop_jokers, key = card.config.center.key}
 					local new_card = SMODS.create_card(temp_card)
 					new_card.states.visible = false

@@ -11,7 +11,7 @@ local blinds = {
 			for i=1,#cards do
 				local card = cards[i]
 				--print(inspect(card))
-				if pseudorandom(pseudoseed('jera')) < G.GAME.probabilities.normal/4 then
+				if SMODS.pseudorandom_probability(card, 'jera', 1, 4) then
 					self.triggered = true
 					card:juice_up()
 
@@ -34,7 +34,8 @@ local blinds = {
 			return mult, hand_chips, false
 		end,
 		get_loc_debuff_text = function(self)
-			return G.GAME.probabilities.normal.." in 4 chance to copy played cards"
+			local this = {SMODS.get_probability_vars(nil, 1, 4)}
+			return this[1].." in "..this[2].." chance to copy played cards"
 		end,
 	},
 }

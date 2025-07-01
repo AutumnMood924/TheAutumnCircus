@@ -801,7 +801,7 @@ local planets = {
 		},
 		boxes = { 1, 3, },
 		effect = 'The D8',
-		config = { extra = 2 },
+		config = { extra = {odds = 2} },
 		pos = { x = 5, y = 2 },
 		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
@@ -810,7 +810,7 @@ local planets = {
 			else
 				info_queue[#info_queue+1] = {key = 'mc_obs_off_dysnomia', set = 'Other'}
 			end
-			return {vars = { G.GAME.probabilities.normal, _c.config.extra }}
+			return {vars = { SMODS.get_probability_vars(card, 1, card.ability.extra.odds) }}
 		end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
@@ -825,7 +825,7 @@ local planets = {
             pseudoshuffle(temp_hands[3], pseudoseed('dysnomia'))
 			for i=1, #temp_hands[1] do
 				G.GAME.hands[temp_hands[3][i]].level = temp_hands[2][i]
-				if pseudorandom(pseudoseed('dysnomia_check1')) < G.GAME.probabilities.normal/self.ability.extra then
+				if SMODS.pseudorandom_probability(card, 'dysnomia_check', 1, card.ability.extra.odds) then
 					if pseudorandom(pseudoseed('dysnomia_check2')) < 1/2 then
 						G.GAME.hands[temp_hands[3][i]].level = math.max(1,G.GAME.hands[temp_hands[3][i]].level - 1)
 					else
@@ -1620,11 +1620,286 @@ local spectrals = {
 	},
 }
 
+local mftarots = {
+	"rot_universe", rot_universe = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 0, y = 0},
+		loc_vars = function(self, info_queue, card)
+		end,
+		use = function(self, card, area, copier)
+		end,
+		can_use = function(self, card)
+			return false
+		end,
+		in_pool = function(self)
+			return false
+		end,
+	},
+	"rot_void", rot_void = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 1, y = 0},
+		loc_vars = function(self, info_queue, card)
+		end,
+		use = function(self, card, area, copier)
+		end,
+		can_use = function(self, card)
+			return false
+		end,
+		in_pool = function(self)
+			return false
+		end,
+	},
+	"rot_happy_squirrel", rot_happy_squirrel = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 2, y = 0},
+		loc_vars = function(self, info_queue, card)
+		end,
+		use = function(self, card, area, copier)
+		end,
+		can_use = function(self, card)
+			return false
+		end,
+		in_pool = function(self)
+			return false
+		end,
+	},
+	"rot_artist", rot_artist = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 3, y = 0},
+		loc_vars = function(self, info_queue, card)
+		end,
+		use = function(self, card, area, copier)
+		end,
+		can_use = function(self, card)
+			return false
+		end,
+		in_pool = function(self)
+			return false
+		end,
+	},
+	"rot_veteran", rot_veteran = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 4, y = 0},
+		loc_vars = function(self, info_queue, card)
+		end,
+		use = function(self, card, area, copier)
+		end,
+		can_use = function(self, card)
+			return false
+		end,
+		in_pool = function(self)
+			return false
+		end,
+	},
+	"rot_drunkard", rot_drunkard = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 5, y = 0},
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS.j_drunkard
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i = 1, math.min(1, G.jokers.config.card_limit - #G.jokers.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.jokers.config.card_limit > #G.jokers.cards then
+						play_sound('timpani')
+						local card = SMODS.create_card{
+							key = "j_drunkard",
+							area = G.jokers,
+						}
+						card:add_to_deck()
+						G.jokers:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(self, card)
+			return #G.jokers.cards < G.jokers.config.card_limit
+		end,
+	},
+	"rot_juggler", rot_juggler = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 6, y = 0},
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS.j_juggler
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i = 1, math.min(1, G.jokers.config.card_limit - #G.jokers.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.jokers.config.card_limit > #G.jokers.cards then
+						play_sound('timpani')
+						local card = SMODS.create_card{
+							key = "j_juggler",
+							area = G.jokers,
+						}
+						card:add_to_deck()
+						G.jokers:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(self, card)
+			return #G.jokers.cards < G.jokers.config.card_limit
+		end,
+	},
+	"rot_joker", rot_joker = {
+		config = {
+			extra = {
+			},
+		},
+		pos = {x = 0, y = 1},
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS.c_thac_joker
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i = 1, math.min(1, G.consumeables.config.card_limit - #G.consumeables.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = SMODS.create_card{
+							key = "c_thac_joker",
+							area = G.consumeables,
+						}
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(self, card)
+			return #G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables
+		end,
+	},
+	"rotflip_star", rotflip_star = {
+		config = {
+			extra = {
+				targets = 3
+			},
+		},
+		pos = {x = 0, y = 2},
+		loc_vars = function(self, info_queue, card)
+			return { vars = {card.ability.extra.targets} }
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local target_area = G.hand
+			if G.STATE == G.STATES.BLIND_SELECT or G.STATE == G.STATES.SHOP or G.STATE == G.STATES.ROUND_EVAL then
+			  target_area = G.deck
+			end
+			G.E_MANAGER:add_event(Event({
+			  trigger = 'after',
+			  delay = 0.7,
+			  func = function() 
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				local cards = {}
+				for i=1, card.ability.extra.targets do
+				  cards[i] = true
+				  local _rank = pseudorandom_element({'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'}, pseudoseed('suitarot'))
+				  local cen_pool = {}
+				  for k, v in pairs(G.P_CENTER_POOLS["Enhanced"]) do
+					if v.key ~= 'm_stone' and not v.overrides_base_rank then 
+					  cen_pool[#cen_pool+1] = v
+					end
+				  end
+				  create_playing_card({front = G.P_CARDS['six_STAR_'.._rank], center = pseudorandom_element(cen_pool, pseudoseed('suitarot'))}, target_area, nil, i ~= 1, {G.C.SECONDARY_SET.Rotarot})
+				end
+				playing_card_joker_effects(cards)
+				return true end }))
+		end,
+		can_use = function(self, card)
+			return G.hand and #G.hand.cards > 0
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("SixSuits"))
+		end
+	},
+	"rotflip_moon", rotflip_moon = {
+		config = {
+			extra = {
+				targets = 3
+			},
+		},
+		pos = {x = 1, y = 2},
+		loc_vars = function(self, info_queue, card)
+			return { vars = {card.ability.extra.targets} }
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local target_area = G.hand
+			if G.STATE == G.STATES.BLIND_SELECT or G.STATE == G.STATES.SHOP or G.STATE == G.STATES.ROUND_EVAL then
+			  target_area = G.deck
+			end
+			G.E_MANAGER:add_event(Event({
+			  trigger = 'after',
+			  delay = 0.7,
+			  func = function() 
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				local cards = {}
+				for i=1, card.ability.extra.targets do
+				  cards[i] = true
+				  local _rank = pseudorandom_element({'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'}, pseudoseed('suitarot'))
+				  local cen_pool = {}
+				  for k, v in pairs(G.P_CENTER_POOLS["Enhanced"]) do
+					if v.key ~= 'm_stone' and not v.overrides_base_rank then 
+					  cen_pool[#cen_pool+1] = v
+					end
+				  end
+				  create_playing_card({front = G.P_CARDS['six_MOON_'.._rank], center = pseudorandom_element(cen_pool, pseudoseed('suitarot'))}, target_area, nil, i ~= 1, {G.C.SECONDARY_SET.Rotarot})
+				end
+				playing_card_joker_effects(cards)
+				return true end }))
+		end,
+		can_use = function(self, card)
+			return G.hand and #G.hand.cards > 0
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("SixSuits"))
+		end
+	},
+}
+
 SMODS.Atlas{
 	key = "MoreConsumables",
 	path = "MoreConsumables.png",
 	px = 71,
 	py = 95,
+}
+SMODS.Atlas{
+	key = "Rotatema",
+	path = "Rotatema.png",
+	px = 107,
+	py = 107,
 }
 
 --tarots
@@ -1643,4 +1918,13 @@ end
 for _, k in ipairs(spectrals) do
 	local v = spectrals[k]
 	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Spectral", key = k, atlas = "MoreConsumables"})
+end
+
+
+--45degreetarots
+if SMODS.find_mod("MoreFluff") then
+	for _, k in ipairs(mftarots) do
+		local v = mftarots[k]
+		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Rotarot", key = k, atlas = "Rotatema", display_size = { w = 106, h = 106 }})
+	end
 end
