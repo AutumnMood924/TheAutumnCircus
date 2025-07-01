@@ -2006,7 +2006,7 @@ local jokers = {
     },
     'underdogs_secret', underdogs_secret = {
         config = { extra = {
-            threshold = 50,
+            threshold = 20,
             money = 5,
         }},
         pos = { x = 0, y = 0 },
@@ -2031,7 +2031,7 @@ local jokers = {
     },
     'topple_the_titans', topple_the_titans = {
         config = { extra = {
-            threshold = 100,
+            threshold = 50,
             reduction = 0.20,
         }},
         pos = { x = 0, y = 0 },
@@ -2069,7 +2069,7 @@ local jokers = {
     },
     'autoapotheosis', autoapotheosis = {
         config = { extra = {
-            threshold = 300,
+            threshold = 200,
         }},
         pos = { x = 0, y = 0 },
         cost = 10,
