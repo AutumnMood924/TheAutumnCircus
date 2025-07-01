@@ -1922,7 +1922,7 @@ end
 
 
 --45degreetarots
-if SMODS.find_mod("MoreFluff") then
+if next(SMODS.find_mod("MoreFluff")) then
 	for _, k in ipairs(mftarots) do
 		local v = mftarots[k]
 		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Rotarot", key = k, atlas = "Rotatema", display_size = { w = 106, h = 106 }})
