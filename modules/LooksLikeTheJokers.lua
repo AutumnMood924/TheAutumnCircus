@@ -3222,6 +3222,8 @@ local jokers = {
 					
 					["c_six_star_q"] = "c_thac_rotflip_star",
 					["c_six_moon_q"] = "c_thac_rotflip_moon",
+					
+					["j_thac_cartowomancer"] = "j_thac_rot_cartowomancer",
 				},
 				["counter-clockwise"] = {
 				},
@@ -3251,6 +3253,92 @@ local jokers = {
             return next(SMODS.find_mod("MoreFluff"))
         end,
 	},
+	'rot_cartowomancer', rot_cartowomancer = {
+        config = { extra = {
+        }},
+        pos = { x = 0, y = 0 },
+		atlas = "specialjoker",
+		display_size = { w = 113, h = 113 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'astro'} end
+			info_queue[#info_queue+1] = { key = "petting", set = "Other" }
+            return {vars = {}}
+        end,
+		func_cartowo = function(cardkey, direction)
+			local ret = nil
+			local table = {
+				["clockwise"] = {
+					["c_fool"] = "c_mf_rot_fool",
+					["c_magician"] = "c_mf_rot_magician",
+					["c_high_priestess"] = "c_mf_rot_high_priestess",
+					["c_empress"] = "c_mf_rot_empress",
+					["c_emperor"] = "c_mf_rot_emperor",
+					["c_heirophant"] = "c_mf_rot_heirophant",
+					["c_lovers"] = "c_mf_rot_lovers",
+					["c_chariot"] = "c_mf_rot_chariot",
+					["c_justice"] = "c_mf_rot_justice",
+					["c_hermit"] = "c_mf_rot_hermit",
+					["c_wheel_of_fortune"] = "c_mf_rot_wheel",
+					["c_strength"] = "c_mf_rot_strength",
+					["c_hanged_man"] = "c_mf_rot_hanged_man",
+					["c_death"] = "c_mf_rot_death",
+					["c_temperance"] = "c_mf_rot_temperance",
+					["c_devil"] = "c_mf_rot_devil",
+					["c_tower"] = "c_mf_rot_tower",
+					["c_star"] = "c_mf_rot_star",
+					["c_moon"] = "c_mf_rot_moon",
+					["c_sun"] = "c_mf_rot_sun",
+					["c_judgement"] = "c_mf_rot_judgement",
+					["c_world"] = "c_mf_rot_world",
+					
+					["c_thac_universe"] = "c_thac_rot_universe",
+					["c_thac_void"] = "c_thac_rot_void",
+					["c_thac_happy_squirrel"] = "c_thac_rot_happy_squirrel",
+					["c_thac_artist"] = "c_thac_rot_artist",
+					["c_thac_veteran"] = "c_thac_rot_veteran",
+					["c_thac_drunkard"] = "c_thac_rot_drunkard",
+					["c_thac_juggler"] = "c_thac_rot_juggler",
+					["c_thac_joker"] = "c_thac_rot_joker",
+					
+					["c_six_star_q"] = "c_thac_rotflip_star",
+					["c_six_moon_q"] = "c_thac_rotflip_moon",
+					
+					["j_thac_cartowomancer"] = "j_thac_rot_cartowomancer",
+				},
+				["counter-clockwise"] = {
+				},
+			}
+			for k, v in pairs(table["clockwise"]) do
+				table["counter-clockwise"][v] = k
+			end
+			if table[direction][cardkey] then ret = table[direction][cardkey] end
+			return ret
+		end,
+        calculate = function(self, card, context)
+            if context.amm_pet_card and self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction) and G.P_CENTERS[self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction)] then
+				return {
+					message = localize("k_thac_owo"),
+					card = context.amm_pet_card,
+					focus = context.amm_pet_card,
+					colour = G.C.PURPLE,
+                    func = function()
+						context.amm_pet_card:set_ability(G.P_CENTERS[self.func_cartowo(context.amm_pet_card.config.center.key, context.amm_pet_direction)])
+						context.amm_pet_card:set_cost()
+						context.amm_pet_card:set_sprites(context.amm_pet_card.config.center)
+					end,
+				}
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("MoreFluff"))
+        end,
+	},
 }
 
 SMODS.Atlas{
@@ -3258,6 +3346,12 @@ SMODS.Atlas{
 	path = "LooksLikeTheJokers.png",
 	px = 71,
 	py = 95,
+}
+SMODS.Atlas{
+	key = "specialjoker",
+	path = "specialjoker.png",
+	px = 113,
+	py = 113,
 }
 
 --jokers

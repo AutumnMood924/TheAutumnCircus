@@ -938,6 +938,16 @@ return {
 					"by {C:green}petting them {C:inactive}({C:attention}Direction{C:inactive} matters)",
 				},
 			},
+			j_thac_rot_cartowomancer = {
+				name = {
+					"Cartowomancer!",
+				},
+				text = {
+					"Rotate {C:tarot}45 Degree Rotated Tarot{}",
+					"cards to {C:tarot}Tarot{} cards and vice versa",
+					"by {C:green}petting them {C:inactive}({C:attention}Direction{C:inactive} matters)",
+				},
+			},
 		},
 		Tarot = {
 		},
