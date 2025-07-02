@@ -207,7 +207,7 @@ function Game:main_menu(ctx)
 		if math.random() < 1/8192 then
 			card:set_edition("e_thac_gilded")
 		end
-		card:set_seal("thac_blueprint", true, true)
+		card:set_seal("thac_sock_and_buskin", true, true)
         G.title_top.T.w = G.title_top.T.w * 1.7675
         G.title_top.T.x = G.title_top.T.x - 0.8
         card:set_sprites(card.config.center)
@@ -215,7 +215,10 @@ function Game:main_menu(ctx)
         card.states.visible = true
         self.title_top:emplace(card)
         self.title_top:align_cards()
-		self.title_top.cards[1]:set_aspect("thac_void", true, true)
+		if next(SMODS.find_mod("SixSuits")) and self.title_top.cards[1].base then
+			SMODS.change_base(self.title_top.cards[1], "six_Stars", nil)
+		end
+		self.title_top.cards[1]:set_aspect("thac_heart", true, true)
 		self.title_top.cards[1].bottle = true
     end
     return r
