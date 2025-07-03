@@ -319,7 +319,7 @@ local jokers = {
             return {vars = {probvars[1], probvars[2], card.ability.extra.retriggers, blah}}
         end,
         calculate = function(self, card, context)
-            if (context.retrigger_joker_check and context.other_card ~= card and SMODS.pseudorandom_probability(card, 'mirage_joker', 1, card.ability.extra.odds)) then
+            if (context.retrigger_joker_check and (not context.other_context.mod_probability) and (not context.other_context.fix_probability) and context.other_card ~= card and SMODS.pseudorandom_probability(card, 'mirage_joker', 1, card.ability.extra.odds)) then
                 return {
                     repetitions = card.ability.extra.retriggers,
                     card = card,
