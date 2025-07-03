@@ -160,7 +160,7 @@ local decks = {
             }))
 		end,
 	},
-	"cyan", cyan = {
+	--[["cyan", cyan = {
 		pos = {x = 6, y = 1},
 		config = {
 		},
@@ -194,14 +194,14 @@ local decks = {
 		},
 		apply = function(self)
 		end,
-	},
+	},--]]
 	"grey", grey = {
 		pos = {x = 4, y = 2},
 		config = {
 		},
 		apply = function(self)
 		end,
-	},
+	},--[[
 	"pale", pale = {
 		pos = {x = 5, y = 2},
 		config = {
@@ -215,7 +215,7 @@ local decks = {
 		},
 		apply = function(self)
 		end,
-	},
+	},--]]
 }
 
 

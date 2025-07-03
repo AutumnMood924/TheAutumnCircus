@@ -994,6 +994,8 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
+		no_collection = true,
+		no_doe = true,
     },
     'bladekind', bladekind = {
         name = "Bladekind Specibus",
@@ -1034,6 +1036,8 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
+		no_collection = true,
+		no_doe = true,
     },
     'pokerkind', pokerkind = {
         name = "Pokerkind Specibus",
@@ -1074,6 +1078,8 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
+		no_collection = true,
+		no_doe = true,
     },
     'combat_capability', combat_capability = {
         name = "Combat Capability",
@@ -1117,6 +1123,8 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
+		no_collection = true,
+		no_doe = true,
     },
     'pseudoscratch', pseudoscratch = {
         name = "Pseudo-Scratch Gambit",
@@ -1172,6 +1180,8 @@ local jokers = {
         calculate = function(self, card, context)
         end,
         yes_pool_flag = "no",
+		no_collection = true,
+		no_doe = true,
     },
     'astront', astront = {
         config = { extra = {
