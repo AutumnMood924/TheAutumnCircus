@@ -812,8 +812,8 @@ local planets = {
 			end
 			return {vars = { SMODS.get_probability_vars(card, 1, card.ability.extra.odds) }}
 		end,
-		use = function(_, self, area, copier)
-			local used_tarot = copier or self
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
             local temp_hands = {{},{},{}}
             for k, v in pairs(G.GAME.hands) do
 				if v.visible then

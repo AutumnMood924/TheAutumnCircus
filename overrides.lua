@@ -205,7 +205,11 @@ function Game:main_menu(ctx)
         card.T.w = card.T.w * 1.4
         card.T.h = card.T.h * 1.4
 		if math.random() < 1/8192 then
-			card:set_edition("e_thac_gilded")
+			if next(SMODS.find_mod("Pokermon")) then
+				card:set_edition("e_poke_shiny")
+			else
+				card:set_edition("e_thac_gilded")
+			end
 		end
 		card:set_seal("thac_sock_and_buskin", true, true)
         G.title_top.T.w = G.title_top.T.w * 1.7675
@@ -217,6 +221,19 @@ function Game:main_menu(ctx)
         self.title_top:align_cards()
 		if next(SMODS.find_mod("SixSuits")) and self.title_top.cards[1].base then
 			SMODS.change_base(self.title_top.cards[1], "six_Stars", nil)
+		end
+		if next(SMODS.find_mod("ortalab")) and self.title_top.cards[1].base then
+			self.title_top.cards[1]:set_ability(G.P_CENTERS.m_ortalab_iou)
+		end
+		if next(SMODS.find_mod("GrabBag")) and self.title_top.cards[1].base then
+			self.title_top.cards[1]:set_seal("gb_fortune", true, true)
+		end
+		if math.random() < 1/8192 then
+			if next(SMODS.find_mod("Pokermon")) then
+				self.title_top.cards[1]:set_edition("e_poke_shiny")
+			else
+				self.title_top.cards[1]:set_edition("e_thac_gilded")
+			end
 		end
 		self.title_top.cards[1]:set_aspect("thac_heart", true, true)
 		self.title_top.cards[1].bottle = true

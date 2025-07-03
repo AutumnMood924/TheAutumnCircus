@@ -1904,6 +1904,7 @@ local jokers = {
         pos = { x = 8, y = 1 },
         cost = 10,
         rarity = 3,
+		discovered = true,
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
