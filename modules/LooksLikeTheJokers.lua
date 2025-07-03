@@ -3224,6 +3224,7 @@ local jokers = {
 					["c_six_moon_q"] = "c_thac_rotflip_moon",
 					
 					["j_thac_cartowomancer"] = "j_thac_rot_cartowomancer",
+					["j_cartomancer"] = "j_mf_rot_cartomancer",
 				},
 				["counter-clockwise"] = {
 				},
@@ -3310,6 +3311,7 @@ local jokers = {
 					["c_six_moon_q"] = "c_thac_rotflip_moon",
 					
 					["j_thac_cartowomancer"] = "j_thac_rot_cartowomancer",
+					["j_cartomancer"] = "j_mf_rot_cartomancer",
 				},
 				["counter-clockwise"] = {
 				},
