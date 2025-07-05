@@ -200,43 +200,119 @@ function Game:main_menu(ctx)
     local r = alias__Game_main_menu(self,ctx)
     if self.title_top then
         local tg = self.title_top
+		
+		local target_pcard = nil
+		
+		
+		if tg.cards[1].base.suit then
+			target_pcard = tg.cards[1]
+		else
+			target_pcard = Card(tg.T.x,tg.T.y,G.CARD_W*1.4,G.CARD_H*1.4,nil,G.P_CENTERS['c_base'])
+			target_pcard.bypass_discovery_center = true
+			--target_pcard.T.w = target_pcard.T.w * 1.4
+			--target_pcard.T.h = target_pcard.T.h * 1.4
+			target_pcard:set_sprites(target_pcard.config.center)
+			target_pcard.no_ui = true
+			target_pcard.states.visible = true
+
+			tg.T.w = tg.T.w * 1.25
+			tg.T.x = tg.T.x - 1
+			tg:emplace(target_pcard)
+			tg:align_cards()
+		end
+		
+		
         local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS['j_thac_triplicate_soul'])
         card.bypass_discovery_center = true
         card.T.w = card.T.w * 1.4
         card.T.h = card.T.h * 1.4
-		if math.random() < 1/8192 then
-			if next(SMODS.find_mod("Pokermon")) then
-				card:set_edition("e_poke_shiny")
-			else
-				card:set_edition("e_thac_gilded")
-			end
+		
+		math.randomseed(os.time())
+		local _editions = {"polychrome", "negative", "thac_gilded"}
+		if next(SMODS.find_mod("aikoyorisshenanigans")) then
+			_editions[#_editions+1] = "akyrs_texelated"
+			_editions[#_editions+1] = "akyrs_noire"
+			_editions[#_editions+1] = "akyrs_sliced"
 		end
+		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
+			_editions = {"poke_shiny"}
+		end
+		card:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
 		card:set_seal("thac_sock_and_buskin", true, true)
-        G.title_top.T.w = G.title_top.T.w * 1.7675
-        G.title_top.T.x = G.title_top.T.x - 0.8
         card:set_sprites(card.config.center)
         card.no_ui = true
         card.states.visible = true
-        self.title_top:emplace(card)
-        self.title_top:align_cards()
-		if next(SMODS.find_mod("SixSuits")) and self.title_top.cards[1].base then
-			SMODS.change_base(self.title_top.cards[1], "six_Stars", nil)
+
+		tg.T.w = tg.T.w * 1.25
+			tg.T.x = tg.T.x - 1
+        tg:emplace(card)
+        tg:align_cards()
+		
+		local _suits = {"Spades"}
+		local _ranks = {"Ace"}
+		if next(SMODS.find_mod("SixSuits")) then
+			_suits[#_suits+1] = "six_Stars"
 		end
-		if next(SMODS.find_mod("ortalab")) and self.title_top.cards[1].base then
-			self.title_top.cards[1]:set_ability(G.P_CENTERS.m_ortalab_iou)
+		math.randomseed(os.time())
+		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
+		
+		local _enhancements = {"m_lucky", "m_glass", "m_steel", "m_thac_star", "m_thac_soulbound"}
+		if next(SMODS.find_mod("ortalab")) then
+			_enhancements[#_enhancements+1] = "m_ortalab_bent"
+			_enhancements[#_enhancements+1] = "m_ortalab_iou"
+			_enhancements[#_enhancements+1] = "m_ortalab_recycled"
 		end
-		if next(SMODS.find_mod("GrabBag")) and self.title_top.cards[1].base then
-			self.title_top.cards[1]:set_seal("gb_fortune", true, true)
+		if next(SMODS.find_mod("MoreFluff")) then
+			_enhancements[#_enhancements+1] = "m_mf_cult"
+			_enhancements[#_enhancements+1] = "m_mf_styled"
+			_enhancements[#_enhancements+1] = "m_mf_teal"
 		end
-		if math.random() < 1/8192 then
-			if next(SMODS.find_mod("Pokermon")) then
-				self.title_top.cards[1]:set_edition("e_poke_shiny")
-			else
-				self.title_top.cards[1]:set_edition("e_thac_gilded")
-			end
+		if next(SMODS.find_mod("GrabBag")) then
+			_enhancements[#_enhancements+1] = "m_gb_river"
 		end
-		self.title_top.cards[1]:set_aspect("thac_heart", true, true)
-		self.title_top.cards[1].bottle = true
+		if next(SMODS.find_mod("aikoyorisshenanigans")) then
+			_enhancements[#_enhancements+1] = "m_akyrs_scoreless"
+		end
+		math.randomseed(os.time())
+		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
+		
+		
+		local _seals = {"Red"}
+		if next(SMODS.find_mod("GrabBag")) then
+			_seals[#_seals+1] = "gb_fortune"
+		end
+		if next(SMODS.find_mod("Pokermon")) then
+			_seals[#_seals+1] = "poke_pink_seal"
+		end
+		if next(SMODS.find_mod("aikoyorisshenanigans")) then
+			_seals[#_seals+1] = "akyrs_debuff"
+		end
+		math.randomseed(os.time())
+		target_pcard:set_seal(_seals[math.random(#_seals)], true, true)
+		if target_pcard.seal == "akyrs_debuff" then
+			target_pcard:set_debuff(true)
+		end
+		
+		math.randomseed(os.time()*0.75)
+		local _editions = {"polychrome", "negative", "thac_gilded"}
+		if next(SMODS.find_mod("aikoyorisshenanigans")) then
+			_editions[#_editions+1] = "akyrs_texelated"
+			_editions[#_editions+1] = "akyrs_noire"
+			_editions[#_editions+1] = "akyrs_sliced"
+		end
+		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
+			_editions = {"poke_shiny"}
+		end
+		target_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+		local _aspect = "thac_void"
+		math.randomseed(os.time())
+		if math.random() < 1/2 then
+			_aspect = "thac_heart"
+		else
+			_aspect = "thac_mind"
+		end
+		target_pcard:set_aspect(_aspect, true, true)
+		target_pcard.bottle = true
     end
     return r
 end

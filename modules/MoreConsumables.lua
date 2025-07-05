@@ -1922,7 +1922,7 @@ end
 
 
 --45degreetarots
-if next(SMODS.find_mod("MoreFluff")) then
+if next(SMODS.find_mod("MoreFluff")) and SMODS.find_mod("MoreFluff")[1].config["45 Degree Rotated Tarot Cards"] then
 	for _, k in ipairs(mftarots) do
 		local v = mftarots[k]
 		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Rotarot", key = k, atlas = "Rotatema", display_size = { w = 106, h = 106 }})

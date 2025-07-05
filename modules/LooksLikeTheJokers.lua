@@ -2000,18 +2000,12 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:get_id() == 14 then
-                ease_dollars(card.ability.extra.money)
                 return {
-                    extra = {
-                        message = localize('$')..card.ability.extra.money,
-                        colour = G.C.MONEY
-                    },
-                    card = card,
-                    colour = G.C.MONEY
+                    dollars = card.ability.extra.money
                 }
             end
-            if context.destroying_card and context.cardarea == "unscored" and context.destroying_card:get_id() == 14 then
-                return true
+            if context.destroy_card and context.cardarea == "unscored" and context.destroy_card:get_id() == 14 then
+                return { remove = true }
             end
         end,
     },
@@ -2264,7 +2258,7 @@ local jokers = {
     },
     'somber_snowfall', somber_snowfall = {
         config = { extra = {
-            chips = 5,
+            chips = 15,
         }},
         pos = { x = 0, y = 0 },
         cost = 4,
