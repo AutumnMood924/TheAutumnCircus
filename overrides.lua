@@ -234,6 +234,14 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "akyrs_noire"
 			_editions[#_editions+1] = "akyrs_sliced"
 		end
+		if next(SMODS.find_mod("Cryptid")) then
+			_editions[#_editions+1] = "cry_noisy"
+			_editions[#_editions+1] = "cry_astral"
+			_editions[#_editions+1] = "cry_glitched"
+			_editions[#_editions+1] = "cry_mosaic"
+			_editions[#_editions+1] = "cry_gold"
+			--_editions[#_editions+1] = "cry_jolly"
+		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
 			_editions = {"poke_shiny"}
 		end
@@ -273,6 +281,10 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
 			_enhancements[#_enhancements+1] = "m_akyrs_scoreless"
 		end
+		if next(SMODS.find_mod("Cryptid")) then
+			_enhancements[#_enhancements+1] = "m_cry_echo"
+			_enhancements[#_enhancements+1] = "m_cry_light"
+		end
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
 		
@@ -287,6 +299,9 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
 			_seals[#_seals+1] = "akyrs_debuff"
 		end
+		if next(SMODS.find_mod("Cryptid")) then
+			_seals[#_seals+1] = "cry_green"
+		end
 		math.randomseed(os.time())
 		target_pcard:set_seal(_seals[math.random(#_seals)], true, true)
 		if target_pcard.seal == "akyrs_debuff" then
@@ -299,6 +314,14 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "akyrs_texelated"
 			_editions[#_editions+1] = "akyrs_noire"
 			_editions[#_editions+1] = "akyrs_sliced"
+		end
+		if next(SMODS.find_mod("Cryptid")) then
+			_editions[#_editions+1] = "cry_noisy"
+			_editions[#_editions+1] = "cry_astral"
+			_editions[#_editions+1] = "cry_glitched"
+			_editions[#_editions+1] = "cry_mosaic"
+			_editions[#_editions+1] = "cry_gold"
+			--_editions[#_editions+1] = "cry_jolly"
 		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
 			_editions = {"poke_shiny"}

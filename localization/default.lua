@@ -1255,6 +1255,71 @@ return {
 					"them in your hand"
 				},
 			},
+			c_thac_flashlight = {
+				name = {
+					"Flashlight",
+					"{C:autumn,s:0.5}Cryptid Crossmod!",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Light Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_abstract_oddity = {
+				name = {
+					"Abstract Oddity",
+					"{C:autumn,s:0.5}Cryptid Crossmod!",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Abstract Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_pot_of_honey = {
+				name = {
+					"Pot of Honey",
+					"{C:autumn,s:0.5}By all known laws of aviation...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Honey Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_bottle_of_water = {
+				name = {
+					"Bottle of Water",
+					"{C:autumn,s:0.5}Refreshing!",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}River Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_bag_of_bricks = {
+				name = {
+					"Bag of Bricks",
+					"{C:autumn,s:0.5}Do you carry that around everywhere?",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random {C:attention}Brick Cards{}",
+					"and puts them in your hand"
+				},
+			},
+			c_thac_charred_pouch = {
+				name = {
+					"Charred Pouch",
+					"{C:autumn,s:0.5}Bone to ash, magic to dust...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Ash Cards{} and puts",
+					"them in your hand"
+				},
+			},
 			c_thac_scrap_metal = {
 				name = {
 					"Scrap Metal",
@@ -1273,6 +1338,57 @@ return {
 				text = {
 					"Creates {C:attention}#1#{} random",
 					"{C:attention}Bone Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_lost_envelope = {
+				name = {
+					"Lost Envelope",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Post Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_groundwater = {
+				name = {
+					"Groundwater",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}River Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_ritual_page = {
+				name = {
+					"Ritual Page",
+					"{C:autumn,s:0.5}Unreadable, yet ominous",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Cult Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_glimmer_beyond = {
+				name = {
+					"Glimmer Beyond",
+					"{C:autumn,s:0.5}Light that defies all dark...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Light Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_bizarre_shard = {
+				name = {
+					"Bizarre Shard",
+					"{C:autumn,s:0.5}For just a brief moment...",
+					"{C:autumn,s:0.5}Peer through, tell what you see",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Abstract Cards{} and","puts them in","your {C:attention}graveyard{}"
 				},
 			},
 			c_thac_gift_of_the_knight = {
