@@ -146,13 +146,23 @@ local stamps = {
 	"hiker", hiker = {
 		name = "Hiker",
 		text = {
-			"{C:inactive}Not Yet Implemented"
-			-- "Cards in the {C:attention}first drawn{}",
-			-- "{C:attention}hand{} permanently gain {C:chips}+5 Chips{}"
+			"Played cards",
+			"permanently gain",
+			"{X:chips,C:white}X0.1{C:chips} Chips{}",
 		},
 		display_name = "Hiker's Stamp",
 		pos = { x = 8, y = 0 },
 		color = "6AAB5F",
+		calculate = function(self, card, context)
+			if context.joker_main then
+				for i=1, #G.play.cards do
+					G.play.cards[i].ability.perma_x_chips = G.play.cards[i].ability.perma_x_chips + 0.1
+					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
+						card_eval_status_text(G.play.cards[i], 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS, instant = true})
+					return true end}))
+				end
+			end
+		end,
 	},
 	"gros_michel", gros_michel = {
 		name = "Gros Michel",
@@ -227,6 +237,22 @@ local stamps = {
 					}
 				end
 			end
+		end,
+	},
+	"dusk", dusk = {
+		name = "Dusk",
+		text = {
+			"The {C:green}denominators{} of",
+			"this {C:attention}Joker{}'s listed",
+			"{C:green}probabilities{} are",
+			"{C:attention}at most{C:green} 1{} on the",
+			"{C:attention}final hand{}",
+		},
+		display_name = "Dusk Stamp",
+		pos = { x = 1, y = 1 },
+		color = "B5AAA1",
+		calculate = function(self, card, context)
+			-- done with a hook to SMODS.get_probability_vars
 		end,
 	},
 }

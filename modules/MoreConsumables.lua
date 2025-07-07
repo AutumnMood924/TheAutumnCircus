@@ -1202,7 +1202,7 @@ local spectrals = {
 			"gain {C:dark_edition}+#1#{} Joker Slot",
 		},
 		config = { remove_card = true, extra = {slots = 1} },
-		pos = { x = 9, y = 6 },
+		pos = { x = 2, y = 6 },
 		loc_vars = function(_c, info_queue, card) return {vars = { _c.config.extra.slots }} end,
 		use = function(_, self, area, copier)
 			local destroyed_cards = {}
@@ -1244,7 +1244,7 @@ local spectrals = {
 			"{C:blue}-#2# Hand{} per round"
 		},
 		config = { remove_card = true, extra = {slots = 1, hands = 1} },
-		pos = { x = 9, y = 6 },
+		pos = { x = 2, y = 6 },
 		loc_vars = function(_c, info_queue, card) return {vars = { _c.config.extra.slots, _c.config.extra.hands }} end,
 		use = function(_, self, area, copier)
 			local destroyed_cards = {}
@@ -1309,7 +1309,7 @@ local spectrals = {
             "{C:inactive}(Must have room)"
 		},
 		config = { extra = {tarots = 3} },
-		pos = { x = 9, y = 6 },
+		pos = { x = 2, y = 6 },
 		loc_vars = function(_c, info_queue, card) return {vars = { card.ability.extra.tarots }} end,
 		use = function(_, self, area, copier)
 			local used_tarot = copier or self
@@ -1509,7 +1509,7 @@ local spectrals = {
 			"to a random {C:attention}Joker{}"
 		},
 		config = { extra = "thac_mr_bones" },
-		pos = {x = 9, y = 6},
+		pos = {x = 2, y = 6},
 		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1529,7 +1529,7 @@ local spectrals = {
 			"to a random {C:attention}Joker{}"
 		},
 		config = { extra = "thac_sock_and_buskin" },
-		pos = {x = 9, y = 6},
+		pos = {x = 2, y = 6},
 		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1541,6 +1541,26 @@ local spectrals = {
 			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.sock_and_buskin
 		end,
 	},
+	'journey', journey = {
+		name = "Journey",
+		subtitle = "Work In Progress!",
+		text = {
+			"Add a {C:green}Hiker Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_hiker" },
+		pos = {x = 2, y = 6},
+		loc_vars = function(_c, info_queue, card)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.hiker
+		end,
+	},
 	'banana', banana = {
 		name = "Banana",
 		subtitle = "Work In Progress!",
@@ -1549,7 +1569,7 @@ local spectrals = {
 			"to a random {C:attention}Joker{}"
 		},
 		config = { extra = "thac_gros_michel" },
-		pos = {x = 9, y = 6},
+		pos = {x = 2, y = 6},
 		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1569,7 +1589,7 @@ local spectrals = {
 			"to a random {C:attention}Joker{}"
 		},
 		config = { extra = "thac_blueprint" },
-		pos = {x = 9, y = 6},
+		pos = {x = 2, y = 6},
 		loc_vars = function(_c, info_queue, card)
 			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
 			return {vars = {}}
@@ -1579,6 +1599,26 @@ local spectrals = {
 		update = stampcardupdate,
 		load_check = function()
 			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.blueprint
+		end,
+	},
+	'sunset', sunset = {
+		name = "Sunset",
+		subtitle = "Work In Progress!",
+		text = {
+			"Add a {C:attention}Dusk Stamp{}",
+			"to a random {C:attention}Joker{}"
+		},
+		config = { extra = "thac_dusk" },
+		pos = {x = 2, y = 6},
+		loc_vars = function(_c, info_queue, card)
+			info_queue[#info_queue+1] = {key = _c.config.extra.."_stamp", set = "Other"}
+			return {vars = {}}
+		end,
+		use = stampcarduse,
+		can_use = stampcardcanuse,
+		update = stampcardupdate,
+		load_check = function()
+			return TheAutumnCircus.config.enabled_modules.jokerstamps and TheAutumnCircus.config.enabled_stamps.dusk
 		end,
 	},
 	'quest_bed', quest_bed = {

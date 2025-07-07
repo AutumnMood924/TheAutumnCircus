@@ -198,6 +198,7 @@ local config = {
 		hiker = false,
 		gros_michel = true,
 		blueprint = true,
+		dusk = true,
 	},
 	enabled_enhancements = {
 		loop = false,

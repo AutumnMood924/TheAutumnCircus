@@ -1,10 +1,2 @@
-Balatro
-
-Hiker Stamp - +5 chips to n random cards in first hand of round (timing like Mr. Bones stamp?)
-Vampire Stamp(ire) - Removes seals from cards, cards get X0.25 additional permamult
-
-Loop Card (Enhancement) - Returns to the deck after being played
-
-??? - If the first played hand each round has only 1 card, it becomes Negative
-??? - Retrigger the leftmost Rare Joker 2 times
-??? - Retrigger the leftmost Joker 1 time for each other Joker (including this one)
+cryptid - 
+	stamps don't calculate
