@@ -47,7 +47,7 @@ local chip_function = function(_, self, area, copier)
 end
 
 local activate_oddity = function(self, card, area, copier)
-	local used_tarot = copier or self
+	local used_tarot = copier or card
 	card.ability.extra.active = true
 	card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_thac_active"), colour = G.C.ORANGE, instant = true})
 	juice_card_until(card, function(v) return v.ability.extra.active == true end, true)
@@ -55,7 +55,7 @@ end
 
 local enhancement_potion = function(self, card, context)
 	if card.ability.extra.active then
-		if context.check_enhancement then
+		if context.check_enhancement and (context.other_card.area == G.play or context.other_card.area == "unscored" or context.other_card.area == G.hand) and G.STATE == G.STATES.HAND_PLAYED then
 			temp = {}
 			temp[card.ability.extra.card_type] = true
 			return temp
@@ -75,7 +75,9 @@ end
 
 local enhancement_potion_lv = function(_c,info_queue,card)
 	info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.card_type]
-	return {vars = {}}
+	return {vars = { 
+		localize{ type = 'name_text', set = 'Enhanced', key = card.ability.extra.card_type },
+	}}
 end
 
 local oddities = {
@@ -460,6 +462,9 @@ local oddities = {
 				end
 			end
 		end,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return true else return false end
+		end,
 	},
 	'snecko_potion', snecko_potion = {
 		effect = 'ssssssss',
@@ -556,6 +561,9 @@ local oddities = {
 					}))
 				end
 			end
+		end,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return true else return false end
 		end,
 	},
 	--[['vote_sticker', vote_sticker = {
@@ -1511,7 +1519,115 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return true end
+		end,
 	},
+	'stoneskin_potion', stoneskin_potion = {
+		config = {
+			extra = {
+				card_type = "m_stone",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return true end
+		end,
+	},
+	'midas_potion', midas_potion = {
+		config = {
+			extra = {
+				card_type = "m_gold",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return true end
+		end,
+	},
+	'stardust_potion', stardust_potion = {
+		config = {
+			extra = {
+				card_type = "m_ortalab_iou",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("ortalab")) and true end
+		end,
+	},
+	'teal_potion', teal_potion = {
+		config = {
+			extra = {
+				card_type = "m_mf_teal",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("MoreFluff")) and true end
+		end,
+	},
+	'brickskin_potion', brickskin_potion = {
+		config = {
+			extra = {
+				card_type = "m_akyrs_brick_card",
+				active = false,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		cost = 6,
+		rarity = 2,
+		loc_vars = enhancement_potion_lv,
+		use = activate_oddity,
+		can_use = function(self, card) return G.STATE == G.STATES.SELECTING_HAND and not card.ability.extra.active end,
+		keep_on_use = function(self, card)
+			return true
+		end,
+		calculate = enhancement_potion,
+		load_check = function()
+			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("aikoyorisshenanigans")) and true end
+		end,
+	},--]]
 }
 
 SMODS.Atlas{

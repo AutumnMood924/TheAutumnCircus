@@ -714,7 +714,7 @@ return {
 			j_thac_celestial_crossing = {
 				name = {
 					"Celestial Crossing",
-					"{C:autumn,s:0.5}Work in progress!",
+					"{C:autumn,s:0.5}Work In progress!",
 				},
 				text = {
 					"Played cards with {C:six_stars}Star{} suit",
@@ -1447,7 +1447,72 @@ return {
 					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
 					'{X:attention,C:white}ACTIVE:{} Each playing',
 					'card is treated as if it',
-					'is also a {C:attention}Steel Card{}',
+					'is also a {C:attention}#1#{}',
+					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_stoneskin_potion = {
+				name = {
+					"Stoneskin Potion",
+					"{C:autumn,s:0.5}Immunity to some statuses",
+				},
+				text = {
+					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+					'{X:attention,C:white}ACTIVE:{} Each playing',
+					'card is treated as if it',
+					'is also a {C:attention}#1#{}',
+					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_midas_potion = {
+				name = {
+					"Midas Potion",
+					"{C:autumn,s:0.5}Touch of Greed",
+				},
+				text = {
+					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+					'{X:attention,C:white}ACTIVE:{} Each playing',
+					'card is treated as if it',
+					'is also a {C:attention}#1#{}',
+					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_stardust_potion = {
+				name = {
+					"Stardust Potion",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+					'{X:attention,C:white}ACTIVE:{} Each playing',
+					'card is treated as if it',
+					'is also a {C:attention}#1#{}',
+					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_teal_potion = {
+				name = {
+					"Teal Potion",
+					"{C:autumn,s:0.5}Teal In Progress!",
+				},
+				text = {
+					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+					'{X:attention,C:white}ACTIVE:{} Each playing',
+					'card is treated as if it',
+					'is also a {C:attention}#1#{}',
+					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_brickskin_potion = {
+				name = {
+					"Brickskin Potion",
+					"{C:autumn,s:0.5}... what?",
+				},
+				text = {
+					'{C:attention}Use{} to {X:attention,C:white}ACTIVATE{}',
+					'{X:attention,C:white}ACTIVE:{} Each playing',
+					'card is treated as if it',
+					'is also a {C:attention}#1#{}',
 					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
 				},
 			},
