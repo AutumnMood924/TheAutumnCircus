@@ -1277,6 +1277,40 @@ return {
 					"them in your hand"
 				},
 			},
+			c_thac_corrupting_shard = {
+				name = {
+					"Corrupting Shard",
+					"{C:autumn,s:0.5}The light bends around it",
+					"{C:autumn,s:0.5}As if in fear",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Dark Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_sack_of_meat = {
+				name = {
+					"Sack of Meat",
+					"{C:autumn,s:0.5}Work In Progress",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Flesh Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_immaculate_prism = {
+				name = {
+					"Immaculate Prism",
+					"{C:edition,s:0.5}LIGHT{C:autumn,s:0.5} pours out endlessly",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Prismatic Cards{} and puts",
+					"them in your hand"
+				},
+			},
 			c_thac_pot_of_honey = {
 				name = {
 					"Pot of Honey",
@@ -1317,6 +1351,28 @@ return {
 				text = {
 					"Creates {C:attention}#1#{} random",
 					"{C:attention}Ash Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_unstable_concoction = {
+				name = {
+					"Unstable Concoction",
+					"{C:autumn,s:0.5}Work In Progress",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Volatile Cards{} and puts",
+					"them in your hand"
+				},
+			},
+			c_thac_vial_of_plasma = {
+				name = {
+					"Vial of Plasma",
+					"{C:autumn,s:0.5}A powerful substance...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Laser Cards{} and puts",
 					"them in your hand"
 				},
 			},
@@ -1389,6 +1445,26 @@ return {
 				text = {
 					"Creates {C:attention}#1#{} random",
 					"{C:attention}Abstract Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_fading_shadow = {
+				name = {
+					"Fading Shadow",
+					"{C:autumn,s:0.5}Dark wavering under oppressive light...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Dark Cards{} and","puts them in","your {C:attention}graveyard{}"
+				},
+			},
+			c_thac_viscera = {
+				name = {
+					"Viscera",
+					"{C:autumn,s:0.5}Gruesome...",
+				},
+				text = {
+					"Creates {C:attention}#1#{} random",
+					"{C:attention}Flesh Cards{} and","puts them in","your {C:attention}graveyard{}"
 				},
 			},
 			c_thac_gift_of_the_knight = {

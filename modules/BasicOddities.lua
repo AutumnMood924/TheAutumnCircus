@@ -989,7 +989,7 @@ local oddities = {
 		rarity = 3,
 		cost = 10,
 		loc_vars = function(_c, info_queue, card) 
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.m_cry_abstract
 			return {vars = { card.ability.extra.cards }}
 		end,
@@ -1009,6 +1009,103 @@ local oddities = {
 		end,
 		load_check = function()
 			if next(SMODS.find_mod("Cryptid")) then return true else return false end
+		end,
+	},
+	'corrupting_shard', corrupting_shard = {
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_dark}, G.hand)
+				cardmak:set_edition(poll_edition("corrupting_shard"))
+				cardmak:set_seal(SMODS.poll_seal{key = "corrupting_shard", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("entr")) then return true else return false end
+		end,
+	},
+	'sack_of_meat', sack_of_meat = {
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_flesh
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_flesh}, G.hand)
+				cardmak:set_edition(poll_edition("sack_of_meat"))
+				cardmak:set_seal(SMODS.poll_seal{key = "sack_of_meat", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("entr")) then return true else return false end
+		end,
+	},
+	'immaculate_prism', immaculate_prism = {
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 5, y = 2 },
+		pixel_size = { w = 71, h = 70 },
+		rarity = 3,
+		cost = 10,
+		loc_vars = function(_c, info_queue, card) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_prismatic
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_prismatic}, G.hand)
+				cardmak:set_edition(poll_edition("immaculate_prism"))
+				cardmak:set_seal(SMODS.poll_seal{key = "immaculate_prism", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("entr")) then return true else return false end
 		end,
 	},
 	'pot_of_honey', pot_of_honey = {
@@ -1137,6 +1234,70 @@ local oddities = {
 		end,
 		load_check = function()
 			if next(SMODS.find_mod("aikoyorisshenanigans")) then return true else return false end
+		end,
+	},
+	'unstable_concoction', unstable_concoction = {
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_payasaka_volatile
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_payasaka_volatile}, G.hand)
+				cardmak:set_edition(poll_edition("unstable_concoction"))
+				cardmak:set_seal(SMODS.poll_seal{key = "unstable_concoction", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("pta_saka")) then return true else return false end
+		end,
+	},
+	'vial_of_plasma', vial_of_plasma = {
+		config = {
+			extra = {
+				cards = 2
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_payasaka_laser
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			local cards = {}
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_payasaka_laser}, G.hand)
+				cardmak:set_edition(poll_edition("vial_of_plasma"))
+				cardmak:set_seal(SMODS.poll_seal{key = "vial_of_plasma", mod = 10})
+				cards[#cards+1] = cardmak
+			end
+			playing_card_joker_effects(cards)
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			if next(SMODS.find_mod("pta_saka")) then return true else return false end
 		end,
 	},
 	'scrap_metal', scrap_metal = {
@@ -1362,6 +1523,68 @@ local oddities = {
 		end,
 		load_check = function()
 			return next(SMODS.find_mod("Cryptid")) and true
+		end,
+	},
+	'fading_shadow', fading_shadow = {
+		config = {
+			extra = {
+				cards = 4
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_dark}, G.deck)
+				cardmak:set_edition(poll_edition("fading_shadow"), true, true)
+				cardmak:set_seal(SMODS.poll_seal{key = "fading_shadow", mod = 10}, true, true)
+				cardmak:move_to_graveyard()
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("entr")) and true
+		end,
+	},
+	'viscera', viscera = {
+		config = {
+			extra = {
+				cards = 4
+			}
+		},
+		pos = { x = 4, y = 2 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_flesh
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i=1,card.ability.extra.cards do
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_flesh}, G.deck)
+				cardmak:set_edition(poll_edition("viscera"), true, true)
+				cardmak:set_seal(SMODS.poll_seal{key = "viscera", mod = 10}, true, true)
+				cardmak:move_to_graveyard()
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("entr")) and true
 		end,
 	},
 	'gift_of_the_knight', gift_of_the_knight = {
