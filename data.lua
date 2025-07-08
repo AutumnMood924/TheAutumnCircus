@@ -258,12 +258,73 @@ data.buffer_register_funcs = {
 	end,
 }
 
+local THAC_JoyousSpring = next(SMODS.find_mod("JoyousSpring")) and {
+		["helpful_joker"] = { attribute = "LIGHT", monster_type = "Spellcaster", is_tuner = true },
+		["dutiful_joker"] = { attribute = "DARK", monster_type = "Spellcaster", is_tuner = true },
+		["frivolous_joker"] = { attribute = "LIGHT", monster_type = "Warrior" },
+		["groaning_joker"] = { attribute = "FIRE", monster_type = "Warrior", is_tuner = true },
+		["lord_of_the_meek"] = { attribute = "EARTH", monster_type = "Warrior" },
+		["mirage_joker"] = { attribute = "LIGHT", monster_type = "Illusion" },
+		["placeholder_joker"] = { attribute = "DARK", monster_type = "Warrior" },
+		["sans"] = { attribute = "DARK", monster_type = "Zombie" },
+		["null"] = { attribute = "DIVINE", monster_type = "Cyberse" },
+		["clown_posse"] = { attribute = "EARTH", monster_type = "Warrior" },
+		["knight_of_heart"] = { attribute = "DARK", monster_type = "Warrior" },
+		["witch_of_mind"] = { attribute = "DARK", monster_type = "Spellcaster" },
+		["lord_of_void"] = { attribute = "DIVINE", monster_type = "Fiend" },
+		["astront"] = { attribute = "LIGHT", monster_type = "Warrior" },
+		["torrential"] = { attribute = "WATER", monster_type = "Aqua" },
+		["landlord"] = { attribute = "DARK", monster_type = "Warrior" },
+		["the_csi"] = { attribute = "DARK", monster_type = "Warrior" },
+		["junk_collector"] = { attribute = "EARTH", monster_type = "Warrior" },
+		["exorcist"] = { attribute = "LIGHT", monster_type = "Spellcaster" },
+		["tombstone"] = { attribute = "DARK", monster_type = "Rock", is_tuner = true },
+		["gem_joker"] = { attribute = "LIGHT", monster_type = "Rock", is_tuner = true },
+		["discarded_vessel"] = { attribute = "DARK", monster_type = "Warrior", is_tuner = true },
+		["jokermancer"] = { attribute = "DARK", monster_type = "Spellcaster" },
+		["gravedigger"] = { attribute = "DARK", monster_type = "Warrior" },
+		["triplicate_soul"] = { attribute = "DARK", monster_type = "Fairy" },
+		["shutin"] = { attribute = "DARK", monster_type = "Warrior" },
+		["amalgamiter"] = { attribute = "DARK", monster_type = "Machine" },
+		["jack_of_all_trades"] = { attribute = "LIGHT", monster_type = "Warrior" },
+		["grave_legion"] = { attribute = "DARK", monster_type = "Zombie" },
+		["scrapper"] = { attribute = "EARTH", monster_type = "Machine" },
+		["hardlyquin"] = { attribute = "DARK", monster_type = "Warrior" },
+		["jet_worldmage"] = { attribute = "WATER", monster_type = "Spellcaster" },
+		["ruby_sunmage"] = { attribute = "FIRE", monster_type = "Spellcaster" },
+		["opal_moonmage"] = { attribute = "WIND", monster_type = "Spellcaster" },
+		["topaz_starmage"] = { attribute = "EARTH", monster_type = "Spellcaster" },
+		["amethyst_starmage"] = { attribute = "LIGHT", monster_type = "Spellcaster" },
+		["onyx_moonmage"] = { attribute = "DARK", monster_type = "Spellcaster" },
+		["coven"] = { attribute = "EARTH", monster_type = "Spellcaster" },
+		["cartowomancer"] = { attribute = "DARK", monster_type = "BeastWarrior" },
+		["rot_cartowomancer"] = { attribute = "DARK", monster_type = "BeastWarrior", is_tuner = true },
+	} or nil
+
 function data.buffer_insert(buffer, object, extra)
 	if extra then
 		for k, v in pairs(extra) do
 			if not object[k] then
 				object[k] = v
 			end
+		end
+	end
+	if THAC_JoyousSpring and THAC_JoyousSpring[object.key] then
+		local this_trait = THAC_JoyousSpring[object.key]
+		if not object.config then
+			object.config = {}
+		end
+		if type(object.config.extra) == "nil" then
+			object.config.extra = {}
+		end
+		if type(object.config.extra) == "table" and not object.config.extra.joyous_spring then
+			object.generate_ui = JoyousSpring.generate_info_ui
+			object.config.extra.joyous_spring = JoyousSpring.init_joy_table {
+				attribute = this_trait.attribute,
+				monster_type = this_trait.monster_type,
+				is_tuner = this_trait.is_tuner,
+				is_normal = this_trait.is_normal,
+			}
 		end
 	end
 	table.insert(data.BUFFERS[buffer], object)

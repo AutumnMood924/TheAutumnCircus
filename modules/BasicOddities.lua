@@ -462,9 +462,6 @@ local oddities = {
 				end
 			end
 		end,
-		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return true else return false end
-		end,
 	},
 	'snecko_potion', snecko_potion = {
 		effect = 'ssssssss',
@@ -561,9 +558,6 @@ local oddities = {
 					}))
 				end
 			end
-		end,
-		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return true else return false end
 		end,
 	},
 	--[['vote_sticker', vote_sticker = {
@@ -1078,12 +1072,12 @@ local oddities = {
 	'immaculate_prism', immaculate_prism = {
 		config = {
 			extra = {
-				cards = 2
+				cards = 3
 			}
 		},
 		pos = { x = 5, y = 2 },
 		pixel_size = { w = 71, h = 70 },
-		rarity = 3,
+		rarity = 4,
 		cost = 10,
 		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
@@ -1742,9 +1736,6 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return true end
-		end,
 	},
 	'stoneskin_potion', stoneskin_potion = {
 		config = {
@@ -1763,9 +1754,6 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return true end
-		end,
 	},
 	'midas_potion', midas_potion = {
 		config = {
@@ -1784,9 +1772,6 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return true end
-		end,
 	},
 	'stardust_potion', stardust_potion = {
 		config = {
@@ -1806,7 +1791,7 @@ local oddities = {
 		end,
 		calculate = enhancement_potion,
 		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("ortalab")) and true end
+			return next(SMODS.find_mod("ortalab")) and true
 		end,
 	},
 	'teal_potion', teal_potion = {
@@ -1827,7 +1812,7 @@ local oddities = {
 		end,
 		calculate = enhancement_potion,
 		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("MoreFluff")) and true end
+			return next(SMODS.find_mod("MoreFluff")) and true
 		end,
 	},
 	'brickskin_potion', brickskin_potion = {
@@ -1848,7 +1833,7 @@ local oddities = {
 		end,
 		calculate = enhancement_potion,
 		load_check = function()
-			if not next(SMODS.find_mod("Cryptid")) then return next(SMODS.find_mod("aikoyorisshenanigans")) and true end
+			return next(SMODS.find_mod("aikoyorisshenanigans")) and true
 		end,
 	},--]]
 }
