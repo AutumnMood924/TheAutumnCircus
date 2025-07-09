@@ -746,6 +746,9 @@ local oddities = {
 			if next(SMODS.find_mod("Cryptid")) then
 				info_queue[#info_queue+1] = G.P_CENTERS.m_cry_echo
 			end
+			if next(SMODS.find_mod("pta_saka")) then
+				info_queue[#info_queue+1] = G.P_CENTERS.m_payasaka_volatile
+			end
 			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_star
 			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_soulbound
 			return {vars = { card.ability.extra.cards }}

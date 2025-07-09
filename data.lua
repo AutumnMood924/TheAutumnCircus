@@ -287,6 +287,7 @@ local THAC_JoyousSpring = next(SMODS.find_mod("JoyousSpring")) and {
 		["shutin"] = { attribute = "DARK", monster_type = "Warrior" },
 		["amalgamiter"] = { attribute = "DARK", monster_type = "Machine" },
 		["jack_of_all_trades"] = { attribute = "LIGHT", monster_type = "Warrior" },
+		["lunatic_cultist"] = { attribute = "DARK", monster_type = "Spellcaster" },
 		["grave_legion"] = { attribute = "DARK", monster_type = "Zombie" },
 		["scrapper"] = { attribute = "EARTH", monster_type = "Machine" },
 		["hardlyquin"] = { attribute = "DARK", monster_type = "Warrior" },
@@ -309,7 +310,7 @@ function data.buffer_insert(buffer, object, extra)
 			end
 		end
 	end
-	if THAC_JoyousSpring and THAC_JoyousSpring[object.key] then
+	if THAC_JoyousSpring and THAC_JoyousSpring[object.key] and object.set == "Joker" then
 		local this_trait = THAC_JoyousSpring[object.key]
 		if not object.config then
 			object.config = {}

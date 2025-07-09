@@ -2477,6 +2477,34 @@ local jokers = {
             return next(SMODS.find_mod("SixSuits"))
         end
     },
+    'lunatic_cultist', lunatic_cultist = {
+        config = {extra = { }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_mf_cult
+            return {vars = { }}
+        end,
+        calculate = function(self, card, context)
+            if context.check_enhancement then
+                if context.other_card.area == G.play and
+                    (context.other_card.config.center.key == "m_wild" or context.other_card.config.center.any_suit or 
+                    (context.other_card.base.suit == "six_Moons" and not (context.other_card.config.center.key == "m_stone" or context.other_card.config.center.no_suit))) then
+                    return {
+                        m_mf_cult = true,
+                    }
+                end
+            end
+        end,
+        load_check = function()
+            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("MoreFluff"))
+        end
+    },
     --[['paradoxic_prophecy', paradoxic_prophecy = {
         name = "Paradoxic Prophecy",
 		subtitle = "Work In Progress!",

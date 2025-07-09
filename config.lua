@@ -16,6 +16,7 @@ local config = {
 		editiontomeetya = true,
 		hamspect = true,
 		totallyrealzodiac = true,
+		bossmyjokers = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

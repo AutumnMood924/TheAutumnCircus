@@ -744,6 +744,17 @@ return {
 					"also {C:attention}Bone Cards{}",
 				},
 			},
+			j_thac_lunatic_cultist = {
+				name = {
+					"Lunar Cult",
+					"{C:autumn,s:0.5}Oh I guess Moon gets two also",
+				},
+				text = {
+					"Played cards with {C:six_moon}Moon{} suit",
+					"are treated as if they are",
+					"also {C:attention}Cult Cards{}",
+				},
+			},
 			j_thac_grave_legion = {
 				name = {
 					"Grave Legion",
@@ -946,6 +957,16 @@ return {
 					"Rotate {C:tarot}45 Degree Rotated Tarot{}",
 					"cards to {C:tarot}Tarot{} cards and vice versa",
 					"by {C:green}petting them {C:inactive}({C:attention}Direction{C:inactive} matters)",
+				},
+			},
+			j_thac_jera = {
+				name = {
+					"Jera",
+					--"{C:autumn,s:0.5}(Not the Grab Bag one)",
+				},
+				text = {
+					"{C:green}#1# in #2#{} chance to",
+					"copy played cards",
 				},
 			},
 		},

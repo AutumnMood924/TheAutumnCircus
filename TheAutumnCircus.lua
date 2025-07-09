@@ -202,6 +202,11 @@ if TheAutumnCircus.config.enabled_modules.hamspect then
 	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
 end
 
+
+if TheAutumnCircus.config.enabled_modules.bossmyjokers and next(SMODS.find_mod("GrabBag")) then
+	TheAutumnCircus.BMJ = NFS.load(TheAutumnCircus.mod.path.."modules/BossMyJokers.lua")()
+end
+
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
 
 -- Run INIT functions
