@@ -1839,6 +1839,66 @@ local oddities = {
 			return next(SMODS.find_mod("aikoyorisshenanigans")) and true
 		end,
 	},--]]
+	'experience_splitter', experience_splitter = {
+		config = {
+			extra = {
+				per_entr_level = 10,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 3,
+		cost = 7,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			--info_queue[#info_queue+1] = G.P_CENTERS.m_akyrs_brick_card
+			return {vars = {  }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			-- level up each of each suit's levels to the highest level among that suit's levels
+			
+			for _, suit in ipairs(SMODS.Suit.obj_buffer) do
+				local target = 0
+				
+				-- AMM suit level
+				target = math.max(target, G.GAME.amm_data.suit_levels[suit].level)
+				
+				-- Entropy suit level
+				if type(Entropy) == "table" and G.GAME.SuitBuffs and G.GAME.SuitBuffs[suit] and G.GAME.SuitBuffs[suit].level and G.GAME.SuitBuffs[suit].level > target then
+					target = G.GAME.SuitBuffs[suit].level
+				end
+				
+				-- TARGET DECIDED
+				
+				-- AMM suit level
+				if G.GAME.amm_data.suit_levels[suit].level < target then
+					AMM.level_up_suit(used_tarot, suit, nil, target - G.GAME.amm_data.suit_levels[suit].level)
+				end
+				
+				-- Entropy suit level
+				if type(Entropy) == "table" then
+					if not G.GAME.SuitBuffs then G.GAME.SuitBuffs = {} end
+					if not G.GAME.SuitBuffs[suit] then
+						G.GAME.SuitBuffs[suit] = {level = 1, chips = 0}
+					end
+					if not G.GAME.SuitBuffs[suit].chips then G.GAME.SuitBuffs[suit].chips = 0 end
+					if not G.GAME.SuitBuffs[suit].level then G.GAME.SuitBuffs[suit].level = 1 end
+					if G.GAME.SuitBuffs[suit].level < target then
+						Entropy.LevelSuit(suit, used_tarot, target - G.GAME.SuitBuffs[suit].level, card.ability.extra.per_entr_level)
+					end
+				end
+				
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		load_check = function()
+			return (
+				next(SMODS.find_mod("entr"))
+			) and true
+		end,
+	},
 }
 
 SMODS.Atlas{

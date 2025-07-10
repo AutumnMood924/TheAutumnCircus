@@ -30,6 +30,7 @@ akai - Estradiol oddity art
 Jevonn - Planet S, H, C, D art  
 Fritz Lancastor - Some hand planet art
 Astro - Cartowomancer art
+lord-ruby - Entropy code which was referenced heavily for various mechanics relating to its crossmod as well as that for Cryptid
   
 Eremel, Gappie, Crimson Heart, and the rest of Ortalab's crew - Ortalab :)  
   

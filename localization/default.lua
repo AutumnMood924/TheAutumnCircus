@@ -1047,6 +1047,56 @@ return {
 				},
 			},
 		},
+		Fraud = {
+		},
+		Star = {
+			c_thac_rev_planet_s = {
+				name = {
+					"Star S",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8,C:gold}#2#{S:0.8}){} Level up",
+					"{V:2}#3#",
+					"{C:gold}+#4#{} Ascension Power"
+				}
+			},
+			c_thac_rev_planet_h = {
+				name = {
+					"Star H",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8,C:gold}#2#{S:0.8}){} Level up",
+					"{V:2}#3#",
+					"{C:gold}+#4#{} Ascension Power"
+				}
+			},
+			c_thac_rev_planet_c = {
+				name = {
+					"Star C",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8,C:gold}#2#{S:0.8}){} Level up",
+					"{V:2}#3#",
+					"{C:gold}+#4#{} Ascension Power"
+				}
+			},
+			c_thac_rev_planet_d = {
+				name = {
+					"Star D",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8,C:gold}#2#{S:0.8}){} Level up",
+					"{V:2}#3#",
+					"{C:gold}+#4#{} Ascension Power"
+				}
+			},
+		},
+		Omen = {
+		},
 		Oddity = {
 			c_thac_one_jollar = {
 				name = "$1",
@@ -1611,6 +1661,17 @@ return {
 					'card is treated as if it',
 					'is also a {C:attention}#1#{}',
 					'{C:red,E:1}self destructs{} after {C:blue}Hand{}',
+				},
+			},
+			c_thac_experience_splitter = {
+				name = {
+					"Experience Splitter",
+					"{C:autumn,s:0.5}Not to be confused with #&$ !@%\\",
+				},
+				text = {
+					"Level up each of each {C:attention}suit's",
+					"{C:attention}levels{} to the {C:knightofheart}highest level",
+					"among that {C:attention}suit's levels",
 				},
 			},
 		},

@@ -17,6 +17,7 @@ local config = {
 		hamspect = true,
 		totallyrealzodiac = true,
 		bossmyjokers = true,
+		selbamusnocerom = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

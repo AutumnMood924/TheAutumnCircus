@@ -63,7 +63,7 @@ local tarots = {
 	'universe', universe = {
 		name = "The Universe",
 		text = {
-			'Randomly enhances {C:attention}#1#{}',
+			'Randomly enhances',
 			'selected cards',
 			'{C:inactive}Having seen the World\'s vastness,{}',
 			'{C:inactive}the Fool saw endless possibility{}',
@@ -71,7 +71,7 @@ local tarots = {
 		boxes = { 2, 2, },
 		effect = 'Random Enhancement',
 		config = {
-			max_highlighted = 3,
+			max_highlighted = 999999,
 		},
 		pos = { x = 0, y = 0 },
 		loc_vars = function(_c,info_queue,card)
@@ -103,7 +103,7 @@ local tarots = {
 		name = "Void",
 		text = {
 			'{C:attention}Removes{} each enhancement from',
-			'up to {C:attention}#1#{} cards and gain {C:money}$#2#{} for',
+			'each selected card and gain {C:money}$#2#{} for',
 			'each {C:attention}removed{} enhancement',
 			'{C:inactive}However, the Fool was unable to handle{}',
 			'{C:inactive}this freedom, and fell to aimless despair{}',
@@ -111,7 +111,7 @@ local tarots = {
 		boxes = { 3, 2, },
 		effect = 'Remove Enhancement',
 		config = {
-			max_highlighted = 5,
+			max_highlighted = 9999999,
 			extra = {
 				dollars = 6,
 			},
