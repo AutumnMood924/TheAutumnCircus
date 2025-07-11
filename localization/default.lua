@@ -1674,6 +1674,18 @@ return {
 					"among that {C:attention}suit's levels",
 				},
 			},
+			c_thac_chaos_harness = {
+				name = {
+					"Chaos Harness",
+					"{C:autumn,s:0.5}Totally not contrived",
+				},
+				text = {
+					"Each card held in hand gains",
+					"{C:purple}+#1#%{} Balance permanently for",
+					"each {C:attention}Light{} or {C:attention}Dark{} Card",
+					"in your {C:attention}graveyard{} {C:inactive}[#2#]",
+				},
+			},
 		},
 		Voucher = {
 			v_thac_spectral_merchant = {

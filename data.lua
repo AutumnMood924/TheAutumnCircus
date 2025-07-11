@@ -258,7 +258,7 @@ data.buffer_register_funcs = {
 	end,
 }
 
-local THAC_JoyousSpring = next(SMODS.find_mod("JoyousSpring")) and {
+local THAC_JoyousSpring = (next(SMODS.find_mod("JoyousSpring")) and AMM.mod.config.joyousspringify) and {
 		["helpful_joker"] = { attribute = "LIGHT", monster_type = "Spellcaster", is_tuner = true },
 		["dutiful_joker"] = { attribute = "DARK", monster_type = "Spellcaster", is_tuner = true },
 		["frivolous_joker"] = { attribute = "LIGHT", monster_type = "Warrior" },

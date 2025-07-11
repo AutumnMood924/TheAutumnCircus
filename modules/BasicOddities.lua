@@ -1899,6 +1899,61 @@ local oddities = {
 			) and true
 		end,
 	},
+	'chaos_harness', chaos_harness = {
+		config = {
+			extra = {
+				balance = 0.01,
+			},
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 2,
+		cost = 5,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			
+			local count = AMM.api.graveyard.filter_count(function(v)
+				return (SMODS.has_enhancement(v, "m_cry_light") or SMODS.has_enhancement(v, "m_entr_dark")) and true
+			end)
+			info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+			return {vars = { card.ability.extra.balance * 100, count or 0 }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			
+			-- Each card held in hand gains #1#% Balance permanently for each Light Card or Dark Card in your graveyard
+			
+			local count = AMM.api.graveyard.filter_count(function(v)
+				return (SMODS.has_enhancement(v, "m_cry_light") or SMODS.has_enhancement(v, "m_entr_dark")) and true
+			end)
+			
+			if count > 1 then -- possible via revive effects following collecting this
+				for i=1, #G.hand.cards do
+					G.hand.cards[i].ability.perma_balance = G.hand.cards[i].ability.perma_balance or 0
+					G.hand.cards[i].ability.perma_balance = G.hand.cards[i].ability.perma_balance + (card.ability.extra.balance * count)
+					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
+						card_eval_status_text(G.hand.cards[i], 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.PURPLE, instant = true})
+					return true end}))
+				end
+			end
+			
+		end,
+		can_use = function(self, card, area, copier)
+			return G.hand and #G.hand.cards > 0
+		end,
+		in_pool = function(self)
+			-- check for at least one Light Card or Dark Card in your graveyard
+			return AMM.api.graveyard.filter_count(function(v)
+				return (SMODS.has_enhancement(v, "m_cry_light") or SMODS.has_enhancement(v, "m_entr_dark")) and true
+			end) > 0
+		end,
+		load_check = function()
+			return (
+				next(SMODS.find_mod("pta_saka")) and next(SMODS.find_mod("Cryptid")) and next(SMODS.find_mod("entr"))
+			) and true
+		end,
+	},
 }
 
 SMODS.Atlas{
