@@ -38,11 +38,37 @@ local blinds = {
 			return this[1].." in "..this[2].." chance to copy played cards"
 		end,
 	},
+	"thac", thac = {
+		pos = { x = 0, y = 0 },
+		boss = {showdown = true},
+		boss_colour = HEX('f7dc42'),
+		dollars = 8,
+		mult = 3,
+		atlas = "ShowdownThrowdown",
+		calculate = function(self, blind, context)
+			if not blind.disabled then
+				-- checking if a card has a base value is to verify it is a playing card
+				if context.debuff_card and context.debuff_card.base.value then
+					if AMM.api.graveyard.count_rank(context.debuff_card.base.value) > 0 then
+						return { debuff = true }
+					end
+				end
+			end
+		end,
+	},
 }
 
 SMODS.Atlas{
 	key = "BlindToAllButTheVideo",
 	path = "BlindToAllButTheVideo.png",
+	px = 34, 
+	py = 34,
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 21
+}
+SMODS.Atlas{
+	key = "ShowdownThrowdown",
+	path = "ShowdownThrowdown.png",
 	px = 34, 
 	py = 34,
 	atlas_table = "ANIMATION_ATLAS",

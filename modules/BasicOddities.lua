@@ -1954,6 +1954,42 @@ local oddities = {
 			) and true
 		end,
 	},
+	'yellow_amulet', yellow_amulet = {
+		config = {
+			extra = {
+				
+			},
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 1,
+		cost = 3,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'entr_yellow_sign', set = 'Other'}
+			--info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+			return {vars = {  }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			
+			for i=1, #G.hand.cards do
+				local this_card = G.hand.cards[i]
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function()
+					card_eval_status_text(this_card, 'extra', nil, nil, nil, {message = ' ', colour = G.C.GOLD, instant = true})
+					this_card.ability.entr_yellow_sign = true
+				return true end}))
+			end
+			
+		end,
+		can_use = function(self, card, area, copier)
+			return G.GAME.blind.in_blind
+		end,
+		load_check = function()
+			return (
+				next(SMODS.find_mod("entr"))
+			) and true
+		end,
+	},
 }
 
 SMODS.Atlas{

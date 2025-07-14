@@ -1686,6 +1686,16 @@ return {
 					"in your {C:attention}graveyard{} {C:inactive}[#2#]",
 				},
 			},
+			c_thac_yellow_amulet = {
+				name = {
+					"Yellow Amulet",
+					"{C:autumn,s:0.5}Engraved with a strange symbol",
+				},
+				text = {
+					"Gives each card held in",
+					"hand a {C:diamonds}Yellow Sign{} sicker",
+				},
+			},
 		},
 		Voucher = {
 			v_thac_spectral_merchant = {
@@ -2145,6 +2155,14 @@ return {
 				name = "Jera",
 				text = {
 					"1 in 4 chance to","copy played cards",
+				},
+			},
+			bl_thac_thac = {
+				name = "Þe Autumn Circus",
+				text = {
+					"Debuffs each playing card",
+					"with a card of matching",
+					"rank in your graveyard"
 				},
 			},
 		},
