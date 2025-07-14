@@ -30,13 +30,6 @@ local function stampcardupdate(_, self, dt)
 	end
 end
 
-local suitplanettext = {
-	"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
-	"{V:2}#2#",
-	"{C:mult}+#3#{} Mult and",
-	"{C:chips}+#4#{} chips"
-}
-
 local suitplanetloc_vars = function(_c, info_queue, card)
 	local cfg = (card and card.ability) or _c.config
 	return {vars = {
@@ -61,14 +54,6 @@ end
 
 local tarots = {
 	'universe', universe = {
-		name = "The Universe",
-		text = {
-			'Randomly enhances',
-			'selected cards',
-			'{C:inactive}Having seen the World\'s vastness,{}',
-			'{C:inactive}the Fool saw endless possibility{}',
-		},
-		boxes = { 2, 2, },
 		effect = 'Random Enhancement',
 		config = {
 			max_highlighted = 999999,
@@ -100,15 +85,6 @@ local tarots = {
 		end,
 	},
 	'void', void = {
-		name = "Void",
-		text = {
-			'{C:attention}Removes{} each enhancement from',
-			'each selected card and gain {C:money}$#2#{} for',
-			'each {C:attention}removed{} enhancement',
-			'{C:inactive}However, the Fool was unable to handle{}',
-			'{C:inactive}this freedom, and fell to aimless despair{}',
-		},
-		boxes = { 3, 2, },
 		effect = 'Remove Enhancement',
 		config = {
 			max_highlighted = 9999999,
@@ -148,16 +124,6 @@ local tarots = {
 		end,
 	},
 	'happy_squirrel', happy_squirrel = {
-		name = "The Happy Squirrel",
-		text = {
-			"Create {C:attention}#2#{} copy of",
-			"{C:attention}#1#{} selected card",
-			"without an enhancement",
-			"in your hand",
-			'{C:inactive}Seeking meaning once again, the Fool{}',
-			'{C:inactive}looked to nature\'s simplicity{}',
-		},
-		boxes = { 4, 2, },
 		effect = 'Copy Unenhanced',
 		config = {
 			--max_highlighted = 1,
@@ -200,13 +166,6 @@ local tarots = {
 		can_use = function(_, self) return #G.hand.highlighted == 1 and G.hand.highlighted[1].ability.set == "Default" end
 	},
 	'artist', artist = {
-		name = "The Artist",
-		text = {
-			'Select {C:attention}#1#{} card,',
-			'apply its {C:attention}enhancement{}, {C:dark_edition}edition{},',
-			'and {C:purple}seal{} to {C:attention}#2#{} {C:green}random{}',
-			'cards in your hand'
-		},
 		effect = 'A PAINTING OF THE SOUL',
 		config = {
 			max_highlighted = 1,
@@ -263,12 +222,6 @@ local tarots = {
 		end,
 	},
 	'veteran', veteran = {
-		name = "The Veteran",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		},
 		effect = 'vet',
 		config = {
 			mod_conv = "m_thac_star",
@@ -291,12 +244,6 @@ local tarots = {
 		end,
 	},
 	'drunkard', drunkard = {
-		name = "The Drunkard",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		},
 		effect = 'dunk',
 		config = {
 			mod_conv = "m_thac_dirt",
@@ -319,11 +266,6 @@ local tarots = {
 		end,
 	},
 	'juggler', juggler = {
-		name = "The Juggler",
-		subtitle = "Work In Progress!",
-		text = {
-			'{C:inactive}Not Yet Implemented',
-		},
 		effect = 'jugs',
 		config = {
 		},
@@ -334,13 +276,6 @@ local tarots = {
 		end,
 	},
 	'grass', grass = {
-		name = "The Grass",
-		subtitle = "Work In Progress!",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		},
 		effect = 'grass',
 		config = {
 			mod_conv = "m_thac_grass",
@@ -362,13 +297,6 @@ local tarots = {
 		end,
 	},
 	'bone', bone = {
-		name = "The Bone",
-		subtitle = "Work In Progress!",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		},
 		effect = 'bone',
 		config = {
 			mod_conv = "m_thac_bone",
@@ -390,13 +318,6 @@ local tarots = {
 		end,
 	},
 	'collector', collector = {
-		name = "The Collector",
-		subtitle = "Work In Progress!",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected card to",
-			"a {C:attention}#2#"
-		},
 		effect = 'jewel',
 		config = {
 			mod_conv = "m_thac_jewel",
@@ -418,13 +339,6 @@ local tarots = {
 		end,
 	},
 	'cycle', cycle = {
-		name = "The Cycle",
-		subtitle = "Work In Progress!",
-		text = {
-			"Enhances {C:attention}#1#",
-			"selected cards to",
-			"{C:attention}#2#s"
-		},
 		effect = 'soulbound',
 		config = {
 			mod_conv = "m_thac_soulbound",
@@ -446,16 +360,6 @@ local tarots = {
 		end,
 	},
 	'joker', joker = {
-		name = "The Joker",
-		subtitle = "Our gracious host!",
-		text = {
-			'{C:mult}+#1#{} Mult while in your',
-			'{C:attention}consumable{} area',
-			'{C:inactive}Hee hee, hoo hoo!{}',
-			'{C:inactive}Looks like the joke\'s{}',
-			'{C:dark_edition,E:2,s:1.75}ON YOU!{}',
-		},
-		boxes = { 2, 3, },
 		effect = 'NOTHING',
 		config = {
 			mult = 4
@@ -548,11 +452,6 @@ local tarots = {
 
 local planets = {
 	'comet', comet = {
-		name = "Comet",
-		text = {
-			"Upgrades a {C:green}random{}",
-			"poker hand by {C:attention}#1#{} levels",
-		},
 		effect = 'Random Hand Upgrade',
 		config = {strength = 2},
 		pos = { x = 0, y = 2 },
@@ -596,13 +495,6 @@ local planets = {
 		end,
 	},
 	'meteor', meteor = {
-		name = "Meteor",
-		text = {
-			"Upgrades a {C:green}random{}",
-			"poker hand by {C:attention}#1#{} levels,",
-			"but {C:attention}decreases{} a different",
-			"{C:green}random{} poker hand's level by #2#"
-		},
 		effect = 'Random Hand Upgrade And Downgrade',
 		config = {strength = 3, weakness = 1},
 		pos = { x = 1, y = 2 },
@@ -663,13 +555,6 @@ local planets = {
 		end,
 	},
 	'satellite', satellite = {
-		name = "Satellite",
-		subtitle = "(Not the Joker One)",
-		text = {
-            "Creates up to {C:attention}2",
-            "random {C:planet}Planet{} cards",
-            "{C:inactive}(Must have room)"
-        },
 		effect = 'Round Bonus',
 		config = {planets = 2},
 		pos = { x = 2, y = 2 },
@@ -701,14 +586,6 @@ local planets = {
 		end,
 	},
 	'moon', moon = {
-		name = "Moon",
-		subtitle = "Moon of Earth",
-		text = {
-            "Creates #1# random",
-            "{C:tarot}Tarot{}, {C:planet}Planet{}, or",
-			"{C:spectral}Spectral{} card",
-            "{C:inactive}(Must have room)"
-        },
 		effect = 'Random Round Bonus',
 		config = {cards = 1},
 		pos = { x = 3, y = 2 },
@@ -745,12 +622,6 @@ local planets = {
 		end
 	},
 	'station', station = {
-		name = "Space Station",
-		text = {
-			"Upgrades your most played",
-			"poker hand by {C:attention}#1#{} level",
-			"{C:inactive}Currently: {C:attention}#2#{}",
-		},
 		effect = 'Favorite Hand Upgrade',
 		config = {strength = 1},
 		pos = { x = 4, y = 2 },
@@ -791,15 +662,6 @@ local planets = {
 		end,
 	},
 	'dysnomia', dysnomia = {
-		name = "Dysnomia",
-		subtitle = "Moon of Eris",
-		text = {
-			"{C:green}Shuffle{} your poker hands' levels",
-			"{C:green}#1# in #2#{} chance to {C:green}randomly{}",
-			"{C:attention}upgrade{} or {C:attention}downgrade{}",
-			"each shuffled hand",
-		},
-		boxes = { 1, 3, },
 		effect = 'The D8',
 		config = { extra = {odds = 2} },
 		pos = { x = 5, y = 2 },
@@ -882,9 +744,6 @@ local planets = {
 		end,
 	},
 	'planet_s', planet_s = {
-		name = "Planet S",
-		subtitle = "Spades in Spades",
-		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Spades"},
 		pos = { x = 6, y = 2 },
@@ -911,9 +770,6 @@ local planets = {
         end,
 	},
 	'planet_h', planet_h = {
-		name = "Planet H",
-		subtitle = "Hearty Hearts",
-		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Hearts"},
 		pos = { x = 7, y = 2 },
@@ -940,9 +796,6 @@ local planets = {
         end,
 	},
 	'planet_c', planet_c = {
-		name = "Planet C",
-		subtitle = "Club's Clubbin'",
-		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "Clubs"},
 		pos = { x = 8, y = 2 },
@@ -998,9 +851,6 @@ local planets = {
         end,
 	},
 	'shooting_star', shooting_star = {
-		name = "Shooting Star",
-		subtitle = "Look out it's got a gun!",
-		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "six_Stars"},
 		pos = { x = 4, y = 3 },
@@ -1030,9 +880,6 @@ local planets = {
         end,
 	},
 	'chill_moon', chill_moon = {
-		name = "Chill Moon",
-		subtitle = "That moon has sunglasses on?",
-		text = suitplanettext,
 		effect = 'Suit Level Upgrade',
 		config = {level_suit = "six_Moons"},
 		pos = { x = 5, y = 3 },

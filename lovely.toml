@@ -241,3 +241,21 @@ break
 '''
 match_indent = true
 overwrite = false
+
+# 0-ERROR - Patch in additional PrestigeValues
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "PrestigeValues = {"
+position = "after"
+payload = '''
+	xchips_extra = 0,
+	emult_extra = 0,
+	echips_extra = 0,
+	ascension_extra = 0,
+	numerator_extra = 0,
+	denominator_extra = 0,
+	dollar_eor = 0,
+'''
+match_indent = true
+overwrite = false

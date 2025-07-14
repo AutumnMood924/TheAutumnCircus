@@ -18,6 +18,7 @@ local config = {
 		totallyrealzodiac = true,
 		bossmyjokers = true,
 		selbamusnocerom = true,
+		threeerror = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

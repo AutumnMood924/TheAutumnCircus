@@ -11,6 +11,18 @@ return {
 			k_thac_cawcaw = "CAW CAW!!!!",
 			k_thac_active = "ACTIVE!",
 			k_thac_owo = "owo",
+			
+			xchips_extra = "Bonus XChips",
+			emult_extra = "Bonus ^Mult",
+			echips_extra = "Bonus ^Chips",
+			ascension_extra = "Bonus Ascension Power",
+			numerator_extra = "Numerator Modifier",
+			denominator_extra = "Denominator Modifier",
+			
+			k_c_thac_prestige_ante = "Prestige: Ante",
+			k_c_thac_prestige_hand = "Prestige: Hand",
+			k_c_thac_prestige_discard = "Prestige: Discard",
+			k_c_thac_prestige_ascension = "Prestige: Ascension",
 		},
 		labels = {
 			thac_breath_aspect = "Breath",
@@ -971,8 +983,265 @@ return {
 			},
 		},
 		Tarot = {
+			c_thac_universe = {
+				name = "The Universe",
+				text = {
+					'Randomly enhances',
+					'selected cards',
+					'{C:inactive}Having seen the World\'s vastness,{}',
+					'{C:inactive}the Fool saw endless possibility{}',
+				},
+				boxes = { 2, 2, },
+			},
+			c_thac_void = {
+				name = "Void",
+				text = {
+					'{C:attention}Removes{} each enhancement from',
+					'each selected card and gain {C:money}$#2#{} for',
+					'each {C:attention}removed{} enhancement',
+					'{C:inactive}However, the Fool was unable to handle{}',
+					'{C:inactive}this freedom, and fell to aimless despair{}',
+				},
+				boxes = { 3, 2, },
+			},
+			c_thac_happy_squirrel = {
+				name = "The Happy Squirrel",
+				text = {
+					"Create {C:attention}#2#{} copy of",
+					"{C:attention}#1#{} selected card",
+					"without an enhancement",
+					"in your hand",
+					'{C:inactive}Seeking meaning once again, the Fool{}',
+					'{C:inactive}looked to nature\'s simplicity{}',
+				},
+				boxes = { 4, 2, },
+			},
+			c_thac_artist = {
+				name = "The Artist",
+				text = {
+					'Select {C:attention}#1#{} card,',
+					'apply its {C:attention}enhancement{}, {C:dark_edition}edition{},',
+					'and {C:purple}seal{} to {C:attention}#2#{} {C:green}random{}',
+					'cards in your hand'
+				},
+			},
+			c_thac_veteran = {
+				name = "The Veteran",
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_drunkard = {
+				name = "The Drunkard",
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_juggler = {
+				name = {
+					"The Juggler",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					'{C:inactive}Not Yet Implemented',
+				},
+			},
+			c_thac_grass = {
+				name = {
+					"The Grass",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_bone = {
+				name = {
+					"The Bone",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_collector = {
+				name = {
+					"The Collector",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected card to",
+					"a {C:attention}#2#"
+				},
+			},
+			c_thac_cycle = {
+				name = {
+					"The Cycle",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_joker = {
+				name = {
+					"The Joker",
+					"{C:autumn,s:0.5}Our gracious host!",
+				},
+				text = {
+					'{C:mult}+#1#{} Mult while in your',
+					'{C:attention}consumable{} area',
+					'{C:inactive}Hee hee, hoo hoo!{}',
+					'{C:inactive}Looks like the joke\'s{}',
+					'{C:dark_edition,E:2,s:1.75}ON YOU!{}',
+				},
+				boxes = { 2, 3, },
+			},
 		},
 		Planet = {
+			c_thac_comet = {
+				name = "Comet",
+				text = {
+					"Upgrades a {C:green}random{}",
+					"poker hand by {C:attention}#1#{} levels",
+				},
+			},
+			c_thac_meteor = {
+				name = "Meteor",
+				text = {
+					"Upgrades a {C:green}random{}",
+					"poker hand by {C:attention}#1#{} levels,",
+					"but {C:attention}decreases{} a different",
+					"{C:green}random{} poker hand's level by #2#"
+				},
+			},
+			c_thac_satellite = {
+				name = {
+					"Satellite",
+					"{C:autumn,s:0.5}(Not the Joker One)",
+				},
+				text = {
+					"Creates up to {C:attention}2",
+					"random {C:planet}Planet{} cards",
+					"{C:inactive}(Must have room)"
+				},
+			},
+			c_thac_moon = {
+				name = {
+					"Moon",
+					"{C:autumn,s:0.5}Moon of Earth",
+				},
+				text = {
+					"Creates #1# random",
+					"{C:tarot}Tarot{}, {C:planet}Planet{}, or",
+					"{C:spectral}Spectral{} card",
+					"{C:inactive}(Must have room)"
+				},
+			},
+			c_thac_station = {
+				name = "Space Station",
+				text = {
+					"Upgrades your most played",
+					"poker hand by {C:attention}#1#{} level",
+					"{C:inactive}Currently: {C:attention}#2#{}",
+				},
+			},
+			c_thac_dysnomia = {
+				name = {
+					"Dysnomia",
+					"{C:autumn,s:0.5}Moon of Eris",
+				},
+				text = {
+					"{C:green}Shuffle{} your poker hands' levels",
+					"{C:green}#1# in #2#{} chance to {C:green}randomly{}",
+					"{C:attention}upgrade{} or {C:attention}downgrade{}",
+					"each shuffled hand",
+				},
+				boxes = { 1, 3, },
+			},
+			c_thac_planet_s = {
+				name = {
+					"{C:spades}Planet S",
+					"{C:autumn,s:0.5}Spades in Spades",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
+			c_thac_planet_h = {
+				name = {
+					"{C:hearts}Planet H",
+					"{C:autumn,s:0.5}Hearty Hearts",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
+			c_thac_planet_c = {
+				name = {
+					"{C:clubs}Planet C",
+					"{C:autumn,s:0.5}Club's Clubbin'",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
+			c_thac_planet_d = {
+				name = {
+					"{C:diamonds}Planet D",
+					"{C:autumn,s:0.5}Diamonds twice (funny somehow?)",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
+			c_thac_shooting_star = {
+				name = {
+					"{C:six_stars}Shooting Star",
+					"{C:autumn,s:0.5}Look out it's got a gun!",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
+			c_thac_chill_moon = {
+				name = {
+					"{C:six_moons}Chill Moon",
+					"{C:autumn,s:0.5}That moon has sunglasses on?",
+				},
+				text = {
+					"{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
+					"{V:2}#2#",
+					"{C:mult}+#3#{} Mult and",
+					"{C:chips}+#4#{} chips"
+				},
+			},
 		},
 		Spectral = {
 		},
@@ -1666,7 +1935,7 @@ return {
 			c_thac_experience_splitter = {
 				name = {
 					"Experience Splitter",
-					"{C:autumn,s:0.5}Not to be confused with #&$ !@%\\",
+					"{C:autumn,s:0.5}Not to be confused with \\#&$ !@%\")",
 				},
 				text = {
 					"Level up each of each {C:attention}suit's",
@@ -1694,6 +1963,161 @@ return {
 				text = {
 					"Gives each card held in",
 					"hand a {C:diamonds}Yellow Sign{} sicker",
+				},
+			},
+		},
+		Prestige = {
+			c_thac_prestige_xchips = {
+				name = {
+					"Prestige: XChips",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All future {X:chips,C:white}XChips{} triggers",
+					"give {X:chips,C:white}X#1#{} more {X:chips,C:white}XChips{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_emult = {
+				name = {
+					"Prestige: ^Mult",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All future {X:dark_edition,C:white}^Mult{} triggers",
+					"give {X:dark_edition,C:white}^#1#{} more {X:dark_edition,C:white}^Mult{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_echips = {
+				name = {
+					"Prestige: ^Chips",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All future {X:dark_edition,C:white}^Chips{} triggers",
+					"give {X:dark_edition,C:white}^#1#{} more {X:dark_edition,C:white}^Chips{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_ascension = {
+				name = {
+					"Prestige: Ascension",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All future {C:gold}Ascension Power{} triggers",
+					"give {C:gold}+#1#{} more {C:gold}Ascension Power{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_ascension_cd = {
+				name = {
+					"Prestige: Ascension",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_numerator = {
+				name = {
+					"Prestige: Numerator",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All listed {C:green}probabilities",
+					"have {C:green}+#1# numerator",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_denominator = {
+				name = {
+					"Prestige: Denominator",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"All listed {C:green}probabilities",
+					"have {C:green}-#1# denominator",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_ante = {
+				name = {
+					"Prestige: Ante",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:dark_edition}-#1#{} Ante",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_ante_cd = {
+				name = {
+					"Prestige: Ante",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_hand = {
+				name = {
+					"Prestige: Hand",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:blue}+#1# Hand{} per round",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_hand_cd = {
+				name = {
+					"Prestige: Hand",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_discard = {
+				name = {
+					"Prestige: Discard",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}+#1# Discard{} per round",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_discard_cd = {
+				name = {
+					"Prestige: Discard",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
 				},
 			},
 		},
@@ -2149,6 +2573,12 @@ return {
 					"{C:lordofvoid}I refuse to be determined.",
                 }
             },
+			prestige_ante_effect = {
+				name = "Prestige: Ante",
+				text = {
+					"{C:dark_edition}-1{} Ante",
+				},
+			},
 		},
 		Blind = {
 			bl_thac_jera = {

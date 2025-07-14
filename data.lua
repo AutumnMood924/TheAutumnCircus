@@ -310,7 +310,7 @@ function data.buffer_insert(buffer, object, extra)
 			end
 		end
 	end
-	if THAC_JoyousSpring and THAC_JoyousSpring[object.key] and object.set == "Joker" then
+	if THAC_JoyousSpring and THAC_JoyousSpring[object.key] then
 		local this_trait = THAC_JoyousSpring[object.key]
 		if not object.config then
 			object.config = {}
