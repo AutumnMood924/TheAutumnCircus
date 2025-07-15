@@ -18,11 +18,18 @@ return {
 			ascension_extra = "Bonus Ascension Power",
 			numerator_extra = "Numerator Modifier",
 			denominator_extra = "Denominator Modifier",
+			packopt_extra = "Bonus Booster Cards",
+			packsel_extra = "Bonus Booster Choices",
+			dollar_eor = "Bonus $ each Round",
 			
 			k_c_thac_prestige_ante = "Prestige: Ante",
 			k_c_thac_prestige_hand = "Prestige: Hand",
 			k_c_thac_prestige_discard = "Prestige: Discard",
 			k_c_thac_prestige_ascension = "Prestige: Ascension",
+			k_c_thac_prestige_energy = "Prestige: Energy",
+		},
+		v_dictionary = {
+			prestige_dollar_eor = "Prestige: $",
 		},
 		labels = {
 			thac_breath_aspect = "Breath",
@@ -2027,6 +2034,15 @@ return {
 					"after {C:attention}#1#{} more use#2#"
 				},
 			},
+			c_thac_prestige_dollar_eor = {
+				name = {
+					"Prestige: $",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:money}+$#1#{} each {C:attention}Round",
+				},
+			},
 			c_thac_prestige_numerator = {
 				name = {
 					"Prestige: Numerator",
@@ -2111,6 +2127,29 @@ return {
 			c_thac_prestige_discard_cd = {
 				name = {
 					"Prestige: Discard",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_energy = {
+				name = {
+					"Prestige: Energy",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:pink}+#1#{} Energy Limit",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_energy_cd = {
+				name = {
+					"Prestige: Energy",
 					"{C:autumn,s:0.5}Work In Progress!",
 				},
 				text = {

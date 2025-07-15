@@ -32,6 +32,36 @@ local prestiges = {
 			) and true
 		end,
 	},
+	"prestige_dollar_eor", prestige_dollar_eor = {
+		config = {
+			extra = {
+				amount = 1,
+			},
+		},
+		pos = { x = 0, y = 0 },
+		soul_pos = { x = 1, y = 0 },
+		cost = 4,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'scaler_explainer', set = 'Other', specific_vars = { localize{key=card.config.center.key, set="Prestige", type="name_text"}, card.ability.extra.scale_amount } }
+			return {vars = { 
+				--G.GAME.Prestiges and G.GAME.Prestiges["c_thac_prestige_xchips"] or card.ability.immutable.base_amount, 
+				card.ability.extra.amount 
+			}}
+		end,
+		use = function(self, card, area, copier)
+			--local value = scaler_keyword(card, "c_thac_prestige_xchips")
+			G.GAME.PrestigeValues.dollar_eor = G.GAME.PrestigeValues.dollar_eor + card.ability.extra.amount
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		load_check = function()
+			return (
+				next(SMODS.find_mod("zeroError"))
+			) and true
+		end,
+	},
 	"prestige_numerator", prestige_numerator = {
 		config = {
 			immutable = {
@@ -217,7 +247,7 @@ local prestiges = {
 			local doit = cooldown_keyword(card, "c_thac_prestige_discard")
 			if doit then
 				G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.amount
-				ease_discards(card.ability.extra.amount)
+				ease_discard(card.ability.extra.amount)
 			end
 		end,
 		can_use = function(self, card, area, copier)
@@ -340,6 +370,49 @@ local prestiges = {
 			) and true
 		end,
 	},
+	"prestige_energy", prestige_energy = {
+		config = {
+			extra = {
+				amount = 1,
+			},
+		},
+		pos = { x = 0, y = 0 },
+		soul_pos = { x = 1, y = 0 },
+		cost = 4,
+		loc_vars = function(_c, info_queue, card) 
+			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_energy"] or 1
+			local coolnow = G.GAME.Prestiges["c_thac_prestige_energy"]
+			if coolnow ~= nil then
+				info_queue[#info_queue+1] = {key = "prestige_energy_effect", set="Other"}
+				return {
+					key = card.config.center.key.."_cd",
+					vars = {
+						coolnow,
+						coolnow == 1 and "" or "s",
+					},
+				}
+			end
+            info_queue[#info_queue+1] = {key = 'cooldown_explainer', set = 'Other', specific_vars = { localize{key=card.config.center.key, set="Prestige", type="name_text"}, cooldown } }
+			return {vars = { 
+				card.ability.extra.amount,
+				cooldown
+			}}
+		end,
+		use = function(self, card, area, copier)
+			local doit = cooldown_keyword(card, "c_thac_prestige_energy")
+			if doit then
+				G.GAME.energy_plus = (G.GAME.energy_plus or 0) + card.ability.extra.amount
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		load_check = function()
+			return (
+				next(SMODS.find_mod("Pokermon"))
+			) and true
+		end,
+	},
 }
 
 -- increase score yummy
@@ -365,8 +438,8 @@ end
 local alias__SMODS_get_probability_vars = SMODS.get_probability_vars
 SMODS.get_probability_vars = function(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
 	local ret = {alias__SMODS_get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll)}
-	ret[1] = ret[1] + G.GAME.PrestigeValues.numerator_extra
-	ret[2] = ret[2] + G.GAME.PrestigeValues.denominator_extra
+	ret[1] = (ret[1] or 0) + (G.GAME.PrestigeValues.numerator_extra or 0)
+	ret[2] = (ret[2] or 0) + (G.GAME.PrestigeValues.denominator_extra or 0)
 	return ret[1], ret[2]
 end
 
@@ -384,8 +457,9 @@ function create_UIBox_current_prestige(simple)
 	if next(SMODS.find_mod("entr")) then
 		hands[#hands+1] = create_UIBox_current_prestige_row("ascension_extra", "c_thac_prestige_ascension", 1, darken(G.C.GOLD, 0.1))
 		-- this doesn't scale
-		hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+1"
+		hands[#hands].nodes[3].nodes[1].config.text = "+1"
 	end
+	hands[#hands+1] = create_UIBox_current_prestige_row("dollar_eor", "c_thac_prestige_dollar_eor", 1, darken(G.C.MONEY, 0.1))
 	
 	hands[#hands+1] = create_UIBox_current_prestige_row("numerator_extra", "c_thac_prestige_numerator", 0.1, lighten(G.C.GREEN, 0.2))
 	if G.GAME.PrestigeValues["numerator_extra"] >= 0 then
