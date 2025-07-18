@@ -246,24 +246,12 @@ local tarots = {
 	'drunkard', drunkard = {
 		effect = 'dunk',
 		config = {
-			mod_conv = "m_thac_dirt",
-			max_highlighted = 3,
 		},
 		pos = { x = 5, y = 0 },
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
-			return {
-				vars = {
-					card.ability.consumeable.max_highlighted,
-					localize{
-						type = 'name_text',
-						set = 'Enhanced',
-						key = card.ability.consumeable.mod_conv
-					}
-				}
-			}
 		end,
+		yes_pool_flag = "neversetthis",
 	},
 	'juggler', juggler = {
 		effect = 'jugs',
@@ -273,27 +261,6 @@ local tarots = {
 		yes_pool_flag = "neversetthis",
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-		end,
-	},
-	'grass', grass = {
-		effect = 'grass',
-		config = {
-			mod_conv = "m_thac_grass",
-			max_highlighted = 3,
-		},
-		pos = { x = 7, y = 6 },
-		loc_vars = function(self, info_queue, card)
-			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
-			return {
-				vars = {
-					card.ability.consumeable.max_highlighted,
-					localize{
-						type = 'name_text',
-						set = 'Enhanced',
-						key = card.ability.consumeable.mod_conv
-					}
-				}
-			}
 		end,
 	},
 	'bone', bone = {

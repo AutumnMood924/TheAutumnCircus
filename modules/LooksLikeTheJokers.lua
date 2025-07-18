@@ -123,81 +123,6 @@ local jokers = {
             end
         end,
 	},
-    'wayfarer', wayfarer = {
-        config = {
-            extra = {
-                Xmult = 4.5,
-            },
-        },
-        pos = { x = 0, y = 0 },
-        cost = 8,
-        rarity = 3,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(_c, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
-            return {vars = { card.ability.extra.Xmult }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['Straight']) and context.scoring_name ~= 'Straight' then
-                return { xmult = card.ability.extra.Xmult }
-            end
-        end,
-    },
-    'power_of_unity', power_of_unity = {
-        config = {
-            extra = {
-                Xmult = 3.5,
-            },
-        },
-        pos = { x = 0, y = 0 },
-        cost = 8,
-        rarity = 3,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(_c, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
-            return {vars = { card.ability.extra.Xmult }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['Flush']) and context.scoring_name ~= 'Flush' then
-                return { xmult = card.ability.extra.Xmult }
-            end
-        end,
-    },
-    'chaotic', chaotic = {
-        config = {
-            extra = {
-                Xmult = 5,
-            },
-        },
-        pos = { x = 0, y = 0 },
-        cost = 8,
-        rarity = 3,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(_c, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-            --info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
-            return {vars = { card.ability.extra.Xmult }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) and context.scoring_name ~= 'spectrum_Spectrum' then
-                return { xmult = card.ability.extra.Xmult }
-            end
-        end,
-        load_check = function()
-            return next(SMODS.find_mod("SpectrumFramework"))
-        end,
-    },
     'standardized', standardized = {
         config = {
             extra = {
@@ -536,38 +461,6 @@ local jokers = {
             end
         end,
     },
-    'garden', garden = {
-        config = {extra = {retriggers = 1}},
-        pos = { x = 0, y = 0 },
-        cost = 6,
-        rarity = 2,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_dirt']
-            local blah = ""
-            if card.ability.extra.retriggers > 1 then blah = "s" end
-            return {vars = {card.ability.extra.retriggers, blah}}
-        end,
-        calculate = function(self, card, context)
-            if context.repetition and context.cardarea == G.play and (context.other_card.config.center.key == "m_thac_grass" or context.other_card.config.center.key == "m_thac_dirt") then
-                return {
-                    repetitions = card.ability.extra.retriggers,
-                    card = card,
-                    message = localize('k_again_ex'),
-                    colour = G.C.ORANGE,
-                }
-            end
-        end,
-        load_check = function()
-            return TheAutumnCircus.config.enabled_modules.enhancable and not (
-                TheAutumnCircus.config.enabled_enhancements.dirt == false and
-                TheAutumnCircus.config.enabled_enhancements.grass == false )
-        end,
-    },
     'clown_posse', clown_posse = {
         config = {extra = {Xmult_mod = 0.10, Xmult_curr = 1.0}},
         pos = { x = 4, y = 3 },
@@ -854,56 +747,6 @@ local jokers = {
                     message = localize('k_again_ex')
                 }
             end
-        end,
-    },
-    'funny_fertilizer', funny_fertilizer = {
-        config = {extra = { enhancements = 3 }},
-        pos = { x = 0, y = 0 },
-        cost = 6,
-        rarity = 2,
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            local blah = ""
-            if card.ability.extra.enhancements > 1 then blah = "s" end
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_dirt']
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
-            return {vars = {card.ability.extra.enhancements, blah}}
-        end,
-        calculate = function(self, card, context)
-            if context.end_of_round and context.cardarea == G.jokers and G.GAME.blind and G.GAME.blind.boss then
-                local enhanced_cards = {}
-                local used_tarot = copier or self
-                local temp_deck = {}
-                for k, v in ipairs(G.playing_cards) do 
-                    if v.config.center.set == "Default" or v.config.center.key == "m_thac_dirt" then
-                        temp_deck[#temp_deck+1] = v
-                    end
-                end
-                table.sort(temp_deck, function (a, b) return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card end)
-                pseudoshuffle(temp_deck, pseudoseed('funny_fertilizer'))
-    
-                for i = 1, card.ability.extra.enhancements do enhanced_cards[#enhanced_cards+1] = temp_deck[i] end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.1,
-                    func = function() 
-                        for i=#enhanced_cards, 1, -1 do
-                            local card = enhanced_cards[i]
-                            card:set_ability(G.P_CENTERS.m_thac_grass)
-                        end
-                        return true end }))
-                return {
-                    card = card,
-                    colour = G.C.ORANGE,
-                    message = "Grass"
-                }
-            end
-        end,
-        load_check = function()
-            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.grass == false
         end,
     },
     'highest_number', highest_number = {
@@ -2348,43 +2191,6 @@ local jokers = {
 				context.other_card.config.center.key == "m_stone" and not context.other_card.config.center.no_rank then
                     return {
                         m_lucky = true,
-                    }
-                end
-            end
-        end,
-    },
-    'quantum_grass', quantum_grass = {
-        name = "Quantum Grass Glass",
-		subtitle = "Work In Progress!",
-        text = {
-            "{C:attention}Glass{} cards and",
-            "{C:attention}Grass{} cards are also",
-            "considered {C:attention}Grass{} cards",
-            "and {C:attention}Glass{} cards, respectively"
-        },
-        config = {extra = { }},
-        pos = { x = 0, y = 0 },
-        cost = 9,
-        rarity = 3,
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = G.P_CENTERS['m_glass']
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_grass']
-            return {vars = { }}
-        end,
-        calculate = function(self, card, context)
-            if context.check_enhancement then
-                if context.other_card.config.center.key == "m_glass" then
-                    return {
-                        m_thac_grass = true
-                    }
-                end
-                if context.other_card.config.center.key == "m_thac_grass" then
-                    return {
-                        m_glass = true
                     }
                 end
             end

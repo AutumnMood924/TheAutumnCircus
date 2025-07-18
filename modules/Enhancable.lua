@@ -10,7 +10,7 @@ local enhancements = {
 		config = {
 		},
 		pos = { x = 0, y = 0 },
-	},              This effect requires too much jank rn]]
+	},              This effect requires too much jank rn
 	'grass', grass = {
 		name = "grass",
 		effect = 'grass',
@@ -55,7 +55,7 @@ local enhancements = {
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT})
 			end
 		end,
-	},
+	},--]]
 	'star', star = {
 		name = "star",
 		effect = 'bounty',

@@ -33,7 +33,7 @@ local stars = {
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
-			if self.discovered then
+			if self and self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
 				badges[1] = create_badge("Star?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
@@ -59,7 +59,7 @@ local stars = {
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
-			if self.discovered then
+			if self and self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
 				badges[1] = create_badge("Star?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
@@ -85,7 +85,7 @@ local stars = {
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
-			if self.discovered then
+			if self and self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
 				badges[1] = create_badge("Star?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges
@@ -111,7 +111,7 @@ local stars = {
 		end,
 		can_use = function(self, card) return true end,
 		set_badges = function(self, card, badges)
-			if self.discovered then
+			if self and self.discovered then
 				badges[1].nodes[1].nodes[2].config.object:remove()
 				badges[1] = create_badge("Star?", get_type_colour(self or card.config, card), nil, 1.2)
 				return badges

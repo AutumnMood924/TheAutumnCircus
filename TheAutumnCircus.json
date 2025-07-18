@@ -1,14 +1,14 @@
 {
 	"id": "TheAutumnCircus",
-	"name": "TheAutumnCircus",
+	"name": "ÞeAutumnCircus",
 	"author": ["AutumnMood (It/They/She)"],
-	"description": "Welcome to The Autumn Circus!",
+	"description": "Welcome to Þe Autumn Circus!",
 	"prefix": "thac",
 	"main_file": "TheAutumnCircus.lua",
 	"priority": 42,
 	"badge_colour": "d1b628",
 	"badge_text_colour": "ffed83",
-	"display_name": "The Autumn Circus",
+	"display_name": "ÞAC",
 	"version": "0.0.0a",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0623b)",
