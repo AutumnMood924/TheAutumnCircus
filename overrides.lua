@@ -242,10 +242,32 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "cry_gold"
 			--_editions[#_editions+1] = "cry_jolly"
 		end
+		if next(SMODS.find_mod("allinjest")) then
+			_editions[#_editions+1] = "aij_stellar"
+		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
 			_editions = {"poke_shiny"}
 		end
 		card:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+		math.randomseed(os.time())
+		for k,v in ipairs(self.title_top.cards) do
+			if not v.edition then
+				v:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+			end
+		end
+
+        G.E_MANAGER:add_event(
+            Event{
+				func = function()
+					math.randomseed(os.time())
+					for k,v in ipairs(self.title_top.cards) do
+						if not v.edition then
+							v:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+						end
+					end
+				return true end
+			}
+		)
 		card:set_seal("thac_sock_and_buskin", true, true)
         card:set_sprites(card.config.center)
         card.no_ui = true
@@ -323,10 +345,20 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "cry_gold"
 			--_editions[#_editions+1] = "cry_jolly"
 		end
+		if next(SMODS.find_mod("allinjest")) then
+			_editions[#_editions+1] = "aij_stellar"
+		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
 			_editions = {"poke_shiny"}
 		end
-		target_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+        G.E_MANAGER:add_event(
+            Event{
+				func = function()
+					math.randomseed(os.time())
+					target_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+				return true end
+			}
+		)
 		local _aspect = "thac_void"
 		math.randomseed(os.time())
 		if math.random() < 1/2 then

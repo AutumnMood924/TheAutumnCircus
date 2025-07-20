@@ -699,12 +699,17 @@ local jokers = {
             end
         end,
         calculate = function(self, card, context)
-            if context.joker_main and not context.retrigger_joker_check and not context.retrigger_joker and not context.witch_of_mind_repeat then
-                local ret = {}
-                context.witch_of_mind_repeat = true
-                ret = SMODS.calculate_context(context)
-                context.witch_of_mind_repeat = false
-                return ret
+            if context.joker_main and not context.retrigger_joker_check and not context.witch_of_mind_repeat then
+                return {
+					message = localize("k_again_ex"),
+					colour = G.ARGS.LOC_COLOURS['witchofmind'],
+					func = function()
+						context.witch_of_mind_repeat = true
+						SMODS.calculate_context(context)
+						context.witch_of_mind_repeat = false
+						return true
+					end,
+				}
             end
         end,
     },
