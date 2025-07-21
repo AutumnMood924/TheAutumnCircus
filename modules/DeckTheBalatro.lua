@@ -208,14 +208,32 @@ local decks = {
 		},
 		apply = function(self)
 		end,
-	},
+	},--]]
 	"lavender", lavender = {
 		pos = {x = 6, y = 2},
 		config = {
+			extra = {
+				mult = 2,
+			},
 		},
 		apply = function(self)
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					for _, playing_card in ipairs(G.playing_cards) do
+						playing_card.ability.akyrs_special_card_type = pseudorandom(pseudoseed("lavender_deck")) < 0.5 and "suit" or "rank"
+						playing_card:set_sprites(playing_card.config.center,playing_card.config.card)
+						if playing_card.ability.akyrs_special_card_type == "suit" then
+							playing_card.ability.perma_mult = playing_card.ability.perma_mult + self.config.extra.mult
+						end
+					end
+					return true
+				end
+			}))
 		end,
-	},--]]
+		load_check = function()
+			return next(SMODS.find_mod("aikoyorisshenanigans"))
+		end,
+	},
 }
 
 

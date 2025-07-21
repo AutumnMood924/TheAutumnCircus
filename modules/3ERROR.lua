@@ -377,8 +377,8 @@ local prestiges = {
 				amount = 1,
 			},
 		},
-		pos = { x = 0, y = 0 },
-		soul_pos = { x = 1, y = 0 },
+		pos = { x = 0, y = 3 },
+		soul_pos = { x = 1, y = 3 },
 		cost = 4,
 		loc_vars = function(_c, info_queue, card) 
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_energy"] or 1

@@ -1833,8 +1833,20 @@ return {
 				},
 				text = {
 					"Creates a random {C:dark_edition}Dark {C:attention}3{}",
-					"with {C:witchofmind}Mind{C:red} Aspect",
+					"with {C:witchofmind}Mind{C:red} Aspect{}, {C:attention}bottles it",
 					"and adds it to your hand",
+				},
+			},
+			c_thac_gift_of_the_lord = {
+				name = {
+					"Gift of the Lord",
+					"{C:autumn,s:0.5}Three of...",
+				},
+				text = {
+					"Creates a random {C:attention}Glass {C:attention}3{}",
+					"with an {C:attention}Ouroboros Seal{} and",
+					"{C:lordofvoid}Void{C:red} Aspect{}, and",
+					"adds it to your hand",
 				},
 			},
 			c_thac_dance_with_the_dead = {
@@ -2149,8 +2161,8 @@ return {
 			},
 			c_thac_prestige_energy = {
 				name = {
-					"Prestige: Energy",
-					"{C:autumn,s:0.5}Work In Progress!",
+					"Warped Energy",
+					"{C:autumn,s:0.5}Probably safe?",
 				},
 				text = {
 					"{C:pink}+#1#{} Energy Limit",
@@ -2160,8 +2172,8 @@ return {
 			},
 			c_thac_prestige_energy_cd = {
 				name = {
-					"Prestige: Energy",
-					"{C:autumn,s:0.5}Work In Progress!",
+					"Warped Energy",
+					"{C:autumn,s:0.5}Probably safe?",
 				},
 				text = {
 					"{C:red}On cooldown!{}",
@@ -2561,7 +2573,11 @@ return {
 			b_thac_lavender = {
 				name = "Lavender Deck",
 				text = {
-					" ",
+					"Each starting card is missing",
+					"either its {C:attention}suit{} or {C:attention}rank{}",
+					"Starting cards with",
+					"no {C:attention}rank{} gain {C:mult}+2 Mult",
+					"permanently",
 				},
 			},
 		},
