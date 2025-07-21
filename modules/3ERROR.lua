@@ -450,10 +450,16 @@ function create_UIBox_current_prestige(simple)
 	local ret = alias__create_UIBox_current_prestige(simple)
 	
 	local hands = ret.nodes[1].nodes
+	local thunk = hands[1]
+	hands[1] = hands[2]
+	hands[2] = thunk
+	thunk = hands[3]
 	hands[#hands+1] = create_UIBox_current_prestige_row("xchips_extra", "c_thac_prestige_xchips", 0.1, darken(G.C.CHIPS, 0.2))
-	if next(SMODS.find_mod("Cryptid")) then
-		hands[#hands+1] = create_UIBox_current_prestige_row("emult_extra", "c_thac_prestige_emult", 0.05, lighten(G.C.MULT, 0.2))
+	hands[3] = hands[#hands]
+	hands[#hands] = thunk
+	if next(SMODS.find_mod("Cryptlib")) or next(SMODS.find_mod("pta_saka")) then
 		hands[#hands+1] = create_UIBox_current_prestige_row("echips_extra", "c_thac_prestige_echips", 0.05, lighten(G.C.CHIPS, 0.2))
+		hands[#hands+1] = create_UIBox_current_prestige_row("emult_extra", "c_thac_prestige_emult", 0.05, lighten(G.C.MULT, 0.2))
 	end
 	if next(SMODS.find_mod("entr")) then
 		hands[#hands+1] = create_UIBox_current_prestige_row("ascension_extra", "c_thac_prestige_ascension", 1, darken(G.C.GOLD, 0.1))
@@ -474,6 +480,21 @@ function create_UIBox_current_prestige(simple)
 		hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["denominator_extra"]
 	end
 	hands[#hands].nodes[3].nodes[1].config.text = "-"..(G.GAME.Prestiges and G.GAME.Prestiges["c_thac_prestige_denominator"] or 0.4)
+	
+	local new_hands = {}
+	
+	for i=1, math.ceil(#hands/2) do
+		local new_hand = {n=G.UIT.R, config={align = "cm", r = 0.1}, nodes={}}
+		for ii=1, 2 do
+			if not hands[i*2 - math.floor(2/ii) + 1] then break end
+			hands[i*2 - math.floor(2/ii) + 1].n = G.UIT.C
+			hands[i*2 - math.floor(2/ii) + 1].config.align = ii == 1 and "cl" or "cm"
+			new_hand.nodes[#new_hand.nodes+1] = hands[i*2 - math.floor(2/ii) + 1]
+		end
+		new_hands[#new_hands+1] = new_hand
+	end
+	
+	ret.nodes[1].nodes = new_hands
 	
 	return ret
 end

@@ -1586,6 +1586,39 @@ local oddities = {
 			return #G.hand.cards > 1
 		end
 	},
+	'gift_of_the_witch', gift_of_the_witch = {
+		config = {
+			extra = {
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 4,
+		cost = 10,
+		loc_vars = function(_c, info_queue, card) 
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+			info_queue[#info_queue+1] = G.P_ASPECTS.thac_mind
+            --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.cards }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+				local enhancement = G.P_CENTERS.m_entr_dark
+				local cardmak = create_playing_card({front = G.P_CARDS.H_3, center = enhancement}, G.hand)
+				cardmak:set_edition(poll_edition("gift_of_the_witch", nil, false, false))
+				cardmak:set_seal(SMODS.poll_seal{key = "gift_of_the_witch", mod = 10})
+				cardmak:set_aspect("thac_mind")
+				cardmak.ability.akyrs_special_card_type = "rank"
+                cardmak:set_sprites(cardmak.config.center,cardmak.config.card)
+			playing_card_joker_effects({cardmak})
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.hand.cards > 1
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("entr")) and next(SMODS.find_mod("aikoyorisshenanigans"))
+		end,
+	},
 	'dance_with_the_dead', dance_with_the_dead = {
 		config = {
 			extra = {

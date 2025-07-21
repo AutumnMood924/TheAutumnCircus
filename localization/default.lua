@@ -1826,6 +1826,17 @@ return {
 					"and adds it to your hand",
 				},
 			},
+			c_thac_gift_of_the_witch = {
+				name = {
+					"Gift of the Witch",
+					"{C:autumn,s:0.5}Three of...",
+				},
+				text = {
+					"Creates a random {C:dark_edition}Dark {C:attention}3{}",
+					"with {C:witchofmind}Mind{C:red} Aspect",
+					"and adds it to your hand",
+				},
+			},
 			c_thac_dance_with_the_dead = {
 				name = {
 					"Dance of the Dead",
@@ -2319,9 +2330,9 @@ return {
 				name = "Breath",
 				text = {
 					"This card can be {C:attention}selected beyond {C:blue}Hand{} or",
-					"{C:red}Discard{} selection limits, and can be {C:attention}played{}",
-					"or {C:red}discarded {C:attention}beyond normal limits{}, and",
-					"{C:tarot}consumables{} that apply to selected cards",
+					"{C:red}Discard{} selection limits and can be {C:attention}played{}",
+					"or {C:red}discarded {C:attention}beyond normal limits{}",
+					"{C:tarot}Consumables{} that apply to selected cards",
 					"can apply to this card {C:attention}beyond normal limits",
 				},
 			},
