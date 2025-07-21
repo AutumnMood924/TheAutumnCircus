@@ -3,20 +3,12 @@ local aspects = {
 		name = "breath",
 		effect = 'breath',
 		config = {
-			extra = {
-				Xchips = 3
-			}
 		},
 		pos = { x = 0, y = 0 },
 		loc_vars = function(self, info_queue, card)
-			return {vars = {self.config.extra.Xchips}}
+			--return {vars = {self.config.extra.Xchips}}
 		end,
 		calculate = function(self, card, context)
-			if context.cardarea == G.play and context.main_scoring then
-				return {
-					xchips = 3
-				}
-			end
 		end,
         badge_colour = "0086EB",
         badge_text_colour = "10E0FF"
@@ -245,13 +237,6 @@ local aspects = {
 	},
 	'void', void = {
 		name = "void",
-		display_name = "Void",
-		text = {
-			"Scores this card's",
-            "{C:chips}Chips{} and {C:mult}Mult{}",
-            "values while it is",
-            "held in hand"
-		},
 		effect = 'void',
 		config = {
 			extra = {
@@ -263,12 +248,7 @@ local aspects = {
 		end,
 		calculate = function(self, card, context)
 			if context.cardarea == G.hand and context.main_scoring then
-				return {
-					chips = card:get_chip_bonus(),
-                    mult = card:get_chip_mult(),
-                    xchips = math.max(1, card:get_chip_x_bonus()),
-                    xmult = math.max(1, card:get_chip_x_mult()),
-				}
+				SMODS.score_card(card, {cardarea = G.play, full_hand = context.full_hand, scoring_hand = context.scoring_hand, scoring_name = context.scoring_name, poker_hands = context.poker_hands })
 			end
 		end,
         badge_colour = "033476",
@@ -301,7 +281,7 @@ local aspects = {
 		effect = 'mind',
 		config = {
 			extra = {
-				mult = 5
+				mult = 0.3
 			}
 		},
 		pos = { x = 4, y = 1 },
@@ -314,8 +294,8 @@ local aspects = {
 					message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                     func = function()
-						card.ability.perma_h_mult = math.max(card.ability.perma_h_mult, 0)
-						card.ability.perma_h_mult = card.ability.perma_h_mult + 5
+						card.ability.perma_h_x_mult = math.max(card.ability.perma_h_x_mult, 0)
+						card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + 0.3
                     end,
 				}
 			end

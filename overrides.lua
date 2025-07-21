@@ -375,10 +375,10 @@ end
 -- dusk stamop
 local alias__SMODS_get_probability_vars = SMODS.get_probability_vars
 function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
-    if not G.jokers then return base_numerator, base_denominator end
 	
 	local probvars = {alias__SMODS_get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll)}
 	
+    if not G.jokers then return probvars[1], probvars[2] end
 	-- wow this is dumb
 	if trigger_obj and trigger_obj.config and trigger_obj.config.center and trigger_obj.config.center.set and trigger_obj.config.center.set == "Joker" then
 		if trigger_obj:get_seal() == "thac_dusk" and ((G.GAME.current_round.hands_left == 0 and (G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.GAME_OVER or G.STATE == G.STATES.ROUND_EVAL or G.STATE == G.STATES.NEW_ROUND)) or (G.GAME.current_round.hands_left == 1 and G.STATE == G.STATES.SELECTING_HAND)) then
@@ -387,4 +387,10 @@ function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominato
 	end
 	
 	return probvars[1], probvars[2]
+end
+
+local alias__CardArea_can_highlight = CardArea.can_highlight
+function CardArea:can_highlight(card)
+	if card.aspect == "thac_breath" then return true end
+	return alias__CardArea_can_highlight(self, card)
 end

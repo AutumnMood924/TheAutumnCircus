@@ -1807,7 +1807,7 @@ return {
 			c_thac_viscera = {
 				name = {
 					"Viscera",
-					"{C:autumn,s:0.5}Gruesome...",
+					"{C:autumn,s:0.5}Yikes!",
 				},
 				text = {
 					"Creates {C:attention}#1#{} random",
@@ -1817,7 +1817,7 @@ return {
 			c_thac_gift_of_the_knight = {
 				name = {
 					"Gift of the Knight",
-					"{C:autumn,s:0.5}Your indeterminate fate shines within you",
+					"{C:autumn,s:0.5}Three of...",
 				},
 				text = {
 					"Creates a random",
@@ -1828,8 +1828,8 @@ return {
 			},
 			c_thac_dance_with_the_dead = {
 				name = {
-					"Dance with the Dead",
-					"{C:autumn,s:0.5}We all fall down!",
+					"Dance of the Dead",
+					"{C:autumn,s:0.5}Betraying Graves",
 				},
 				text = {
 					"Put each card in your hand",
@@ -2300,7 +2300,7 @@ return {
 				text = {
 					"Returns from your {C:attention}graveyard{}",
 					"after each {C:attention}Boss Blind{}",
-					"Gains {C:mult}+#1#{} Mult permanently after",
+					"Gains {C:white,X:mult}X#1#{} Mult permanently after",
 					"returning from your {C:attention}graveyard{}",
 				},
 			},
@@ -2318,7 +2318,11 @@ return {
 			thac_breath_aspect = {
 				name = "Breath",
 				text = {
-					'{X:chips,C:white} X3 {} chips'
+					"This card can be {C:attention}selected beyond {C:blue}Hand{} or",
+					"{C:red}Discard{} selection limits, and can be {C:attention}played{}",
+					"or {C:red}discarded {C:attention}beyond normal limits{}, and",
+					"{C:tarot}consumables{} that apply to selected cards",
+					"can apply to this card {C:attention}beyond normal limits",
 				},
 			},
 			thac_life_aspect = {
@@ -2380,10 +2384,10 @@ return {
 			thac_void_aspect = {
 				name = "Void",
 				text = {
-					"Scores this card's",
-					"{C:chips}Chips{} and {C:mult}Mult{}",
-					"values while it is",
-					"held in hand"
+					"Score this card as",
+					"if it was {C:attention}played and",
+					"{C:attention}scored{} while it is",
+					"{C:lordofvoidw}held in hand{}"
 				},
 			},
 			thac_space_aspect = {
@@ -2399,7 +2403,7 @@ return {
 				name = "Mind",
 				text = {
 					'This card permanently',
-					'gains {C:mult}+5{} Mult while',
+					'gains {C:white,X:mult}X0.3{} Mult while',
 					'held in hand each',
 					'{C:blue}Hand{} played while this',
 					'card is held in hand'

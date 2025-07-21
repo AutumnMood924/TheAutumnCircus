@@ -322,7 +322,8 @@ local prestiges = {
 		end,
 		load_check = function()
 			return (
-				next(SMODS.find_mod("Cryptid"))
+				next(SMODS.find_mod("Cryptlib")) or
+				next(SMODS.find_mod("pta_saka"))
 				-- TODO: add other echips
 			) and true
 		end,
@@ -431,7 +432,7 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
 		amount = amount + G.GAME.PrestigeValues.echips_extra
 	end
 	
-	alias__SMODS_calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+	return alias__SMODS_calculate_individual_effect(effect, scored_card, key, amount, from_edition)
 end
 
 -- apply probability effects

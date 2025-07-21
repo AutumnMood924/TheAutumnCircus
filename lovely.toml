@@ -277,3 +277,173 @@ end
 '''
 match_indent = true
 overwrite = false
+
+# ASPECT : Breath effect (count breaths)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then
+	if self.ability.consumeable.max_highlighted then
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = false
+# ASPECT : Breath effect (noncryptid ver)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.consumeable.mod_num >= #G.hand.highlighted and #G.hand.highlighted >= (self.ability.consumeable.min_highlighted or 1) then"
+position = "at"
+payload = "if self.ability.consumeable.mod_num >= (#G.hand.highlighted - thac_selbreaths) and #G.hand.highlighted >= (self.ability.consumeable.min_highlighted or 1) then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect (cryptid ver)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if (self.ability.consumeable.mod_num - ((G.GAME.modifiers.cry_consumable_reduce and (self.ability.name ~= 'Death')) and (self.ability.consumeable.mod_num > 1) and 1 or 0)) >= #G.hand.highlighted + (self.area == G.hand and -1 or 0) and #G.hand.highlighted + (self.area == G.hand and -1 or 0) >= 1 then"
+position = "at"
+payload = "if (self.ability.consumeable.mod_num - ((G.GAME.modifiers.cry_consumable_reduce and (self.ability.name ~= 'Death')) and (self.ability.consumeable.mod_num > 1) and 1 or 0)) >= (#G.hand.highlighted - thac_selbreaths) + (self.area == G.hand and -1 or 0) and #G.hand.highlighted + (self.area == G.hand and -1 or 0) >= (self.ability.consumeable.min_highlighted or 1) then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 2 (count breaths)
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = '''
+function CardArea:add_to_highlighted(card, silent)
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = card.aspect == "thac_breath" and 1 or 0
+for k,v in ipairs(self.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = false
+# ASPECT : Breath effect pt 2 (noncryptid ver)
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if #self.highlighted >= self.config.highlighted_limit then"
+position = "at"
+payload = "if #self.highlighted - thac_selbreaths >= self.config.highlighted_limit then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 2 (cryptid ver)
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if to_big(#self.highlighted) >= to_big(self.config.highlighted_limit) then"
+position = "at"
+payload = "if to_big(#self.highlighted - thac_selbreaths) >= to_big(self.config.highlighted_limit) then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 3 (count breaths cryptid)
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/overrides.lua"]'
+pattern = '''
+G.FUNCS.can_play = function(e)
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = false
+# ASPECT : Breath effect pt 3 (count breaths noncryptid)
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+G.FUNCS.can_play = function(e)
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = false
+# ASPECT : Breath effect pt 3 (cryptid ver)
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/overrides.lua"]'
+pattern = "or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1)"
+position = "at"
+payload = "or (#G.hand.highlighted - thac_selbreaths) > math.max(G.GAME.starting_params.play_limit, 1)"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 3 (noncryptid ver)
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1) then "
+position = "at"
+payload = "if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or (#G.hand.highlighted - thac_selbreaths) > math.max(G.GAME.starting_params.play_limit, 1) then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 4 (count breaths cryptid)
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/overrides.lua"]'
+pattern = '''
+G.FUNCS.can_discard = function(e)
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 4 (count breaths noncryptid)
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = '''
+G.FUNCS.can_discard = function(e)
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+end
+'''
+match_indent = true
+overwrite = false
+# ASPECT : Breath effect pt 4 (cryptid ver)
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/overrides.lua"]'
+pattern = "or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0)"
+position = "at"
+payload = "or (#G.hand.highlighted - thac_selbreaths) > math.max(G.GAME.starting_params.discard_limit, 0)"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect pt 4 (noncryptid ver)
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0) then "
+position = "at"
+payload = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or (#G.hand.highlighted - thac_selbreaths) > math.max(G.GAME.starting_params.discard_limit, 0) then"
+match_indent = true
+overwrite = true

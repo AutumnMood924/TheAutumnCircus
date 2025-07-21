@@ -61,7 +61,7 @@ local enhancements = {
 		effect = 'bounty',
 		config = {
 			extra = {
-				reduction = 0.08,
+				reduction = 0.10,
 			}
 		},
 		pos = { x = 3, y = 0 },
@@ -74,14 +74,14 @@ local enhancements = {
 				return {
 					extra = {focus = card,
 						message = localize{type = 'variable', key = 'a_blind_minus_percent',
-							vars = {card.ability.extra and card.ability.extra.reduction*100 or 8}}, },
+							vars = {card.ability.extra and card.ability.extra.reduction*100 or 10}}, },
 					card = card,
                     func = function()
                     G.E_MANAGER:add_event(Event({
                         trigger = 'before',
                         delay = 0.0,
                         func = (function()
-                            AMM.mod_blind(1-(card.ability.extra and card.ability.extra.reduction or 0.08), nil, true)
+                            AMM.mod_blind(1-(card.ability.extra and card.ability.extra.reduction or 0.10), nil, true)
                             return true
                         end)}))
 					end,
@@ -121,7 +121,7 @@ local enhancements = {
 		effect = 'jewel',
 		config = {
 			extra = {
-				money = 7,
+				money = 5,
 			}
 		},
 		no_rank = true,
@@ -132,12 +132,12 @@ local enhancements = {
 		loc_vars = function(self, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-			return {vars = {(card.ability.extra and card.ability.extra.money or 7)}}
+			return {vars = {(card.ability.extra and card.ability.extra.money or 5)}}
 		end,
 		calculate = function(self, card, context)
 			if context.main_scoring and context.cardarea == G.play then
 				return {
-					p_dollars = (card.ability.extra and card.ability.extra.money or 7)
+					p_dollars = (card.ability.extra and card.ability.extra.money or 5)
 				}
 			end
 		end,
@@ -147,17 +147,17 @@ local enhancements = {
 		effect = 'soulbound',
 		config = {
 			extra = {
-				mult = 2
+				xmult = 1
 			}
 		},
 		pos = { x = 2, y = 1 },
 		loc_vars = function(self, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-			return {vars = { card.ability.extra.mult }}
+			return {vars = { card.ability.extra.xmult }}
 		end,
 		remove_from_graveyard = function(self, card)
-			card.ability.perma_mult = card.ability.perma_mult + card.ability.extra.mult
+			card.ability.perma_x_mult = card.ability.perma_x_mult + card.ability.extra.xmult
 		end,
 	},
 }
