@@ -226,9 +226,11 @@ end
 -- yes i am in fact loading this twice
 SMODS.Atlas{
 	key = "modicon",
-	path = "TagImIt.png",
+	path = "ShowdownThrowdown.png",
 	px = 34,
 	py = 34,
+	frames = 21,
+	atlas_table = "ANIMATION_ATLAS",
 }
 
 -- Register game objects
