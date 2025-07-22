@@ -30,6 +30,7 @@ return {
 		},
 		v_dictionary = {
 			prestige_dollar_eor = "Prestige: $",
+			thac_gain_pyrox = "¥#1#",
 		},
 		labels = {
 			thac_breath_aspect = "Breath",
@@ -986,6 +987,30 @@ return {
 				text = {
 					"{C:green}#1# in #2#{} chance to",
 					"copy played cards",
+				},
+			},
+			j_thac_edge_of_reality = {
+				name = {
+					"{C:joy_spell}Edge of Reality",
+					"{C:lordofvoid,s:0.5}Are you afraid?",
+				},
+				text = {
+					{
+						"{C:attention}Split{} each card put in your",
+						"{C:attention}graveyard{} into {C:attention}Suit{} and {C:attention}Rank{} cards",
+					},
+					{
+						"Earn {C:blue}¥#1#{} at end of round after",
+						"{C:attention}Boss Blind{} is defeated for each",
+						"{C:attention}rankless card{} in your {C:attention}graveyard {C:inactive}[{C:attention}#2#{C:inactive}]",
+						"{s:0.15} ",
+						"{C:colour}Colour{} and {C:shape}Shape?{} cards get {C:attention}#3#",
+						"{C:attention}additional round#4#{} after {C:attention}Boss Blind",
+						"is defeated for every #6#{C:attention}suitless",
+						"{C:attention}card#7#{} in your {C:attention}graveyard {C:inactive}[{C:attention}#5#{C:inactive}]",
+						"{s:0.15} ",
+						"{C:attention}Double these rewards{} in the {C:purple}Flip-Side",
+					},
 				},
 			},
 		},

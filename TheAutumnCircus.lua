@@ -212,6 +212,9 @@ end
 if TheAutumnCircus.config.enabled_modules.threeerror and next(SMODS.find_mod("zeroError")) then
 	TheAutumnCircus.THREE = NFS.load(TheAutumnCircus.mod.path.."modules/3ERROR.lua")()
 end
+if TheAutumnCircus.config.enabled_modules.joyinautumn and next(SMODS.find_mod("JoyousSpring")) then
+	TheAutumnCircus.JIA = NFS.load(TheAutumnCircus.mod.path.."modules/JoyInAutumn.lua")()
+end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
 
