@@ -11,8 +11,8 @@ local jokers = {
 		generate_ui = JoyousSpring.generate_info_ui,
 		set_sprites = JoyousSpring.set_back_sprite,
         pos = { x = 6, y = 0 },
-        cost = 10,
-		rarity = 3,
+        cost = 15,
+		rarity = "cry_epic",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -91,6 +91,7 @@ local jokers = {
 			return (
 				-- this is implicit from this file's load requirement but:
 				--next(SMODS.find_mod("JoyousSpring")) and
+				next(SMODS.find_mod("Cryptid")) and
 				next(SMODS.find_mod("aikoyorisshenanigans")) and
 				next(SMODS.find_mod("pta_saka")) and
 				next(SMODS.find_mod("MoreFluff")) and
