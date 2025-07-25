@@ -304,13 +304,17 @@ return {
 					"{C:knightofheartw,s:0.5}apotheotic vessel",
 				},
 				text = {
-					"Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
-					"and this Joker gains the following",
-					"depending on the card's {C:attention}original suit{}:",
-					"{C:spades}Spades{}: {C:chips}+#1#{} Chips {C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
-					"{C:clubs}Clubs{}: {C:mult}+#3#{} Mult {C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
-					"{C:diamonds}Diamonds{}: {C:money}+$#5#{} at end of round {C:inactive}(Currently {C:money}$#6#{C:inactive})",
-					"{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
+					{
+						"Played cards are {C:attention}converted{} to {C:hearts}Hearts{}",
+						"and this Joker gains the following",
+						"depending on the card's {C:attention}original suit{}:",
+					},
+					{
+						"{C:spades}Spades{}: {C:chips}+#1#{} Chips {C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+						"{C:clubs}Clubs{}: {C:mult}+#3#{} Mult {C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+						"{C:diamonds}Diamonds{}: {C:money}+$#5#{} at end of round {C:inactive}(Currently {C:money}$#6#{C:inactive})",
+						"{C:attention}Other suits{}: {C:mult}+{X:mult,C:white} X#7# {} Mult {C:inactive}(Currently {X:mult,C:white} X#8# {C:inactive} Mult)"
+					},
 				},
 			},
 			j_thac_witch_of_mind = {
@@ -1003,12 +1007,14 @@ return {
 						"Earn {C:blue}¥#1#{} at end of round after",
 						"{C:attention}Boss Blind{} is defeated for each",
 						"{C:attention}rankless card{} in your {C:attention}graveyard {C:inactive}[{C:attention}#2#{C:inactive}]",
-						"{s:0.15} ",
+					},
+					{
 						"{C:colour}Colour{} and {C:shape}Shape?{} cards get {C:attention}#3#",
 						"{C:attention}additional round#4#{} after {C:attention}Boss Blind",
 						"is defeated for every #6#{C:attention}suitless",
 						"{C:attention}card#7#{} in your {C:attention}graveyard {C:inactive}[{C:attention}#5#{C:inactive}]",
-						"{s:0.15} ",
+					},
+					{
 						"{C:attention}Double these rewards{} in the {C:purple}Flip-Side",
 					},
 				},

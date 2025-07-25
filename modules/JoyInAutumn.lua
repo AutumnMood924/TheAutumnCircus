@@ -89,8 +89,6 @@ local jokers = {
         end,
 		load_check = function()
 			return (
-				-- this is implicit from this file's load requirement but:
-				--next(SMODS.find_mod("JoyousSpring")) and
 				next(SMODS.find_mod("Cryptid")) and
 				next(SMODS.find_mod("aikoyorisshenanigans")) and
 				next(SMODS.find_mod("pta_saka")) and

@@ -644,6 +644,11 @@ local jokers = {
                 local state = 0
                 for k, v in ipairs(context.scoring_hand) do
                     if v.base.suit == "Hearts" or SMODS.has_no_suit(v) then
+						if v.ability.akyrs_special_card_type == "rank" then
+							v.ability.akyrs_special_card_type = nil
+							v:change_suit("Hearts")
+							state = 1
+						end
                     elseif v.base.suit == "Spades" then
                         card.ability.extra.curr_chips = card.ability.extra.curr_chips + card.ability.extra.chips
                         v:change_suit("Hearts")
