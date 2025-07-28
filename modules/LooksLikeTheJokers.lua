@@ -3167,6 +3167,7 @@ local jokers = {
 			},
 		},
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
 			return {vars = {
 				probvars[1],
@@ -3215,6 +3216,7 @@ local jokers = {
 			},
 		},
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
 			if card.area.config.collection then
 				return {vars = {
@@ -3282,6 +3284,8 @@ local jokers = {
 			},
 		},
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
 			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
 			if card.area.config.collection then
 				return {vars = {
@@ -3354,6 +3358,7 @@ local jokers = {
 		config = { extra = {
 		}},
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
 			return { vars = {
 			}}
@@ -3384,6 +3389,7 @@ local jokers = {
 		rarity = "hmlt_godtier",
 		dependencies = { "homelatro" },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			if card.area.config.collection then
 				return {vars = {
 					card.ability.extra.xmult,
@@ -3421,6 +3427,8 @@ local jokers = {
 		rarity = "hmlt_godtier",
 		dependencies = { "homelatro" },
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
 			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
 			local probvars2 = {SMODS.get_probability_vars(card, 1, 10)}
 			if card.area.config.collection then
