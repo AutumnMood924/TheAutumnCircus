@@ -87,15 +87,7 @@ local jokers = {
 				end
 			end
         end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("Cryptid")) and
-				next(SMODS.find_mod("aikoyorisshenanigans")) and
-				next(SMODS.find_mod("pta_saka")) and
-				next(SMODS.find_mod("MoreFluff")) and
-				next(SMODS.find_mod("entr"))
-			)
-		end,
+		dependencies = { "JoyousSpring", "Cryptid", "aikoyorisshenanigans", "pta_saka", "MoreFluff", "entr" },
     },
 }
 

@@ -33,9 +33,7 @@ local jokers = {
                 if v:is_suit(self.config.extra.suit, true) then return true end
             end
         end,
-		load_check = function()
-			return next(SMODS.find_mod("SixSuits"))
-		end,
+		dependencies = { "SixSuits" },
     },
     'dutiful_joker', dutiful_joker = {
         config = { extra = {
@@ -69,9 +67,7 @@ local jokers = {
                 if v:is_suit(self.config.extra.suit, true) then return true end
             end
         end,
-		load_check = function()
-			return next(SMODS.find_mod("SixSuits"))
-		end,
+		dependencies = { "SixSuits" },
     },
 	'frivolous_joker', frivolous_joker = {
 		config = {
@@ -89,9 +85,7 @@ local jokers = {
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.mult }} end,
-        load_check = function()
-			return next(SMODS.find_mod("SpectrumFramework"))
-        end,
+		dependencies = { "SpectrumFramework" },
         calculate = function(self, card, context)
             if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
                 return { mult = card.ability.extra.mult }
@@ -114,9 +108,7 @@ local jokers = {
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.chips }} end,
-        load_check = function()
-			return next(SMODS.find_mod("SpectrumFramework"))
-        end,
+		dependencies = { "SpectrumFramework" },
         calculate = function(self, card, context)
             if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
                 return { chips = card.ability.extra.chips }
@@ -561,9 +553,7 @@ local jokers = {
                 }
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SpectrumFramework"))
-        end,
+		dependencies = { "SpectrumFramework" },
     },
     'psychic_double_reacharound', psychic_double_reacharound = {
         config = {extra = { retriggers = 2 }},
@@ -2105,9 +2095,7 @@ local jokers = {
                 }
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SpectrumFramework"))
-        end,
+		dependencies = { "SpectrumFramework" },
     },
     'somber_snowfall', somber_snowfall = {
         config = { extra = {
@@ -2233,9 +2221,7 @@ local jokers = {
                 end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
-        end
+		dependencies = { "SixSuits", "ortalab" },
     },
     'twin_stella', twin_stella = {
         config = {extra = { }},
@@ -2261,9 +2247,7 @@ local jokers = {
                 end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits"))
-        end
+		dependencies = { "SixSuits" },
     },
     'lunar_grave', lunar_grave = {
         config = {extra = { }},
@@ -2289,9 +2273,7 @@ local jokers = {
                 end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits"))
-        end
+		dependencies = { "SixSuits" },
     },
     'lunatic_cultist', lunatic_cultist = {
         config = {extra = { }},
@@ -2317,9 +2299,7 @@ local jokers = {
                 end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("MoreFluff"))
-        end
+		dependencies = { "SixSuits", "MoreFluff" },
     },
     --[['paradoxic_prophecy', paradoxic_prophecy = {
         name = "Paradoxic Prophecy",
@@ -2597,9 +2577,7 @@ local jokers = {
                 end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits"))
-        end
+		dependencies = { "SixSuits" },
     },
 	"golden_ratio", golden_ratio = {
         config = {extra = { Xmult = 1.618033988749894 }},
@@ -2884,9 +2862,7 @@ local jokers = {
 				end
             end
         end,
-		load_check = function(self)
-			return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
-		end,
+		dependencies = { "SixSuits", "ortalab" },
     },
     'onyx_moonmage', onyx_moonmage = {
         config = { extra = {
@@ -2912,9 +2888,7 @@ local jokers = {
 				}
             end
         end,
-		load_check = function(self)
-			return next(SMODS.find_mod("SixSuits"))
-		end,
+		dependencies = { "SixSuits" },
     },
 	'coven', coven = {
         config = {
@@ -2976,9 +2950,7 @@ local jokers = {
 				end
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits")) and next(SMODS.find_mod("ortalab"))
-        end,
+		dependencies = { "SixSuits", "ortalab" },
     },
 	'olivine', olivine = {
         config = { extra = {
@@ -3014,9 +2986,7 @@ local jokers = {
 				}
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("SixSuits"))
-        end,
+		dependencies = { "SixSuits" },
 	},
 	'cartowomancer', cartowomancer = {
         config = { extra = {
@@ -3099,9 +3069,7 @@ local jokers = {
 				}
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("MoreFluff"))
-        end,
+		dependencies = { "MoreFluff" },
 	},
 	'rot_cartowomancer', rot_cartowomancer = {
         config = { extra = {
@@ -3186,9 +3154,343 @@ local jokers = {
 				}
             end
         end,
-        load_check = function()
-            return next(SMODS.find_mod("MoreFluff"))
-        end,
+		dependencies = { "MoreFluff" },
+	},
+	"nekogloop", nekogloop = {
+		pos = { x = 0, y = 4 },
+		rarity = "hmlt_player",
+		dependencies = { "homelatro" },
+		config = {
+			extra = {
+				numer = 1,
+				denom = 4.13,
+			},
+		},
+		loc_vars = function(self, info_queue, card)
+			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
+			return {vars = {
+				probvars[1],
+				probvars[2],
+			}}
+		end,
+		calculate = function(self, card, context)
+			if context.debuff_card and context.debuff_card:is_suit("Hearts", true) then
+				return { prevent_debuff = true }
+			end
+			if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+				if SMODS.pseudorandom_probability(card, 'thac_nekogloop_extinct', card.ability.extra.numer, card.ability.extra.denom) then
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound('slice1')
+							G.E_MANAGER:add_event(Event({
+								trigger = 'after',
+								delay = 0,
+								blockable = false,
+								func = function()
+									card:remove()
+									G.GAME.pool_flags.thac_nekogloop_extinct = true
+									return true
+								end
+							}))
+						return true
+					end }))
+					return { message = localize('k_extinct_ex') }
+				else
+					return { message = localize('k_safe_ex') }
+				end
+			end
+		end,
+		no_pool_flag = 'thac_nekogloop_extinct',
+	},
+	"autumnmood", autumnmood = {
+		pos = { x = 1, y = 4 },
+		rarity = "hmlt_player",
+		dependencies = { "homelatro" },
+		config = {
+			extra = {
+				numer = 1,
+				denom = 4.13,
+				mult = 3,
+				threshold = 3,
+			},
+		},
+		loc_vars = function(self, info_queue, card)
+			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
+			if card.area.config.collection then
+				return {vars = {
+					probvars[1],
+					probvars[2],
+					card.ability.extra.mult,
+					math.floor(card.ability.extra.threshold),
+					"N/A",
+				}}
+			end
+			local threezones = 0
+			for k,v in ipairs(G.I.CARDAREA) do
+				if v.cards and #v.cards == math.floor(card.ability.extra.threshold) then threezones = threezones + 1 end
+			end
+			return {vars = {
+				probvars[1],
+				probvars[2],
+				card.ability.extra.mult,
+				math.floor(card.ability.extra.threshold),
+				card.ability.extra.mult * threezones,
+			}}
+		end,
+		calculate = function(self, card, context)
+			if context.joker_main then
+				local threezones = 0
+				for k,v in ipairs(G.I.CARDAREA) do
+					if v.cards and #v.cards == math.floor(card.ability.extra.threshold) then threezones = threezones + 1 end
+				end
+				return { mult = card.ability.extra.mult * threezones }
+			end
+			if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+				if SMODS.pseudorandom_probability(card, 'thac_autumnmood_extinct', card.ability.extra.numer, card.ability.extra.denom) then
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound('slice1')
+							G.E_MANAGER:add_event(Event({
+								trigger = 'after',
+								delay = 0,
+								blockable = false,
+								func = function()
+									card:remove()
+									G.GAME.pool_flags.thac_autumnmood_extinct = true
+									return true
+								end
+							}))
+						return true
+					end }))
+					return { message = localize('k_extinct_ex') }
+				else
+					return { message = localize('k_safe_ex') }
+				end
+			end
+		end,
+		no_pool_flag = 'thac_autumnmood_extinct',
+	},
+	"", [""] = {
+		pos = { x = 2, y = 4 },
+		rarity = "hmlt_player",
+		dependencies = { "homelatro" },
+		config = {
+			extra = {
+				numer = 1,
+				denom = 4.13,
+				mult = 3,
+			},
+		},
+		loc_vars = function(self, info_queue, card)
+			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
+			if card.area.config.collection then
+				return {vars = {
+					probvars[1],
+					probvars[2],
+					card.ability.extra.mult,
+					"N/A",
+				}}
+			end
+			local negatives = 0
+			for k,v in ipairs(G.playing_cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			for k,v in ipairs(G.jokers.cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			for k,v in ipairs(G.consumeables.cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			return {vars = {
+				probvars[1],
+				probvars[2],
+				card.ability.extra.mult,
+				card.ability.extra.mult * negatives,
+			}}
+		end,
+		calculate = function(self, card, context)
+			if context.joker_main then
+				local negatives = 0
+				for k,v in ipairs(G.playing_cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				for k,v in ipairs(G.jokers.cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				for k,v in ipairs(G.consumeables.cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				return { mult = card.ability.extra.mult * negatives }
+			end
+			if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+				if SMODS.pseudorandom_probability(card, 'thac__extinct', card.ability.extra.numer, card.ability.extra.denom) then
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound('slice1')
+							G.E_MANAGER:add_event(Event({
+								trigger = 'after',
+								delay = 0,
+								blockable = false,
+								func = function()
+									card:remove()
+									G.GAME.pool_flags.thac__extinct = true
+									return true
+								end
+							}))
+						return true
+					end }))
+					return { message = localize('k_extinct_ex') }
+				else
+					return { message = localize('k_safe_ex') }
+				end
+			end
+		end,
+		no_pool_flag = 'thac__extinct',
+	},
+	"hmlt_knightofheart", hmlt_knightofheart = {
+		pos = { x = 0, y = 5 },
+		rarity = "hmlt_godtier",
+		dependencies = { "homelatro" },
+		config = { extra = {
+		}},
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = { key = "graveyard", set = "Other" }
+			return { vars = {
+			}}
+		end,
+		calculate = function(self, card, context)
+			if context.debuff_card and context.debuff_card:is_suit("Hearts", true) then
+				return { prevent_debuff = true }
+			end
+			if context.amm_buried_card and context.other_card:is_suit("Hearts") then
+				local _card = copy_card(context.other_card, nil, nil, G.playing_card)
+				return { 
+					message = localize('k_copied_ex'),
+					func = function()
+						_card:add_to_deck()
+						G.deck.config.card_limit = G.deck.config.card_limit + 1
+						G.deck:emplace(_card)
+						table.insert(G.playing_cards, _card)
+						playing_card_joker_effects({true})
+						return true
+					end,
+				}
+			end
+		end,
+		yes_pool_flag = "thac_nekogloop_extinct",
+	},
+	"hmlt_witchofmind", hmlt_witchofmind = {
+		pos = { x = 1, y = 5 },
+		rarity = "hmlt_godtier",
+		dependencies = { "homelatro" },
+		loc_vars = function(self, info_queue, card)
+			if card.area.config.collection then
+				return {vars = {
+					card.ability.extra.xmult,
+					math.floor(card.ability.extra.threshold),
+					"N/A",
+				}}
+			end
+			local threezones = 0
+			for k,v in ipairs(G.I.CARDAREA) do
+				if v.cards and #v.cards == math.floor(card.ability.extra.threshold) then threezones = threezones + 1 end
+			end
+			return {vars = {
+				card.ability.extra.xmult,
+				math.floor(card.ability.extra.threshold),
+				1 + (card.ability.extra.xmult * threezones),
+			}}
+		end,
+		config = { extra = {
+			xmult = 3,
+			threshold = 3,
+		}},
+		calculate = function(self, card, context)
+			if context.joker_main then
+				local threezones = 0
+				for k,v in ipairs(G.I.CARDAREA) do
+					if v.cards and #v.cards == math.floor(card.ability.extra.threshold) then threezones = threezones + 1 end
+				end
+				return { xmult = 1 + (card.ability.extra.xmult * threezones) }
+			end
+		end,
+		yes_pool_flag = "thac_autumnmood_extinct",
+	},
+	"hmlt_lordofvoid", hmlt_lordofvoid = {
+		pos = { x = 2, y = 5 },
+		rarity = "hmlt_godtier",
+		dependencies = { "homelatro" },
+		loc_vars = function(self, info_queue, card)
+			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
+			local probvars2 = {SMODS.get_probability_vars(card, 1, 10)}
+			if card.area.config.collection then
+				return {vars = {
+					card.ability.extra.mult,
+					"N/A",
+					probvars[1],
+					probvars[2],
+					"",
+				}}
+			end
+			local negatives = 0
+			for k,v in ipairs(G.playing_cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			for k,v in ipairs(G.jokers.cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			for k,v in ipairs(G.consumeables.cards) do
+				if v.edition and v.edition.negative then negatives = negatives + 1 end
+			end
+			return { vars = {
+				card.ability.extra.mult,
+				card.ability.extra.mult * negatives,
+				probvars[1],
+				probvars[2],
+				probvars2[1] >= probvars2[2] and localize("k_thac_hubris") or "",
+			}}
+		end,
+		config = {extra = {
+			mult = 6,
+			numer = 33,
+			denom = 666,
+		}},
+		calculate = function(self, card, context)
+			if context.joker_main then
+				local negatives = 0
+				for k,v in ipairs(G.playing_cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				for k,v in ipairs(G.jokers.cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				for k,v in ipairs(G.consumeables.cards) do
+					if v.edition and v.edition.negative then negatives = negatives + 1 end
+				end
+				return { mult = card.ability.extra.mult * negatives }
+			end
+			if context.amm_added_card and context.other_card.ability.set == "Joker" and (not context.other_card.edition or context.other_card.edition == {}) and not context.from_debuff and SMODS.pseudorandom_probability(card, 'thac_lordofvoid2', card.ability.extra.numer, card.ability.extra.denom) then
+				local probvars2 = {SMODS.get_probability_vars(card, 1, 10)}
+				if probvars2[1] >= probvars2[2] then
+					return {
+						func = function()
+							card:shatter()
+							context.other_card:shatter()
+							return true
+						end,
+						message = localize('k_extinct_ex')
+					}
+				end
+				return {
+					func = function()
+						context.other_card:set_edition{negative = true}
+						return true
+					end,
+					message = localize('k_thac_negative')
+				}
+			end
+		end,
+		yes_pool_flag = "thac__extinct",
 	},
 }
 

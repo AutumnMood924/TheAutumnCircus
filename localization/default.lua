@@ -11,6 +11,7 @@ return {
 			k_thac_cawcaw = "CAW CAW!!!!",
 			k_thac_active = "ACTIVE!",
 			k_thac_owo = "owo",
+			k_thac_hubris = "Unlikely to participate in hubris...",
 			
 			xchips_extra = "Bonus XChips",
 			emult_extra = "Bonus ^Mult",
@@ -991,6 +992,107 @@ return {
 				text = {
 					"{C:green}#1# in #2#{} chance to",
 					"copy played cards",
+				},
+			},
+			j_thac_nekogloop = {
+				name = {
+					"{C:knightofheartw}nekoGloop",
+				},
+				text = {
+					{
+						"Cards with {C:hearts}Heart{}",
+						"suit can't be {C:attention}debuffed",
+					},
+					{
+						"{C:green}#1# in #2#{} chance for this",
+						"{C:attention}Joker{} to be {C:red}destroyed",
+						"at end of round",
+					},
+				},
+			},
+			j_thac_autumnmood = {
+				name = {
+					"{C:witchofmindw}autumnMood",
+				},
+				text = {
+					{
+						"{C:mult}+#3#{} Mult for each card area",
+						"with exactly {C:attention}#4#{} cards in it",
+						"{C:inactive}(Currently: {C:mult}+#5#{C:inactive} Mult)",
+					},
+					{
+						"{C:green}#1# in #2#{} chance for this",
+						"{C:attention}Joker{} to be {C:red}destroyed",
+						"at end of round",
+					},
+				},
+			},
+			j_thac_  = {
+				name = {
+					"{C:lordofvoidw} ",
+				},
+				text = {
+					{
+						"{C:mult}+#3#{} Mult for each {C:dark_edition}Negative",
+						"{C:attention}Joker{} or {C:attention}consumable{} and for",
+						"each {C:dark_edition}Negative{C:attention} playing card{}",
+						"in your {C:attention}full deck{}",
+						"{C:inactive}(Currently: {C:mult}+#4#{C:inactive} Mult)",
+					},
+					{
+						"{C:green}#1# in #2#{} chance for this",
+						"{C:attention}Joker{} to be {C:red}destroyed",
+						"at end of round",
+					},
+				},
+			},
+			j_thac_hmlt_knightofheart = {
+				name = {
+					"{C:knightofheartw}Knight of Heart",
+				},
+				text = {
+					{
+						"Cards with {C:hearts}Heart{}",
+						"suit can't be {C:attention}debuffed",
+					},
+					{
+						"When a card with {C:hearts}Heart{} suit",
+						"is put into your {C:attention}graveyard{},",
+						"{C:attention}create a copy{} of it and put it",
+						"on the {C:attention}bottom{} of your deck",
+					},
+				},
+			},
+			j_thac_hmlt_witchofmind = {
+				name = {
+					"{C:witchofmindw}Witch of Mind",
+				},
+				text = {
+					{
+						"{X:mult,C:white}X#1#{} Mult for each card area",
+						"with exactly {C:attention}#2#{} cards in it",
+						"{C:inactive}(Currently: {X:mult,C:white}X#3#{C:inactive} Mult)",
+					},
+				},
+			},
+			j_thac_hmlt_lordofvoid = {
+				name = {
+					"{C:lordofvoidw}Lord of Void",
+				},
+				text = {
+					{
+						"{C:mult}+#1#{} Mult for each {C:dark_edition}Negative",
+						"{C:attention}Joker{} or {C:attention}consumable{} and for",
+						"each {C:dark_edition}Negative{C:attention} playing card{}",
+						"in your {C:attention}full deck{}",
+						"{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)",
+					},
+					{
+						"When another {C:attention}Joker{} without an",
+						"{C:dark_edition}Edition{} is gained, {C:green}#3# in #4#{} chance",
+						"for it to become {C:dark_edition}Negative",
+						"{C:inactive}#5#{}",
+					},
 				},
 			},
 			j_thac_edge_of_reality = {
