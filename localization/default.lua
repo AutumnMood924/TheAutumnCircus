@@ -11,7 +11,8 @@ return {
 			k_thac_cawcaw = "CAW CAW!!!!",
 			k_thac_active = "ACTIVE!",
 			k_thac_owo = "owo",
-			k_thac_hubris = "Unlikely to participate in hubris...",
+			k_thac_hubris = "Your hubris exceeds my interest.",
+			k_thac_not_fun = "Nah. Not fun anymore.",
 			
 			xchips_extra = "Bonus XChips",
 			emult_extra = "Bonus ^Mult",

@@ -1976,83 +1976,8 @@ local jokers = {
             if context.first_hand_drawn and not context.blueprint then
                 local gy_cards = AMM.api.graveyard.get_cards()
                 if #gy_cards < card.ability.extra.threshold then return end
-                local suits = {} local ranks = {}
-                local enhancements = {} local seals = {} local editions = {}
-                local aspects = {} local bottles = {}
-                local perma = {
-                    bonus = 0,
-                    mult = 0,
-                    x_chips = 0,
-                    x_mult = 0,
-                    h_chips = 0,
-                    h_mult = 0,
-                    h_x_chips = 0,
-                    h_x_mult = 0,
-                    p_dollars = 0,
-                    h_dollars = 0,
-                }
-                for k,v in ipairs(gy_cards) do
-                    suits[#suits+1] = v.base.suit
-                    ranks[#ranks+1] = v.base.value
-                    enhancements[#enhancements+1] = v.config.center.key
-                    seals[#seals+1] = v:get_seal(true)
-                    editions[#editions+1] = v.edition
-                    aspects[#aspects+1] = v:get_aspect(true)
-                    bottles[#bottles+1] = v.bottle
-                    perma.bonus = perma.bonus + v.ability.perma_bonus
-                    perma.bonus = perma.bonus + v.base.nominal
-                    perma.mult = perma.mult + v.ability.perma_mult
-                    -- fuck it we ball idfk how this shit works
-                    perma.x_chips = perma.x_chips + v.ability.perma_x_chips
-                    perma.x_mult = perma.x_mult + v.ability.perma_x_mult
-                    perma.h_chips = perma.h_chips + v.ability.perma_h_chips
-                    perma.h_mult = perma.h_mult + v.ability.perma_h_mult
-                    perma.h_x_chips = perma.h_x_chips + v.ability.perma_h_x_chips
-                    perma.h_x_mult = perma.h_x_mult + v.ability.perma_h_x_mult
-                    perma.p_dollars = perma.p_dollars + v.ability.perma_p_dollars
-                    perma.h_dollars = perma.h_dollars + v.ability.perma_h_dollars
-                end
-                -- generate and place the card
-                --   remember to remove the nominal value for the generated rank from perma.bonus
-                --   so its chip value isn't "counted twice"
-                local suit = pseudorandom_element(suits, pseudoseed("amalgamiter"))
-                local rank = pseudorandom_element(ranks, pseudoseed("amalgamiter"))
-                local enhancement = pseudorandom_element(enhancements, pseudoseed("amalgamiter"))
-                local seal = pseudorandom_element(seals, pseudoseed("amalgamiter"))
-                local edition = pseudorandom_element(editions, pseudoseed("amalgamiter"))
-                local aspect = pseudorandom_element(aspects, pseudoseed("amalgamiter"))
-                local bottle = pseudorandom_element(bottles, pseudoseed("amalgamiter"))
 
-                local new_card = create_playing_card({
-                    -- this isnt exactly obvious, but create_playing_card
-                    -- will default to creating a random playing card front if the
-                    -- front supplied is nil, so this should actually be safe even
-                    -- if for some reason certain combinations of suit and rank
-                    -- are invalid; it just won't make *much* sense
-
-                    -- you're welcome to test this though i have no idea if it works
-                    front = G.P_CARDS[('%s_%s'):format(SMODS.Suits[suit].card_key, SMODS.Ranks[rank].card_key)],
-                    center = G.P_CENTERS[enhancement]
-                }, G.hand)
-
-                new_card:set_seal(seal)
-                new_card:set_edition(edition)
-                new_card:set_aspect(aspect)
-                new_card.bottle = bottle
-                -- i remberd
-                new_card.ability.perma_bonus = perma.bonus - new_card.base.nominal
-                new_card.ability.perma_mult = perma.mult
-                new_card.ability.perma_x_chips = perma.x_chips
-                new_card.ability.perma_x_mult = perma.x_mult
-                new_card.ability.perma_h_chips = perma.h_chips
-                new_card.ability.perma_h_mult = perma.h_mult
-                new_card.ability.perma_h_x_chips = perma.h_x_chips
-                new_card.ability.perma_h_x_mult = perma.h_x_mult
-
-                -- empty the graveyard
-                for i=#gy_cards,1,-1 do
-                    gy_cards[i]:remove_from_game(nil, true)
-                end
+                AMM.combine_cards(gy_cards, "amalgamiter", G.hand)
             end
         end,
         in_pool = function(self)
@@ -2155,17 +2080,22 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.check_enhancement then
-                if context.other_card.area == G.play and context.other_card.base.value == "Jack" and not
-				context.other_card.config.center.key == "m_stone" and not context.other_card.config.center.no_rank then
-                    keys = {}
-                    ret = false
-                    for k,v in ipairs(G.hand.cards) do
-                        if v.ability.set == "Enhanced" then
-                            keys[v.config.center.key] = true
-                            ret = true
-                        end
-                    end
-                    if ret then return keys end
+                if context.other_card.area == G.play then
+					if context.other_card.base.value == "Jack" then
+						if context.other_card.config.center.key ~= "m_stone" then
+							if not context.other_card.config.center.no_rank then
+								keys = {}
+								ret = false
+								for k,v in ipairs(G.hand.cards) do
+									if v.config.center.set == "Enhanced" then
+										keys[v.config.center.key] = true
+										ret = true
+									end
+								end
+								if ret then return keys end
+							end
+						end
+					end
                 end
             end
         end,
@@ -3486,7 +3416,7 @@ local jokers = {
 							context.other_card:shatter()
 							return true
 						end,
-						message = localize('k_extinct_ex')
+						message = localize('k_thac_not_fun')
 					}
 				end
 				return {
