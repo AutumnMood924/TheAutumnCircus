@@ -3133,6 +3133,7 @@ local jokers = {
 	"nekogloop", nekogloop = {
 		pos = { x = 0, y = 4 },
 		rarity = "hmlt_player",
+		cost = 4,
 		dependencies = { "homelatro" },
 		config = {
 			extra = {
@@ -3169,9 +3170,9 @@ local jokers = {
 							}))
 						return true
 					end }))
-					return { message = localize('k_extinct_ex') }
+					return { message = localize('hmlt_extinct') }
 				else
-					return { message = localize('k_safe_ex') }
+					return { message = localize('hmlt_safe') }
 				end
 			end
 		end,
@@ -3180,6 +3181,7 @@ local jokers = {
 	"autumnmood", autumnmood = {
 		pos = { x = 1, y = 4 },
 		rarity = "hmlt_player",
+		cost = 4,
 		dependencies = { "homelatro" },
 		config = {
 			extra = {
@@ -3238,9 +3240,9 @@ local jokers = {
 							}))
 						return true
 					end }))
-					return { message = localize('k_extinct_ex') }
+					return { message = localize('hmlt_extinct') }
 				else
-					return { message = localize('k_safe_ex') }
+					return { message = localize('hmlt_safe') }
 				end
 			end
 		end,
@@ -3249,6 +3251,7 @@ local jokers = {
 	"", [""] = {
 		pos = { x = 2, y = 4 },
 		rarity = "hmlt_player",
+		cost = 4,
 		dependencies = { "homelatro" },
 		config = {
 			extra = {
@@ -3317,9 +3320,9 @@ local jokers = {
 							}))
 						return true
 					end }))
-					return { message = localize('k_extinct_ex') }
+					return { message = localize('hmlt_extinct') }
 				else
-					return { message = localize('k_safe_ex') }
+					return { message = localize('hmlt_safe') }
 				end
 			end
 		end,
@@ -3328,6 +3331,7 @@ local jokers = {
 	"hmlt_knightofheart", hmlt_knightofheart = {
 		pos = { x = 0, y = 5 },
 		rarity = "hmlt_godtier",
+		cost = 8,
 		dependencies = { "homelatro" },
 		config = { extra = {
 		}},
@@ -3361,6 +3365,7 @@ local jokers = {
 	"hmlt_witchofmind", hmlt_witchofmind = {
 		pos = { x = 1, y = 5 },
 		rarity = "hmlt_godtier",
+		cost = 8,
 		dependencies = { "homelatro" },
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
@@ -3399,6 +3404,7 @@ local jokers = {
 	"hmlt_lordofvoid", hmlt_lordofvoid = {
 		pos = { x = 2, y = 5 },
 		rarity = "hmlt_godtier",
+		cost = 8,
 		dependencies = { "homelatro" },
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end

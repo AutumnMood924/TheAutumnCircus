@@ -850,9 +850,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("ortalab")) then return true else return false end
-		end,
+		dependencies = { "ortalab" },
 	},
 	'bag_of_stardust', bag_of_stardust = {
 		config = {
@@ -882,9 +880,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("ortalab")) then return true else return false end
-		end,
+		dependencies = { "ortalab" },
 	},
 	'calcium', calcium = {
 		config = {
@@ -943,9 +939,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("Cryptid")) then return true else return false end
-		end,
+		dependencies = { "Cryptid" },
 	},
 	'abstract_oddity', abstract_oddity = {
 		config = {
@@ -975,9 +969,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("Cryptid")) then return true else return false end
-		end,
+		dependencies = { "Cryptid" },
 	},
 	'corrupting_shard', corrupting_shard = {
 		config = {
@@ -1007,9 +999,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("entr")) then return true else return false end
-		end,
+		dependencies = { "entr" },
 	},
 	'sack_of_meat', sack_of_meat = {
 		config = {
@@ -1039,9 +1029,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("entr")) then return true else return false end
-		end,
+		dependencies = { "entr" },
 	},
 	'immaculate_prism', immaculate_prism = {
 		config = {
@@ -1072,9 +1060,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("entr")) then return true else return false end
-		end,
+		dependencies = { "entr" },
 	},
 	'pot_of_honey', pot_of_honey = {
 		config = {
@@ -1104,9 +1090,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("GrabBag")) then return true else return false end
-		end,
+		dependencies = { "GrabBag" },
 	},
 	'bottle_of_water', bottle_of_water = {
 		config = {
@@ -1136,9 +1120,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("GrabBag")) then return true else return false end
-		end,
+		dependencies = { "GrabBag" },
 	},
 	'bag_of_bricks', bag_of_bricks = {
 		config = {
@@ -1168,9 +1150,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("aikoyorisshenanigans")) then return true else return false end
-		end,
+		dependencies = { "aikoyorisshenanigans" },
 	},
 	'charred_pouch', charred_pouch = {
 		config = {
@@ -1200,9 +1180,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("aikoyorisshenanigans")) then return true else return false end
-		end,
+		dependencies = { "aikoyorisshenanigans" },
 	},
 	'unstable_concoction', unstable_concoction = {
 		config = {
@@ -1232,9 +1210,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("pta_saka")) then return true else return false end
-		end,
+		dependencies = { "pta_saka" },
 	},
 	'vial_of_plasma', vial_of_plasma = {
 		config = {
@@ -1264,9 +1240,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			if next(SMODS.find_mod("pta_saka")) then return true else return false end
-		end,
+		dependencies = { "pta_saka" },
 	},
 	'scrap_metal', scrap_metal = {
 		config = {
@@ -1365,9 +1339,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("ortalab")) and true
-		end,
+		dependencies = { "ortalab" },
 	},
 	'groundwater', groundwater = {
 		config = {
@@ -1396,9 +1368,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("GrabBag")) and true
-		end,
+		dependencies = { "GrabBag" },
 	},
 	'ritual_page', ritual_page = {
 		config = {
@@ -1427,9 +1397,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("MoreFluff")) and true
-		end,
+		dependencies = { "MoreFluff" },
 	},
 	'glimmer_beyond', glimmer_beyond = {
 		config = {
@@ -1458,9 +1426,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("Cryptid")) and true
-		end,
+		dependencies = { "Cryptid" },
 	},
 	'bizarre_shard', bizarre_shard = {
 		config = {
@@ -1489,9 +1455,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("Cryptid")) and true
-		end,
+		dependencies = { "Cryptid" },
 	},
 	'fading_shadow', fading_shadow = {
 		config = {
@@ -1520,9 +1484,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("entr")) and true
-		end,
+		dependencies = { "entr" },
 	},
 	'viscera', viscera = {
 		config = {
@@ -1551,9 +1513,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("entr")) and true
-		end,
+		dependencies = { "entr" },
 	},
 	'gift_of_the_knight', gift_of_the_knight = {
 		config = {
@@ -1617,9 +1577,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("entr")) and next(SMODS.find_mod("aikoyorisshenanigans"))
-		end,
+		dependencies = { "entr", "aikoyorisshenanigans" },
 	},
 	'gift_of_the_lord', gift_of_the_lord = {
 		config = {
@@ -1651,9 +1609,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("artbox")) and next(SMODS.find_mod("aikoyorisshenanigans"))
-		end,
+		dependencies = { "artbox", "aikoyorisshenanigans" },
 	},
 	'dance_with_the_dead', dance_with_the_dead = {
 		config = {
@@ -1728,9 +1684,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return G.HUD_zodiac and #G.HUD_zodiac > 0
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("ortalab"))
-		end,
+		dependencies = { "ortalab" },
 	},
 	'memorial_ticket', memorial_ticket = {
 		config = {
@@ -1833,9 +1787,7 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			return next(SMODS.find_mod("ortalab")) and true
-		end,
+		dependencies = { "ortalab" },
 	},
 	'teal_potion', teal_potion = {
 		config = {
@@ -1854,9 +1806,7 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			return next(SMODS.find_mod("MoreFluff")) and true
-		end,
+		dependencies = { "MoreFluff" },
 	},
 	'brickskin_potion', brickskin_potion = {
 		config = {
@@ -1875,9 +1825,7 @@ local oddities = {
 			return true
 		end,
 		calculate = enhancement_potion,
-		load_check = function()
-			return next(SMODS.find_mod("aikoyorisshenanigans")) and true
-		end,
+		dependencies = { "aikoyorisshenanigans" },
 	},--]]
 	'experience_splitter', experience_splitter = {
 		config = {
@@ -1933,10 +1881,12 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("entr"))
-			) and true
+		dependencies = {  },
+		load_check = function(self)
+			if next(SMODS.find_mod("entr")) then
+				self.dependencies[#self.dependencies+1] = "entr"
+			end
+			return (#self.dependencies > 0)
 		end,
 	},
 	'chaos_harness', chaos_harness = {

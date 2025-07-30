@@ -26,7 +26,7 @@ data.BUFFERS = {
 
 data.buffer_register_funcs = {
 	Jokers = function(v)
-		if not (TheAutumnCircus.config.enabled_jokers[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_jokers[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "j_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then
@@ -43,7 +43,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Consumables = function(v)
-		if not (TheAutumnCircus.config.enabled_consumables[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_consumables[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			--if v.set == "Oddity" and AMM.api.oddity == nil then return end
 			local a = "c_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
@@ -61,7 +61,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Seals = function(v)
-		if not (TheAutumnCircus.config.enabled_seals[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_seals[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = string.lower(v.name)..'_seal'
 			
 			if not v.loc_txt then
@@ -78,7 +78,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Stamps = function(v)
-		if not (TheAutumnCircus.config.enabled_stamps[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_stamps[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = string.lower(v.name)..'_seal'
 			
 			if not v.loc_txt then
@@ -100,7 +100,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Vouchers = function(v)
-		if not (TheAutumnCircus.config.enabled_vouchers[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_vouchers[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "v_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then
@@ -117,7 +117,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Enhancements = function(v)
-		if not (TheAutumnCircus.config.enabled_enhancements[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_enhancements[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "m_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then
@@ -134,7 +134,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Decks = function(v)
-		if not (TheAutumnCircus.config.enabled_decks[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_decks[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "b_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then
@@ -149,7 +149,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Blinds = function(v)
-		if not (TheAutumnCircus.config.enabled_blinds[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_blinds[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "bl_"..TheAutumnCircus.mod_prefix.."_"..v.key
 			
 			if not v.loc_txt then
@@ -164,12 +164,12 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Shaders = function(v)
-		if (not v.load_check) or v.load_check() then
+		if (not v.load_check) or v:load_check() then
 			SMODS.Shader(v)
 		end
 	end,
 	Editions = function(v)
-		if not (TheAutumnCircus.config.enabled_editions[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_editions[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
@@ -183,7 +183,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Tags = function(v)
-		if not (TheAutumnCircus.config.enabled_tags[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_tags[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
@@ -195,7 +195,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Aspects = function(v)
-		if not (TheAutumnCircus.config.enabled_aspects[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_aspects[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = string.lower(v.name)..'_aspect'
 			
 			if not v.loc_txt then
@@ -221,7 +221,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Zodiacs = function(v)
-		if not (TheAutumnCircus.config.enabled_zodiacs[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_zodiacs[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
@@ -233,7 +233,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Materials = function(v)
-		if not (BUB.config.enabled_materials[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_materials[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			if not v.loc_txt then
 				v.loc_txt = {
 					name = v.display_name or v.name,
@@ -245,7 +245,7 @@ data.buffer_register_funcs = {
 		end
 	end,
 	Recipes = function(v)
-		if not (BUB.config.enabled_recipes[v.key] == false) and ((not v.load_check) or v.load_check()) then
+		if not (TheAutumnCircus.config.enabled_recipes[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local m = {}
 			m.recipe = {}
 			for i=1,#v.recipe do
