@@ -13,6 +13,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
@@ -27,6 +28,11 @@ local jokers = {
                     colour = G.C.CHIPS
                 }
             end
+			if context.forcetrigger then
+				return {
+					chips = card.ability.extra.s_chips
+				}
+			end
         end,
         in_pool = function(self)
             for k,v in ipairs(G.playing_cards) do
@@ -47,6 +53,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.s_chips, localize(card.ability.extra.suit, 'suits_singular')}}
         end,
@@ -61,6 +68,11 @@ local jokers = {
                     colour = G.C.CHIPS
                 }
             end
+			if context.forcetrigger then
+				return {
+					chips = card.ability.extra.s_chips
+				}
+			end
         end,
         in_pool = function(self)
             for k,v in ipairs(G.playing_cards) do
@@ -82,6 +94,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.mult }} end,
@@ -90,6 +103,11 @@ local jokers = {
             if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
                 return { mult = card.ability.extra.mult }
             end
+			if context.forcetrigger then
+				return {
+					mult = card.ability.extra.mult
+				}
+			end
         end,
 	},
 	'groaning_joker', groaning_joker = {
@@ -105,6 +123,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.chips }} end,
@@ -113,6 +132,11 @@ local jokers = {
             if context.joker_main and not (next(context.poker_hands['spectrum_Spectrum'])) then
                 return { chips = card.ability.extra.chips }
             end
+			if context.forcetrigger then
+				return {
+					chips = card.ability.extra.chips
+				}
+			end
         end,
 	},
     'standardized', standardized = {
@@ -128,6 +152,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -137,6 +162,11 @@ local jokers = {
             if context.joker_main and TheAutumnCircus.func.context_strict_standard_hands(context) then
                 return { xmult = card.ability.extra.Xmult }
             end
+			if context.forcetrigger then
+				return {
+					xmult = card.ability.extra.Xmult
+				}
+			end
         end,
     },
     'nonstandard', nonstandard = {
@@ -152,6 +182,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
@@ -161,6 +192,11 @@ local jokers = {
             if context.joker_main and not TheAutumnCircus.func.context_strict_standard_hands(context) then
                 return { xmult = card.ability.extra.Xmult }
             end
+			if context.forcetrigger then
+				return {
+					xmult = card.ability.extra.Xmult
+				}
+			end
         end,
     },
     'gift_from_the_void', gift_from_the_void = {
@@ -172,24 +208,30 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {}}
         end,
         calculate = function(self, card, context)
-            if context.end_of_round and not context.individual and not context.repetition then
-                G.E_MANAGER:add_event(Event({
-                    func = function() 
-                        local _card = create_playing_card({
-                            front = pseudorandom_element(G.P_CARDS, pseudoseed('gftv')), 
-                            center = G.P_CENTERS.c_base}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
-                        _card:set_edition({negative = true}, nil, true)
-                        G.GAME.blind:debuff_card(_card)
-                        if context.blueprint_card then context.blueprint_card:juice_up() else card:juice_up() end
-                        return true
-                    end}))
-
-                playing_card_joker_effects({true})
+            if (context.end_of_round and not context.individual and not context.repetition) or context.forcetrigger then
+				return {
+					extra = {
+						func = function()
+							G.deck.config.card_limit = G.deck.config.card_limit + 1
+							local _card = create_playing_card({
+								front = pseudorandom_element(G.P_CARDS, pseudoseed('gftv')), 
+								center = G.P_CENTERS.c_base}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+							_card:set_edition({negative = true}, nil, true)
+							G.deck:emplace(_card)
+							G.GAME.blind:debuff_card(_card)
+							if context.blueprint_card then context.blueprint_card:juice_up() else card:juice_up() end
+							playing_card_joker_effects({true})
+							return true
+						end,
+					},
+					message = localize("k_thac_negative"),
+				}
             end
         end,
     },
@@ -202,6 +244,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = false,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             local blah = ""
@@ -217,6 +260,7 @@ local jokers = {
                     message = localize('k_again_ex')
                 }     
             end
+			-- incompatible with context.forcetrigger
         end,
     },
     'mirage_joker', mirage_joker = {
@@ -228,6 +272,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = false,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             local blah = ""
@@ -244,6 +289,7 @@ local jokers = {
                     message = localize('k_again_ex')
                 }     
             end
+			-- incompatible with context.forcetrigger
         end,
     },
     'transfusion', transfusion = {
@@ -255,41 +301,27 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             return {vars = {card.ability.extra.rate * 100, card.ability.extra.Xmult}}
         end,
         calculate = function(self, card, context)
-            if context.joker_main then
-                if type(hand_chips) == 'table' then
-                    -- Talisman version
-                    local hchips = hand_chips:sub(card.ability.extra.buffer)
-                    hchips = hchips:mul(card.ability.extra.rate)
-                    local val = hchips:floor()
-                    card.ability.extra.buffer = val:add(card.ability.extra.buffer)
-                    return {
-                        chip_mod = val:neg(),
-                        mult_mod = val:mul(card.ability.extra.Xmult),
-                        card = card,
-                        colour = G.C.PURPLE,
-                        message = "Converted!"
-                    }
-                else
-                    -- Nontalisman version
-                    local hchips = hand_chips - card.ability.extra.buffer
-                    local val = math.floor(card.ability.extra.rate * hchips)
-                    card.ability.extra.buffer = card.ability.extra.buffer + val
-                    return {
-                        chip_mod = -val,
-                        mult_mod = val * card.ability.extra.Xmult,
-                        card = card,
-                        colour = G.C.PURPLE,
-                        message = localize("k_thac_converted")
-                    }
-                end
-            end
-            if context.after then
-                card.ability.extra.buffer = 0
+            if context.joker_main or (context.forcetrigger and type(hand_chips) == "number" and hand_chips > -1) then
+				local hchips = hand_chips - card.ability.extra.buffer
+				local val = math.floor(card.ability.extra.rate * hchips)
+				card.ability.extra.buffer = card.ability.extra.buffer + val
+				return {
+					chip_mod = -val,
+					mult_mod = val * card.ability.extra.Xmult,
+					card = card,
+					colour = G.C.PURPLE,
+					message = localize("k_thac_converted"),
+					func = function()
+						card.ability.extra.buffer = 0
+						return true
+					end,
+				}
             end
         end,
     },
@@ -302,13 +334,14 @@ local jokers = {
         eternal_compat = false,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
             return {vars = {probvars[1], probvars[2]}}
         end,
         calculate = function(self, card, context)
-            if context.joker_main and SMODS.pseudorandom_probability(card, 'placeholder_joker', 1, card.ability.extra.odds) then
+            if (context.joker_main or context.forcetrigger) and SMODS.pseudorandom_probability(card, 'placeholder_joker', 1, card.ability.extra.odds) then
                 card:set_ability(G.P_CENTERS[pseudorandom_element(placeholder_jokers, pseudoseed('placeholder_joker'))])
             end
         end,
@@ -322,6 +355,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.Xchips, card.ability.extra.Xchips_curr }}
@@ -342,7 +376,7 @@ local jokers = {
                     colour = G.C.CHIPS,
                 }
             end
-            if context.joker_main and card.ability.extra.Xchips_curr > 1 then
+            if (context.joker_main or context.forcetrigger) and card.ability.extra.Xchips_curr > 1 then
                 return {
                     colour = G.C.CHIPS,
                     xchips = card.ability.extra.Xchips_curr
@@ -359,6 +393,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.Xchips }}
@@ -377,6 +412,11 @@ local jokers = {
                     }
                 end
             end
+			if context.forcetrigger then
+				return {
+					xchips = card.ability.extra.Xchips
+				}
+			end
         end,
     },
     'sans', sans = {
@@ -388,6 +428,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = false,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = {  }}
@@ -407,6 +448,7 @@ local jokers = {
                     }
                 end
             end
+			-- incompatible with context.forcetrigger
         end,
     },
     'null', null = {
@@ -418,13 +460,14 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
             return {vars = {  }}
         end,
         calculate = function(self, card, context)
-            if context.setting_blind and not (context.blueprint_card or card).getting_sliced then
+            if (context.setting_blind or context.forcetrigger) and not (context.blueprint_card or card).getting_sliced then
 				local do_anything = false
 				local candidates = {}
 				for i=1, #G.jokers.cards do
@@ -462,12 +505,13 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+        demicolon_compat = true,
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
         end,
         calculate = function(self, card, context)
-            if context.amm_added_card and context.other_card.ability.set == "Joker" and not context.from_debuff and not context.blueprint then
+            if context.card_added and context.card.ability.set == "Joker" and not context.blueprint then
                 card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult_mod
                 return {
                     card = card,
@@ -475,7 +519,7 @@ local jokers = {
                     colour = G.C.MULT,
                 }
             end
-            if context.joker_main and card.ability.extra.Xmult_curr > 1 then
+            if (context.joker_main or context.forcetrigger) and card.ability.extra.Xmult_curr > 1 then
                 return {
                     colour = G.C.MULT,
                     xmult = card.ability.extra.Xmult_curr
@@ -3407,13 +3451,13 @@ local jokers = {
 				end
 				return { mult = card.ability.extra.mult * negatives }
 			end
-			if context.amm_added_card and context.other_card.ability.set == "Joker" and (not context.other_card.edition or context.other_card.edition == {}) and not context.from_debuff and SMODS.pseudorandom_probability(card, 'thac_lordofvoid2', card.ability.extra.numer, card.ability.extra.denom) then
+			if context.card_added and context.card.ability.set == "Joker" and (not context.card.edition or context.card.edition == {}) and SMODS.pseudorandom_probability(card, 'thac_lordofvoid2', card.ability.extra.numer, card.ability.extra.denom) then
 				local probvars2 = {SMODS.get_probability_vars(card, 1, 10)}
 				if probvars2[1] >= probvars2[2] then
 					return {
 						func = function()
 							card:shatter()
-							context.other_card:shatter()
+							context.card:shatter()
 							return true
 						end,
 						message = localize('k_thac_not_fun')
@@ -3421,7 +3465,7 @@ local jokers = {
 				end
 				return {
 					func = function()
-						context.other_card:set_edition{negative = true}
+						context.card:set_edition{negative = true}
 						return true
 					end,
 					message = localize('k_thac_negative')
