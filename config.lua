@@ -20,6 +20,7 @@ local config = {
 		selbamusnocerom = true,
 		threeerror = true,
 		joyinautumn = true,
+		shattermyjokersintopieces = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

@@ -46,6 +46,15 @@ local chip_function = function(_, self, area, copier)
 	delay(0.5)
 end
 
+local graveyarder = function(card, enhancement, pseed)
+	for i=1,card.ability.extra.cards do
+		local cardmak = create_playing_card({center = G.P_CENTERS[enhancement]}, G.deck)
+		cardmak:set_edition(poll_edition(pseed), true, true)
+		cardmak:set_seal(SMODS.poll_seal{key = pseed, mod = 10}, true, true)
+		cardmak:move_to_graveyard()
+	end
+end
+
 local activate_oddity = function(self, card, area, copier)
 	local used_tarot = copier or card
 	card.ability.extra.active = true
@@ -1287,7 +1296,8 @@ local oddities = {
 	'fossil', fossil = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_thac_bone"
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1295,18 +1305,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_thac_bone
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_thac_bone}, G.deck)
-				cardmak:set_edition(poll_edition("fossil"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "fossil", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1315,7 +1320,8 @@ local oddities = {
 	'lost_envelope', lost_envelope = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_ortalab_post",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1323,18 +1329,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_ortalab_post
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_ortalab_post}, G.deck)
-				cardmak:set_edition(poll_edition("lost_envelope"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "lost_envelope", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1344,7 +1345,8 @@ local oddities = {
 	'groundwater', groundwater = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_gb_river",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1352,18 +1354,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_gb_river
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_gb_river}, G.deck)
-				cardmak:set_edition(poll_edition("groundwater"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "groundwater", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1373,7 +1370,8 @@ local oddities = {
 	'ritual_page', ritual_page = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_mf_cult",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1381,18 +1379,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_mf_cult
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_mf_cult}, G.deck)
-				cardmak:set_edition(poll_edition("ritual_page"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "ritual_page", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1402,7 +1395,8 @@ local oddities = {
 	'glimmer_beyond', glimmer_beyond = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_cry_light",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1410,18 +1404,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_cry_light}, G.deck)
-				cardmak:set_edition(poll_edition("glimmer_beyond"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "glimmer_beyond", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1431,7 +1420,8 @@ local oddities = {
 	'bizarre_shard', bizarre_shard = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_cry_abstract",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1439,18 +1429,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_cry_abstract
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_cry_abstract}, G.deck)
-				cardmak:set_edition(poll_edition("glimmer_beyond"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "glimmer_beyond", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1460,7 +1445,8 @@ local oddities = {
 	'fading_shadow', fading_shadow = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_entr_dark",
 			}
 		},
 		pos = { x = 0, y = 4 },
@@ -1468,18 +1454,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_dark
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_dark}, G.deck)
-				cardmak:set_edition(poll_edition("fading_shadow"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "fading_shadow", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1489,7 +1470,8 @@ local oddities = {
 	'viscera', viscera = {
 		config = {
 			extra = {
-				cards = 4
+				cards = 4,
+				enh = "m_entr_flesh",
 			}
 		},
 		pos = { x = 4, y = 2 },
@@ -1497,18 +1479,13 @@ local oddities = {
 		cost = 5,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_entr_flesh
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.enh]
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
-			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_entr_flesh}, G.deck)
-				cardmak:set_edition(poll_edition("viscera"), true, true)
-				cardmak:set_seal(SMODS.poll_seal{key = "viscera", mod = 10}, true, true)
-				cardmak:move_to_graveyard()
-			end
+			graveyarder(card, card.ability.extra.enh, self.key)
 		end,
 		can_use = function(self, card, area, copier)
 			return true
@@ -1715,6 +1692,7 @@ local oddities = {
 			return true
 		end,
 	},
+	--[[
 	'ironskin_potion', ironskin_potion = {
 		effect = 'steelify',
 		config = {
@@ -1938,11 +1916,7 @@ local oddities = {
 				return (SMODS.has_enhancement(v, "m_cry_light") or SMODS.has_enhancement(v, "m_entr_dark")) and true
 			end) > 0
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("pta_saka")) and next(SMODS.find_mod("Cryptid")) and next(SMODS.find_mod("entr"))
-			) and true
-		end,
+		dependencies = { "pta_saka", "Cryptid", "entr" },
 	},
 	'yellow_amulet', yellow_amulet = {
 		config = {
@@ -1974,11 +1948,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return G.GAME.blind.in_blind
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("entr"))
-			) and true
-		end,
+		dependencies = { "entr" },
 	},
 }
 

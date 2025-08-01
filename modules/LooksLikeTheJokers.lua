@@ -1,4 +1,4 @@
-local placeholder_jokers = { }
+TheAutumnCircus.placeholder_jokers = { }
 
 local jokers = {
     'helpful_joker', helpful_joker = {
@@ -342,7 +342,7 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if (context.joker_main or context.forcetrigger) and SMODS.pseudorandom_probability(card, 'placeholder_joker', 1, card.ability.extra.odds) then
-                card:set_ability(G.P_CENTERS[pseudorandom_element(placeholder_jokers, pseudoseed('placeholder_joker'))])
+                card:set_ability(G.P_CENTERS[pseudorandom_element(TheAutumnCircus.placeholder_jokers, pseudoseed('placeholder_joker'))])
             end
         end,
     },
@@ -401,7 +401,7 @@ local jokers = {
         calculate = function(self, card, context)
             if context.other_joker and not context.end_of_round then
                 local do_it = false
-                for k,v in ipairs(placeholder_jokers) do
+                for k,v in ipairs(TheAutumnCircus.placeholder_jokers) do
                     if context.other_joker.config.center.key == v then do_it = true; break end
                 end
                 if do_it then
@@ -436,7 +436,7 @@ local jokers = {
         calculate = function(self, card, context)
             if context.retrigger_joker_check then
                 local do_it = false
-                for k,v in ipairs(placeholder_jokers) do
+                for k,v in ipairs(TheAutumnCircus.placeholder_jokers) do
                     if context.other_card.config.center.key == v then do_it = true; break end
                 end
                 if do_it then
@@ -473,7 +473,7 @@ local jokers = {
 				for i=1, #G.jokers.cards do
 					local do_it = false
 					local card2 = G.jokers.cards[i]
-					for k,v in ipairs(placeholder_jokers) do
+					for k,v in ipairs(TheAutumnCircus.placeholder_jokers) do
 						if card2.config.center.key == v and (not card2.edition or not card2.edition.negative) then do_it = true; do_anything = true; break end
 					end
 					if do_it then
@@ -2109,7 +2109,7 @@ local jokers = {
         end,
     },
     
-    --
+    --[[
     'jack_of_all_trades', jack_of_all_trades = {
         config = {extra = { }},
         pos = { x = 0, y = 0 },
@@ -2169,7 +2169,7 @@ local jokers = {
         end,
     },
     'celestial_crossing', celestial_crossing = {
-        config = {extra = { }},
+        config = {extra = { in_progress = false }},
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
@@ -2185,14 +2185,17 @@ local jokers = {
             return {vars = { }}
         end,
         calculate = function(self, card, context)
-            if context.check_enhancement then
-                if context.other_card.area == G.play and
-                    (context.other_card.config.center.key == "m_wild" or context.other_card.config.center.any_suit or 
-                    (context.other_card.base.suit == "six_Stars" and not (context.other_card.config.center.key == "m_stone" or context.other_card.config.center.no_suit))) then
+            if context.check_enhancement and not card.ability.extra.in_progress then
+                card.ability.extra.in_progress = true
+				if context.other_card.area == G.play and
+                    (SMODS.has_any_suit(context.other_card) or 
+                    context.other_card.base.suit == "six_Stars") and not SMODS.has_no_suit(context.other_card) then
+					card.ability.extra.in_progress = false
                     return {
                         m_ortalab_iou = true,
                     }
                 end
+				card.ability.extra.in_progress = false
             end
         end,
 		dependencies = { "SixSuits", "ortalab" },
@@ -3480,6 +3483,35 @@ local jokers = {
 		end,
 		yes_pool_flag = "thac__extinct",
 	},
+    'stirring_graves', stirring_graves = {
+        config = { extra = {
+            retriggers = 1,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 9,
+        rarity = 3,
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {
+                math.floor(card.ability.extra.retriggers),
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.amm_buried_card then
+                context.other_card.ability.perma_retriggers = context.other_card.ability.perma_retriggers + math.floor(card.ability.extra.retriggers)
+                return {
+                    message = localize("k_upgrade_ex"),
+                    colour = G.C.ORANGE,
+                }
+            end
+        end,
+		dependencies = { "allinjest" },
+    },
 }
 
 SMODS.Atlas{
@@ -3502,9 +3534,9 @@ for _, k in ipairs(jokers) do
 	TheAutumnCircus.data.buffer_insert("Jokers", v, {key = k, atlas = "LooksLikeTheJokers"})
     if v.pos.x == 0 and v.pos.y == 0 then
         if v.load_check then
-            if v.load_check() then placeholder_jokers[#placeholder_jokers+1] = "j_thac_" .. k end
+            if v.load_check() then TheAutumnCircus.placeholder_jokers[#TheAutumnCircus.placeholder_jokers+1] = "j_thac_" .. k end
         else
-            placeholder_jokers[#placeholder_jokers+1] = "j_thac_" .. k
+            TheAutumnCircus.placeholder_jokers[#TheAutumnCircus.placeholder_jokers+1] = "j_thac_" .. k
         end
     end
 end

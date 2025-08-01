@@ -46,6 +46,7 @@ local jokers = {
             end
         end,
 		lazy_blind_key = "bl_thac_jera",
+		dependencies = { "GrabBag" },
     },
 }
 

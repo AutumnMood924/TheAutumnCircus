@@ -206,6 +206,9 @@ end
 if TheAutumnCircus.config.enabled_modules.bossmyjokers and next(SMODS.find_mod("GrabBag")) then
 	TheAutumnCircus.BMJ = NFS.load(TheAutumnCircus.mod.path.."modules/BossMyJokers.lua")()
 end
+if TheAutumnCircus.config.enabled_modules.shattermyjokersintopieces and next(SMODS.find_mod("GrabBag")) then
+	TheAutumnCircus.SMJIP = NFS.load(TheAutumnCircus.mod.path.."modules/ShatterMyJokersIntoPieces.lua")()
+end
 if TheAutumnCircus.config.enabled_modules.selbamusnocerom and next(SMODS.find_mod("entr")) then
 	TheAutumnCircus.CM = NFS.load(TheAutumnCircus.mod.path.."modules/selbamusnoCeroM.lua")()
 end

@@ -985,16 +985,6 @@ return {
 					"by {C:green}petting them {C:inactive}({C:attention}Direction{C:inactive} matters)",
 				},
 			},
-			j_thac_jera = {
-				name = {
-					"Jera",
-					--"{C:autumn,s:0.5}(Not the Grab Bag one)",
-				},
-				text = {
-					"{C:green}#1# in #2#{} chance to",
-					"copy played cards",
-				},
-			},
 			j_thac_nekogloop = {
 				name = {
 					"{C:knightofheartw}nekoGloop",
@@ -1096,6 +1086,26 @@ return {
 					},
 				},
 			},
+			j_thac_stirring_graves = {
+				name = {
+					"Stirring Graves",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Cards put into your {C:attention}graveyard{}",
+					"permanently gain {C:attention}#1#{} retrigger",
+				},
+			},
+			j_thac_jera = {
+				name = {
+					"Jera",
+					--"{C:autumn,s:0.5}(Not the Grab Bag one)",
+				},
+				text = {
+					"{C:green}#1# in #2#{} chance to",
+					"copy played cards",
+				},
+			},
 			j_thac_edge_of_reality = {
 				name = {
 					"{C:joy_spell}Edge of Reality",
@@ -1119,6 +1129,40 @@ return {
 					},
 					{
 						"{C:attention}Double these rewards{} in the {C:purple}Flip-Side",
+					},
+				},
+			},
+			j_thac_aggregating_mass = {
+				name = {
+					"{C:purple}Aggregating Mass",
+				},
+				text = {
+					{
+						"When {C:attention}Blind{} is selected,",
+						"create {C:attention}#1#{} random cards",
+						"with {C:gb_eyes}Eye{} suit and put",
+						"them in your {C:attention}graveyard",
+					},
+				},
+			},
+			j_thac_void_nullmage = {
+				name = {
+					"{C:purple}Void Nullmage",
+				},
+				text = {
+					"{C:attention}Unscored{} played cards",
+					"with {C:gb_eyes}Eye{} suit {C:purple}balance",
+					"{C:chips} Chips{} and {C:mult}Mult{}",
+				},
+			},
+			j_thac_shattered_lord_of_void = {
+				name = {
+					"{C:purple}Lord of Void",
+				},
+				text = {
+					{
+						"{C:purple}Divides {C:attention}Blind{} requirement by the",
+						"amount of cards in the {C:riftraft_void}Void{C:inactive} [{C:riftraft_void}#1#{C:inactive}]"
 					},
 				},
 			},
