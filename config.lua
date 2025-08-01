@@ -21,6 +21,7 @@ local config = {
 		threeerror = true,
 		joyinautumn = true,
 		shattermyjokersintopieces = true,
+		effectsonmyjokersitsmorelikelythanyouthink = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

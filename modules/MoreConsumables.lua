@@ -1474,6 +1474,44 @@ local spectrals = {
 	},
 }
 
+local colours = {
+	"placeholder_grey", placeholder_grey = {
+		config = {
+			extra = {
+			},
+			val = 0,
+			partial_rounds = 0,
+			upgrade_rounds = 3,
+		},
+		cost = 4,
+		pos = { x = 1, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			local val, max = progressbar(card.ability.partial_rounds, card.ability.upgrade_rounds)
+			info_queue[#info_queue+1] = G.P_CENTERS.j_thac_placeholder_joker
+			return { vars = {card.ability.val, val, max, card.ability.upgrade_rounds} }
+		end,
+		use = function(self, card, area, copier)
+			for i = 1, card.ability.val do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+					local _card = SMODS.create_card{
+						set = "Joker",
+						key = "j_thac_placeholder_joker",
+						edition = {negative = true},
+					}
+					_card:add_to_deck()
+					G.jokers:emplace(_card)
+					card:juice_up(0.3, 0.5)
+				return true end }))
+			end
+			delay(0.4)
+		end,
+		can_use = function(self, card)
+			return true
+		end,
+		dependencies = { "MoreFluff" },
+	},
+}
+
 local mftarots = {
 	"rot_universe", rot_universe = {
 		config = {
@@ -1491,6 +1529,7 @@ local mftarots = {
 		in_pool = function(self)
 			return false
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_void", rot_void = {
 		config = {
@@ -1508,6 +1547,7 @@ local mftarots = {
 		in_pool = function(self)
 			return false
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_happy_squirrel", rot_happy_squirrel = {
 		config = {
@@ -1525,6 +1565,7 @@ local mftarots = {
 		in_pool = function(self)
 			return false
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_artist", rot_artist = {
 		config = {
@@ -1542,6 +1583,7 @@ local mftarots = {
 		in_pool = function(self)
 			return false
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_veteran", rot_veteran = {
 		config = {
@@ -1559,6 +1601,7 @@ local mftarots = {
 		in_pool = function(self)
 			return false
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_drunkard", rot_drunkard = {
 		config = {
@@ -1590,6 +1633,7 @@ local mftarots = {
 		can_use = function(self, card)
 			return #G.jokers.cards < G.jokers.config.card_limit
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_juggler", rot_juggler = {
 		config = {
@@ -1621,6 +1665,7 @@ local mftarots = {
 		can_use = function(self, card)
 			return #G.jokers.cards < G.jokers.config.card_limit
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rot_joker", rot_joker = {
 		config = {
@@ -1652,6 +1697,7 @@ local mftarots = {
 		can_use = function(self, card)
 			return #G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables
 		end,
+		dependencies = { "MoreFluff" },
 	},
 	"rotflip_star", rotflip_star = {
 		config = {
@@ -1693,9 +1739,7 @@ local mftarots = {
 		can_use = function(self, card)
 			return G.hand and #G.hand.cards > 0
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("SixSuits"))
-		end
+		dependencies = { "MoreFluff", "SixSuits" },
 	},
 	"rotflip_moon", rotflip_moon = {
 		config = {
@@ -1737,9 +1781,7 @@ local mftarots = {
 		can_use = function(self, card)
 			return G.hand and #G.hand.cards > 0
 		end,
-		load_check = function()
-			return next(SMODS.find_mod("SixSuits"))
-		end
+		dependencies = { "MoreFluff", "SixSuits" },
 	},
 }
 
@@ -1774,9 +1816,17 @@ for _, k in ipairs(spectrals) do
 	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Spectral", key = k, atlas = "MoreConsumables"})
 end
 
+local morefluff = SMODS.find_mod("MoreFluff")[1]
 
+--colours
+if morefluff and morefluff.config["Colour Cards"] then
+	for _, k in ipairs(colours) do
+		local v = colours[k]
+		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Colour", key = k, atlas = "MoreConsumables", pixel_size = { w = 71, h = 87 }, display_size = { w = 71, h = 87 }})
+	end
+end
 --45degreetarots
-if next(SMODS.find_mod("MoreFluff")) and SMODS.find_mod("MoreFluff")[1].config["45 Degree Rotated Tarot Cards"] then
+if morefluff and morefluff.config["45 Degree Rotated Tarot Cards"] then
 	for _, k in ipairs(mftarots) do
 		local v = mftarots[k]
 		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Rotarot", key = k, atlas = "Rotatema", display_size = { w = 106, h = 106 }})

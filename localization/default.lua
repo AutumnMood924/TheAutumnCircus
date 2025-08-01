@@ -1430,6 +1430,17 @@ return {
 		},
 		Spectral = {
 		},
+		Colour = {
+			c_thac_placeholder_grey = {
+				name = "Placeholder Grey",
+				text = {
+					"Create a {C:dark_edition}Negative",
+					"{C:attention}Placeholder Joker{} for every",
+					"{C:attention}#4#{} rounds this has been held",
+					"{C:inactive}(Currently {C:attention}#1#{C:inactive}, {}[{C:attention}#2#{C:inactive}#3#{}]{C:inactive})",
+				},
+			},
+		},
 		Rotarot = {
 			c_thac_rot_universe = {
 				name = "The Universe!",

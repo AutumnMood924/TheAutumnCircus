@@ -599,31 +599,6 @@ local jokers = {
         end,
 		dependencies = { "SpectrumFramework" },
     },
-    'psychic_double_reacharound', psychic_double_reacharound = {
-        config = {extra = { retriggers = 2 }},
-        pos = { x = 0, y = 0 },
-        cost = 10,
-        rarity = 3,
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            local blah = ""
-            if card.ability.extra.retriggers > 1 then blah = "s" end
-            return {vars = {card.ability.extra.retriggers, blah}}
-        end,
-        calculate = function(self, card, context)
-            if context.retrigger_joker_check and context.other_card.ability.blueprint_compat_check then
-                return {
-                    repetitions = card.ability.extra.retriggers,
-                    card = card,
-                    colour = G.C.ORANGE,
-                    message = localize('k_again_ex')
-                }
-            end
-        end,
-    },
     'knight_of_heart', knight_of_heart = {
         config = {extra = {
             chips = 10,
