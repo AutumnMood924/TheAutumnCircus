@@ -2856,4 +2856,20 @@ return {
 			},
 		},
 	},
+	ExtraEffects = {
+		thac_handsel = {
+            text = {
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:blue}+#1# Hand",
+				"{C:blue}selection limit",
+            },
+		},
+		thac_discardsel = {
+            text = {
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:red}+#1# Discard",
+				"{C:red}selection limit",
+            },
+		},
+	},
 }
