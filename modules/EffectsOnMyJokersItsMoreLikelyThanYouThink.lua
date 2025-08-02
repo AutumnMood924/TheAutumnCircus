@@ -8,7 +8,7 @@ local thac_effects = {
         ability = {sel = 1},
         description = {
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){}",
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:blue}+#1# Hand",
 				"{C:blue}selection limit",
             },
@@ -35,7 +35,7 @@ local thac_effects = {
         ability = {sel = 1},
         description = {
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){}",
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:red}+#1# Discard",
 				"{C:red}selection limit",
             },
@@ -62,5 +62,7 @@ local thac_effects = {
 
 for k,v in pairs(thac_effects) do
 	v.key = k
-	ExtraEffects[k] = v
+	if (not v.load_check) or (type(v.load_check) == "function" and v:load_check()) then
+		ExtraEffects[k] = v
+	end
 end

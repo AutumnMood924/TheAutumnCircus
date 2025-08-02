@@ -46,13 +46,13 @@ local chip_function = function(_, self, area, copier)
 	delay(0.5)
 end
 
-local graveyarder = function(card, enhancement, pseed)
-	for i=1,card.ability.extra.cards do
-		local cardmak = create_playing_card({center = G.P_CENTERS[enhancement]}, G.deck)
-		cardmak:set_edition(poll_edition(pseed), true, true)
-		cardmak:set_seal(SMODS.poll_seal{key = pseed, mod = 10}, true, true)
-		cardmak:move_to_graveyard()
-	end
+	local graveyarder = function(card, enhancement, pseed)
+		for i=1,card.ability.extra.cards do
+			local cardmak = create_playing_card({center = G.P_CENTERS[enhancement]}, G.deck)
+			cardmak:set_edition(poll_edition(pseed), true, true)
+			cardmak:set_seal(SMODS.poll_seal{key = pseed, mod = 10}, true, true)
+			cardmak:move_to_graveyard()
+		end
 end
 
 local activate_oddity = function(self, card, area, copier)
