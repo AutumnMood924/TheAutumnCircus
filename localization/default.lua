@@ -23,6 +23,8 @@ return {
 			packopt_extra = "Bonus Booster Cards",
 			packsel_extra = "Bonus Booster Choices",
 			dollar_eor = "Bonus $ each Round",
+			effect_slots_extra = "Maximum Effect Slots",
+			potency_extra = "Effect Potency Cap",
 			
 			k_c_thac_prestige_ante = "Prestige: Ante",
 			k_c_thac_prestige_hand = "Prestige: Hand",
@@ -2185,6 +2187,40 @@ return {
 				},
 			},
 		},
+		Bakery = {
+			c_thac_odd_bread = {
+				name = "Odd Bread",
+				text = {
+                    "Create {C:attention}#1#{} {C:green}free{} {C:oddity}Oddity Pack{}",
+                    "at the start of shop,",
+                    "lasts {C:attention}#2#{} trigger(s)",
+                    "{C:inactive}(Doesn't require room)"
+                },
+			},
+		},
+		Umbral = {
+			c_thac_exosphere = {
+				name = "Exosphere",
+				text = {
+                    "Give {C:attention}permanent{} bonus of {C:purple}#1#%{} Balance",
+					"to {C:attention}all{C:six_stars} Stars{} cards in hands",
+                },
+			},
+			c_thac_vacuum = {
+				name = "Vacuum",
+				text = {
+                    "{C:green}#1# in #2#{} chance to give {C:attention}permanent{} bonus of",
+					"{C:attention}+#3#{} retrigger#4# to {C:attention}all{C:six_moons} Moons{} cards in hands",
+                },
+			},
+			c_thac_friend = {
+				name = "Friend",
+				text = {
+                    "Cards in your {C:attention}graveyard{}",
+					"{C:attention}permanently{} gain {X:chips,C:white}X#1#{} Chips",
+                },
+			},
+		},
 		Prestige = {
 			c_thac_prestige_xchips = {
 				name = {
@@ -2369,6 +2405,42 @@ return {
 					"{s:0.15} ",
 					"Will become functional",
 					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_effect_slots = {
+				name = {
+					"Prestige: Effect Slots",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Increases {C:attention}Maximum Effect Slots{}",
+					"of {C:attention}Jokers{} by {C:attention}+#1#{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Cooldown{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
+				},
+			},
+			c_thac_prestige_effect_slots_cd = {
+				name = {
+					"Prestige: Effect Slots",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:red}On cooldown!{}",
+					"{s:0.15} ",
+					"Will become functional",
+					"after {C:attention}#1#{} more use#2#"
+				},
+			},
+			c_thac_prestige_potency = {
+				name = {
+					"Prestige: Potency",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Increases {C:attention}Effect Potency Cap{}",
+					"of {C:attention}Jokers{} by {C:attention}#1#%{}",
+					"{s:0.15} ",
+					"{C:dark_edition}Scaler{s:0.5,C:attention} {f:6,s:0.8}—{s:0.5,C:attention} {C:attention}#2#"
 				},
 			},
 		},
@@ -2838,6 +2910,38 @@ return {
 					"{C:dark_edition}-1{} Ante",
 				},
 			},
+			prestige_hand_effect = {
+				name = "Prestige: Hand",
+				text = {
+					"{C:blue}+#1# Hand{} per round",
+				},
+			},
+			prestige_discard_effect = {
+				name = "Prestige: Discard",
+				text = {
+					"{C:red}+#1# Discard{} per round",
+				},
+			},
+			prestige_ascension_effect = {
+				name = "Prestige: Ascension",
+				text = {
+					"All future {C:gold}Ascension Power{} triggers",
+					"give {C:gold}+#1#{} more {C:gold}Ascension Power{}",
+				},
+			},
+			prestige_energy_effect = {
+				name = "Warped Energy",
+				text = {
+					"{C:pink}+#1#{} Energy Limit",
+				},
+			},
+			prestige_effect_slots_effect = {
+				name = "Prestige: Effect Slots",
+				text = {
+					"Increases {C:attention}Maximum Effect Slots{}",
+					"of {C:attention}Jokers{} by {C:attention}+#1#{}",
+				},
+			},
 		},
 		Blind = {
 			bl_thac_jera = {
@@ -2859,16 +2963,39 @@ return {
 	ExtraEffects = {
 		thac_handsel = {
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
-                "Joker gives {C:blue}+#1# Hand",
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:blue}+#2# Hand",
 				"{C:blue}selection limit",
             },
 		},
 		thac_discardsel = {
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#2#%{}{C:inactive}){C:gold} ~ ÞAC",
-                "Joker gives {C:red}+#1# Discard",
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:red}+#2# Discard",
 				"{C:red}selection limit",
+            },
+		},
+		thac_consumableslot = {
+            text = {
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:purple}+#2#",
+				"{C:purple}consumable slot#3#",
+            },
+		},
+		thac_horoscopeslot = {
+            text = {
+                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Joker gives {C:attention}+#2#",
+				"{C:attention}horoscope slot#3#",
+            },
+		},
+		thac_suitleveler = {
+            text = {
+                "{C:inactive}[Chain]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Level up {V:2}#2#{} suit after",
+				"this {C:attention}Joker{} triggers {C:attention}#3#{} time#4#,",
+				"then {C:attention}increase{} this threshold",
+				"by {C:attention}#5#{} trigger#6#{C:inactive} ({C:attention}#7#{C:inactive} left)",
             },
 		},
 	},

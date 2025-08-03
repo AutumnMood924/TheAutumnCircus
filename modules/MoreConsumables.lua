@@ -1785,6 +1785,193 @@ local mftarots = {
 	},
 }
 
+local colours = {
+	"placeholder_grey", placeholder_grey = {
+		config = {
+			extra = {
+			},
+			val = 0,
+			partial_rounds = 0,
+			upgrade_rounds = 3,
+		},
+		cost = 4,
+		pos = { x = 1, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			local val, max = progressbar(card.ability.partial_rounds, card.ability.upgrade_rounds)
+			info_queue[#info_queue+1] = G.P_CENTERS.j_thac_placeholder_joker
+			return { vars = {card.ability.val, val, max, card.ability.upgrade_rounds} }
+		end,
+		use = function(self, card, area, copier)
+			for i = 1, card.ability.val do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+					local _card = SMODS.create_card{
+						set = "Joker",
+						key = "j_thac_placeholder_joker",
+						edition = {negative = true},
+					}
+					_card:add_to_deck()
+					G.jokers:emplace(_card)
+					card:juice_up(0.3, 0.5)
+				return true end }))
+			end
+			delay(0.4)
+		end,
+		can_use = function(self, card)
+			return true
+		end,
+		dependencies = { "MoreFluff" },
+	},
+}
+
+local bakery = {
+	"odd_bread", odd_bread = {
+		config = {
+			extra = {
+				amount = 1,
+				remaining = 3,
+			},
+		},
+		cost = 4,
+		pos = { x = 3, y = 6 },
+		soul_pos = { x = 4, y = 6 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS.p_amm_oddity_normal_1
+			return SMODS.Bakery.loc_vars(self, info_queue, card)
+		end,
+		calculate = function(self, card, context)
+			if context.starting_shop then
+				for i = 1, card.ability.extra.amount do
+					G.E_MANAGER:add_event(Event{
+						func = function()
+						local _booster = SMODS.add_booster_to_shop('p_amm_oddity_normal_'..(math.random(1,4)))
+						_booster.cost = 0
+						return true
+					end})
+					card_eval_status_text(card, 'extra', nil, nil, nil, {
+						message = localize('k_plus_pack'),
+						colour = G.C.SECONDARY_SET.Oddity,
+					})
+				end
+				SDM_0s_Stuff_Funcs.decrease_remaining_food(card)
+			end
+		end,
+		dependencies = { "sdm0sstuff" },
+	},
+}
+
+local umbrals = {
+	"exosphere", exosphere = {
+		config = {
+			extra = {
+				balance = 0.2,
+			},
+		},
+		cost = 4,
+		pos = { x = 5, y = 5 },
+		loc_vars = function(self, info_queue, card)
+			return {
+				vars = {
+					card.ability.extra.balance * 100
+				}
+			}
+		end,
+		use = function(self, card, area, copier)
+			card:juice_up(0.3, 0.5)
+			for k,v in ipairs(G.hand.cards) do
+				if v:is_suit("six_Stars") then
+					v.ability.perma_balance = v.ability.perma_balance or 0
+					v.ability.perma_balance = v.ability.perma_balance + card.ability.extra.balance
+					card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.PURPLE, instant = true})
+				end
+			end
+		end,
+		can_use = function(self, card)
+			return true
+		end,
+		dependencies = { "aikoyorisshenanigans", "SixSuits", "pta_saka" },
+	},
+	"vacuum", vacuum = {
+		config = {
+			extra = {
+				retriggers = 1,
+				numer = 1,
+				denom = 4,
+			},
+		},
+		cost = 4,
+		pos = { x = 6, y = 5 },
+		loc_vars = function(self, info_queue, card)
+			local probvars = {SMODS.get_probability_vars(card, card.ability.extra.numer, card.ability.extra.denom)}
+			return {
+				vars = {
+					probvars[1],
+					probvars[2],
+					card.ability.extra.retriggers,
+					card.ability.extra.retriggers == 1 and "" or "s",
+				}
+			}
+		end,
+		use = function(self, card, area, copier)
+			card:juice_up(0.3, 0.5)
+			if SMODS.pseudorandom_probability(card, "c_thac_vacuum", card.ability.extra.numer, card.ability.extra.denom) then
+				for k,v in ipairs(G.hand.cards) do
+					if v:is_suit("six_Moons") then
+						v.ability.perma_retriggers = v.ability.perma_retriggers or 0
+						v.ability.perma_retriggers = v.ability.perma_retriggers + card.ability.extra.retriggers
+						card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), instant = true})
+					end
+				end
+			else
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.PURPLE, instant = true})
+			end
+		end,
+		can_use = function(self, card)
+			return true
+		end,
+		dependencies = { "aikoyorisshenanigans", "SixSuits", "allinjest" },
+	},
+	"friend", friend = {
+		config = {
+			extra = {
+				xchips = 0.13
+			},
+		},
+		cost = 4,
+		pos = { x = 7, y = 5 },
+		soul_pos = { x = 8, y = 5, draw=function (card, scale_mod, rotate_mod)
+			if card.children.floating_sprite then
+				--rotate_mod = -G.TIMERS.REAL * 0.333\
+				local xm = (math.cos(G.TIMERS.REAL) / 15)
+				local ym = (math.sin(G.TIMERS.REAL) / 25)
+				scale_mod = math.min(math.max((math.tan(G.TIMERS.REAL) / 5), 0), 0.5)
+				card.children.floating_sprite:draw_shader('dissolve', 0, nil,nil,card.children.center,scale_mod, rotate_mod,xm,ym+0.2,nil, 1)
+				card.children.floating_sprite:draw_shader('dissolve', nil, nil,nil,card.children.center,scale_mod, rotate_mod,xm,ym,nil, 1)
+			end
+		end },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+			return {
+				vars = {
+					card.ability.extra.xchips
+				}
+			}
+		end,
+		use = function(self, card, area, copier)
+			for k,v in ipairs(G.graveyard) do
+				v.ability.perma_x_chips = v.ability.perma_x_chips + card.ability.extra.xchips
+			end
+			card:juice_up(0.3, 0.5)
+			card_eval_status_text(G.deck.cards[1] or card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.CHIPS, instant = true})
+		end,
+		can_use = function(self, card)
+			return true
+		end,
+		dependencies = { "aikoyorisshenanigans" },
+		in_pool = function(self)
+			return AMM.api.graveyard.count_cards() > 0
+		end,
+	},
+}
 SMODS.Atlas{
 	key = "MoreConsumables",
 	path = "MoreConsumables.png",
@@ -1817,6 +2004,8 @@ for _, k in ipairs(spectrals) do
 end
 
 local morefluff = SMODS.find_mod("MoreFluff")[1]
+local sdms = SMODS.find_mod("sdm0sstuff")[1]
+local aikoyori = SMODS.find_mod("aikoyorisshenanigans")[1]
 
 --colours
 if morefluff and morefluff.config["Colour Cards"] then
@@ -1830,5 +2019,21 @@ if morefluff and morefluff.config["45 Degree Rotated Tarot Cards"] then
 	for _, k in ipairs(mftarots) do
 		local v = mftarots[k]
 		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Rotarot", key = k, atlas = "Rotatema", display_size = { w = 106, h = 106 }})
+	end
+end
+
+--bakery
+if sdms and sdms.config["sdm_bakery"] then
+	for _, k in ipairs(bakery) do
+		local v = bakery[k]
+		TheAutumnCircus.data.buffer_insert("Bakery", v, {key = k, atlas = "MoreConsumables"})
+	end
+end
+
+--umbral
+if aikoyori then
+	for _, k in ipairs(umbrals) do
+		local v = umbrals[k]
+		TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Umbral", key = k, atlas = "MoreConsumables"})
 	end
 end

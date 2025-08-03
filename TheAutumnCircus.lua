@@ -9,7 +9,8 @@ TheAutumnCircus.mod = SMODS.current_mod
 TheAutumnCircus.mod.optional_features = function()
 	return {
 		retrigger_joker = true,
-        quantum_enhancements = true,
+        --quantum_enhancements = true,
+		post_trigger = true,
         cardareas = {
             unscored = true,
             --graveyard = true,

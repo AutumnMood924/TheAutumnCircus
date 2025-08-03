@@ -22,6 +22,7 @@ data.BUFFERS = {
 	Zodiacs = {},
 	Materials = {},
 	Recipes = {},
+	Bakery = {},
 }
 
 data.buffer_register_funcs = {
@@ -58,6 +59,24 @@ data.buffer_register_funcs = {
 			end
 			
 			SMODS.Consumable(v)
+		end
+	end,
+	Bakery = function(v)
+		if not (TheAutumnCircus.config.enabled_consumables[v.key] == false) and ((not v.load_check) or v:load_check()) then
+			--if v.set == "Oddity" and AMM.api.oddity == nil then return end
+			local a = "c_"..TheAutumnCircus.mod_prefix.."_"..v.key
+			
+			if not v.loc_txt then
+				v.loc_txt = {
+					name = v.display_name or v.name,
+					subtitle = v.subtitle,
+					text = v.text,
+					boxes = v.boxes
+				}
+				v.subtitle = nil
+			end
+			
+			SMODS.Bakery(v)
 		end
 	end,
 	Seals = function(v)

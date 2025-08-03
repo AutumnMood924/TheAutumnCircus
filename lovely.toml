@@ -258,6 +258,8 @@ payload = '''
 	packopt_extra = 0,
 	packsel_extra = 0,
 	dollar_eor = 0,
+	effect_slots_extra = 0,
+	potency_extra = 0,
 '''
 match_indent = true
 overwrite = false

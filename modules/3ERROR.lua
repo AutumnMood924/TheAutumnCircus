@@ -26,11 +26,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_dollar_eor", prestige_dollar_eor = {
 		config = {
@@ -56,11 +52,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_numerator", prestige_numerator = {
 		config = {
@@ -89,11 +81,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_denominator", prestige_denominator = {
 		config = {
@@ -122,11 +110,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_ante", prestige_ante = {
 		config = {
@@ -165,11 +149,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_hand", prestige_hand = {
 		config = {
@@ -209,11 +189,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_discard", prestige_discard = {
 		config = {
@@ -253,11 +229,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("zeroError"))
-			) and true
-		end,
+		dependencies = { "zeroError" },
 	},
 	"prestige_emult", prestige_emult = {
 		config = {
@@ -286,9 +258,11 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
+		dependencies = { "zeroError" },
 		load_check = function()
 			return (
-				next(SMODS.find_mod("Cryptid"))
+				next(SMODS.find_mod("Cryptid")) or 
+				next(SMODS.find_mod("pta_saka"))
 				-- TODO: add other echips
 			) and true
 		end,
@@ -320,6 +294,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
+		dependencies = { "zeroError" },
 		load_check = function()
 			return (
 				next(SMODS.find_mod("Cryptlib")) or
@@ -365,11 +340,7 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("entr"))
-			) and true
-		end,
+		dependencies = { "zeroError", "entr" },
 	},
 	"prestige_energy", prestige_energy = {
 		config = {
@@ -408,11 +379,77 @@ local prestiges = {
 		can_use = function(self, card, area, copier)
 			return true
 		end,
-		load_check = function()
-			return (
-				next(SMODS.find_mod("Pokermon"))
-			) and true
+		dependencies = { "zeroError", "Pokermon" },
+	},
+	"prestige_effect_slots", prestige_effect_slots = {
+		config = {
+			extra = {
+				amount = 1,
+			},
+		},
+		pos = { x = 0, y = 0 },
+		soul_pos = { x = 1, y = 0 },
+		cost = 4,
+		loc_vars = function(_c, info_queue, card) 
+			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_effect_slots"] or 1
+			local coolnow = G.GAME.Prestiges["c_thac_prestige_effect_slots"]
+			if coolnow ~= nil then
+				info_queue[#info_queue+1] = {key = "prestige_effect_slots_effect", set="Other"}
+				return {
+					key = card.config.center.key.."_cd",
+					vars = {
+						coolnow,
+						coolnow == 1 and "" or "s",
+					},
+				}
+			end
+            info_queue[#info_queue+1] = {key = 'cooldown_explainer', set = 'Other', specific_vars = { localize{key=card.config.center.key, set="Prestige", type="name_text"}, cooldown } }
+			return {vars = { 
+				card.ability.extra.amount,
+				cooldown
+			}}
 		end,
+		use = function(self, card, area, copier)
+			local doit = cooldown_keyword(card, "c_thac_prestige_effect_slots")
+			if doit then
+				G.GAME.hsr_maximum_extra_effects = G.GAME.hsr_maximum_extra_effects + card.ability.extra.amount
+				G.GAME.PrestigeValues.effect_slots_extra = G.GAME.PrestigeValues.effect_slots_extra + card.ability.extra.amount
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		dependencies = { "zeroError", "stacked" },
+	},
+	"prestige_potency", prestige_potency = {
+		config = {
+			immutable = {
+				base_amount = 10,
+			},
+			extra = {
+				scale_amount = 5,
+			},
+		},
+		pos = { x = 0, y = 0 },
+		soul_pos = { x = 1, y = 0 },
+		cost = 4,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'scaler_explainer', set = 'Other', specific_vars = { localize{key=card.config.center.key, set="Prestige", type="name_text"}, card.ability.extra.scale_amount } }
+			return {vars = { 
+				G.GAME.Prestiges and G.GAME.Prestiges["c_thac_prestige_potency"] or card.ability.immutable.base_amount, 
+				card.ability.extra.scale_amount 
+			}}
+		end,
+		use = function(self, card, area, copier)
+			local value = scaler_keyword(card, "c_thac_prestige_potency")
+			G.GAME.hsr_potency_cap = G.GAME.hsr_potency_cap + value
+			G.GAME.PrestigeValues.potency_extra = G.GAME.PrestigeValues.potency_extra + value
+		end,
+		can_use = function(self, card, area, copier)
+			return true
+		end,
+		dependencies = { "zeroError", "stacked" },
 	},
 }
 
@@ -480,6 +517,18 @@ function create_UIBox_current_prestige(simple)
 		hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["denominator_extra"]
 	end
 	hands[#hands].nodes[3].nodes[1].config.text = "-"..(G.GAME.Prestiges and G.GAME.Prestiges["c_thac_prestige_denominator"] or 0.4)
+	if next(SMODS.find_mod("stacked")) then
+		hands[#hands+1] = create_UIBox_current_prestige_row("effect_slots_extra", "c_thac_prestige_effect_slots", 1, darken(G.C.JOKER_GREY, 0.2))
+		-- this doesn't scale
+		hands[#hands].nodes[3].nodes[1].config.text = "+1"
+		if G.GAME.PrestigeValues["effect_slots_extra"] >= 0 then
+			hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["effect_slots_extra"]
+		end
+		hands[#hands+1] = create_UIBox_current_prestige_row("potency_extra", "c_thac_prestige_potency", 10, lighten(G.C.JOKER_GREY, 0.1))
+		if G.GAME.PrestigeValues["potency_extra"] >= 0 then
+			hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["potency_extra"].."%"
+		end
+	end
 	
 	local new_hands = {}
 	
@@ -490,6 +539,9 @@ function create_UIBox_current_prestige(simple)
 			hands[i*2 - math.floor(2/ii) + 1].n = G.UIT.C
 			hands[i*2 - math.floor(2/ii) + 1].config.align = ii == 1 and "cl" or "cm"
 			new_hand.nodes[#new_hand.nodes+1] = hands[i*2 - math.floor(2/ii) + 1]
+			if ii == 1 then
+				new_hand.nodes[#new_hand.nodes+1] = {n=G.UIT.C, config = {align = "cm", minw = 0.13}, nodes={}}
+			end
 		end
 		new_hands[#new_hands+1] = new_hand
 	end
