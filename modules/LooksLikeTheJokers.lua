@@ -1592,7 +1592,11 @@ local jokers = {
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = { }}
         end,
-        -- effect handled in a lovely patch
+		calculate = function(self, card, context)
+			if context.other_card.area == G.graveyard_area and context.individual then
+				SMODS.score_card(context.other_card, {cardarea = G.hand, full_hand = context.full_hand, scoring_hand = context.scoring_hand, scoring_name = context.scoring_name, poker_hands = context.poker_hands })
+			end
+		end,
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
         end,

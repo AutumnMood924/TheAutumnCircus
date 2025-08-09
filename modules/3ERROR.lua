@@ -125,7 +125,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_ante"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_ante"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_ante_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_ante_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {
@@ -164,7 +166,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_hand"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_hand"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_hand_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_hand_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {
@@ -204,7 +208,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_discard"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_discard"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_discard_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_discard_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {
@@ -316,7 +322,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_ascension"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_ascension"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_ascension_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_ascension_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {
@@ -355,7 +363,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_energy"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_energy"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_energy_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_energy_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {
@@ -394,7 +404,9 @@ local prestiges = {
 			local cooldown = G.GAME.PrestigeCooldowns and G.GAME.PrestigeCooldowns["c_thac_prestige_effect_slots"] or 1
 			local coolnow = G.GAME.Prestiges["c_thac_prestige_effect_slots"]
 			if coolnow ~= nil then
-				info_queue[#info_queue+1] = {key = "prestige_effect_slots_effect", set="Other"}
+				info_queue[#info_queue+1] = {key = "prestige_effect_slots_effect", set="Other", vars = { 
+					card.ability.extra.amount
+				}}
 				return {
 					key = card.config.center.key.."_cd",
 					vars = {

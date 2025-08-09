@@ -1922,7 +1922,7 @@ local umbrals = {
 					end
 				end
 			else
-				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.PURPLE, instant = true})
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_nope_ex'), colour = G.C.PURPLE})
 			end
 		end,
 		can_use = function(self, card)

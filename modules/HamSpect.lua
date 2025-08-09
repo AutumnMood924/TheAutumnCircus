@@ -247,7 +247,7 @@ local aspects = {
 			return {vars = { }}
 		end,
 		calculate = function(self, card, context)
-			if context.cardarea == G.hand and context.main_scoring then
+			if context.other_card.area == G.hand and context.other_card == card and context.main_scoring then
 				SMODS.score_card(card, {cardarea = G.play, full_hand = context.full_hand, scoring_hand = context.scoring_hand, scoring_name = context.scoring_name, poker_hands = context.poker_hands })
 			end
 		end,
