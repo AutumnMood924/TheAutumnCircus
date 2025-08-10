@@ -2960,38 +2960,52 @@ return {
 			},
 		},
 	},
+	ExtraEffectTypes = {
+		-- Chain: For context.post_trigger effects
+		chain = "Chain",
+		-- Impulse: For forcetriggering effects
+		impulse = "Impulse",
+		-- Aura: For multi-Joker effects
+		aura = "Aura",
+		
+	},
 	ExtraEffects = {
 		thac_handsel = {
+			name = "Dexterity",
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:blue}+#2# Hand",
 				"{C:blue}selection limit",
             },
 		},
 		thac_discardsel = {
+			name = "Clumsiness",
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:red}+#2# Discard",
 				"{C:red}selection limit",
             },
 		},
 		thac_consumableslot = {
+			name = "Collector's Boon",
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:purple}+#2#",
 				"{C:purple}consumable slot#3#",
             },
 		},
 		thac_horoscopeslot = {
+			name = "Horoscope Fanatic",
             text = {
-                "{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:attention}+#2#",
 				"{C:attention}horoscope slot#3#",
             },
 		},
 		thac_suitleveler = {
+			name = "Suit Leveler",
             text = {
-                "{C:inactive}[Chain]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                --"{C:inactive}[Chain]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Level up {V:2}#2#{} suit after",
 				"this {C:attention}Joker{} triggers {C:attention}#3#{} time#4#,",
 				"then {C:attention}increase{} this threshold",

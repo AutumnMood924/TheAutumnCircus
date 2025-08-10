@@ -15,6 +15,7 @@ end
 
 local thac_effects = {
     thac_handsel = {
+		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 3, pseed = "thac_handsel"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
@@ -38,6 +39,7 @@ local thac_effects = {
         end,
     },
     thac_discardsel = {
+		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 3, pseed = "thac_discardsel"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
@@ -61,6 +63,7 @@ local thac_effects = {
         end,
     },
     thac_consumableslot = {
+		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 2, pseed = "thac_consumableslot"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
@@ -84,6 +87,7 @@ local thac_effects = {
         end,
     },
     thac_horoscopeslot = {
+		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 2, pseed = "thac_horoscopeslot"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
@@ -110,6 +114,7 @@ local thac_effects = {
 		end,
     },
     thac_suitleveler = {
+		type = "chain",
         ability = {value = 2, reset = 4, counter = 4, suit = "Hearts", min_possible = 1, max_possible = 2, pseed = "thac_suitleveler"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.suit, 'suits_plural'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}, G.C.SUITS[ability_table.suit]}}}

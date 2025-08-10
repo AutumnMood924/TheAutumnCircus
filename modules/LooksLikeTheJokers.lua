@@ -3482,14 +3482,13 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.amm_buried_card then
-                context.other_card.ability.perma_retriggers = context.other_card.ability.perma_retriggers + math.floor(card.ability.extra.retriggers)
+                context.other_card.ability.perma_repetitions = context.other_card.ability.perma_repetitions + math.floor(card.ability.extra.retriggers)
                 return {
                     message = localize("k_upgrade_ex"),
                     colour = G.C.ORANGE,
                 }
             end
         end,
-		dependencies = { "allinjest" },
     },
 }
 

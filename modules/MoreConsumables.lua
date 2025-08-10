@@ -1916,8 +1916,8 @@ local umbrals = {
 			if SMODS.pseudorandom_probability(card, "c_thac_vacuum", card.ability.extra.numer, card.ability.extra.denom) then
 				for k,v in ipairs(G.hand.cards) do
 					if v:is_suit("six_Moons") then
-						v.ability.perma_retriggers = v.ability.perma_retriggers or 0
-						v.ability.perma_retriggers = v.ability.perma_retriggers + card.ability.extra.retriggers
+						v.ability.perma_repetitions = v.ability.perma_repetitions or 0
+						v.ability.perma_repetitions = v.ability.perma_repetitions + card.ability.extra.retriggers
 						card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), instant = true})
 					end
 				end
@@ -1928,7 +1928,7 @@ local umbrals = {
 		can_use = function(self, card)
 			return true
 		end,
-		dependencies = { "aikoyorisshenanigans", "SixSuits", "allinjest" },
+		dependencies = { "aikoyorisshenanigans", "SixSuits" },
 	},
 	"friend", friend = {
 		config = {
