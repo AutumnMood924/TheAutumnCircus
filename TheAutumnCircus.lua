@@ -199,6 +199,9 @@ end
 if TheAutumnCircus.config.enabled_modules.editiontomeetya then
 	TheAutumnCircus.ETMY = NFS.load(TheAutumnCircus.mod.path.."modules/EditionToMeetYa.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.transgirlswhobooster then
+	TheAutumnCircus.TGWB = NFS.load(TheAutumnCircus.mod.path.."modules/TransGirlsWhoBooster.lua")()	
+end
 if TheAutumnCircus.config.enabled_modules.hamspect then
 	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
 end

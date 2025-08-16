@@ -7,16 +7,62 @@ local randvalue_default = function(card, ability_table)
 	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = ability_table.max_possible - ability_table.min_possible}
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
 end
+local updvalue_default = function(card, ability_table)
+	if not ability_table.perfect then randvalue_default(card,ability_table) end
+	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 100) / 100
+end
+local updvalue_whole = function(card, ability_table)
+	if not ability_table.perfect then randvalue_default(card,ability_table) end
+	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 1) / 1
+end
 -- treats potency as inverse - lower numbers are better
 local randvalue_inverse = function(card, ability_table)
 	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = ability_table.max_possible - ability_table.min_possible}
 	ability_table.value = (ability_table.max_possible) - ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
 end
+local updvalue_inverse = function(card, ability_table)
+	if not ability_table.perfect then randvalue_inverse(card,ability_table) end
+	ability_table.value = (ability_table.max_possible) - ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 100) / 100
+end
+-- intended for XMult/Chips effects but can be used elsewhere
+local randvalue_tenths = function(card, ability_table)
+	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = (ability_table.max_possible - ability_table.min_possible) * 10, round = 0.1}
+	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 10) / 10
+end
+local randvalue_hundreths = function(card, ability_table)
+	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = (ability_table.max_possible - ability_table.min_possible) * 100, round = 0.01}
+	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 100) / 100
+end
+local updvalue_tenths = function(card, ability_table)
+	if not ability_table.perfect then randvalue_tenths(card,ability_table) end
+	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+	ability_table.value = math.floor(ability_table.value * 10) / 10
+end
+
+local cardquality_value = function(value, quality)
+	if quality == "face" then value = value * 0.9 end
+	if quality == "odd" then value = value * 0.85 end
+	if quality == "even" then value = value * 0.85 end
+	if quality == "numbered" then value = value * 0.75 end
+	if quality == "unenhanced" then value = value * 0.66 end
+	if quality == "enhanced" then value = value * 1.2 end
+	if quality == "unsealed" then value = value * 0.66 end
+	if quality == "sealed" then value = value * 1.5 end
+	if quality == "baseedition" then value = value * 0.66 end
+	if quality == "editioned" then value = value * 1.75 end
+	value = math.floor(value * 100) / 100
+	return value
+end
 
 local thac_effects = {
     thac_handsel = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 3, pseed = "thac_handsel"},
+        ability = {value = 1, min_possible = 1, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
         end,
@@ -40,7 +86,7 @@ local thac_effects = {
     },
     thac_discardsel = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 3, pseed = "thac_discardsel"},
+        ability = {value = 1, min_possible = 1, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
         end,
@@ -64,7 +110,7 @@ local thac_effects = {
     },
     thac_consumableslot = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 2, pseed = "thac_consumableslot"},
+        ability = {value = 1, min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
         end,
@@ -88,7 +134,7 @@ local thac_effects = {
     },
     thac_horoscopeslot = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 2, pseed = "thac_horoscopeslot"},
+        ability = {value = 1, min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
         end,
@@ -113,9 +159,54 @@ local thac_effects = {
 			return next(SMODS.find_mod("Maximus"))
 		end,
     },
+    thac_handleveler = {
+		type = "chain",
+        ability = {value = 3, reset = 5, counter = 5, hand_type = "High Card", min_possible = 2, max_possible = 4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.hand_type, 'poker_hands'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter}}
+        end,
+        randomize_values = function(card, ability_table)
+			local hands = {}
+			for k, hand in pairs(G.GAME.hands) do
+				if hand.visible then
+					hands[#hands+1] = k
+				end
+			end
+		
+			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_inverse(card, ability_table)
+			ability_table.value = math.max(0,ability_table.value)
+		end,
+        update_values = function(card, ability_table)
+            local new = (ability_table.max_possible) - ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+            local old = ability_table.value
+            local diff = new - old
+
+            ability_table.value = new
+			ability_table.value = math.max(0,ability_table.value)
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret then
+                ability_table.counter = ability_table.counter - 1
+				if ability_table.counter <= 0 then
+					ability_table.reset = ability_table.reset + ability_table.value
+					ability_table.counter = ability_table.reset
+					
+					return {
+						extra = {
+							func = function()
+								level_up_hand(card, ability_table.hand_type)
+								return true
+							end,
+						},
+					}
+				end
+            end
+        end,
+    },
     thac_suitleveler = {
 		type = "chain",
-        ability = {value = 2, reset = 4, counter = 4, suit = "Hearts", min_possible = 1, max_possible = 2, pseed = "thac_suitleveler"},
+        ability = {value = 2, reset = 4, counter = 4, suit = "Hearts", min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.suit, 'suits_plural'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}, G.C.SUITS[ability_table.suit]}}}
         end,
@@ -159,11 +250,630 @@ local thac_effects = {
             end
         end,
     },
+    thac_attr_mult = {
+		type = {"passive", "aura"},
+        ability = {value = 2, attr = "DARK", min_possible = 3, max_possible = 12},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
+			-- DIVINE is intentionally omitted
+		
+			ability_table.attr = pseudorandom_element(attrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+            local new = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+            local old = ability_table.value
+            local diff = new - old
+
+            ability_table.value = new
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_attribute(context.other_joker, ability_table.attr) then
+				return {
+					mult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+    thac_attr_chips = {
+		type = {"passive", "aura"},
+        ability = {value = 50, attr = "DARK", min_possible = 8, max_possible = 80,},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
+			-- DIVINE is intentionally omitted
+		
+			ability_table.attr = pseudorandom_element(attrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+            local new = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+            local old = ability_table.value
+            local diff = new - old
+
+            ability_table.value = new
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_attribute(context.other_joker, ability_table.attr) then
+				return {
+					chips = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+    thac_attr_xmult = {
+		type = {"passive", "aura"},
+        ability = {value = 1.5, attr = "DARK", min_possible = 1.0, max_possible = 2.0},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
+			-- DIVINE is intentionally omitted
+		
+			ability_table.attr = pseudorandom_element(attrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_attribute(context.other_joker, ability_table.attr) then
+				return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+	thac_attr_asc = {
+		type = {"passive", "aura"},
+        ability = {value = 1.5, attr = "DARK", min_possible = 1.0, max_possible = 2.0},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
+			-- DIVINE is intentionally omitted
+		
+			ability_table.attr = pseudorandom_element(attrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_attribute(context.other_joker, ability_table.attr) then
+				return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring")) and next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_ygotype_mult = {
+		type = {"passive", "aura"},
+        ability = {value = 10, type = "Fiend", min_possible = 4, max_possible = 16},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
+			-- DivineBeast and CreatorGod are intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+            local new = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+            local old = ability_table.value
+            local diff = new - old
+
+            ability_table.value = new
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_monster_type(context.other_joker, ability_table.type) then
+				return {
+					mult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+    thac_ygotype_chips = {
+		type = {"passive", "aura"},
+        ability = {value = 50, type = "Fiend", min_possible = 25, max_possible = 150},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
+			-- DivineBeast and CreatorGod are intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+            local new = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
+            local old = ability_table.value
+            local diff = new - old
+
+            ability_table.value = new
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_monster_type(context.other_joker, ability_table.type) then
+				return {
+					chips = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+    thac_ygotype_xmult = {
+		type = {"passive", "aura"},
+        ability = {value = 1.5, type = "Fiend", min_possible = 1.5, max_possible = 2.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
+			-- DivineBeast and CreatorGod are intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_monster_type(context.other_joker, ability_table.type) then
+				return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+    },
+    thac_ygotype_asc = {
+		type = {"passive", "aura"},
+        ability = {value = 1.5, type = "Fiend", min_possible = 1.5, max_possible = 2.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
+			-- DivineBeast and CreatorGod are intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and JoyousSpring.is_monster_type(context.other_joker, ability_table.type) then
+				return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring")) and next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_hand_mult = {
+		type = "passive",
+        ability = {value = 10, hand_type = "High Card", min_possible = 8, max_possible = 12},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+        end,
+        randomize_values = function(card, ability_table)
+			local hands = {}
+			for k, hand in pairs(G.GAME.hands) do
+				if hand.visible then
+					hands[#hands+1] = k
+				end
+			end
+		
+			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+                return {
+					mult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_hand_chips = {
+		type = "passive",
+        ability = {value = 70, hand_type = "High Card", min_possible = 50, max_possible = 100},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+        end,
+        randomize_values = function(card, ability_table)
+			local hands = {}
+			for k, hand in pairs(G.GAME.hands) do
+				if hand.visible then
+					hands[#hands+1] = k
+				end
+			end
+		
+			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+                return {
+					chips = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_hand_xmult = {
+		type = "passive",
+        ability = {value = 2, hand_type = "High Card", min_possible = 2, max_possible = 4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+        end,
+        randomize_values = function(card, ability_table)
+			local hands = {}
+			for k, hand in pairs(G.GAME.hands) do
+				if hand.visible then
+					hands[#hands+1] = k
+				end
+			end
+		
+			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+                return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_hand_asc = {
+		type = "passive",
+        ability = {value = 2, hand_type = "High Card", min_possible = 2, max_possible = 4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+        end,
+        randomize_values = function(card, ability_table)
+			local hands = {}
+			for k, hand in pairs(G.GAME.hands) do
+				if hand.visible then
+					hands[#hands+1] = k
+				end
+			end
+		
+			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+                return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_small_hands = {
+		type = "passive",
+        ability = {value = 3, target = 3, min_possible = 2, max_possible = 5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, ability_table.target}}
+        end,
+        randomize_values = function(card, ability_table)
+			local sizes = {1, 2, 3, 4}
+		
+			ability_table.target = pseudorandom_element(sizes, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+			ability_table.value = ability_table.value^(5-ability_table.target)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = ability_table.value^(5-ability_table.target)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main and #context.scoring_hand <= ability_table.target then
+                return {
+					mult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_cq_mult = {
+		type = "attack",
+        ability = {value = 10, quality = "face", min_possible = 4, max_possible = 20},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+                return {
+					mult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_cq_chips = {
+		type = "attack",
+        ability = {value = 50, quality = "face", min_possible = 30, max_possible = 60},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+                return {
+					chips = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_cq_xmult = {
+		type = "attack",
+        ability = {value = 1, quality = "face", min_possible = 1, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+                return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_cq_asc = {
+		type = "attack",
+        ability = {value = 1, quality = "face", min_possible = 1, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+                return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_bj_mult = {
+		type = "passive",
+        ability = {value = 1.0, min_possible = 0.5, max_possible = 1.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				ability_table.value * (G.deck and #G.deck.cards or 52),
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+                return {
+					mult = ability_table.value * #G.deck.cards
+				}
+            end
+        end,
+    },
+    thac_bj_chips = {
+		type = "passive",
+        ability = {value = 2.0, min_possible = 1.0, max_possible = 5.0},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				ability_table.value * (G.deck and #G.deck.cards or 52),
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+                return {
+					chips = ability_table.value * #G.deck.cards
+				}
+            end
+        end,
+    },
+    thac_bj_xmult = {
+		type = "passive",
+        ability = {value = 0.2, min_possible = 0.0, max_possible = 0.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				1 + (ability_table.value * (G.deck and #G.deck.cards or 52)),
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+                return {
+					xmult = 1 + (ability_table.value * #G.deck.cards)
+				}
+            end
+        end,
+    },
+    thac_bj_asc = {
+		type = "passive",
+        ability = {value = 0.2, min_possible = 0.0, max_possible = 0.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				ability_table.value * (G.deck and #G.deck.cards or 52),
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+                return {
+					plus_asc = ability_table.value * #G.deck.cards
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+	thac_bonus_attr = {
+		type = "passive",
+		no_potency = true,
+		ability = {attr = "DARK"},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
+			-- DIVINE is intentionally omitted
+			
+			local newattrs = {}
+			for _,att in ipairs(attrs) do
+				if not JoyousSpring.is_attribute(card, att) then
+					newattrs[#newattrs+1] = att
+				end
+			end
+			if #newattrs == 0 then newattrs[newattrs+1] = "DIVINE" end
+		
+			ability_table.attr = pseudorandom_element(newattrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+		in_pool = function(card)
+			return JoyousSpring.is_monster_card(card) and not JoyousSpring.is_all_attributes(card)
+		end,
+	},
+	thac_bonus_ygotype = {
+		type = "passive",
+		no_potency = true,
+		ability = {ygotype = "Fiend"},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {localize("k_joy_" .. ability_table.type)}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
+			-- DivineBeast and CreatorGod are intentionally omitted
+			
+			local newtypes = {}
+			for _,typ in ipairs(types) do
+				if not JoyousSpring.is_monster_type(card, typ) then
+					newtypes[#newtypes+1] = typ
+				end
+			end
+			if #newtypes == 0 then newtypes[newtypes+1] = "DivineBeast" end
+		
+			ability_table.type = pseudorandom_element(newtypes, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+		in_pool = function(card)
+			return JoyousSpring.is_monster_card(card) and not JoyousSpring.is_all_monster_types(card)
+		end,
+	},
 }
 
 for k,v in pairs(thac_effects) do
 	v.key = k
+	v.ability.pseed = k
 	if (not v.load_check) or (type(v.load_check) == "function" and v:load_check()) then
-		ExtraEffects[k] = v
+		Stacked.extra_effect(v)
 	end
 end

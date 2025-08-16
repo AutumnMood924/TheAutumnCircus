@@ -242,7 +242,18 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "cry_gold"
 			--_editions[#_editions+1] = "cry_jolly"
 		end
+		if next(SMODS.find_mod("RevosVault")) then
+			_editions[#_editions+1] = "crv_pastel"
+			_editions[#_editions+1] = "crv_magnetised_edition"
+		end
+		if next(SMODS.find_mod("entr")) then
+			_editions[#_editions+1] = "entr_sunny"
+			_editions[#_editions+1] = "entr_solar"
+			_editions[#_editions+1] = "entr_fractured"
+			_editions[#_editions+1] = "entr_freaky"
+		end
 		if next(SMODS.find_mod("allinjest")) then
+			_editions[#_editions+1] = "aij_glimmer"
 			_editions[#_editions+1] = "aij_stellar"
 		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
@@ -278,11 +289,15 @@ function Game:main_menu(ctx)
         tg:emplace(card)
         tg:align_cards()
 		
-		local _suits = {"Spades"}
-		local _ranks = {"Ace"}
+		local _suits = {"Spades", "Hearts"}
+		local _ranks = {"Ace", "3", "Queen", "King", "Jack"}
 		if next(SMODS.find_mod("SixSuits")) then
 			_suits[#_suits+1] = "six_Stars"
 		end
+		if next(SMODS.find_mod("GrabBag")) then
+			_suits[#_suits+1] = "gb_Eyes"
+		end
+		target_pcard.ability.entr_yellow_sign = true
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
 		
@@ -297,15 +312,48 @@ function Game:main_menu(ctx)
 			_enhancements[#_enhancements+1] = "m_mf_styled"
 			_enhancements[#_enhancements+1] = "m_mf_teal"
 		end
-		if next(SMODS.find_mod("GrabBag")) then
-			_enhancements[#_enhancements+1] = "m_gb_river"
+		if next(SMODS.find_mod("RevosVault")) then
+			_enhancements[#_enhancements+1] = "m_crv_blessedcard"
+			_enhancements[#_enhancements+1] = "m_crv_tier3card"
+			_enhancements[#_enhancements+1] = "m_crv_aflame"
+			_enhancements[#_enhancements+1] = "m_crv_shattered"
+			if next(SMODS.find_mod("entr")) then
+				_enhancements[#_enhancements+1] = "m_crv_brightest"
+				_enhancements[#_enhancements+1] = "m_crv_darkest"
+			end
+		end
+		if next(SMODS.find_mod("VISIBILITY")) then
+			_enhancements[#_enhancements+1] = "m_vis_notebook"
+		end
+		if next(SMODS.find_mod("artbox")) then
+			_enhancements[#_enhancements+1] = "m_artb_pinata"
 		end
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
 			_enhancements[#_enhancements+1] = "m_akyrs_scoreless"
+			_enhancements[#_enhancements+1] = "m_akyrs_insolate_card"
+			_enhancements[#_enhancements+1] = "m_akyrs_canopy_card"
+			_enhancements[#_enhancements+1] = "m_akyrs_thai_tea_card"
+			_enhancements[#_enhancements+1] = "m_akyrs_zap_card"
 		end
 		if next(SMODS.find_mod("Cryptid")) then
 			_enhancements[#_enhancements+1] = "m_cry_echo"
 			_enhancements[#_enhancements+1] = "m_cry_light"
+		end
+		if next(SMODS.find_mod("entr")) then
+			_enhancements[#_enhancements+1] = "m_entr_flesh"
+			_enhancements[#_enhancements+1] = "m_entr_dark"
+			_enhancements[#_enhancements+1] = "m_entr_prismatic"
+		end
+		if next(SMODS.find_mod("pta_saka")) then
+			_enhancements[#_enhancements+1] = "m_payasaka_damp"
+			_enhancements[#_enhancements+1] = "m_payasaka_volatile"
+			_enhancements[#_enhancements+1] = "m_payasaka_laser"
+			_enhancements[#_enhancements+1] = "m_payasaka_true"
+			_enhancements[#_enhancements+1] = "m_payasaka_score"
+		end
+		if next(SMODS.find_mod("allinjest")) then
+			_enhancements[#_enhancements+1] = "m_aij_fervent"
+			_enhancements[#_enhancements+1] = "m_aij_charged"
 		end
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
@@ -314,9 +362,34 @@ function Game:main_menu(ctx)
 		local _seals = {"Red"}
 		if next(SMODS.find_mod("GrabBag")) then
 			_seals[#_seals+1] = "gb_fortune"
+			_seals[#_seals+1] = "gb_dual"
+			_seals[#_seals+1] = "gb_infinite"
 		end
 		if next(SMODS.find_mod("Pokermon")) then
 			_seals[#_seals+1] = "poke_pink_seal"
+		end
+		if next(SMODS.find_mod("RevosVault")) then
+			_seals[#_seals+1] = "crv_ps"
+		end
+		if next(SMODS.find_mod("VISIBILITY")) then
+			_seals[#_seals+1] = "vis_wooden"
+			_seals[#_seals+1] = "vis_mitosis"
+		end
+		if next(SMODS.find_mod("artbox")) then
+			_seals[#_seals+1] = "artb_brick"
+			_seals[#_seals+1] = "artb_ouroboros"
+		end
+		if next(SMODS.find_mod("TOGAPack")) then
+			_seals[#_seals+1] = "toga_sealseal"
+			_seals[#_seals+1] = "toga_urlseal"
+		end
+		if next(SMODS.find_mod("RiftRaft")) then
+			_seals[#_seals+1] = "riftraft_rift"
+		end
+		if next(SMODS.find_mod("pta_saka")) then
+			_seals[#_seals+1] = "payasaka_random"
+			_seals[#_seals+1] = "payasaka_thunder"
+			_seals[#_seals+1] = "payasaka_ghost"
 		end
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
 			_seals[#_seals+1] = "akyrs_debuff"
@@ -345,7 +418,18 @@ function Game:main_menu(ctx)
 			_editions[#_editions+1] = "cry_gold"
 			--_editions[#_editions+1] = "cry_jolly"
 		end
+		if next(SMODS.find_mod("RevosVault")) then
+			_editions[#_editions+1] = "crv_pastel"
+			_editions[#_editions+1] = "crv_magnetised_edition"
+		end
+		if next(SMODS.find_mod("entr")) then
+			_editions[#_editions+1] = "entr_sunny"
+			_editions[#_editions+1] = "entr_solar"
+			_editions[#_editions+1] = "entr_fractured"
+			_editions[#_editions+1] = "entr_freaky"
+		end
 		if next(SMODS.find_mod("allinjest")) then
+			_editions[#_editions+1] = "aij_glimmer"
 			_editions[#_editions+1] = "aij_stellar"
 		end
 		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
@@ -393,4 +477,27 @@ local alias__CardArea_can_highlight = CardArea.can_highlight
 function CardArea:can_highlight(card)
 	if card.aspect == "thac_breath" then return true end
 	return alias__CardArea_can_highlight(self, card)
+end
+
+local alias__JoyousSpring_is_monster_type = JoyousSpring.is_monster_type
+function JoyousSpring.is_monster_type(card, monster_type)
+	if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
+		for k,v in ipairs(card.ability.hsr_extra_effects) do
+			if v.key == "thac_bonus_ygotype" and v.ability.type == monster_type then
+				return true
+			end
+		end
+	end
+	return alias__JoyousSpring_is_monster_type(card, monster_type)
+end
+local alias__JoyousSpring_is_attribute = JoyousSpring.is_attribute
+function JoyousSpring.is_attribute(card, attribute)
+	if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
+		for k,v in ipairs(card.ability.hsr_extra_effects) do
+			if v.key == "thac_bonus_attr" and v.ability.attr == attribute then
+				return true
+			end
+		end
+	end
+	return alias__JoyousSpring_is_attribute(card, attribute)
 end

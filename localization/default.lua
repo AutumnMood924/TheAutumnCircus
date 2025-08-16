@@ -14,6 +14,8 @@ return {
 			k_thac_hubris = "Your hubris exceeds my interest.",
 			k_thac_not_fun = "Nah. Not fun anymore.",
 			
+			k_thac_option_select = "Option Select",
+			
 			xchips_extra = "Bonus XChips",
 			emult_extra = "Bonus ^Mult",
 			echips_extra = "Bonus ^Chips",
@@ -2942,6 +2944,14 @@ return {
 					"of {C:attention}Jokers{} by {C:attention}+#1#{}",
 				},
 			},
+			p_thac_option_select = {
+				name = "{V:1}Option {V:2}Select",
+				text = {
+					"Holds {V:1}#1#{} cards which",
+					"you may choose {V:2}#2#{} to",
+					"decide your {C:dark_edition}fate",
+				},
+			},
 		},
 		Blind = {
 			bl_thac_jera = {
@@ -2967,13 +2977,14 @@ return {
 		impulse = "Impulse",
 		-- Aura: For multi-Joker effects
 		aura = "Aura",
-		
+		-- Scalar: For Potency-increasing effects
+		-- This is used as a blacklist for these types of effects (probably)
+		scalar = "Scalar",
 	},
 	ExtraEffects = {
 		thac_handsel = {
 			name = "Dexterity",
             text = {
-                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:blue}+#2# Hand",
 				"{C:blue}selection limit",
             },
@@ -2981,7 +2992,6 @@ return {
 		thac_discardsel = {
 			name = "Clumsiness",
             text = {
-                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:red}+#2# Discard",
 				"{C:red}selection limit",
             },
@@ -2989,7 +2999,6 @@ return {
 		thac_consumableslot = {
 			name = "Collector's Boon",
             text = {
-                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:purple}+#2#",
 				"{C:purple}consumable slot#3#",
             },
@@ -2997,20 +3006,182 @@ return {
 		thac_horoscopeslot = {
 			name = "Horoscope Fanatic",
             text = {
-                --"{C:inactive}[Passive]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
                 "Joker gives {C:attention}+#2#",
 				"{C:attention}horoscope slot#3#",
             },
 		},
-		thac_suitleveler = {
-			name = "Suit Leveler",
+		thac_handleveler = {
+			name = "Man I Love #2#",
             text = {
-                --"{C:inactive}[Chain]{} {C:inactive}({}{V:1}#1#%{}{C:inactive}){C:gold} ~ ÞAC",
+                "Level up {C:attention}#2#{} after",
+				"this {C:attention}Joker{} triggers {C:attention}#3#{} time#4#,",
+				"then {C:attention}increase{} this threshold",
+				"by {C:attention}#5#{} trigger#6#{C:inactive} ({C:attention}#7#{C:inactive} left)",
+            },
+		},
+		thac_suitleveler = {
+			name = "Apprentice of {V:2}#2#{}",
+            text = {
                 "Level up {V:2}#2#{} suit after",
 				"this {C:attention}Joker{} triggers {C:attention}#3#{} time#4#,",
 				"then {C:attention}increase{} this threshold",
 				"by {C:attention}#5#{} trigger#6#{C:inactive} ({C:attention}#7#{C:inactive} left)",
             },
 		},
+        thac_attr_mult = {
+            name = "{V:1}#2#{} Synergy M",
+            text = {
+                "{V:1}#2#{C:attention} Jokers{} give {C:mult}+#1#{} Mult",
+            },
+        },
+        thac_attr_chips = {
+            name = "{V:1}#2#{} Synergy C",
+            text = {
+                "{V:1}#2#{C:attention} Jokers{} give {C:chips}+#1#{} Chips",
+            },
+        },
+        thac_attr_xmult = {
+            name = "{V:1}#2#{} Synergy X",
+            text = {
+                "{V:1}#2#{C:attention} Jokers{} give {X:mult,C:white}X#1#{} Mult",
+            },
+        },
+        thac_attr_asc = {
+            name = "{V:1}#2#{} Synergy A",
+            text = {
+                "{V:1}#2#{C:attention} Jokers{} give","{C:gold}+#1#{} Ascension Power",
+            },
+        },
+        thac_ygotype_mult = {
+            name = "{C:joy_normal}#2#{} Synergy M",
+            text = {
+                "{C:joy_normal}#2#{C:attention} Jokers{} give {C:mult}+#1#{} Mult",
+            },
+        },
+        thac_ygotype_chips = {
+            name = "{C:joy_normal}#2#{} Synergy C",
+            text = {
+                "{C:joy_normal}#2#{C:attention} Jokers{} give {C:chips}+#1#{} Chips",
+            },
+        },
+        thac_ygotype_xmult = {
+            name = "{C:joy_normal}#2#{} Synergy X",
+            text = {
+                "{C:joy_normal}#2#{C:attention} Jokers{} give {X:mult,C:white}X#1#{} Mult",
+            },
+        },
+        thac_ygotype_asc = {
+            name = "{C:joy_normal}#2#{} Synergy A",
+            text = {
+                "{C:joy_normal}#2#{C:attention} Jokers{} give","{C:gold}+#1#{} Ascension Power",
+            },
+        },
+        thac_hand_mult = {
+            name = "#2# Synergy M",
+            text = {
+                "{C:attention}Joker{} gives {C:mult}+#1#{} Mult if {C:blue}Hand{}",
+				"contains {C:attention}#2#{}",
+            },
+        },
+        thac_hand_chips = {
+            name = "#2# Synergy C",
+            text = {
+                "{C:attention}Joker{} gives {C:chips}+#1#{} Chips if {C:blue}Hand{}",
+				"contains {C:attention}#2#{}",
+            },
+        },
+        thac_hand_xmult = {
+            name = "#2# Synergy X",
+            text = {
+                "{C:attention}Joker{} gives {C:white,X:mult}X#1#{} Mult if {C:blue}Hand{}",
+				"contains {C:attention}#2#{}",
+            },
+        },
+        thac_hand_asc = {
+            name = "#2# Synergy A",
+            text = {
+                "{C:attention}Joker{} gives {C:gold}+#1#{} Ascension Power if {C:blue}Hand{}",
+				"contains {C:attention}#2#{}",
+            },
+        },
+        thac_small_hands = {
+            name = "Small Hands",
+            text = {
+                "{C:attention}Joker{} gives {C:mult}+#1#{} Mult if {C:blue}Hand{}",
+				"contains {C:attention}#2# or fewer{} cards",
+            },
+        },
+        thac_cq_mult = {
+            name = "#3# Synergy M",
+            text = {
+                "Scored {C:attention}#2#{} cards",
+                "give {C:mult}+#1#{} Mult",
+            },
+        },
+        thac_cq_chips = {
+            name = "#3# Synergy C",
+            text = {
+                "Scored {C:attention}#2#{} cards",
+                "give {C:chips}+#1#{} Chips",
+            },
+        },
+        thac_cq_xmult = {
+            name = "#3# Synergy X",
+            text = {
+                "Scored {C:attention}#2#{} cards",
+                "give {C:white,X:mult}X#1#{} Mult",
+            },
+        },
+        thac_cq_asc = {
+            name = "#3# Synergy A",
+            text = {
+                "Scored {C:attention}#2#{} cards",
+                "give {C:gold}+#1#{} Ascension Power",
+            },
+        },
+        thac_bj_mult = {
+            name = "Blue Jokes M",
+            text = {
+                "{C:attention}Joker{} gives {C:mult}+#1#{} Mult for",
+				"each remaining card in {C:attention}deck",
+				"{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)",
+            },
+        },
+        thac_bj_chips = {
+            name = "Blue Jokes C",
+            text = {
+                "{C:attention}Joker{} gives {C:chips}+#1#{} Chips for",
+				"each remaining card in {C:attention}deck",
+				"{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)",
+            },
+        },
+        thac_bj_xmult = {
+            name = "Blue Jokes X",
+            text = {
+                "{C:attention}Joker{} gives {C:white,X:mult}X#1#{} Mult for",
+				"each remaining card in {C:attention}deck",
+				"{C:inactive}(Currently: {C:white,X:mult}X#2#{C:inactive} Mult)",
+            },
+        },
+        thac_bj_asc = {
+            name = "Blue Jokes A",
+            text = {
+                "{C:attention}Joker{} gives {C:gold}+#1#{} Ascension Power for",
+				"each remaining card in {C:attention}deck",
+				"{C:inactive}(Currently: {C:gold}+#2#{C:inactive} Ascension Power)",
+            },
+        },
+        thac_bonus_attr = {
+            name = "{V:1}#1#{}-Attuned",
+            text = {
+                "{C:attention}Joker{} is also {V:1}#1#{}",
+            },
+        },
+        thac_bonus_ygotype = {
+            name = "Form of {C:joy_normal}#1#{}",
+            text = {
+                "{C:attention}Joker{} is also a {C:joy_normal}#1#{}",
+            },
+        },
 	},
 }

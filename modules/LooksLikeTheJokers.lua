@@ -368,13 +368,12 @@ local jokers = {
                 (not context.other_card.edition) and
                 (not context.other_card.aspect)
             ) then
-                card.ability.extra.Xchips_curr = card.ability.extra.Xchips_curr + card.ability.extra.Xchips
-                return {
-                    card = card,
-					focus = card,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.CHIPS,
-                }
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "Xchips_curr",
+					scalar_value = "Xchips",
+					message_colour = G.C.CHIPS,
+				})
             end
             if (context.joker_main or context.forcetrigger) and card.ability.extra.Xchips_curr > 1 then
                 return {
@@ -512,12 +511,12 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.card_added and context.card.ability.set == "Joker" and not context.blueprint then
-                card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + card.ability.extra.Xmult_mod
-                return {
-                    card = card,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                }
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "Xmult_curr",
+					scalar_value = "Xmult_mod",
+					message_colour = G.C.MULT,
+				})
             end
             if (context.joker_main or context.forcetrigger) and card.ability.extra.Xmult_curr > 1 then
                 return {
@@ -654,26 +653,66 @@ local jokers = {
                 for k, v in ipairs(context.scoring_hand) do
                     if v.base.suit == "Hearts" or SMODS.has_no_suit(v) then
 						if v.ability.akyrs_special_card_type == "rank" then
-							v.ability.akyrs_special_card_type = nil
-							v:change_suit("Hearts")
+							append_extra(ret, {
+								func = function()
+									v.ability.akyrs_special_card_type = nil
+									v:change_suit("Hearts")
+								end,
+							})
 							state = 1
 						end
                     elseif v.base.suit == "Spades" then
-                        card.ability.extra.curr_chips = card.ability.extra.curr_chips + card.ability.extra.chips
+						append_extra(ret, {
+							func = function()
+								SMODS.scale_card(card, {
+									ref_table = card.ability.extra,
+									ref_value = "curr_chips",
+									scalar_value = "chips",
+									message_colour = G.C.CHIPS,
+								})
+							end,
+						})
                         v:change_suit("Hearts")
                         state = 1
                     elseif v.base.suit == "Clubs" then
-                        card.ability.extra.curr_mult = card.ability.extra.curr_mult + card.ability.extra.mult
+						append_extra(ret, {
+							func = function()
+								SMODS.scale_card(card, {
+									ref_table = card.ability.extra,
+									ref_value = "curr_mult",
+									scalar_value = "mult",
+									message_colour = G.C.MULT,
+								})
+							end,
+						})
                         v:change_suit("Hearts")
                         state = 1
                     elseif v.base.suit == "Diamonds" then
-                        card.ability.extra.curr_money = card.ability.extra.curr_money + card.ability.extra.money
-                        v:change_suit("Hearts")
+						append_extra(ret, {
+							func = function()
+								SMODS.scale_card(card, {
+									ref_table = card.ability.extra,
+									ref_value = "curr_money",
+									scalar_value = "money",
+									message_colour = G.C.MONEY,
+								})
+								v:change_suit("Hearts")
+							end,
+						})
                         state = 1
                     else
-                        card.ability.extra.curr_Xmult = card.ability.extra.curr_Xmult + card.ability.extra.Xmult
-                        v:change_suit("Hearts")
-                        state = 1
+						append_extra(ret, {
+							func = function()
+								SMODS.scale_card(card, {
+									ref_table = card.ability.extra,
+									ref_value = "curr_Xmult",
+									scalar_value = "Xmult",
+									message_colour = G.C.MULT,
+								})
+								v:change_suit("Hearts")
+							end,
+						})
+						state = 1
                     end
                 end
                 if state == 1 then
@@ -1157,12 +1196,12 @@ local jokers = {
         calculate = function(self, card, context)
             if context.before and not context.blueprint then
                 if #G.play.cards == #context.scoring_hand + 1 then
-                    card.ability.extra.chips_curr = card.ability.extra.chips_curr + card.ability.extra.chips
-                    return {
-                        card = card,
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.CHIPS,
-                    }
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "chips_curr",
+						scalar_value = "chips",
+						message_colour = G.C.CHIPS,
+					})
                 end
             end
             if context.joker_main and card.ability.extra.chips_curr > 1 then
@@ -1277,12 +1316,14 @@ local jokers = {
                     temp_gy[1]:remove_from_game()
                     success = success + 1
                 end
-                card.ability.extra.Xmult_curr = card.ability.extra.Xmult_curr + (card.ability.extra.Xmult_mod * success)
-                return {
-                    card = card,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                }
+				for i=1,success do
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "Xmult_curr",
+						scalar_value = "Xmult_mod",
+						message_colour = G.C.MULT,
+					})
+				end
             end
             if context.joker_main and card.ability.extra.Xmult_curr > 1 then
                 return {
@@ -1558,12 +1599,12 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_thac_jewel") and not context.end_of_round and not context.blueprint then
-                card.ability.extra.chips_curr = card.ability.extra.chips_curr + card.ability.extra.chips
-                return {
-                    card = card,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.CHIPS,
-                }
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "chips_curr",
+					scalar_value = "chips",
+					message_colour = G.C.CHIPS,
+				})
             end
             if context.joker_main and card.ability.extra.chips_curr > 1 then
                 return {
@@ -2629,13 +2670,12 @@ local jokers = {
         end,
         calculate = function(self, card, context)
             if context.individual and context.cardarea == "unscored" and not context.end_of_round and context.other_card:is_suit("Hearts") then
-				card.ability.extra.mult_curr = card.ability.extra.mult_curr + card.ability.extra.mult
-                return {
-                    card = context.other_card,
-					focus = card,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                }
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "mult_curr",
+					scalar_value = "mult",
+					message_colour = G.C.MULT,
+				})
             end
 			if context.joker_main and card.ability.extra.mult_curr > 0 then
 				return { mult = card.ability.extra.mult_curr }

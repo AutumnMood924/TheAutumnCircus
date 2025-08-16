@@ -22,6 +22,7 @@ local config = {
 		joyinautumn = true,
 		shattermyjokersintopieces = true,
 		effectsonmyjokersitsmorelikelythanyouthink = true,
+		transgirlswhobooster = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,
@@ -269,6 +270,9 @@ local config = {
 	enabled_materials = {
 	},
 	enabled_recipes = {
+	},
+	enabled_boosters = {
+		option_select = true,
 	},
 	mechanics = {
 	},

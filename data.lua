@@ -17,6 +17,7 @@ data.BUFFERS = {
 	Blinds = {},
 	Shaders = {},
 	Editions = {},
+	Boosters = {},
 	Tags = {},
 	Aspects = {},
 	Zodiacs = {},
@@ -201,6 +202,11 @@ data.buffer_register_funcs = {
 			SMODS.Edition(v)
 		end
 	end,
+	Boosters = function(v)
+		if not (TheAutumnCircus.config.enabled_boosters[v.key] == false) and ((not v.load_check) or v:load_check()) then
+			SMODS.Booster(v)
+		end
+	end,
 	Tags = function(v)
 		if not (TheAutumnCircus.config.enabled_tags[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			if not v.loc_txt then
@@ -338,7 +344,7 @@ function data.buffer_insert(buffer, object, extra)
 			object.config.extra = {}
 		end
 		if type(object.config.extra) == "table" and not object.config.extra.joyous_spring then
-			object.generate_ui = JoyousSpring.generate_info_ui
+			--object.generate_ui = JoyousSpring.generate_info_ui
 			object.config.extra.joyous_spring = JoyousSpring.init_joy_table {
 				attribute = this_trait.attribute,
 				monster_type = this_trait.monster_type,
