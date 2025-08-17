@@ -3291,7 +3291,16 @@ return {
             text = {
 				"{C:attention}Joker{} casts a {C:purple,E:1}Spell{} based",
 				"on the first two cards held",
-				"in hand and a {C:attention}#1#{}'s power",
+				"in hand and a#2# {C:attention}#1#{}'s power",
+            },
+        },
+        thac_incrementalist = {
+            name = "#1# Incrementalist",
+            text = {
+                "Creates a#2# {C:attention}#1#{} after",
+				"this {C:attention}Joker{} triggers {C:attention}#3#{} times",
+				"{C:inactive}(Must have room, {C:attention}#4#{C:inactive} left)",
+				
             },
         },
 	},
