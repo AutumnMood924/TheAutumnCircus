@@ -503,3 +503,20 @@ if next(SMODS.find_mod("JoyousSpring")) then
 		return alias__JoyousSpring_is_attribute(card, attribute)
 	end
 end
+
+if next(SMODS.find_mod("kino")) and next(SMODS.find_mod("stacked")) then
+	local alias__Kino_count_bullets = Kino.count_bullets
+	function Kino:count_bullets()
+		local _bullet_count = alias__Kino_count_bullets(self)
+		for __,_joker in ipairs(G.jokers.cards) do
+			if _joker.ability.hsr_extra_effects then
+				for _,_effect in ipairs(_joker.ability.hsr_extra_effects) do
+					if _effect.key == "thac_magazine" then
+						_bullet_count = _bullet_count + _effect.ability.value
+					end
+				end
+			end
+		end
+		return _bullet_count
+	end
+end

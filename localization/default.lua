@@ -3211,5 +3211,88 @@ return {
                 "gives {C:gold}+#1#{} Ascension Power",
             },
         },
+        thac_simplicity = {
+            name = "Simplicity",
+            text = {
+                "{C:mult}+#1#{} Mult",
+				"Increases the {C:green}denominator{} of",
+				"all {C:green}listed probabilities{} by {C:red}#1#",
+            },
+        },
+        thac_more_xchips = {
+            name = "More XChips",
+            text = {
+                "{C:white,X:chips}X#1#{} Chips"
+            },
+        },
+        thac_more_asc = {
+            name = "More {C:gold}Ascension Power",
+            text = {
+                "{C:gold}+#1#{} Ascension Power",
+            },
+        },
+        thac_more_xasc = {
+            name = "More {C:gold}XAscension Power",
+            text = {
+                "{X:gold,C:white}X#1#{} Ascension Power",
+            },
+        },
+        thac_flipside_buff = {
+            name = "Flip-Side Buff",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}X#1#{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"while in the {C:purple}Flip-Side",
+            },
+        },
+        thac_combo_mult = {
+            name = "Comedy Combo M",
+            text = {
+                "{C:mult}+#1#{} Mult when",
+				"this {C:attention}Joker{} triggers"
+            },
+        },
+        thac_combo_chips = {
+            name = "Comedy Combo C",
+            text = {
+                "{C:chips}+#1#{} Chips when",
+				"this {C:attention}Joker{} triggers"
+            },
+        },
+        thac_combo_xmult = {
+            name = "Comedy Combo X",
+            text = {
+                "{C:white,X:mult}X#1#{} Mult when",
+				"this {C:attention}Joker{} triggers"
+            },
+        },
+        thac_combo_asc = {
+            name = "Comedy Combo A",
+            text = {
+                "{C:gold}+#1#{} Ascension Power when",
+				"this {C:attention}Joker{} triggers"
+            },
+        },
+        thac_fadeout = {
+            name = "Fadeout",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"for each card below {C:attention}#2#{} in your {C:attention}full deck",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#3#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_magazine = {
+            name = "Magazine",
+            text = {
+                "Counts as {C:attention}#1#{} Bullet#2#",
+            },
+        },
+        thac_spellcaster = {
+            name = "Spellcaster",
+            text = {
+				"{C:attention}Joker{} casts a {C:purple,E:1}Spell{} based",
+				"on the first two cards held",
+				"in hand and a {C:attention}#1#{}'s power",
+            },
+        },
 	},
 }

@@ -5,7 +5,7 @@
 	"description": "Welcome to Þe Autumn Circus!",
 	"prefix": "thac",
 	"main_file": "TheAutumnCircus.lua",
-	"priority": 42,
+	"priority": 136661225,
 	"badge_colour": "d1b628",
 	"badge_text_colour": "ffed83",
 	"display_name": "ÞAC",

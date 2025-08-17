@@ -208,6 +208,7 @@ local thac_effects = {
             end
         end,
     },
+
     thac_suitleveler = {
 		type = "chain",
         ability = {value = 2, reset = 4, counter = 4, suit = "Hearts", min_possible = 1, max_possible = 2},
@@ -366,6 +367,7 @@ local thac_effects = {
 			return next(SMODS.find_mod("JoyousSpring")) and next(SMODS.find_mod("entr"))
 		end,
     },
+
     thac_ygotype_mult = {
 		type = {"passive", "aura"},
         ability = {value = 10, type = "Fiend", min_possible = 4, max_possible = 16},
@@ -504,6 +506,7 @@ local thac_effects = {
             end
         end,
     },
+
     thac_hand_chips = {
 		type = "passive",
         ability = {value = 70, hand_type = "High Card", min_possible = 50, max_possible = 100},
@@ -637,6 +640,7 @@ local thac_effects = {
             end
         end,
     },
+
     thac_cq_chips = {
 		type = "attack",
         ability = {value = 30, quality = "face", min_possible = 15, max_possible = 45},
@@ -767,6 +771,7 @@ local thac_effects = {
             end
         end,
     },
+
     thac_bj_xmult = {
 		type = "passive",
         ability = {value = 0.02, min_possible = 0.0, max_possible = 0.05},
@@ -914,6 +919,7 @@ local thac_effects = {
             end
         end,
     },
+
     thac_first_cq_chips = {
 		type = "attack",
         ability = {value = 50, quality = "face", min_possible = 30, max_possible = 80},
@@ -1025,6 +1031,301 @@ local thac_effects = {
 			return next(SMODS.find_mod("entr"))
 		end,
     },
+	--[[
+    thac_simplicity = {
+		type = {"passive", "cursed"},
+        ability = {value = 1, min_possible = 0, max_possible = 25},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					mult = ability_table.value
+				}
+            end
+			if context.mod_probability then
+				return {
+					denominator = context.denominator + ability_table.value
+				}
+			end
+        end,
+        in_pool = function(card)
+            return not not G.GAME.cursed_effects_enable
+        end,
+    },--]]
+    thac_more_xchips = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 1.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					xchips = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_more_asc = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+
+    thac_more_xasc = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1.1, max_possible = 1.4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_flipside_buff = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and G.GAME.entr_alt then
+				return {
+					buff = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_combo_mult = {
+		type = {"passive", "chain"},
+        ability = {value = 1, min_possible = 0, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret and type(hand_chips) == "number" then
+                return {
+					mult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_combo_chips = {
+		type = {"passive", "chain"},
+        ability = {value = 1, min_possible = 0, max_possible = 10},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret and type(hand_chips) == "number" then
+                return {
+					chips = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_combo_xmult = {
+		type = {"passive", "chain"},
+        ability = {value = 1, min_possible = 1, max_possible = 1.25},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret and type(hand_chips) == "number" then
+                return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+    },
+
+    thac_combo_asc = {
+		type = {"passive", "chain"},
+        ability = {value = 1, min_possible = 0, max_possible = 0.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = updvalue_default,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret and type(hand_chips) == "number" then
+                return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_fadeout = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0.01, max_possible = 0.1},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value * 100,
+				G.GAME.starting_deck_size,
+				ability_table.value * 100 * math.max(0, G.GAME.starting_deck_size - (G.deck and #G.playing_cards or 52))
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and G.GAME.starting_deck_size > #G.playing_cards then
+				return {
+					buff = 1 + (ability_table.value * math.max(0, G.GAME.starting_deck_size - (G.deck and #G.playing_cards or 52)))
+				}
+            end
+        end,
+    },
+    thac_magazine = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				ability_table.value == 1 and "" or "s",
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("kino"))
+		end,
+    },
+	thac_spellcaster = {
+		type = "passive",
+        ability = {value = 1, min_possible = 2, max_possible = 14},
+        loc_vars = function(info_queue, card, ability_table)
+			local tbl = {
+				"nil",
+				"2", "3", "4", "5", "6", "7", "8", "9", "10",
+				"Jack", "Queen", "King", "Ace"
+			}
+            return {vars = {
+				localize(tbl[ability_table.value], 'ranks'),
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+		calculate = function(card, context, ability_table, ability_index)
+			if context.joker_main and #G.hand.cards > 1 then
+				local _strength = check_spell_strength(ability_table.value)
+				local _spell_key = check_spell_key(G.hand.cards)
+				local _return_table = cast_spell(_spell_key, _strength)
+				G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+					attention_text({
+						text = localize({type="name_text", set="Spell", key= _spell_key }),
+						scale = 1.3, 
+						hold = 1.4,
+						major = G.play,
+						align = 'tm',
+						offset = {x = 0, y = -1},
+						silent = true
+					})
+					card:juice_up()
+				return true end }))
+
+				if type(_return_table) ~= 'table' then return nil end
+				card_eval_status_text(card, 'extra', nil, nil, nil,
+				{ message = localize('k_spell_cast'), colour = G.C.PURPLE })
+				return _return_table
+			end
+		end,
+		load_check = function()
+			return next(SMODS.find_mod("kino"))
+		end,
+	},
 }
 
 for k,v in pairs(thac_effects) do
