@@ -46,7 +46,7 @@ end
 
 local cardquality_value = function(value, quality)
 	if quality == "face" then value = value * 0.9 end
-	if quality == "nonface" then value = value * 0.6 end
+	if quality == "nonface" then value = value ^ 0.9 end
 	if quality == "odd" then value = value * 0.85 end
 	if quality == "even" then value = value * 0.85 end
 	if quality == "prime" then value = value * 1.2 end
@@ -1386,6 +1386,166 @@ local thac_effects = {
 			return next(SMODS.find_mod("zeroError"))
 		end,
 	},
+
+    thac_poketype_mult = {
+		type = {"passive", "aura"},
+        ability = {value = 2, type = "Colorless", min_possible = 3, max_possible = 12},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+			-- Bird is intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and is_type(context.other_joker, ability_table.type) then
+				return {
+					mult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Pokermon"))
+		end,
+    },
+    thac_poketype_chips = {
+		type = {"passive", "aura"},
+        ability = {value = 66, type = "Colorless", min_possible = 8, max_possible = 80},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+			-- Bird is intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and is_type(context.other_joker, ability_table.type) then
+				return {
+					chips = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Pokermon"))
+		end,
+    },
+    thac_poketype_xmult = {
+		type = {"passive", "aura"},
+        ability = {value = 1.4, type = "Colorless", min_possible = 1.0, max_possible = 2.0},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+			-- Bird is intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and is_type(context.other_joker, ability_table.type) then
+				return {
+					xmult = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Pokermon"))
+		end,
+    },
+    thac_poketype_asc = {
+		type = {"passive", "aura"},
+        ability = {value = 2, type = "Colorless", min_possible = 0, max_possible = 4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+        end,
+        randomize_values = function(card, ability_table)
+			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
+			-- Bird is intentionally omitted
+		
+			ability_table.type = pseudorandom_element(types, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+        end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.other_joker and is_type(context.other_joker, ability_table.type) then
+				return {
+					plus_asc = ability_table.value
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Pokermon")) and next(SMODS.find_mod("entr"))
+		end,
+    },
+    thac_genre_whiplash = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0, max_possible = 0.3},
+        loc_vars = function(info_queue, card, ability_table)
+			local genres = {}
+			if not card.area.config.collection then
+				for k,v in ipairs(G.jokers.cards) do
+					local _genres = v and v.config.center.k_genre or {}
+					if #_genres >= 1 then
+						for i, _genre in ipairs(_genres) do
+							genres[_genre] = 1
+						end
+					end
+				end
+			end
+			local uniques = 0
+			for k,v in pairs(genres) do uniques = uniques + 1 end
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * uniques
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local genres = {}
+				for k,v in ipairs(G.jokers.cards) do
+					local _genres = v and v.config.center.k_genre or {}
+					if #_genres >= 1 then
+						for i, _genre in ipairs(_genres) do
+							genres[_genre] = 1
+						end
+					end 
+				end
+				local uniques = 0
+				for k,v in pairs(genres) do uniques = uniques + 1 end
+				if uniques == 0 then return end
+				return {
+					buff = 1 + (ability_table.value * uniques)
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("kino"))
+		end,
+    },
 }
 
 for k,v in pairs(thac_effects) do

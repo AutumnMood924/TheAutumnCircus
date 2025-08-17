@@ -3303,5 +3303,37 @@ return {
 				
             },
         },
+        thac_poketype_mult = {
+            name = "{V:1}#2#{}-Type Synergy M",
+            text = {
+                "{V:1}#2#{}-type{C:attention} Jokers{} give {C:mult}+#1#{} Mult",
+            },
+        },
+        thac_poketype_chips = {
+            name = "{V:1}#2#{}-Type Synergy C",
+            text = {
+                "{V:1}#2#{}-type{C:attention} Jokers{} give {C:chips}+#1#{} Chips",
+            },
+        },
+        thac_poketype_xmult = {
+            name = "{V:1}#2#{}-Type Synergy X",
+            text = {
+                "{V:1}#2#{}-type{C:attention} Jokers{} give {X:mult,C:white}X#1#{} Mult",
+            },
+        },
+        thac_poketype_asc = {
+            name = "{V:1}#2#{}-Type Synergy A",
+            text = {
+                "{V:1}#2#{}-type{C:attention} Jokers{} give","{C:gold}+#1#{} Ascension Power",
+            },
+        },
+        thac_genre_whiplash = {
+            name = "Genre Whiplash",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"for each {C:attention}unique Genre{} among your {C:attention}Jokers{}",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
 	},
 }
