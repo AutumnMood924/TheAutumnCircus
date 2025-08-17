@@ -46,15 +46,19 @@ end
 
 local cardquality_value = function(value, quality)
 	if quality == "face" then value = value * 0.9 end
+	if quality == "nonface" then value = value * 0.6 end
 	if quality == "odd" then value = value * 0.85 end
 	if quality == "even" then value = value * 0.85 end
+	if quality == "prime" then value = value * 1.2 end
 	if quality == "numbered" then value = value * 0.75 end
-	if quality == "unenhanced" then value = value * 0.66 end
-	if quality == "enhanced" then value = value * 1.2 end
-	if quality == "unsealed" then value = value * 0.66 end
-	if quality == "sealed" then value = value * 1.5 end
-	if quality == "baseedition" then value = value * 0.66 end
-	if quality == "editioned" then value = value * 1.75 end
+	if quality == "unenhanced" then value = value * 0.80 end
+	if quality == "enhanced" then value = value * 1.25 end
+	if quality == "metal" then value = (value + 0.5) * 1.25 end
+	if quality == "materialenh" then value = (value + 0.1) * 1.25 end
+	if quality == "unsealed" then value = value * 0.85 end
+	if quality == "sealed" then value = value ^ 1.15 end
+	if quality == "baseedition" then value = value * 0.75 end
+	if quality == "editioned" then value = value ^ 1.23 end
 	value = math.floor(value * 100) / 100
 	return value
 end
@@ -608,7 +612,7 @@ local thac_effects = {
     },
     thac_cq_mult = {
 		type = "attack",
-        ability = {value = 10, quality = "face", min_possible = 4, max_possible = 20},
+        ability = {value = 6, quality = "face", min_possible = 2, max_possible = 8},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -635,7 +639,7 @@ local thac_effects = {
     },
     thac_cq_chips = {
 		type = "attack",
-        ability = {value = 50, quality = "face", min_possible = 30, max_possible = 60},
+        ability = {value = 30, quality = "face", min_possible = 15, max_possible = 45},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -689,7 +693,7 @@ local thac_effects = {
     },
     thac_cq_asc = {
 		type = "attack",
-        ability = {value = 1, quality = "face", min_possible = 1, max_possible = 2},
+        ability = {value = 1, quality = "face", min_possible = 0, max_possible = 1},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -719,7 +723,7 @@ local thac_effects = {
     },
     thac_bj_mult = {
 		type = "passive",
-        ability = {value = 1.0, min_possible = 0.5, max_possible = 1.5},
+        ability = {value = 1.0, min_possible = 0.0, max_possible = 1.0},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -727,7 +731,7 @@ local thac_effects = {
 			}}
         end,
         randomize_values = function(card, ability_table)
-			randvalue_hundreths(card, ability_table)
+			randvalue_default(card, ability_table)
 		end,
         update_values = function(card, ability_table)
 			updvalue_default(card, ability_table)
@@ -742,7 +746,7 @@ local thac_effects = {
     },
     thac_bj_chips = {
 		type = "passive",
-        ability = {value = 2.0, min_possible = 1.0, max_possible = 5.0},
+        ability = {value = 2.0, min_possible = 0.0, max_possible = 2.0},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -750,7 +754,7 @@ local thac_effects = {
 			}}
         end,
         randomize_values = function(card, ability_table)
-			randvalue_hundreths(card, ability_table)
+			randvalue_tenths(card, ability_table)
 		end,
         update_values = function(card, ability_table)
 			updvalue_default(card, ability_table)
@@ -765,7 +769,7 @@ local thac_effects = {
     },
     thac_bj_xmult = {
 		type = "passive",
-        ability = {value = 0.2, min_possible = 0.0, max_possible = 0.5},
+        ability = {value = 0.02, min_possible = 0.0, max_possible = 0.05},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -788,7 +792,7 @@ local thac_effects = {
     },
     thac_bj_asc = {
 		type = "passive",
-        ability = {value = 0.2, min_possible = 0.0, max_possible = 0.5},
+        ability = {value = 0.1, min_possible = 0.0, max_possible = 0.1},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
@@ -815,7 +819,7 @@ local thac_effects = {
 	thac_bonus_attr = {
 		type = "passive",
 		no_potency = true,
-		ability = {attr = "DARK"},
+		ability = {attr = "DIVINE"},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
         end,
@@ -829,7 +833,7 @@ local thac_effects = {
 					newattrs[#newattrs+1] = att
 				end
 			end
-			if #newattrs == 0 then newattrs[newattrs+1] = "DIVINE" end
+			if #newattrs == 0 then newattrs[#newattrs+1] = "DIVINE" end
 		
 			ability_table.attr = pseudorandom_element(newattrs, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
 		end,
@@ -843,9 +847,15 @@ local thac_effects = {
 	thac_bonus_ygotype = {
 		type = "passive",
 		no_potency = true,
-		ability = {ygotype = "Fiend"},
+		ability = {ygotype = "DivineBeast"},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {localize("k_joy_" .. ability_table.type)}}
+			local text = localize("k_joy_" .. ability_table.type)
+			local text2 = text:sub(1,1):upper()
+			local text3 = ""
+			if text2 == "A" or text2 == "E" or text2 == "I" or text2 == "O" or text2 == "U" then
+				text3 = "n"
+			end
+            return {vars = {text, text3}}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -857,7 +867,7 @@ local thac_effects = {
 					newtypes[#newtypes+1] = typ
 				end
 			end
-			if #newtypes == 0 then newtypes[newtypes+1] = "DivineBeast" end
+			if #newtypes == 0 then newtypes[#newtypes+1] = "DivineBeast" end
 		
 			ability_table.type = pseudorandom_element(newtypes, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
 		end,
@@ -865,9 +875,156 @@ local thac_effects = {
 			return next(SMODS.find_mod("JoyousSpring"))
 		end,
 		in_pool = function(card)
-			return JoyousSpring.is_monster_card(card) and not JoyousSpring.is_all_monster_types(card)
+			return JoyousSpring.is_monster_card(card) and not JoyousSpring.is_all_types(card)
 		end,
 	},
+    thac_first_cq_mult = {
+		type = "attack",
+        ability = {value = 10, quality = "face", min_possible = 4, max_possible = 20},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+				local first_cq = false
+				for i = 1, #context.scoring_hand do
+					if AMM.api.cardqualities.has(context.scoring_hand[i], ability_table.quality) then
+						first_cq = context.scoring_hand[i] == context.other_card
+						break
+					end
+				end
+				if first_cq then
+					return {
+						mult = ability_table.value
+					}
+				end
+            end
+        end,
+    },
+    thac_first_cq_chips = {
+		type = "attack",
+        ability = {value = 50, quality = "face", min_possible = 30, max_possible = 80},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+				local first_cq = false
+				for i = 1, #context.scoring_hand do
+					if AMM.api.cardqualities.has(context.scoring_hand[i], ability_table.quality) then
+						first_cq = context.scoring_hand[i] == context.other_card
+						break
+					end
+				end
+				if first_cq then
+					return {
+						chips = ability_table.value
+					}
+				end
+            end
+        end,
+    },
+    thac_first_cq_xmult = {
+		type = "attack",
+        ability = {value = 2, quality = "face", min_possible = 1, max_possible = 2.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+				local first_cq = false
+				for i = 1, #context.scoring_hand do
+					if AMM.api.cardqualities.has(context.scoring_hand[i], ability_table.quality) then
+						first_cq = context.scoring_hand[i] == context.other_card
+						break
+					end
+				end
+				if first_cq then
+					return {
+						xmult = ability_table.value
+					}
+				end
+            end
+        end,
+    },
+    thac_first_cq_asc = {
+		type = "attack",
+        ability = {value = 1, quality = "face", min_possible = 0, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_tenths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value, ability_table.quality)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play and AMM.api.cardqualities.has(context.other_card, ability_table.quality) then
+				local first_cq = false
+				for i = 1, #context.scoring_hand do
+					if AMM.api.cardqualities.has(context.scoring_hand[i], ability_table.quality) then
+						first_cq = context.scoring_hand[i] == context.other_card
+						break
+					end
+				end
+				if first_cq then
+					return {
+						plus_asc = ability_table.value
+					}
+				end
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("entr"))
+		end,
+    },
 }
 
 for k,v in pairs(thac_effects) do

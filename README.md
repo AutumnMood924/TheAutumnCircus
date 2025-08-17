@@ -4,11 +4,23 @@
   
 RECOMMENDED FOR THE FULL EXPERIENCE:  
 This mod features cross-mod compatibility for multiple mods!  
-As such, the full intended experience of the mod will only be present if the following mods also are:  
-⁠Spectrum Framework https://github.com/wingedcatgirl/SpectrumFramework  
+As such, the full available content of the mod will only be present if the following mods also are:  
+⁠Spectrum API https://github.com/lord-ruby/SpectrumAPI  
 ⁠Six Suits https://github.com/Aurelius7309/SixSuits  
-Ortalab https://github.com/Eremel/Ortalab/  
+Aikoyori's Shenanigans https://github.com/Aikoyori/Balatro-Aikoyoris-Shenanigans  
+Ortalab (when a new version releases...) https://github.com/Eremel/Ortalab/  
 MoreFluff https://github.com/notmario/MoreFluff  
+Stacked https://github.com/bepisfever/stacked  
+SDM_0's Stuff https://github.com/SDM0/SDM_0-s-Stuff  
+Grab Bag https://github.com/thefaketh30ne/grab-bag  
+Entropy https://github.com/lord-ruby/Entropy  
+Cryptid https://github.com/SpectralPack/Cryptid/tree/balance-things  
+Pokermon https://github.com/InertSteak/Pokermon  
+JoyousSpring https://github.com/nh6574/JoyousSpring  
+ArtBox https://github.com/SadCubeArt/ArtBox  
+Paya's Terrible Additions https://github.com/hayaunderscore/PayasTerribleAdditions/tree/experimental  
+Maximus https://github.com/the-Astra/Maximus  
+0 ERROR https://github.com/notmario/0-error  
   
 # README BODY  
   

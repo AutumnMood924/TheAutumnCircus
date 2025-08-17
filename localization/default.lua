@@ -3180,7 +3180,35 @@ return {
         thac_bonus_ygotype = {
             name = "Form of {C:joy_normal}#1#{}",
             text = {
-                "{C:attention}Joker{} is also a {C:joy_normal}#1#{}",
+                "{C:attention}Joker{} is also a#2# {C:joy_normal}#1#{}",
+            },
+        },
+        thac_first_cq_mult = {
+            name = "#3# First Strike M",
+            text = {
+                "First scored {C:attention}#2#{}",
+                "card gives {C:mult}+#1#{} Mult",
+            },
+        },
+        thac_first_cq_chips = {
+            name = "#3# First Strike C",
+            text = {
+                "First scored {C:attention}#2#{}",
+                "card gives {C:chips}+#1#{} Chips",
+            },
+        },
+        thac_first_cq_xmult = {
+            name = "#3# First Strike X",
+            text = {
+                "First scored {C:attention}#2#{}",
+                "card gives {C:white,X:mult}X#1#{} Mult",
+            },
+        },
+        thac_first_cq_asc = {
+            name = "#3# First Strike A",
+            text = {
+                "First scored {C:attention}#2#{} card",
+                "gives {C:gold}+#1#{} Ascension Power",
             },
         },
 	},

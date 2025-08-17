@@ -479,25 +479,27 @@ function CardArea:can_highlight(card)
 	return alias__CardArea_can_highlight(self, card)
 end
 
-local alias__JoyousSpring_is_monster_type = JoyousSpring.is_monster_type
-function JoyousSpring.is_monster_type(card, monster_type)
-	if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
-		for k,v in ipairs(card.ability.hsr_extra_effects) do
-			if v.key == "thac_bonus_ygotype" and v.ability.type == monster_type then
-				return true
+if next(SMODS.find_mod("JoyousSpring")) then
+	local alias__JoyousSpring_is_monster_type = JoyousSpring.is_monster_type
+	function JoyousSpring.is_monster_type(card, monster_type)
+		if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
+			for k,v in ipairs(card.ability.hsr_extra_effects) do
+				if v.key == "thac_bonus_ygotype" and v.ability.type == monster_type then
+					return true
+				end
 			end
 		end
+		return alias__JoyousSpring_is_monster_type(card, monster_type)
 	end
-	return alias__JoyousSpring_is_monster_type(card, monster_type)
-end
-local alias__JoyousSpring_is_attribute = JoyousSpring.is_attribute
-function JoyousSpring.is_attribute(card, attribute)
-	if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
-		for k,v in ipairs(card.ability.hsr_extra_effects) do
-			if v.key == "thac_bonus_attr" and v.ability.attr == attribute then
-				return true
+	local alias__JoyousSpring_is_attribute = JoyousSpring.is_attribute
+	function JoyousSpring.is_attribute(card, attribute)
+		if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
+			for k,v in ipairs(card.ability.hsr_extra_effects) do
+				if v.key == "thac_bonus_attr" and v.ability.attr == attribute then
+					return true
+				end
 			end
 		end
+		return alias__JoyousSpring_is_attribute(card, attribute)
 	end
-	return alias__JoyousSpring_is_attribute(card, attribute)
 end
