@@ -21,6 +21,7 @@ ArtBox https://github.com/SadCubeArt/ArtBox
 Paya's Terrible Additions https://github.com/hayaunderscore/PayasTerribleAdditions/tree/experimental  
 Maximus https://github.com/the-Astra/Maximus  
 0 ERROR https://github.com/notmario/0-error  
+Balatro Goes Kino https://github.com/icyethics/Kino  
   
 # README BODY  
   
