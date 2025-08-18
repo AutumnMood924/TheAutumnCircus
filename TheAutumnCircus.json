@@ -6,8 +6,8 @@
 	"prefix": "thac",
 	"main_file": "TheAutumnCircus.lua",
 	"priority": 136661225,
-	"badge_colour": "d1b628",
-	"badge_text_colour": "ffed83",
+	"badge_colour": "00164F",
+	"badge_text_colour": "fff200",
 	"display_name": "ÞAC",
 	"version": "0.0.0d",
 	"dependencies": [

@@ -6,7 +6,7 @@ local deckskins = {
 			{
 				key = "lc",
 				ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', "King", "Ace",},
-				display_ranks = {"King", "Queen", "Jack"},
+				display_ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', "King", "Ace",},
 				atlas = "thac_Skinnington",
 				pos_style = 'ranks'
 			}
