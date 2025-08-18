@@ -23,6 +23,8 @@ local config = {
 		shattermyjokersintopieces = true,
 		effectsonmyjokersitsmorelikelythanyouthink = true,
 		transgirlswhobooster = true,
+		stakemepls = true,
+		skinnington = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,
@@ -273,6 +275,11 @@ local config = {
 	},
 	enabled_boosters = {
 		option_select = true,
+	},
+	enabled_stakes = {
+		culmination = true,
+	},
+	enabled_deckskins = {
 	},
 	mechanics = {
 	},

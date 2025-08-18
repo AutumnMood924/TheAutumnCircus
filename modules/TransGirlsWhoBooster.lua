@@ -153,11 +153,14 @@ local boosters = {
 				timer = 0.0001225,
 				scale = 0.1225,
 				initialize = true,
-				lifespan = 1.1495,
-				speed = 0.666,
+				lifespan = 1.13,
+				pulse_max = 15,
+				vel_variation = 1.225,
+				speed = 3,
 				padding = -1,
+				--akyrs_stay_on_top = true,
 				attach = G.ROOM_ATTACH,
-				colours = {HEX('bd1864'), HEX('46fbc4'), HEX('00164F'), HEX('00164F'), HEX('00164F'), HEX('00164F'), HEX('00164F'), HEX('00164F')},
+				colours = {HEX('bd1864'), HEX('46fbc4'), HEX('00164F'), HEX('00164F'), HEX('00164F'), HEX('00164F'), HEX('fff200'), HEX('ffaec9')},
 				fill = true
 			})
 			G.booster_pack_sparkles.fade_alpha = 1

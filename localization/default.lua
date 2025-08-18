@@ -2446,6 +2446,15 @@ return {
 				},
 			},
 		},
+		Stake = {
+			stake_thac_culmination = {
+				name = "{s:1.225,C:gold}The Culmination{}",
+				text = {
+					"Enables {C:red}most{} gameplay mechanics",
+					"from {C:gold}most{} modded stakes",
+				},
+			},
+		},
 		Voucher = {
 			v_thac_spectral_merchant = {
 				name = "Spectral Merchant",
@@ -2952,6 +2961,13 @@ return {
 					"decide your {C:dark_edition}fate",
 				},
 			},
+			thac_culmination_sticker = {
+                name = 'Culmination Sticker',
+                text = {
+                    'Used this Joker to',
+                    'win {C:gold}The Culmination',
+                }
+            },
 		},
 		Blind = {
 			bl_thac_jera = {
@@ -3333,6 +3349,29 @@ return {
                 "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
 				"for each {C:attention}unique Genre{} among your {C:attention}Jokers{}",
 				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_more_dakka = {
+            name = "More Dakka",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more",
+				"{C:chips}Chips{}/{C:mult}Mult{} for each Bullet",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_enh_force = {
+            name = "#2# Force",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{} for",
+				"each {C:attention}#2#{} in your {C:attention}full deck",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#3#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_hang_in_there = {
+            name = "Hang In There, \\##2#!",
+            text = {
+                "Retrigger the {C:attention}#3#{} played card",
+				"used in scoring {C:attention}#1#{} time#4#",
             },
         },
 	},

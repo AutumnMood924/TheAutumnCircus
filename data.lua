@@ -14,7 +14,9 @@ data.BUFFERS = {
 	Vouchers = {},
 	Enhancements = {},
 	Decks = {},
+	DeckSkins = {},
 	Blinds = {},
+	Stakes = {},
 	Shaders = {},
 	Editions = {},
 	Boosters = {},
@@ -168,6 +170,11 @@ data.buffer_register_funcs = {
 			SMODS.Back(v)
 		end
 	end,
+	DeckSkins = function(v)
+		if not (TheAutumnCircus.config.enabled_deckskins[v.key] == false) and ((not v.load_check) or v:load_check()) then
+			SMODS.DeckSkin(v)
+		end
+	end,
 	Blinds = function(v)
 		if not (TheAutumnCircus.config.enabled_blinds[v.key] == false) and ((not v.load_check) or v:load_check()) then
 			local a = "bl_"..TheAutumnCircus.mod_prefix.."_"..v.key
@@ -181,6 +188,11 @@ data.buffer_register_funcs = {
 			end
 			
 			SMODS.Blind(v)
+		end
+	end,
+	Stakes = function(v)
+		if not (TheAutumnCircus.config.enabled_stakes[v.key] == false) and ((not v.load_check) or v:load_check()) then			
+			SMODS.Stake(v)
 		end
 	end,
 	Shaders = function(v)

@@ -1546,6 +1546,115 @@ local thac_effects = {
 			return next(SMODS.find_mod("kino"))
 		end,
     },
+
+    thac_more_dakka = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0, max_possible = 0.5},
+        loc_vars = function(info_queue, card, ability_table)
+			local bullets = Kino.count_bullets()
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * bullets
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local bullets = Kino.count_bullets()
+				if bullets < 1 then return end
+				return {
+					buff = 1 + (ability_table.value * bullets)
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("kino"))
+		end,
+    },
+    thac_enh_force = {
+		type = "passive",
+        ability = {value = 1, card_key = "m_wild", min_possible = 0.1, max_possible = 0.4},
+        loc_vars = function(info_queue, card, ability_table)
+			local enhs = 0
+			if G.deck then
+				for k,v in ipairs(G.playing_cards) do
+					if SMODS.has_enhancement(v, ability_table.card_key) then
+						enhs = enhs + 1
+					end
+				end
+			end
+			local text = localize{type = 'name_text', set = 'Enhanced', key = ability_table.card_key}
+            return {vars = {
+				ability_table.value * 100,
+				text,
+				ability_table.value * 100 * enhs
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.card_key = pseudorandom_element(G.P_CENTER_POOLS["Enhanced"], ability_table.pseed.."_"..card.config.center_key).key
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local enhs = 0
+				for k,v in ipairs(G.playing_cards) do
+					if SMODS.has_enhancement(v, ability_table.card_key) then
+						enhs = enhs + 1
+					end
+				end
+				if enhs < 1 then return end
+				return {
+					buff = 1 + (ability_table.value * enhs)
+				}
+            end
+        end,
+    },
+    thac_hang_in_there = {
+		type = "passive",
+        ability = {value = 1, pos = 1, min_possible = 0, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+			local text = tostring(ability_table.pos)
+			if ability_table.pos % 10 == 1 then
+				text = text.."st"
+			elseif ability_table.pos % 10 == 2 then
+				text = text.."nd"
+			else
+				text = text.."th"
+			end
+            return {vars = {
+				ability_table.value,
+				ability_table.pos,
+				text,
+				ability_table.value == 1 and "" or "s",
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.pos = pseudorandom(ability_table.pseed.."_"..card.config.center_key, 1, G.GAME.starting_params.play_limit)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.repetition and context.scoring_hand and context.cardarea == G.play then
+				for k,v in ipairs(context.scoring_hand) do
+					if v == context.other_card and k == ability_table.pos then
+						return {
+							repetitions = ability_table.value
+						}
+					end
+				end
+            end
+        end,
+    },
 }
 
 for k,v in pairs(thac_effects) do

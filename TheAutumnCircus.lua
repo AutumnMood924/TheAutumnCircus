@@ -190,6 +190,9 @@ end
 if TheAutumnCircus.config.enabled_modules.tagimit then
 	TheAutumnCircus.TII = NFS.load(TheAutumnCircus.mod.path.."modules/TagImIt.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.skinnington then
+	TheAutumnCircus.SGTB = NFS.load(TheAutumnCircus.mod.path.."modules/Skinnington.lua")()	
+end
 if TheAutumnCircus.config.enabled_modules.basicoddities then
 	TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
 end
@@ -201,6 +204,9 @@ if TheAutumnCircus.config.enabled_modules.editiontomeetya then
 end
 if TheAutumnCircus.config.enabled_modules.transgirlswhobooster then
 	TheAutumnCircus.TGWB = NFS.load(TheAutumnCircus.mod.path.."modules/TransGirlsWhoBooster.lua")()	
+end
+if TheAutumnCircus.config.enabled_modules.stakemepls then
+	TheAutumnCircus.SMP = NFS.load(TheAutumnCircus.mod.path.."modules/StakeMePls.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.hamspect then
 	TheAutumnCircus.HS = NFS.load(TheAutumnCircus.mod.path.."modules/HamSpect.lua")()	
