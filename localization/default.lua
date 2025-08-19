@@ -3374,5 +3374,21 @@ return {
 				"used in scoring {C:attention}#1#{} time#4#",
             },
         },
+        thac_genre_hater = {
+            name = "{V:1}#3#{} Hater",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{} for",
+				"each non-{V:1}#3# {C:attention}Movie Joker{}",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_bigger_picture = {
+            name = "Bigger Picture",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"for each {C:attention}Joker{} card",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
 	},
 }

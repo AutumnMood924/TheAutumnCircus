@@ -590,7 +590,7 @@ local thac_effects = {
     },
     thac_small_hands = {
 		type = "passive",
-        ability = {value = 3, target = 3, min_possible = 2, max_possible = 5},
+        ability = {value = 3, target = 3, min_possible = 0, max_possible = 10},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {ability_table.value, ability_table.target}}
         end,
@@ -598,12 +598,14 @@ local thac_effects = {
 			local sizes = {1, 2, 3, 4}
 		
 			ability_table.target = pseudorandom_element(sizes, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
-			randvalue_default(card, ability_table)
-			ability_table.value = ability_table.value^(5-ability_table.target)
+			randvalue_tenths(card, ability_table)
+			ability_table.value = ability_table.value^(1+(5-ability_table.target)/4)
+			ability_table.value = math.floor(ability_table.value * 100) / 100
 		end,
         update_values = function(card, ability_table)
 			updvalue_default(card, ability_table)
-			ability_table.value = ability_table.value^(5-ability_table.target)
+			ability_table.value = ability_table.value^(1+(5-ability_table.target)/4)
+			ability_table.value = math.floor(ability_table.value * 100) / 100
 		end,
         calculate = function(card, context, ability_table, ability_index)
             if context.joker_main and #context.scoring_hand <= ability_table.target then
@@ -1596,7 +1598,16 @@ local thac_effects = {
 			}}
         end,
         randomize_values = function(card, ability_table)
-			ability_table.card_key = pseudorandom_element(G.P_CENTER_POOLS["Enhanced"], ability_table.pseed.."_"..card.config.center_key).key
+			local enhs = {}
+			if G.deck then
+				for k,v in ipairs(G.playing_cards) do
+					if v.config.center.set == "Enhanced" then
+						enhs[#enhs+1] = v.config.center
+					end
+				end
+			end
+			if #enhs == 0 then enhs = G.P_CENTER_POOLS["Enhanced"] end
+			ability_table.card_key = pseudorandom_element(enhs, ability_table.pseed.."_"..card.config.center_key).key
 			randvalue_hundreths(card, ability_table)
 		end,
         update_values = function(card, ability_table)
@@ -1655,6 +1666,87 @@ local thac_effects = {
             end
         end,
     },
+	thac_genre_hater = {
+		type = "passive",
+        ability = {value = 1, genre = "War", min_possible = 0.1, max_possible = 0.4},
+        loc_vars = function(info_queue, card, ability_table)
+			local nonhated = 0
+			if not card.area.config.collection then
+				for k,v in ipairs(G.jokers.cards) do
+					local _genres = v and v.config.center.k_genre or {}
+					if #_genres >= 1 then
+						local doit = true
+						for i, _genre in ipairs(_genres) do
+							if _genre == ability_table.genre then
+								doit = false
+							end
+						end
+						if doit then nonhated = nonhated + 1 end
+					end
+				end
+			end
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * nonhated,
+				ability_table.genre,
+				colours = {G.ARGS.LOC_COLOURS[ability_table.genre]}
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.genre = pseudorandom_element(kino_genres, ability_table.pseed.."_"..card.config.center_key)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local nonhated = 0
+				for k,v in ipairs(G.jokers.cards) do
+					local _genres = v and v.config.center.k_genre or {}
+					if #_genres >= 1 then
+						local doit = true
+						for i, _genre in ipairs(_genres) do
+							if _genre == ability_table.genre then
+								doit = false
+							end
+						end
+						if doit then nonhated = nonhated + 1 end
+					end
+				end
+				if nonhated == 0 then return end
+				return {
+					buff = 1 + (ability_table.value * nonhated)
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("kino"))
+		end,
+	},
+	thac_bigger_picture = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0.0, max_possible = 0.1},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * (G.jokers and #G.jokers.cards or 0)
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				return {
+					buff = 1 + (ability_table.value * #G.jokers.cards)
+				}
+            end
+        end,
+	},
 }
 
 for k,v in pairs(thac_effects) do
