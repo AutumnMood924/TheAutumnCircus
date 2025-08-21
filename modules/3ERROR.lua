@@ -436,10 +436,10 @@ local prestiges = {
 	"prestige_potency", prestige_potency = {
 		config = {
 			immutable = {
-				base_amount = 10,
+				base_amount = 5,
 			},
 			extra = {
-				scale_amount = 5,
+				scale_amount = 1,
 			},
 		},
 		pos = { x = 0, y = 0 },
@@ -536,7 +536,7 @@ function create_UIBox_current_prestige(simple)
 		if G.GAME.PrestigeValues["effect_slots_extra"] >= 0 then
 			hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["effect_slots_extra"]
 		end
-		hands[#hands+1] = create_UIBox_current_prestige_row("potency_extra", "c_thac_prestige_potency", 10, lighten(G.C.JOKER_GREY, 0.1))
+		hands[#hands+1] = create_UIBox_current_prestige_row("potency_extra", "c_thac_prestige_potency", 5, lighten(G.C.JOKER_GREY, 0.1))
 		if G.GAME.PrestigeValues["potency_extra"] >= 0 then
 			hands[#hands].nodes[2].nodes[1].nodes[1].config.text = "+"..G.GAME.PrestigeValues["potency_extra"].."%"
 		end

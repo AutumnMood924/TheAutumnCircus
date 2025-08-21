@@ -2550,6 +2550,22 @@ return {
 					"limits by {C:attention}#1#{} each",
 				}
 			},
+			v_thac_overscaling = {
+				name = "Overscaling",
+				text = {
+					"{C:attention}Scaling Effects{} can increase {C:attention}Potency{}",
+					"by a factor of {C:attention}#1#%{} over {C:attention}Potency Cap",
+					"{C:inactive}({X:inactive}#2#%{C:inactive} -> {X:attention,C:white}#3#%{C:inactive})",
+				}
+			},
+			v_thac_hyperscaling = {
+				name = "Hyperscaling",
+				text = {
+					"{C:attention}Scaling Effects{} can increase {C:attention}Potency{}",
+					"by a factor of {C:attention}#1#%{} over {C:attention}Potency Cap",
+					"{X:inactive}#2#%{C:attention} -> {X:attention,C:white}#3#%",
+				}
+			},
 		},
 		Enhanced = {
 			m_thac_grass = {
@@ -2993,9 +3009,9 @@ return {
 		impulse = "Impulse",
 		-- Aura: For multi-Joker effects
 		aura = "Aura",
-		-- Scalar: For Potency-increasing effects
+		-- Scaling: For Potency-increasing effects
 		-- This is used as a blacklist for these types of effects (probably)
-		scalar = "Scalar",
+		scaling = "Scaling",
 	},
 	ExtraEffects = {
 		thac_handsel = {
@@ -3388,6 +3404,27 @@ return {
                 "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
 				"for each {C:attention}Joker{} card",
 				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_phasing = {
+            name = "Phasing",
+            text = {
+                "When {C:attention}Blind{} is selected, {C:attention}banish{} this",
+				"{C:attention}Joker{} until {C:attention}next Blind{} is selected",
+            },
+        },
+        thac_hardboiled = {
+            name = "Hard-Boiled",
+            text = {
+                "Joker gains {C:money}$#1#{} of {C:attention}sell",
+				"{C:attention}value{} at end of round",
+            },
+        },
+        thac_simple_scaling = {
+            name = "Simple Scaling",
+            text = {
+                "Increase the {C:attention}Potency{} of a random {C:attention}Effect",
+				"of this Joker by {C:attention}#1#%{} at end of round",
             },
         },
 	},

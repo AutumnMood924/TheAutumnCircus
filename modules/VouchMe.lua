@@ -192,6 +192,47 @@ local vouchers = {
 			SMODS.change_discard_limit(card.ability.extra.limit)
 		end,
 	},
+	"overscaling", overscaling = {
+		config = {
+			extra = {
+				value = 0.5,
+			},
+		},
+		pos = { x = 0, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+			return {vars = {
+				card.ability.extra.value * 100,
+				(G.GAME.hsr_potency_cap or 100),
+				(G.GAME.hsr_potency_cap or 100) * ((G.GAME.thacked_scaling_cap or 1) + ((card.area.config.type ~= "voucher" or card.area.config.collection) and card.ability.extra.value or 0)) 
+			}}
+		end,
+		redeem = function(self, card)
+			G.GAME.thacked_scaling_cap = G.GAME.thacked_scaling_cap or 1
+			G.GAME.thacked_scaling_cap = G.GAME.thacked_scaling_cap + card.ability.extra.value
+		end,
+		dependencies = {"stacked"},
+	},
+	"hyperscaling", hyperscaling = {
+		config = {
+			extra = {
+				value = 0.5,
+			},
+		},
+		pos = { x = 1, y = 1 },
+		requires = {'v_thac_overscaling'},
+		loc_vars = function(_c, info_queue, card)
+			return {vars = {
+				card.ability.extra.value * 100,
+				(G.GAME.hsr_potency_cap or 100),
+				(G.GAME.hsr_potency_cap or 100) * ((G.GAME.thacked_scaling_cap or 1) + ((card.area.config.type ~= "voucher" or card.area.config.collection) and card.ability.extra.value or 0)) 
+			}}
+		end,
+		redeem = function(self, card)
+			G.GAME.thacked_scaling_cap = G.GAME.thacked_scaling_cap or 1
+			G.GAME.thacked_scaling_cap = G.GAME.thacked_scaling_cap + card.ability.extra.value
+		end,
+		dependencies = {"stacked"},
+	},
 }
 SMODS.Atlas{
 	key = "VouchMe",

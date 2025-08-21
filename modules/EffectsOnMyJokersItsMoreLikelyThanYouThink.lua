@@ -10,12 +10,12 @@ end
 local updvalue_default = function(card, ability_table)
 	if not ability_table.perfect then randvalue_default(card,ability_table) end
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 100) / 100
+	ability_table.value = Stacked.round(ability_table.value, 2)
 end
 local updvalue_whole = function(card, ability_table)
 	if not ability_table.perfect then randvalue_default(card,ability_table) end
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 1) / 1
+	ability_table.value = Stacked.round(ability_table.value, 0)
 end
 -- treats potency as inverse - lower numbers are better
 local randvalue_inverse = function(card, ability_table)
@@ -25,23 +25,23 @@ end
 local updvalue_inverse = function(card, ability_table)
 	if not ability_table.perfect then randvalue_inverse(card,ability_table) end
 	ability_table.value = (ability_table.max_possible) - ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 100) / 100
+	ability_table.value = Stacked.round(ability_table.value, 2)
 end
 -- intended for XMult/Chips effects but can be used elsewhere
 local randvalue_tenths = function(card, ability_table)
 	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = (ability_table.max_possible - ability_table.min_possible) * 10, round = 0.1}
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 10) / 10
+	ability_table.value = Stacked.round(ability_table.value, 1)
 end
 local randvalue_hundreths = function(card, ability_table)
 	ability_table.perfect = Stacked.poll_potency{seed = ability_table.pseed.."_roll", min = 0, max = (ability_table.max_possible - ability_table.min_possible) * 100, round = 0.01}
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 100) / 100
+	ability_table.value = Stacked.round(ability_table.value, 2)
 end
 local updvalue_tenths = function(card, ability_table)
 	if not ability_table.perfect then randvalue_tenths(card,ability_table) end
 	ability_table.value = (ability_table.min_possible) + ((ability_table.max_possible - ability_table.min_possible) * (ability_table.perfect/100))
-	ability_table.value = math.floor(ability_table.value * 10) / 10
+	ability_table.value = Stacked.round(ability_table.value, 1)
 end
 
 local cardquality_value = function(value, quality)
@@ -61,6 +61,72 @@ local cardquality_value = function(value, quality)
 	if quality == "editioned" then value = value ^ 1.23 end
 	value = math.floor(value * 100) / 100
 	return value
+end
+
+local scalingeffect = function(args)
+	if not args.cards then
+		if args.card then
+			args.cards = {args.card}
+		end
+	end
+	for _, card in ipairs(args.cards) do
+		local effects = card.ability.hsr_extra_effects
+		local target = -1
+		if args.mode == "random" then
+			local _effects = {}
+			for __,effect in ipairs(effects) do
+				local extraeffect = ExtraEffects[effect.key]
+				local doit = true
+				if extraeffect.no_potency then doit = false end
+				if not type(effect.ability.perfect) == "number" then doit = false end
+				if type(extraeffect.type) == "table" then
+					for ___, _type in ipairs(extraeffect.type) do
+						if _type == "scaling" then doit = false end
+					end
+				elseif type(extraeffect.type) == "string" and extraeffect.type == "scaling" then
+					doit = false
+				end
+				if doit then
+					_effects[#_effects+1] = {effect, __}
+				end
+			end
+			if #_effects == 0 then
+				target = nil
+			end
+			target = pseudorandom_element(_effects, args.pseed)[2]
+		end
+		if args.mode ~= "random" or target then
+			for __, effect in ipairs(effects) do
+				local extraeffect = ExtraEffects[effect.key]
+				local doit = true
+				print(""..__.." is "..target.."?")
+				if args.mode == "random" then
+					if __ ~= target then
+						print("no it isnt")
+						doit = false
+					end
+				elseif args.mode ~= "random" then
+					if extraeffect.no_potency then doit = false end
+					if not type(effect.ability.perfect) == "number" then doit = false end
+					if type(extraeffect.type) == "table" then
+						for ___, _type in ipairs(extraeffect.type) do
+							if _type == "scaling" then doit = false end
+						end
+					elseif type(extraeffect.type) == "string" and extraeffect.type == "scaling" then
+						doit = false
+					end
+				end
+				if doit == true then
+					-- just in case somehow it's above our cap
+					local originalperfect = effect.ability.perfect
+					effect.ability.perfect = effect.ability.perfect + (args.amt or args.val or args.value or args.amount) -- listen i am inconsistent
+					effect.ability.perfect = math.max(math.min(effect.ability.perfect,
+						(G.GAME.hsr_potency_cap or 100) * (G.GAME.thacked_scaling_cap or 1)
+					), originalperfect) -- holy abomination of math
+				end
+			end
+		end
+	end
 end
 
 local thac_effects = {
@@ -499,7 +565,7 @@ local thac_effects = {
 		end,
         update_values = updvalue_default,
         calculate = function(card, context, ability_table, ability_index)
-            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+            if context.joker_main and next(context.poker_hands[ability_table.hand_type]) then
                 return {
 					mult = ability_table.value
 				}
@@ -526,7 +592,7 @@ local thac_effects = {
 		end,
         update_values = updvalue_default,
         calculate = function(card, context, ability_table, ability_index)
-            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+            if context.joker_main and next(context.poker_hands[ability_table.hand_type]) then
                 return {
 					chips = ability_table.value
 				}
@@ -552,7 +618,7 @@ local thac_effects = {
 		end,
         update_values = updvalue_default,
         calculate = function(card, context, ability_table, ability_index)
-            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+            if context.joker_main and next(context.poker_hands[ability_table.hand_type]) then
                 return {
 					xmult = ability_table.value
 				}
@@ -578,7 +644,7 @@ local thac_effects = {
 		end,
         update_values = updvalue_default,
         calculate = function(card, context, ability_table, ability_index)
-            if context.joker_main and context.poker_hands[ability_table.hand_type] then
+            if context.joker_main and next(context.poker_hands[ability_table.hand_type]) then
                 return {
 					plus_asc = ability_table.value
 				}
@@ -1746,6 +1812,93 @@ local thac_effects = {
 				}
             end
         end,
+	},
+
+	thac_phasing = {
+		type = {"passive", "cursed"},
+        ability = { mode = 0 },
+		no_potency = true,
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.setting_blind then
+				if ability_table.mode == 0 then
+					ability_table.mode = 1
+					JoyousSpring.banish(card, "blind_selected", nil, nil)
+				else
+					ability_table.mode = 0
+				end
+            end
+        end,
+        in_pool = function(card)
+            return not not G.GAME.cursed_effects_enable
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("JoyousSpring"))
+		end,
+	},
+	thac_hardboiled = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0, max_possible = 3},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+			if context.end_of_round and context.game_over == false and context.main_eval and ability_table.value > 0 and not context.blueprint then
+				card.ability.extra_value = card.ability.extra_value + ability_table.value
+				card:set_cost()
+				return {
+					message = localize('k_val_up'),
+					colour = G.C.MONEY
+				}
+            end
+        end,
+    },
+	thac_simple_scaling = {
+		type = "scaling",
+		ability = {value = 1, min_possible = 0, max_possible = 10},
+		loc_vars = function(info_queue, card, ability_table)
+			return {vars = {
+				ability_table.value,
+			}}
+		end,
+		randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+		update_values = function(card, ability_table)
+			updvalue_tenths(card, ability_table)
+		end,
+		calculate = function(card, context, ability_table, ability_index)
+			if context.end_of_round and context.game_over == false and context.main_eval and ability_table.value > 0 and not context.blueprint then
+				scalingeffect{
+					card = card,
+					mode = "random",
+					pseed = card.config.center_key.."_"..ability_table.pseed,
+					amount = ability_table.value
+				}
+				return {
+					message = localize('k_val_up'),
+					colour = G.C.GREEN
+				}
+			end
+		end,
+		in_pool = function(card)
+			return card.ability.hsr_extra_effects and #card.ability.hsr_extra_effects > 0
+		end,
 	},
 }
 
