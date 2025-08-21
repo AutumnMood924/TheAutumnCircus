@@ -1,5 +1,7 @@
 # REQUIRES https://github.com/AutumnMood924/AutumnMoodMechanics  
   
+# INCOMPATIBLE WITH TALISMAN  
+  
 # NOTICE  
   
 RECOMMENDED FOR THE FULL EXPERIENCE:  

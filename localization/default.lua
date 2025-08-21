@@ -3427,5 +3427,13 @@ return {
 				"of this Joker by {C:attention}#1#%{} at end of round",
             },
         },
+        thac_caino = {
+            name = "Canio's Mark: #3#",
+            text = {
+                "Increase the {C:attention}Potency{} of this",
+				"Joker's {C:attention}Effects{} by {C:attention}#1#%{} when",
+				"a#4# {C:attention}#2#{} card is destroyed",
+            },
+        },
 	},
 }
