@@ -1950,6 +1950,126 @@ local thac_effects = {
 			return card.ability.hsr_extra_effects and #card.ability.hsr_extra_effects > 0
 		end,
 	},
+	thac_yorick = {
+		type = "scaling",
+		ability = {value = 1, threshold = 23, remaining = 23, min_possible = 5, max_possible = 20},
+		loc_vars = function(info_queue, card, ability_table)
+			return {vars = {
+				ability_table.value,
+				ability_table.threshold,
+				ability_table.remaining,
+			}}
+		end,
+		randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+		update_values = function(card, ability_table)
+			updvalue_tenths(card, ability_table)
+		end,
+		calculate = function(card, context, ability_table, ability_index)
+			if context.discard and not context.blueprint then
+				if ability_table.remaining <= 1 then
+					ability_table.remaining = ability_table.threshold
+					scalingeffect{
+						card = card,
+						--mode = "random",
+						pseed = card.config.center_key.."_"..ability_table.pseed,
+						amount = ability_table.value
+					}
+					return {
+						message = localize('k_val_up'),
+						colour = G.C.GREEN
+					}
+				else
+					ability_table.remaining = ability_table.remaining - 1
+					return nil, true -- something something retriggers?
+					-- maybe investigate why this matters TODO
+				end
+			end
+		end,
+		in_pool = function(card)
+			return card.ability.hsr_extra_effects and #card.ability.hsr_extra_effects > 0
+		end,
+	},
+
+    thac_hiking = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.play then
+                return {
+					message = localize("k_upgrade_ex"),
+					colour = G.C.CHIPS,
+					func = function()
+						context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + ability_table.value
+					end,
+				}
+            end
+        end,
+    },
+    thac_lounging = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == G.hand then
+                return {
+					message = localize("k_upgrade_ex"),
+					colour = G.C.CHIPS,
+					func = function()
+						context.other_card.ability.perma_h_chips = (context.other_card.ability.perma_h_chips or 0) + ability_table.value
+					end,
+				}
+            end
+        end,
+    },
+	thac_skulking = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			}}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.individual and not context.end_of_round and not context.repetition and context.cardarea == "unscored" then
+                return {
+					message = localize("k_upgrade_ex"),
+					colour = G.C.CHIPS,
+					func = function()
+						context.other_card.ability.perma_u_chips = (context.other_card.ability.perma_u_chips or 0) + ability_table.value
+					end,
+				}
+            end
+        end,
+    },
 }
 
 for k,v in pairs(thac_effects) do

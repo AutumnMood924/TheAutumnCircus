@@ -8,7 +8,6 @@ local jokers = {
 			colour_rounds = 1,
 			threshold = 4,
         }},
-		generate_ui = JoyousSpring.generate_info_ui,
 		set_sprites = JoyousSpring.set_back_sprite,
         pos = { x = 6, y = 0 },
         cost = 15,

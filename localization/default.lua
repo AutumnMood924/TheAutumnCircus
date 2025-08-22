@@ -3435,5 +3435,34 @@ return {
 				"a#4# {C:attention}#2#{} card is destroyed",
             },
         },
+        thac_yorick = {
+            name = "Essence of Yorick",
+            text = {
+                "Increase the {C:attention}Potency{} of this",
+				"Joker's {C:attention}Effects{} by {C:attention}#1#%{} every",
+				"{C:attention}#2#{C:inactive} [#3#]{} cards discarded",
+            },
+        },
+        thac_hiking = {
+            name = "Hiking",
+            text = {
+                "Scored cards permanently",
+				"gain {C:chips}+#1#{} Chips when scored",
+            },
+        },
+        thac_lounging = {
+            name = "Lounging",
+            text = {
+                "Cards held in hand permanently",
+				"gain {C:chips}+#1#{} Chips when held in hand",
+            },
+        },
+        thac_skulking = {
+            name = "Skulking",
+            text = {
+                "Unscored played cards permanently",
+				"gain {C:chips}+#1#{} Chips when unscoring",
+            },
+        },
 	},
 }
