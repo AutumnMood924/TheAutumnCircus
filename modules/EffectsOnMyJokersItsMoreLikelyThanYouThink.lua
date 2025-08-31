@@ -2209,6 +2209,7 @@ local thac_effects = {
         end,
 	},
 
+--[[
     thac_more_plusmult = {
 		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 21},
@@ -2255,7 +2256,7 @@ local thac_effects = {
             end
         end,
     },
-    
+--]]
 }
 
 for k,v in pairs(thac_effects) do

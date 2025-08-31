@@ -3531,6 +3531,7 @@ local jokers = {
             end
         end,
     },
+	--[[
 	"plusjimbo", plusjimbo = {
 		pos = {x = 0, y = 0},
 		config = { extra = { plusmult = 4 } },
@@ -3549,6 +3550,7 @@ local jokers = {
 			end
 		end,
 	},
+	--]]
 }
 
 SMODS.Atlas{

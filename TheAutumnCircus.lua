@@ -17,7 +17,7 @@ TheAutumnCircus.mod.optional_features = function()
         },
         amm_suit_levels = true,
 		amm_graveyard = true,
-		amm_plusmult = true,
+		--amm_plusmult = true,
 	}
 end
 
