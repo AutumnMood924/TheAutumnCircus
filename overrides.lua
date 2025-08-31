@@ -297,6 +297,16 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("GrabBag")) then
 			_suits[#_suits+1] = "gb_Eyes"
 		end
+		if next(SMODS.find_mod("zeroError")) then
+			_suits[#_suits+1] = "zero_Brights"
+		end
+		if next(SMODS.find_mod("entr")) then
+			_suits[#_suits+1] = "entr_nilsuit"
+			_ranks[#_ranks+1] = "entr_nilrank"
+		end
+		if next(SMODS.find_mod("finity")) then
+			_ranks[#_ranks+1] = "finity_V"
+		end
 		target_pcard.ability.entr_yellow_sign = true
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])

@@ -1100,6 +1100,15 @@ return {
 					"permanently gain {C:attention}#1#{} retrigger",
 				},
 			},
+			j_thac_plusjimbo = {
+				name = {
+					"+Joker",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:mult}+4 +Mult",
+				},
+			},
 			j_thac_jera = {
 				name = {
 					"Jera",
@@ -3462,6 +3471,32 @@ return {
             text = {
                 "Unscored played cards permanently",
 				"gain {C:chips}+#1#{} Chips when unscoring",
+            },
+        },
+        thac_dramatic_entrance = {
+            name = "Dramatic Entrance",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"on {C:attention}first hand of round",
+            },
+        },
+        thac_grand_finale = {
+            name = "Grand Finale",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"on {C:attention}final hand of round",
+            },
+        },
+        thac_more_plusmult = {
+            name = "More +Mult",
+            text = {
+                "{C:mult}+#1# +Mult"
+            },
+        },
+        thac_more_xplusmult = {
+            name = "More X+Mult",
+            text = {
+                "{C:white,X:mult}X#1#{C:mult} +Mult"
             },
         },
 	},

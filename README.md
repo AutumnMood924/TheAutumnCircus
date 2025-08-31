@@ -10,7 +10,7 @@ As such, the full available content of the mod will only be present if the follo
 ⁠Spectrum API https://github.com/lord-ruby/SpectrumAPI  
 ⁠Six Suits https://github.com/Aurelius7309/SixSuits  
 Aikoyori's Shenanigans https://github.com/Aikoyori/Balatro-Aikoyoris-Shenanigans  
-Ortalab (when a new version releases...) https://github.com/Eremel/Ortalab/  
+Ortalab https://github.com/EremelMods/Ortalab  
 MoreFluff https://github.com/notmario/MoreFluff  
 Stacked https://github.com/bepisfever/stacked  
 SDM_0's Stuff https://github.com/SDM0/SDM_0-s-Stuff  

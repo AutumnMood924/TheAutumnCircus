@@ -127,12 +127,26 @@ local scalingeffect = function(args)
 	end
 end
 
+local bg_contrast = 0.90
+-- bg key:
+-- mult effect: G.C.MULT
+-- chips effect: G.C.CHIPS
+-- xmult effect: G.C.XMULT
+-- xchips effect: G.C.CHIPS
+-- asc effect: G.C.GOLD
+-- xasc effect: G.C.GOLD
+-- chips/mult buff effect: G.C.SECONDARY_SET.Tarot
+-- passive effect: G.C.SECONDARY_SET.Planet
+-- consumable type related effect: G.C.SECONDARY_SET[_type]
+-- misc effect: G.C.IMPORTANT
+
 local thac_effects = {
     thac_handsel = {
 		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = randvalue_default,
         update_values = function(card, ability_table)
@@ -156,7 +170,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = randvalue_default,
         update_values = function(card, ability_table)
@@ -180,7 +195,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = randvalue_default,
         update_values = function(card, ability_table)
@@ -204,7 +220,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 1, min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), ability_table.value, ability_table.value == 1 and "" or "s", colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}}},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = randvalue_default,
         update_values = function(card, ability_table)
@@ -231,7 +248,8 @@ local thac_effects = {
 		type = "chain",
         ability = {value = 3, reset = 5, counter = 5, hand_type = "High Card", min_possible = 2, max_possible = 4},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.hand_type, 'poker_hands'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.hand_type, 'poker_hands'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local hands = {}
@@ -277,7 +295,8 @@ local thac_effects = {
 		type = "chain",
         ability = {value = 2, reset = 4, counter = 4, suit = "Hearts", min_possible = 1, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.suit, 'suits_plural'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}, G.C.SUITS[ability_table.suit]}}}
+            return {vars = {Stacked.round(ability_table.perfect, 1), localize(ability_table.suit, 'suits_plural'), ability_table.reset, ability_table.reset == 1 and "" or "s", ability_table.value, ability_table.value == 1 and "" or "s", ability_table.counter, colours = {{1 - (1 * ability_table.perfect/100), 1 * ability_table.perfect/100, 0, 1}, G.C.SUITS[ability_table.suit]}},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local suits = {}
@@ -323,7 +342,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 2, attr = "DARK", min_possible = 3, max_possible = 12},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
@@ -354,7 +374,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 50, attr = "DARK", min_possible = 8, max_possible = 80,},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
@@ -385,7 +406,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 1.5, attr = "DARK", min_possible = 1.0, max_possible = 2.0},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
@@ -410,7 +432,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 1.5, attr = "DARK", min_possible = 1.0, max_possible = 2.0},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
@@ -436,7 +459,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 10, type = "Fiend", min_possible = 4, max_possible = 16},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -467,7 +491,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 50, type = "Fiend", min_possible = 25, max_possible = 150},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -498,7 +523,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 1.5, type = "Fiend", min_possible = 1.5, max_possible = 2.5},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -523,7 +549,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 1.5, type = "Fiend", min_possible = 1.5, max_possible = 2.5},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)}}
+            return {vars = {ability_table.value, localize("k_joy_" .. ability_table.type)},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -548,7 +575,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 10, hand_type = "High Card", min_possible = 8, max_possible = 12},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local hands = {}
@@ -559,6 +587,10 @@ local thac_effects = {
 			end
 		
 			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			if ability_table.hand_type == "High Card" then
+				ability_table.min_possible = 1
+				ability_table.max_possible = 4
+			end
 			randvalue_default(card, ability_table)
 		end,
         update_values = updvalue_default,
@@ -575,7 +607,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 70, hand_type = "High Card", min_possible = 50, max_possible = 100},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local hands = {}
@@ -586,6 +619,10 @@ local thac_effects = {
 			end
 		
 			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			if ability_table.hand_type == "High Card" then
+				ability_table.min_possible = 10
+				ability_table.max_possible = 40
+			end
 			randvalue_default(card, ability_table)
 		end,
         update_values = updvalue_default,
@@ -601,7 +638,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 2, hand_type = "High Card", min_possible = 2, max_possible = 4},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local hands = {}
@@ -612,6 +650,10 @@ local thac_effects = {
 			end
 		
 			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			if ability_table.hand_type == "High Card" then
+				ability_table.min_possible = 1
+				ability_table.max_possible = 1.5
+			end
 			randvalue_tenths(card, ability_table)
 		end,
         update_values = updvalue_default,
@@ -625,9 +667,10 @@ local thac_effects = {
     },
     thac_hand_asc = {
 		type = "passive",
-        ability = {value = 2, hand_type = "High Card", min_possible = 2, max_possible = 4},
+        ability = {value = 2, hand_type = "High Card", min_possible = 2, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')}}
+            return {vars = {ability_table.value, localize(ability_table.hand_type, 'poker_hands')},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local hands = {}
@@ -638,6 +681,10 @@ local thac_effects = {
 			end
 		
 			ability_table.hand_type = pseudorandom_element(hands, pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			if ability_table.hand_type == "High Card" then
+				ability_table.min_possible = 1
+				ability_table.max_possible = 2
+			end
 			randvalue_tenths(card, ability_table)
 		end,
         update_values = updvalue_default,
@@ -656,7 +703,8 @@ local thac_effects = {
 		type = "passive",
         ability = {value = 3, target = 3, min_possible = 0, max_possible = 10},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, ability_table.target}}
+            return {vars = {ability_table.value, ability_table.target},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local sizes = {1, 2, 3, 4}
@@ -687,7 +735,8 @@ local thac_effects = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -715,7 +764,8 @@ local thac_effects = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -742,7 +792,8 @@ local thac_effects = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -763,13 +814,14 @@ local thac_effects = {
     },
     thac_cq_asc = {
 		type = "attack",
-        ability = {value = 1, quality = "face", min_possible = 0, max_possible = 1},
+        ability = {value = 1, quality = "face", min_possible = 0.1, max_possible = 1},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -798,7 +850,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value,
 				ability_table.value * (G.deck and #G.deck.cards or 52),
-			}}
+			},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -821,7 +874,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value,
 				ability_table.value * (G.deck and #G.deck.cards or 52),
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -840,12 +894,13 @@ local thac_effects = {
 
     thac_bj_xmult = {
 		type = "passive",
-        ability = {value = 0.02, min_possible = 0.0, max_possible = 0.05},
+        ability = {value = 0.02, min_possible = 0.01, max_possible = 0.05},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				1 + (ability_table.value * (G.deck and #G.deck.cards or 52)),
-			}}
+			},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -863,12 +918,13 @@ local thac_effects = {
     },
     thac_bj_asc = {
 		type = "passive",
-        ability = {value = 0.1, min_possible = 0.0, max_possible = 0.1},
+        ability = {value = 0.1, min_possible = 0.01, max_possible = 0.05},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				ability_table.value * (G.deck and #G.deck.cards or 52),
-			}}
+			},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -892,7 +948,8 @@ local thac_effects = {
 		no_potency = true,
 		ability = {attr = "DIVINE"},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}}}
+            return {vars = {localize("k_joy_" .. ability_table.attr), colours = {G.C.JOY[ability_table.attr]}},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local attrs = {"LIGHT", "FIRE", "WATER", "EARTH", "DARK", "WIND"}
@@ -926,7 +983,8 @@ local thac_effects = {
 			if text2 == "A" or text2 == "E" or text2 == "I" or text2 == "O" or text2 == "U" then
 				text3 = "n"
 			end
-            return {vars = {text, text3}}
+            return {vars = {text, text3},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Aqua", "Beast", "BeastWarrior", "Cyberse", "Dinosaur", "Dragon", "Fairy", "Fiend", "Fish", "Illusion", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock", "SeaSerpent", "Spellcaster", "Thunder", "Warrior", "WingedBeast", "Wyrm", "Zombie"}
@@ -951,13 +1009,14 @@ local thac_effects = {
 	},
     thac_first_cq_mult = {
 		type = "attack",
-        ability = {value = 10, quality = "face", min_possible = 4, max_possible = 20},
+        ability = {value = 10, quality = "face", min_possible = 4, max_possible = 15},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -988,13 +1047,14 @@ local thac_effects = {
 
     thac_first_cq_chips = {
 		type = "attack",
-        ability = {value = 50, quality = "face", min_possible = 30, max_possible = 80},
+        ability = {value = 50, quality = "face", min_possible = 30, max_possible = 50},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -1024,13 +1084,14 @@ local thac_effects = {
     },
     thac_first_cq_xmult = {
 		type = "attack",
-        ability = {value = 2, quality = "face", min_possible = 1, max_possible = 2.5},
+        ability = {value = 2, quality = "face", min_possible = 1, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -1060,13 +1121,14 @@ local thac_effects = {
     },
     thac_first_cq_asc = {
 		type = "attack",
-        ability = {value = 1, quality = "face", min_possible = 0, max_possible = 2},
+        ability = {value = 1, quality = "face", min_possible = 0, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
 				AMM.api.cardqualities.localize(ability_table.quality),
 				AMM.api.cardqualities.localize(ability_table.quality,1)
-			}}
+			},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -1134,7 +1196,8 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1152,11 +1215,12 @@ local thac_effects = {
     },
     thac_more_asc = {
 		type = "passive",
-        ability = {value = 1, min_possible = 0, max_possible = 2},
+        ability = {value = 1, min_possible = 0.3, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1182,7 +1246,8 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1207,7 +1272,8 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1230,7 +1296,8 @@ local thac_effects = {
 		type = {"passive", "chain"},
         ability = {value = 1, min_possible = 0, max_possible = 2},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value}}
+            return {vars = {ability_table.value},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1248,7 +1315,8 @@ local thac_effects = {
 		type = {"passive", "chain"},
         ability = {value = 1, min_possible = 0, max_possible = 10},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value}}
+            return {vars = {ability_table.value},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1266,7 +1334,8 @@ local thac_effects = {
 		type = {"passive", "chain"},
         ability = {value = 1, min_possible = 1, max_possible = 1.25},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value}}
+            return {vars = {ability_table.value},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1283,9 +1352,10 @@ local thac_effects = {
 
     thac_combo_asc = {
 		type = {"passive", "chain"},
-        ability = {value = 1, min_possible = 0, max_possible = 0.5},
+        ability = {value = 1, min_possible = 0.1, max_possible = 0.5},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value}}
+            return {vars = {ability_table.value},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1310,7 +1380,8 @@ local thac_effects = {
 				ability_table.value * 100,
 				G.GAME.starting_deck_size,
 				ability_table.value * 100 * math.max(0, G.GAME.starting_deck_size - (G.deck and #G.playing_cards or 52))
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1333,7 +1404,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value,
 				ability_table.value == 1 and "" or "s",
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Planet, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -1362,7 +1434,8 @@ local thac_effects = {
 			end
             return {vars = {
 				text, text3
-			}}
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -1413,7 +1486,8 @@ local thac_effects = {
 				text, text3,
 				ability_table.value,
 				math.max(0,ability_table.value - ability_table.counter),
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Prestige, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.card_key = pseudorandom_element(G.P_CENTER_POOLS["Prestige"], ability_table.pseed.."_"..card.config.center_key).key
@@ -1457,7 +1531,8 @@ local thac_effects = {
 		type = {"passive", "aura"},
         ability = {value = 2, type = "Colorless", min_possible = 3, max_possible = 12},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
@@ -1482,9 +1557,10 @@ local thac_effects = {
     },
     thac_poketype_chips = {
 		type = {"passive", "aura"},
-        ability = {value = 66, type = "Colorless", min_possible = 8, max_possible = 80},
+        ability = {value = 66, type = "Colorless", min_possible = 8, max_possible = 60},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
@@ -1509,9 +1585,10 @@ local thac_effects = {
     },
     thac_poketype_xmult = {
 		type = {"passive", "aura"},
-        ability = {value = 1.4, type = "Colorless", min_possible = 1.0, max_possible = 2.0},
+        ability = {value = 1.4, type = "Colorless", min_possible = 1.0, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
@@ -1536,9 +1613,10 @@ local thac_effects = {
     },
     thac_poketype_asc = {
 		type = {"passive", "aura"},
-        ability = {value = 2, type = "Colorless", min_possible = 0, max_possible = 4},
+        ability = {value = 2, type = "Colorless", min_possible = 0.1, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
-            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}}}
+            return {vars = {ability_table.value, localize("poke_" .. ability_table.type:lower() .. "_badge"), colours = {G.ARGS.LOC_COLOURS[ability_table.type:lower()]}},
+			background_colour = lighten(G.C.GOLD, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local types = {"Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Colorless", "Dark", "Metal", "Fairy", "Dragon", "Earth"}
@@ -1581,7 +1659,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value * 100,
 				ability_table.value * 100 * uniques
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1621,7 +1700,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value * 100,
 				ability_table.value * 100 * bullets
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1659,7 +1739,8 @@ local thac_effects = {
 				ability_table.value * 100,
 				text,
 				ability_table.value * 100 * enhs
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			local enhs = {}
@@ -1709,7 +1790,8 @@ local thac_effects = {
 				ability_table.pos,
 				text,
 				ability_table.value == 1 and "" or "s",
-			}}
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.pos = pseudorandom(ability_table.pseed.."_"..card.config.center_key, 1, G.GAME.starting_params.play_limit)
@@ -1754,7 +1836,8 @@ local thac_effects = {
 				ability_table.value * 100 * nonhated,
 				ability_table.genre,
 				colours = {G.ARGS.LOC_COLOURS[ability_table.genre]}
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			ability_table.genre = pseudorandom_element(kino_genres, ability_table.pseed.."_"..card.config.center_key)
@@ -1795,7 +1878,8 @@ local thac_effects = {
             return {vars = {
 				ability_table.value * 100,
 				ability_table.value * 100 * (G.jokers and #G.jokers.cards or 0)
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_hundreths(card, ability_table)
@@ -1818,7 +1902,8 @@ local thac_effects = {
 		no_potency = true,
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
-			}}
+			},
+			background_colour = lighten(G.C.RED, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 		end,
@@ -1847,7 +1932,8 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.MONEY, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -1872,7 +1958,8 @@ local thac_effects = {
 		loc_vars = function(info_queue, card, ability_table)
 			return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Spectral, bg_contrast)}
 		end,
 		randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1913,7 +2000,8 @@ local thac_effects = {
 				text,
 				AMM.api.cardqualities.localize(ability_table.quality,1),
 				text3,
-			}}
+			},
+			background_colour = lighten(G.C.RARITY[4], bg_contrast)}
 		end,
 		randomize_values = function(card, ability_table)
 			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
@@ -1958,7 +2046,8 @@ local thac_effects = {
 				ability_table.value,
 				ability_table.threshold,
 				ability_table.remaining,
-			}}
+			},
+			background_colour = lighten(G.C.RARITY[4], bg_contrast)}
 		end,
 		randomize_values = function(card, ability_table)
 			randvalue_tenths(card, ability_table)
@@ -1994,11 +2083,12 @@ local thac_effects = {
 
     thac_hiking = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 5},
+        ability = {value = 1, min_possible = 1, max_possible = 10},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -2024,7 +2114,8 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -2046,11 +2137,12 @@ local thac_effects = {
     },
 	thac_skulking = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 5},
+        ability = {value = 1, min_possible = 1, max_possible = 15},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 				ability_table.value,
-			}}
+			},
+			background_colour = lighten(G.C.CHIPS, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 			randvalue_default(card, ability_table)
@@ -2070,6 +2162,100 @@ local thac_effects = {
             end
         end,
     },
+	thac_dramatic_entrance = {
+		type = "passive",
+        ability = {value = 1, min_possible = 0.0, max_possible = 1.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value * 100,
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and ability_table.value > 0 and G.GAME.current_round.hands_played == 0 then
+				return {
+					buff = 1 + ability_table.value
+				}
+            end
+        end,
+	},
+	thac_grand_finale = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1.0, max_possible = 2.5},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value * 100,
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and ability_table.value > 0 and G.GAME.current_round.hands_left == 0 then
+				return {
+					buff = 1 + ability_table.value
+				}
+            end
+        end,
+	},
+
+    thac_more_plusmult = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 21},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					plusmult = ability_table.value
+				}
+            end
+        end,
+    },
+    thac_more_xplusmult = {
+		type = "passive",
+        ability = {value = 1, min_possible = 1, max_possible = 2.1},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			},
+			background_colour = lighten(G.C.MULT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_tenths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_main then
+				return {
+					x_plusmult = ability_table.value
+				}
+            end
+        end,
+    },
+    
 }
 
 for k,v in pairs(thac_effects) do

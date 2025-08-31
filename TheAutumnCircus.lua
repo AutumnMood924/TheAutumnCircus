@@ -15,10 +15,9 @@ TheAutumnCircus.mod.optional_features = function()
             unscored = true,
             --graveyard = true,
         },
-        amm = {
-            suit_levels = true,
-            graveyard = true,
-        },
+        amm_suit_levels = true,
+		amm_graveyard = true,
+		amm_plusmult = true,
 	}
 end
 

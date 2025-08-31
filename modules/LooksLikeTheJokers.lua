@@ -81,6 +81,7 @@ local jokers = {
         end,
 		dependencies = { "SixSuits" },
     },
+	--[[ pending rework
 	'frivolous_joker', frivolous_joker = {
 		config = {
             extra = {
@@ -138,7 +139,7 @@ local jokers = {
 				}
 			end
         end,
-	},
+	}, --]]
     'standardized', standardized = {
         config = {
             extra = {
@@ -3530,6 +3531,24 @@ local jokers = {
             end
         end,
     },
+	"plusjimbo", plusjimbo = {
+		pos = {x = 0, y = 0},
+		config = { extra = { plusmult = 4 } },
+		cost = 1,
+		rarity = 1,
+		blueprint_compat = true,
+		eternal_compat = true,
+		perishable_compat = true,
+		rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+			return {vars = {card.ability.extra.plusmult}}
+		end,
+		calculate = function(self, card, context)
+			if context.joker_main then
+				return { plusmult = card.ability.extra.plusmult }
+			end
+		end,
+	},
 }
 
 SMODS.Atlas{
