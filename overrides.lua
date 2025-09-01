@@ -474,7 +474,7 @@ function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominato
 	
     if not G.jokers then return probvars[1], probvars[2] end
 	-- wow this is dumb
-	if trigger_obj and trigger_obj.config and trigger_obj.config.center and trigger_obj.config.center.set and trigger_obj.config.center.set == "Joker" then
+	if trigger_obj and trigger_obj.config and trigger_obj.config.center and trigger_obj.config.center.set and trigger_obj.config.center.set == "Joker" and not trigger_obj.bypass_lock then
 		if trigger_obj:get_seal() == "thac_dusk" and ((G.GAME.current_round.hands_left == 0 and (G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.GAME_OVER or G.STATE == G.STATES.ROUND_EVAL or G.STATE == G.STATES.NEW_ROUND)) or (G.GAME.current_round.hands_left == 1 and G.STATE == G.STATES.SELECTING_HAND)) then
 			probvars[2] = math.min(1, probvars[2])
 		end

@@ -32,3 +32,8 @@
 	SMODS.Suits['six_Moons'].center_override = six_suits_center_override
 	SMODS.Suits['six_Stars'].center_override = six_suits_center_override
 end--]]
+
+if PB_UTIL then
+	function PB_UTIL.should_load_spectrum_items() return false
+	end
+end

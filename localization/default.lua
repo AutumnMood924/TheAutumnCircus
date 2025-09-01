@@ -3499,5 +3499,13 @@ return {
                 "{C:white,X:mult}X#1#{C:mult} +Mult"
             },
         },
+		thac_colour_by_jokes = {
+			name = "Colour-By-Jokes",
+            text = {
+                "Each held {C:colour}Colour{} card gains",
+				"{C:attention}1 round{} after this Joker",
+				"triggers {C:attention}#1#{} time#2# {C:inactive}({C:attention}#3#{C:inactive} left)",
+            },
+		},
 	},
 }
