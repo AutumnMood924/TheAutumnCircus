@@ -270,10 +270,15 @@ function Game:main_menu(ctx)
         G.E_MANAGER:add_event(
             Event{
 				func = function()
-					math.randomseed(os.time())
 					for k,v in ipairs(self.title_top.cards) do
 						if not v.edition then
+							math.randomseed(os.time()*k)
 							v:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+						end
+						-- counters
+						if next(SMODS.find_mod("Blockbuster-Counters")) then
+							math.randomseed(os.time()*k)
+							v:bb_counter_apply(BlockbusterCounters.Counter.obj_buffer[math.random(#BlockbusterCounters.Counter.obj_buffer)], 3)
 						end
 					end
 				return true end
@@ -307,11 +312,24 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("finity")) then
 			_ranks[#_ranks+1] = "finity_V"
 		end
+		if next(SMODS.find_mod("paperback")) then
+			_suits[#_suits+1] = "paperback_Stars"
+			_suits[#_suits+1] = "paperback_Crowns"
+			_ranks[#_ranks+1] = "paperback_Apostle"
+		end
 		target_pcard.ability.entr_yellow_sign = true
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
 		
 		local _enhancements = {"m_lucky", "m_glass", "m_steel", "m_thac_star", "m_thac_soulbound"}
+		if next(SMODS.find_mod("GrabBag")) then
+			_enhancements[#_enhancements+1] = "m_gb_alloyed"
+			_enhancements[#_enhancements+1] = "m_gb_ashen"
+			_enhancements[#_enhancements+1] = "m_gb_chained"
+			_enhancements[#_enhancements+1] = "m_gb_macabre"
+			_enhancements[#_enhancements+1] = "m_gb_ripple"
+			_enhancements[#_enhancements+1] = "m_gb_rotten"
+		end
 		if next(SMODS.find_mod("ortalab")) then
 			_enhancements[#_enhancements+1] = "m_ortalab_bent"
 			_enhancements[#_enhancements+1] = "m_ortalab_iou"
@@ -338,6 +356,9 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("artbox")) then
 			_enhancements[#_enhancements+1] = "m_artb_pinata"
 		end
+		if next(SMODS.find_mod("zeroError")) then
+			_enhancements[#_enhancements+1] = "m_zero_sunsteel"
+		end
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
 			_enhancements[#_enhancements+1] = "m_akyrs_scoreless"
 			_enhancements[#_enhancements+1] = "m_akyrs_insolate_card"
@@ -348,6 +369,14 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("Cryptid")) then
 			_enhancements[#_enhancements+1] = "m_cry_echo"
 			_enhancements[#_enhancements+1] = "m_cry_light"
+		end
+		if next(SMODS.find_mod("kino")) then
+			_enhancements[#_enhancements+1] = "m_kino_action"
+			_enhancements[#_enhancements+1] = "m_kino_demonic"
+			_enhancements[#_enhancements+1] = "m_kino_sci_fi"
+			if next(SMODS.find_mod("MoreFluff")) then
+				_enhancements[#_enhancements+1] = "m_kino_angelic"
+			end
 		end
 		if next(SMODS.find_mod("entr")) then
 			_enhancements[#_enhancements+1] = "m_entr_flesh"
@@ -462,6 +491,38 @@ function Game:main_menu(ctx)
 		end
 		target_pcard:set_aspect(_aspect, true, true)
 		target_pcard.bottle = true
+		
+		--now set other things
+		
+		-- paperclips
+		if next(SMODS.find_mod("paperback")) then
+			math.randomseed(os.time())
+			local clip_to_apply = PB_UTIL.ENABLED_PAPERCLIPS[math.random(#PB_UTIL.ENABLED_PAPERCLIPS)]
+			clip_to_apply = string.sub(clip_to_apply, 1, #clip_to_apply - 5)
+			PB_UTIL.set_paperclip(target_pcard, clip_to_apply)
+		end
+		
+		-- hexes
+		if next(SMODS.find_mod("GrabBag")) then
+			math.randomseed(os.time())
+			local hex_to_apply = GB.HEX_KEYS[math.random(#GB.HEX_KEYS)]
+			GB.set_hex(target_pcard, hex_to_apply)
+		end
+		
+		-- curses
+		if next(SMODS.find_mod("ortalab")) then
+			math.randomseed(os.time())
+			target_pcard:set_curse(Ortalab.Curse.obj_buffer[math.random(#Ortalab.Curse.obj_buffer)], true)
+		end
+		
+		-- pure suit / rank
+		if next(SMODS.find_mod("aikoyorisshenanigans")) then
+			math.randomseed(os.time())
+			if math.random() < 0.5 then
+				target_pcard.ability.akyrs_special_card_type = math.random() < 0.5 and "suit" or "rank"
+				target_pcard:set_sprites(target_pcard.config.center, target_pcard.config.card)
+			end
+		end
     end
     return r
 end

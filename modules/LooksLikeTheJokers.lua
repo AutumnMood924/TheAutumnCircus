@@ -2490,9 +2490,10 @@ local jokers = {
 							end
 						for i=1, #temp_drawn do
 							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
-								local card = temp_drawn[i]
+								local _card = temp_drawn[i]
 								
-								SMODS.change_base(card, nil, pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('snecko')))
+								SMODS.change_base(_card, nil, pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('snecko')))
+								--_card:set_sprites(_card.config.card, _card.config.center)
 								
 								return true 
 							end }))
