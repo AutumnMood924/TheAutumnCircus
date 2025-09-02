@@ -291,6 +291,10 @@ function Game:main_menu(ctx)
         card:set_sprites(card.config.center)
         card.no_ui = true
         card.states.visible = true
+        function card:click()
+            play_sound('button', 1, 0.3)
+            G.FUNCS['openModUI_TheAutumnCircus']()
+        end
 
 		tg.T.w = tg.T.w * 1.25
 			tg.T.x = tg.T.x - 1
@@ -545,7 +549,7 @@ function Game:main_menu(ctx)
         G.SPLASH_THAC:define_draw_steps({ {
             shader = 'dissolve',
 			other_obj = G.SPLASH_THAC,
-			my = -0.413,
+			ms = 0,
         } })
 
         -- Define logo properties
@@ -564,7 +568,7 @@ function Game:main_menu(ctx)
         end
 
         function G.SPLASH_THAC:hover()
-            G.SPLASH_THAC:juice_up(0.33, 1.225)
+            G.SPLASH_THAC:juice_up(0.1225, 0.515)
             play_sound('foil1', math.random() * 0.33 + 0.11, 0.333)
             Node.hover(self)
         end
