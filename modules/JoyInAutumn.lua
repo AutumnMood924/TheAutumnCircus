@@ -20,6 +20,7 @@ local jokers = {
 			local suitless = AMM.api.graveyard.count_suitless()
 			local rankless = AMM.api.graveyard.count_rankless()
 			info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+			info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
             return {vars = {
 				card.ability.extra.pyroxenes,
 				rankless,

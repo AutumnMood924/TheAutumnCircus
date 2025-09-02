@@ -222,7 +222,9 @@ function Game:main_menu(ctx)
 		end
 		
 		
-        local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS['j_thac_triplicate_soul'])
+		math.randomseed(os.time())
+		local _jokers = {"j_thac_triplicate_soul", "j_thac_knight_of_heart", "j_thac_witch_of_mind", "j_thac_lord_of_void", "j_thac_placeholder_joker"}
+        local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS[_jokers[math.random(#_jokers)]])
         card.bypass_discovery_center = true
         card.T.w = card.T.w * 1.4
         card.T.h = card.T.h * 1.4
@@ -278,8 +280,9 @@ function Game:main_menu(ctx)
 						-- counters
 						if next(SMODS.find_mod("Blockbuster-Counters")) then
 							math.randomseed(os.time()*k)
-							v:bb_counter_apply(BlockbusterCounters.Counter.obj_buffer[math.random(#BlockbusterCounters.Counter.obj_buffer)], 3)
+							v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3)
 						end
+						v.draw_halo = true
 					end
 				return true end
 			}
@@ -393,6 +396,9 @@ function Game:main_menu(ctx)
 		if next(SMODS.find_mod("allinjest")) then
 			_enhancements[#_enhancements+1] = "m_aij_fervent"
 			_enhancements[#_enhancements+1] = "m_aij_charged"
+		end
+		if next(SMODS.find_mod("vallkarri")) then
+			_enhancements[#_enhancements+1] = "m_valk_mirrored"
 		end
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
@@ -520,9 +526,51 @@ function Game:main_menu(ctx)
 			math.randomseed(os.time())
 			if math.random() < 0.5 then
 				target_pcard.ability.akyrs_special_card_type = math.random() < 0.5 and "suit" or "rank"
-				target_pcard:set_sprites(target_pcard.config.center, target_pcard.config.card)
 			end
 		end
+		
+		target_pcard:set_sprites(target_pcard.config.center, target_pcard.config.card)
+		
+		
+        -- Creates thac showdown blind Sprite
+        G.SPLASH_THAC = AnimatedSprite(0, 0, 1.5, 1.5,
+            G.ANIMATION_ATLAS["thac_modicon"], { x = 0, y = 0 }
+        )
+        G.SPLASH_THAC:set_alignment({
+            major = G.title_top,
+            type = 'cm',
+            bond = 'Strong',
+            offset = { x = 5.15, y = -4.13 }
+        })
+        G.SPLASH_THAC:define_draw_steps({ {
+            shader = 'dissolve',
+			other_obj = G.SPLASH_THAC,
+			my = -0.413,
+        } })
+
+        -- Define logo properties
+        G.SPLASH_THAC.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
+
+        G.SPLASH_THAC.dissolve_colours = { HEX('fff200'), HEX('ffaec9') }
+        G.SPLASH_THAC.dissolve = -1
+
+        G.SPLASH_THAC.states.visible = true
+		--G.SPLASH_THAC.states.drag.can = true
+        G.SPLASH_THAC.states.collide.can = true
+
+        function G.SPLASH_THAC:click()
+            play_sound('button', 1, 0.3)
+            G.FUNCS['openModUI_TheAutumnCircus']()
+        end
+
+        function G.SPLASH_THAC:hover()
+            G.SPLASH_THAC:juice_up(0.33, 1.225)
+            play_sound('foil1', math.random() * 0.33 + 0.11, 0.333)
+            Node.hover(self)
+        end
+
+        function G.SPLASH_THAC:stop_hover() Node.stop_hover(self) end
+		
     end
     return r
 end

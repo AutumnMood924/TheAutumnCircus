@@ -45,20 +45,9 @@ local updvalue_tenths = function(card, ability_table)
 end
 
 local cardquality_value = function(value, quality)
-	if quality == "face" then value = value * 0.9 end
-	if quality == "nonface" then value = value ^ 0.9 end
-	if quality == "odd" then value = value * 0.85 end
-	if quality == "even" then value = value * 0.85 end
-	if quality == "prime" then value = value * 1.2 end
-	if quality == "numbered" then value = value * 0.75 end
-	if quality == "unenhanced" then value = value * 0.80 end
-	if quality == "enhanced" then value = value * 1.25 end
-	if quality == "metal" then value = (value + 0.5) * 1.25 end
-	if quality == "materialenh" then value = (value + 0.1) * 1.25 end
-	if quality == "unsealed" then value = value * 0.85 end
-	if quality == "sealed" then value = value ^ 1.15 end
-	if quality == "baseedition" then value = value * 0.75 end
-	if quality == "editioned" then value = value ^ 1.23 end
+	if AMM.qualities[quality] and type(AMM.qualities[quality].value_mod) == "function" then
+		value = AMM.qualities[quality].value_mod(value)
+	end
 	value = math.floor(value * 100) / 100
 	return value
 end
@@ -1268,10 +1257,10 @@ local thac_effects = {
     },
     thac_flipside_buff = {
 		type = "passive",
-        ability = {value = 1, min_possible = 1, max_possible = 2},
+        ability = {value = 1, min_possible = 0, max_possible = 1.5},
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
-				ability_table.value,
+				ability_table.value*100,
 			},
 			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
@@ -1284,7 +1273,7 @@ local thac_effects = {
         calculate = function(card, context, ability_table, ability_index)
             if context.joker_buff and G.GAME.entr_alt then
 				return {
-					buff = ability_table.value
+					buff = 1+ability_table.value
 				}
             end
         end,
@@ -1903,7 +1892,7 @@ local thac_effects = {
         loc_vars = function(info_queue, card, ability_table)
             return {vars = {
 			},
-			background_colour = lighten(G.C.RED, bg_contrast)}
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
         end,
         randomize_values = function(card, ability_table)
 		end,
@@ -2294,7 +2283,232 @@ local thac_effects = {
 				end
             end
         end,
+		load_check = function()
+			return next(SMODS.find_mod("MoreFluff"))
+		end,
     },
+	thac_hexing_jesting = {
+		type = {"passive", "cursed"},
+        ability = {value = 0.01, hex_key = "slothful", min_possible = 0.03, max_possible = 0.13},
+        loc_vars = function(info_queue, card, ability_table)
+			local hexxies = 0
+			for k,v in ipairs(G.playing_cards) do
+				if GB.get_hex(v) then
+					hexxies = hexxies + 1
+				end
+			end
+			info_queue[#info_queue+1] = GB.hex_tooltip(ability_table.hex_key)
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * hexxies,
+				localize{type = 'name_text', set = 'Other', key = "gb_"..ability_table.hex_key.."_hex"},
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.hex_key = pseudorandom_element(GB.HEX_KEYS, card.config.center_key.."_"..ability_table.pseed)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and ability_table.value > 0 then
+				local hexxies = 0
+				for k,v in ipairs(G.playing_cards) do
+					if GB.get_hex(v) then
+						hexxies = hexxies + 1
+					end
+				end
+				if hexxies == 0 then return end
+				return {
+					buff = 1 + (ability_table.value * hexxies)
+				}
+            end
+			if context.end_of_round and context.game_over == false and context.main_eval and ability_table.value > 0 and not context.blueprint then
+				--[[card.ability.extra_value = card.ability.extra_value + ability_table.value
+				card:set_cost()--]]
+				gb_apply_hex(G.playing_cards, ability_table.hex_key, 1)
+				return {
+					message = "Hexed!",--localize('k_val_up'),
+					colour = G.C.SECONDARY_SET.Hex
+				}
+            end
+        end,
+        in_pool = function(card)
+            return not not G.GAME.cursed_effects_enable
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("GrabBag"))
+		end,
+	},
+    thac_cq_force = {
+		type = "passive",
+        ability = {value = 1, quality = "face", min_possible = 0.01, max_possible = 0.03},
+        loc_vars = function(info_queue, card, ability_table)
+			local cqs = 0
+			if G.deck then
+				for k,v in ipairs(G.playing_cards) do
+					if AMM.api.cardqualities.has(v, ability_table.quality) then
+						cqs = cqs + 1
+					end
+				end
+			end
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * cqs,
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_hundreths(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value*10, ability_table.quality)/10
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+			ability_table.value = cardquality_value(ability_table.value*10, ability_table.quality)/10
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local cqs = 0
+				for k,v in ipairs(G.playing_cards) do
+					if AMM.api.cardqualities.has(v, ability_table.quality) then
+						cqs = cqs + 1
+					end
+				end
+				if cqs < 1 then return end
+				return {
+					buff = 1 + (ability_table.value * cqs)
+				}
+            end
+        end,
+    },
+	thac_critical_chance = {
+		type = "passive",
+        ability = {value = 3, chance = 0.15, min_possible = 2, max_possible = 4},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.chance * 100,
+				ability_table.value * 100,
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff and pseudorandom(card.config.center_key.."_"..ability_table.pseed) < ability_table.chance then
+				return {
+					buff = 1 + ability_table.value,
+				}
+            end
+        end,
+    },
+	thac_conflagration = {
+		type = {"attack", "cursed"},
+        ability = {value = 1.75, min_possible = 1.5, max_possible = 3},
+        loc_vars = function(info_queue, card, ability_table)
+			info_queue[#info_queue+1] = G.P_CENTERS["counter_burn"]
+            return {vars = {
+				ability_table.value,
+			},
+			background_colour = lighten(G.C.XMULT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if ability_table.value > 0 then
+				local doit = false
+				if context.individual and context.cardarea == G.play and context.other_card.counter and context.other_card.counter.key == "counter_burn" then
+					doit = true
+				end
+				if context.other_joker and context.other_joker.counter and context.other_joker.counter.key == "counter_burn" then
+					doit = true
+				end
+				if doit then return { xmult = ability_table.value } end
+            end
+			if context.after and #G.hand.cards > 0 and not context.blueprint then
+				local _target = pseudorandom_element(G.hand.cards, card.config.center_key.."_"..ability_table.pseed)
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.05, func = function()
+					card:juice_up()
+					return true end
+				}))
+				_target:bb_counter_apply("counter_burn", 1)
+            end
+        end,
+        in_pool = function(card)
+            return not not G.GAME.cursed_effects_enable
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Blockbuster-Counters"))
+		end,
+	},
+
+	thac_truant = {
+		type = {"chain", "cursed"},
+        ability = { },
+		no_potency = true,
+        loc_vars = function(info_queue, card, ability_table)
+			info_queue[#info_queue+1] = G.P_CENTERS["counter_stun"]
+            return {vars = {
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.post_trigger and context.other_card == card and context.other_ret then
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.00, func = function()
+					if not card.counter or (card.counter.key ~= "counter_stun") then
+						card:bb_counter_apply("counter_stun", 1)
+					end
+					return true end
+				}))
+			end
+        end,
+        in_pool = function(card)
+            return not not G.GAME.cursed_effects_enable
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Blockbuster-Counters"))
+		end,
+	},
+	thac_counter_up = {
+		type = {"passive"},
+        ability = {value = 1, min_possible = 1, max_possible = 3},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+			if card.counter and context.end_of_round and context.game_over == false and context.main_eval and ability_table.value > 0 and not context.blueprint then
+				card:bb_increment_counter(ability_table.value, nil)
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Blockbuster-Counters"))
+		end,
+	},
 }
 
 for k,v in pairs(thac_effects) do

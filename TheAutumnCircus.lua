@@ -5,6 +5,11 @@ TheAutumnCircus.mod_id = 'TheAutumnCircus'
 TheAutumnCircus.mod_prefix = 'thac'
 
 TheAutumnCircus.mod = SMODS.current_mod
+local version = "0.0."
+for i = 1, 99 do
+        version = version.."9"
+end
+TheAutumnCircus.mod.version = version
 
 TheAutumnCircus.mod.optional_features = function()
 	return {

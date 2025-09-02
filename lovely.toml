@@ -427,3 +427,68 @@ position = "at"
 payload = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or (#G.hand.highlighted - thac_selbreaths) > math.max(G.GAME.starting_params.discard_limit, 0) then"
 match_indent = true
 overwrite = true
+
+# 
+[[patches]]
+[patches.pattern]
+target = '=[SMODS kino "Items/Enhancements/z_morefluff_enhancement.lua"]'
+pattern = '''
+order = 30,
+func = function(card, layer)
+	if card and card.config.center == G.P_CENTERS.m_kino_angelic then
+'''
+position = "at"
+payload = '''
+order = 1000001,
+func = function(card, layer)
+	if card and ((G.title_top and card.area == G.title_top) or (card.config.center_key == "j_thac_knight_of_heart" or card.config.center_key == "j_thac_witch_of_mind" or card.config.center_key == "j_thac_lord_of_void" or ((card.config.set == "Default" or card.config.set == "Enhanced") and card.config.center_key == 'm_kino_angelic'))) then
+'''
+match_indent = true
+overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+if self.SPLASH_LOGO then self.SPLASH_LOGO:remove(); self.SPLASH_LOGO = nil end
+'''
+position = "after"
+payload = '''
+if self.SPLASH_THAC then self.SPLASH_THAC:remove(); self.SPLASH_THAC = nil end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+if G.SPLASH_LOGO then
+    love.graphics.push()
+    G.SPLASH_LOGO:translate_container()
+    G.SPLASH_LOGO:draw()
+    love.graphics.pop()
+end
+'''
+position = "after"
+payload = '''
+if G.SPLASH_THAC then
+    love.graphics.push()
+    G.SPLASH_THAC:translate_container()
+    G.SPLASH_THAC.role.draw_major = G.title_top
+	if not G.SETTINGS.reduced_motion then
+	
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (1.7+math.cos(G.TIMERS.REAL*0.3))/1.225, -G.TIMERS.REAL, 0, -0.5)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (0.5+math.cos(G.TIMERS.REAL/3))/0.666, -G.TIMERS.REAL*0.2, 0, -0.5)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (0.333333+math.cos(G.TIMERS.REAL*0.03))/0.33333333, -G.TIMERS.REAL*0.9, 0, -0.5)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (0.2+math.sin(G.TIMERS.REAL))/0.515, G.TIMERS.REAL*0.413, 0, -0.5)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (1+math.sin(G.TIMERS.REAL*1.3))/0.413, G.TIMERS.REAL*0.666, 0, -0.5)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.1, nil, nil, G.SPLASH_THAC, (11+math.sin(-G.TIMERS.REAL))/0.1111, G.TIMERS.REAL*0.1111, 0, -0.5)
+	
+	end
+    G.SPLASH_THAC:draw_shader('dissolve', nil, nil, nil, G.SPLASH_THAC,
+	0.0+(math.sin(G.TIMERS.REAL*0.612)*0.13), math.sin(G.TIMERS.REAL)*0.1225, 0, -0.413)
+    add_to_drawhash(G.SPLASH_THAC)
+    love.graphics.pop()
+end
+'''
+match_indent = true

@@ -3281,7 +3281,7 @@ return {
         thac_flipside_buff = {
             name = "Flip-Side Buff",
             text = {
-                "Joker gives {X:stck_m_a_c,C:white}X#1#{} more {C:chips}Chips{}/{C:mult}Mult{}",
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
 				"while in the {C:purple}Flip-Side",
             },
         },
@@ -3507,5 +3507,56 @@ return {
 				"triggers {C:attention}#1#{} time#2# {C:inactive}({C:attention}#3#{C:inactive} left)",
             },
 		},
+		thac_hexing_jesting = {
+			name = "Hexing Jesting",
+            text = {
+				"Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+				"for each {C:gb_hex}Hex{} in your {C:attention}full deck{}",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+				"{s:0.15} ",
+				"A random card in your {C:attention}full deck",
+				"becomes {C:attention}#3#{} at end of round",
+            },
+		},
+        thac_cq_force = {
+            name = "#4# Card Force",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{} for",
+				"each {C:attention}#3#{} card in your {C:attention}full deck",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
+        thac_critical_chance = {
+            name = "Critical Chance",
+            text = {
+                "{C:green}#1#%{} chance for this Joker to",
+				"give {X:stck_m_a_c,C:white}#2#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
+            },
+        },
+		thac_conflagration = {
+			name = "Conflagration",
+            text = {
+				"Jokers and played cards with {C:attention}Burn",
+				"{C:attention}Counters{} give {X:mult,C:white}X#1#{} Mult when scored",
+				"{s:0.15} ",
+				"Put a {C:attention}Burn Counter{} on a random card",
+				"held in hand after {C:blue}Hand{} is played",
+            },
+		},
+        thac_truant = {
+            name = "Truant",
+            text = {
+				"Put a {C:attention}Stun Counter{} on",
+				"this {C:attention}Joker{} after it triggers"
+            },
+        },
+        thac_counter_up = {
+            name = "Counter Up",
+            text = {
+				"If this {C:attention}Joker{} has a {C:attention}Counter{}",
+				"on it, it gains {C:attention}#1#{} of that type",
+				"of {C:attention}Counter{} at end of round",
+            },
+        },
 	},
 }
