@@ -549,6 +549,7 @@ local jokers = {
         cost = 20,
         rarity = 4,
 		pronouns = "none",
+		pools = { ["Friend"] = true },
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -873,6 +874,7 @@ local jokers = {
         soul_pos = { x = 6, y = 2 },
         cost = 20,
         rarity = 4,
+		pools = { ["Friend"] = true },
 		pronouns = "it_he_they",
 		has_halo = true,
         blueprint_compat = true,
@@ -1357,7 +1359,7 @@ local jokers = {
             return AMM.api.graveyard.count_faces() > 0
         end,
     },
-    'junk_collector', junk_collector = {
+    --[['junk_collector', junk_collector = {
         config = { extra = {
             
         }},
@@ -1394,7 +1396,7 @@ local jokers = {
         in_pool = function(self)
             return #G.P_CENTER_POOLS.Oddity ~= 0
         end,
-    },
+    },--]]
     'exorcist', exorcist = {
         config = { extra = {
             targets = 2,
@@ -2750,6 +2752,7 @@ local jokers = {
         cost = 6,
         rarity = 2,
 		pronouns = "it_he_they",
+		pools = { ["Friend"] = true },
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2917,7 +2920,7 @@ local jokers = {
 			end
         end,
     },
-    'topaz_starmage', topaz_starmage = {
+    --[['topaz_starmage', topaz_starmage = {
         config = { extra = {
             odds = 2,
         }},
@@ -2963,7 +2966,7 @@ local jokers = {
 				end
             end
         end,
-    },
+    },--]]
     'amethyst_starmage', amethyst_starmage = {
         config = { extra = {
             odds = 3,
@@ -3443,6 +3446,7 @@ local jokers = {
 				mult = 3,
 			},
 		},
+		pools = { ["Friend"] = true },
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -3592,6 +3596,7 @@ local jokers = {
 		cost = 8,
 		dependencies = { "homelatro" },
 		pronouns = "it_he_they",
+		pools = { ["Friend"] = true },
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.e_negative

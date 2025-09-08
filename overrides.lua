@@ -280,7 +280,7 @@ function Game:main_menu(ctx)
 						-- counters
 						if next(SMODS.find_mod("Blockbuster-Counters")) then
 							math.randomseed(os.time()*k)
-							v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3)
+							v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3, nil, true)
 						end
 						v.draw_halo = true
 						

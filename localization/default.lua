@@ -3594,5 +3594,13 @@ return {
 				"{C:attention}#3# card#2#{} to your hand",
 			},
 		},
+        thac_counter_force = {
+            name = "#3# Force",
+            text = {
+                "Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{} for each",
+				"{C:attention}#3#{} on cards in your {C:attention}full deck",
+				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
+            },
+        },
 	},
 }

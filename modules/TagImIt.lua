@@ -27,35 +27,6 @@ local tags = {
 		end,
 		loc_vars = function() return {vars = {}} end,
 	},
-	"collector", collector = {
-		config = {type = "immediate"},
-		pos = {x = 1, y = 1},
-		discovered = false,
-		apply = function(self, tag, context)
-			--print("yo")
-			if context.type == 'immediate' then
-				local lock = tag.ID
-				G.CONTROLLER.locks[lock] = true
-				tag:yep('+', G.C.PURPLE,function() 
-					local oddities_to_spawn = G.consumeables.config.card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer)
-					--G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + oddities_to_spawn
-					for i = 1, oddities_to_spawn do
-						if G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit then
-							local card = create_card('Oddity', G.consumeables, nil, nil, nil, nil, nil, 'collectorstag')
-							card:add_to_deck()
-							G.consumeables:emplace(card)
-						end
-					end
-					G.CONTROLLER.locks[lock] = nil
-					return true
-				end)
-				tag.triggered = true
-				return true
-			end
-		end,
-		loc_vars = function() return {vars = {}} end,
-		in_pool = function() return #G.P_CENTER_POOLS.Oddity > 0 end,
-	},
 	"chaos", chaos = {
 		config = {type = "immediate"},
 		pos = {x = 0, y = 0},

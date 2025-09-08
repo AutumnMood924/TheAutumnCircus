@@ -2590,6 +2590,58 @@ local thac_effects = {
             end
         end,
     },
+    thac_counter_force = {
+		type = "passive",
+        ability = {value = 1, counter = "counter_mult", min_possible = 0.03, max_possible = 0.06},
+        loc_vars = function(info_queue, card, ability_table)
+			local counters = 0
+			if G.deck then
+				for k,v in ipairs(G.playing_cards) do
+					if Blockbuster.Counters.is_counter(v, ability_table.counter) then
+						counters = counters + Blockbuster.Counters.get_counter_num(v)
+					end
+				end
+			end
+            return {vars = {
+				ability_table.value * 100,
+				ability_table.value * 100 * counters,
+				localize{type = 'name_text', set = 'Counter', key = ability_table.counter},
+			},
+			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.counter = pseudorandom_element(Blockbuster.Counters.get_counter_pool({},true), card.config.center_key.."_"..ability_table.pseed)
+			local counterobj = Blockbuster.Counters.Counters[ability_table.counter]
+			for k,v in ipairs(counterobj.counter_class) do
+				if v == "detrimental" then
+					ability_table.max_possible = ability_table.max_possible * 3
+				end
+			end
+			randvalue_hundreths(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_default(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+            if context.joker_buff then
+				local counters = 0
+				if G.deck then
+					for k,v in ipairs(G.playing_cards) do
+						if Blockbuster.Counters.is_counter(v, ability_table.counter) then
+							counters = counters + Blockbuster.Counters.get_counter_num(v)
+						end
+					end
+				end
+				if counters < 1 then return end
+				return {
+					buff = 1 + (ability_table.value * counters)
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Blockbuster-Counters"))
+		end,
+    },
 }
 
 for k,v in pairs(thac_effects) do
