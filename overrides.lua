@@ -283,6 +283,17 @@ function Game:main_menu(ctx)
 							v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3)
 						end
 						v.draw_halo = true
+						
+						
+						-- HOOOO BOY THIS IS JANK AS FUUUUUUUUUUUUUUU
+						
+						if v.config.center.mod and not (v.config.center.set == "Default" or v.config.center.set == "Enhanced") then
+							function v:click()
+								play_sound('button', 1, 0.3)
+								G.FUNCS['openModUI_'..v.config.center.mod.id]()
+							end
+						end
+						
 					end
 				return true end
 			}
@@ -291,10 +302,11 @@ function Game:main_menu(ctx)
         card:set_sprites(card.config.center)
         card.no_ui = true
         card.states.visible = true
-        function card:click()
+        
+		--[[function card:click()
             play_sound('button', 1, 0.3)
             G.FUNCS['openModUI_TheAutumnCircus']()
-        end
+        end--]]
 
 		tg.T.w = tg.T.w * 1.25
 			tg.T.x = tg.T.x - 1
@@ -441,16 +453,13 @@ function Game:main_menu(ctx)
 			_seals[#_seals+1] = "payasaka_ghost"
 		end
 		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			_seals[#_seals+1] = "akyrs_debuff"
+			_seals[#_seals+1] = "akyrs_carmine"
 		end
 		if next(SMODS.find_mod("Cryptid")) then
 			_seals[#_seals+1] = "cry_green"
 		end
 		math.randomseed(os.time())
 		target_pcard:set_seal(_seals[math.random(#_seals)], true, true)
-		if target_pcard.seal == "akyrs_debuff" then
-			target_pcard:set_debuff(true)
-		end
 		
 		math.randomseed(os.time()*0.75)
 		local _editions = {"polychrome", "negative", "thac_gilded"}

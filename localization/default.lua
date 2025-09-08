@@ -1109,6 +1109,19 @@ return {
 					"{C:mult}+4 +Mult",
 				},
 			},
+			j_thac_amalgam_joker = {
+				name = {
+					"Amalgam Joker",
+					"{C:autumn,s:0.5}Come join the fun!",
+				},
+				text = {
+					"Combines {C:attention}#1#{} random cards",
+					"held in hand at end of round",
+					"This Joker gains {X:money,C:white}X#2#{} of the",
+					"combined card's {C:chips}Chips{} value as",
+					"additional {C:money}sell value",
+				},
+			},
 			j_thac_jera = {
 				name = {
 					"Jera",
@@ -2022,9 +2035,8 @@ return {
 					"{C:autumn,s:0.5}Three of...",
 				},
 				text = {
-					"Creates a random",
-					"{C:dark_edition}Polychrome {C:attention}3 of {C:hearts}Hearts{}",
-					"with {C:knightofheart}Heart{C:red} Aspect",
+					"Creates a random {C:dark_edition}Polychrome",
+					"{C:dark_edition}Light {C:attention}3 of {C:hearts}Hearts{} with {C:knightofheart}Heart{C:red} Aspect",
 					"and adds it to your hand",
 				},
 			},
@@ -2046,8 +2058,8 @@ return {
 				},
 				text = {
 					"Creates a random {C:attention}Glass {C:attention}3{}",
-					"with an {C:attention}Ouroboros Seal{} and",
-					"{C:lordofvoid}Void{C:red} Aspect{}, and",
+					"{C:attention}of {V:1}Eyes{} with an {C:attention}Ouroboros ",
+					"Seal{} and {C:lordofvoid}Void{C:red} Aspect{}, and",
 					"adds it to your hand",
 				},
 			},
@@ -2195,6 +2207,15 @@ return {
 				text = {
 					"Gives each card held in",
 					"hand a {C:diamonds}Yellow Sign{} sicker",
+				},
+			},
+			c_thac_get_out_of_juvie = {
+				name = {
+					"Get Out Of Juvie Free Card",
+					"{C:autumn,s:0.5}",
+				},
+				text = {
+					"Reduces {C:attention}Blind{} requirement by {C:attention}#1#%{}",
 				},
 			},
 		},
@@ -3511,7 +3532,7 @@ return {
 			name = "Hexing Jesting",
             text = {
 				"Joker gives {X:stck_m_a_c,C:white}#1#%{} more {C:chips}Chips{}/{C:mult}Mult{}",
-				"for each {C:gb_hex}Hex{} in your {C:attention}full deck{}",
+				"for each {V:1}Hex{} in your {C:attention}full deck{}",
 				"{C:inactive}(Currently: {X:stck_m_a_c,C:white}#2#%{C:inactive} more Chips/Mult)",
 				"{s:0.15} ",
 				"A random card in your {C:attention}full deck",
@@ -3558,5 +3579,20 @@ return {
 				"of {C:attention}Counter{} at end of round",
             },
         },
+        thac_held_counter = {
+            name = "#2#holder",
+            text = {
+				"Distribute #1# {C:attention}#2##3#{}",
+				"randomly among cards held",
+				"in hand at end of round",
+            },
+        },
+		thac_cq_spawner = {
+			name = "#4# Card Printer",
+			text = {
+				"When round begins, add {C:attention}#1#{} random",
+				"{C:attention}#3# card#2#{} to your hand",
+			},
+		},
 	},
 }

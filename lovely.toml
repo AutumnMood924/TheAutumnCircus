@@ -441,7 +441,7 @@ position = "at"
 payload = '''
 order = 1000001,
 func = function(card, layer)
-	if card and ((G.title_top and card.area == G.title_top) or (card.config.center_key == "j_thac_knight_of_heart" or card.config.center_key == "j_thac_witch_of_mind" or card.config.center_key == "j_thac_lord_of_void" or ((card.config.set == "Default" or card.config.set == "Enhanced") and card.config.center_key == 'm_kino_angelic'))) then
+	if card and ((G.title_top and card.area == G.title_top) or (card.config.center_key == "j_thac_knight_of_heart" or card.config.center_key == "j_thac_witch_of_mind" or ((card.config.set == "Default" or card.config.set == "Enhanced") and card.config.center_key == 'm_kino_angelic'))) then
 '''
 match_indent = true
 overwrite = true
@@ -477,18 +477,18 @@ if G.SPLASH_THAC then
     G.SPLASH_THAC.role.draw_major = G.title_top
 	if not G.SETTINGS.reduced_motion then
 	
-	G.SPLASH_THAC:draw_shader('thac_gilded', 0.01, nil, nil, G.SPLASH_THAC, (1.7+math.cos(G.TIMERS.REAL*0.3))/1.225, -G.TIMERS.REAL, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.01, nil, nil, G.SPLASH_THAC, (1.7+math.cos(G.TIMERS.REAL*0.3))/1.225, -G.TIMERS.REAL, 0, 0)
-	G.SPLASH_THAC:draw_shader('thac_gilded', 0.03, nil, nil, G.SPLASH_THAC, (0.5+math.cos(G.TIMERS.REAL/3))/0.666, -G.TIMERS.REAL*0.2, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.03, nil, nil, G.SPLASH_THAC, (0.5+math.cos(G.TIMERS.REAL/3))/0.666, -G.TIMERS.REAL*0.2, 0, 0)
-	G.SPLASH_THAC:draw_shader('thac_gilded', 0.07, nil, nil, G.SPLASH_THAC, (0.333333+math.cos(G.TIMERS.REAL*0.03))/0.33333333, -G.TIMERS.REAL*0.9, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.07, nil, nil, G.SPLASH_THAC, (0.333333+math.cos(G.TIMERS.REAL*0.03))/0.33333333, -G.TIMERS.REAL*0.9, 0, 0)
-	G.SPLASH_THAC:draw_shader('thac_gilded', 0.009, nil, nil, G.SPLASH_THAC, (0.2+math.sin(G.TIMERS.REAL))/0.515, G.TIMERS.REAL*0.413, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.009, nil, nil, G.SPLASH_THAC, (0.2+math.sin(G.TIMERS.REAL))/0.515, G.TIMERS.REAL*0.413, 0, 0)
-	--G.SPLASH_THAC:draw_shader('thac_gilded', 0.006, nil, nil, G.SPLASH_THAC, (1+math.sin(G.TIMERS.REAL*1.3))/0.413, G.TIMERS.REAL*0.666, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.006, nil, nil, G.SPLASH_THAC, (1+math.sin(G.TIMERS.REAL*1.3))/0.413, G.TIMERS.REAL*0.666, 0, 0)
-	--G.SPLASH_THAC:draw_shader('thac_gilded', 0.001, nil, nil, G.SPLASH_THAC, (11+math.sin(-G.TIMERS.REAL))/0.1111, G.TIMERS.REAL*0.1111, 0, 0)
-	G.SPLASH_THAC:draw_shader('dissolve', 0.001, nil, nil, G.SPLASH_THAC, (11+math.sin(-G.TIMERS.REAL))/0.1111, G.TIMERS.REAL*0.1111, 0, 0)
+	G.SPLASH_THAC:draw_shader('thac_gilded', 0.01, nil, true, G.SPLASH_THAC, (1.9+math.cos(G.TIMERS.REAL*0.4))/0.5, -G.TIMERS.REAL, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.01, nil, true, G.SPLASH_THAC, (1.7+math.cos(G.TIMERS.REAL*0.3))/1.225, -G.TIMERS.REAL, 0, 0)
+	G.SPLASH_THAC:draw_shader('thac_gilded', 0.01, nil, true, G.SPLASH_THAC, (0.8+math.cos(G.TIMERS.REAL/2))*3, -G.TIMERS.REAL*0.8, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.03, nil, true, G.SPLASH_THAC, (0.5+math.cos(G.TIMERS.REAL/3))/0.666, -G.TIMERS.REAL*0.2, 0, 0)
+	G.SPLASH_THAC:draw_shader('thac_gilded', 0.01, nil, true, G.SPLASH_THAC, (0.37+math.cos(G.TIMERS.REAL*0.13))/0.22333333, -G.TIMERS.REAL*0.3, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.07, nil, true, G.SPLASH_THAC, (0.333333+math.cos(G.TIMERS.REAL*0.03))/0.33333333, -G.TIMERS.REAL*0.9, 0, 0)
+	G.SPLASH_THAC:draw_shader('thac_gilded', 0.01, nil, true, G.SPLASH_THAC, (0.2+math.sin(G.TIMERS.REAL))/0.2, G.TIMERS.REAL*0.413, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.009, nil, true, G.SPLASH_THAC, (0.2+math.sin(G.TIMERS.REAL))/0.515, G.TIMERS.REAL*0.413, 0, 0)
+	--G.SPLASH_THAC:draw_shader('thac_gilded', 0.006, nil, true, G.SPLASH_THAC, (1+math.sin(G.TIMERS.REAL*1.3))/0.1, G.TIMERS.REAL*0.666, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.006, nil, true, G.SPLASH_THAC, (1+math.sin(G.TIMERS.REAL*1.3))/0.413, G.TIMERS.REAL*0.666, 0, 0)
+	--G.SPLASH_THAC:draw_shader('thac_gilded', 0.001, nil, true, G.SPLASH_THAC, (11+math.sin(-G.TIMERS.REAL))/0.09, G.TIMERS.REAL*0.1111, 0, 0)
+	G.SPLASH_THAC:draw_shader('dissolve', 0.001, nil, true, G.SPLASH_THAC, (11+math.sin(-G.TIMERS.REAL))/0.1111, G.TIMERS.REAL*0.1111, 0, 0)
 	
 	end
     G.SPLASH_THAC:draw_shader('dissolve', nil, nil, nil, G.SPLASH_THAC,

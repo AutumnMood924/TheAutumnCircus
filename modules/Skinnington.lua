@@ -38,6 +38,18 @@ local deckskins = {
 					pos = {x = 0, y = 0,},
 					atlas_key = "thac_Skinberly_akyrs",
 				},
+			},
+			{
+				key = "lc_white",
+				loc_txt = "White Eyes",
+				ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', "King", "Ace", "finity_V", "entr_nilrank", "paperback_Apostle", "unstb_0", "unstb_0.5", "unstb_1", "unstb_r2", "unstb_e", "unstb_Pi", "unstb_11", "unstb_12", "unstb_13", "unstb_21", "unstb_25", "unstb_161", "unstb_???"},
+				display_ranks = displayers,
+				atlas = "thac_Skinthree",
+				pos_style = 'ranks',
+				akyrs_pure_suit = {
+					pos = {x = 0, y = 0,},
+					atlas_key = "thac_Skinthree_akyrs",
+				},
 			}
 		},
 		load_check = function()
@@ -68,6 +80,18 @@ SMODS.Atlas{
 SMODS.Atlas{
 	key = "Skinberly_akyrs",
 	path = "Skinberly_akyrs.png",
+	px = 71,
+	py = 95,
+}
+SMODS.Atlas{
+	key = "Skinthree",
+	path = "Skinthree.png",
+	px = 71,
+	py = 95,
+}
+SMODS.Atlas{
+	key = "Skinthree_akyrs",
+	path = "Skinthree_akyrs.png",
 	px = 71,
 	py = 95,
 }

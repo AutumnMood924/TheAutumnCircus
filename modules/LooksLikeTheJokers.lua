@@ -1,5 +1,85 @@
 TheAutumnCircus.placeholder_jokers = { }
 
+if CardPronouns then
+	if not CardPronouns.badge_types["it_they"] then
+		CardPronouns.Pronoun {
+			colour = HEX("6e0e2e"),
+			text_colour = HEX("bd1864"),
+			pronoun_table = { "It", "They" },
+			in_pool = function()
+				return false
+			end,
+			key = "it_they"
+		}
+	end
+	if not CardPronouns.badge_types["it_she_they"] then
+		CardPronouns.Pronoun {
+			colour = HEX("50b250"),
+			text_colour = HEX("46fbc4"),
+			pronoun_table = { "It", "She", "They" },
+			in_pool = function()
+				return false
+			end,
+			key = "it_she_they"
+		}
+	end
+	if not CardPronouns.badge_types["it_he_they"] then
+		CardPronouns.Pronoun {
+			colour = HEX("d1b628"),
+			text_colour = HEX("FFF200"),
+			pronoun_table = { "It", "He", "They" },
+			in_pool = function()
+				return false
+			end,
+			key = "it_he_they"
+		}
+	end
+	if not CardPronouns.badge_types["she_it"] then
+		CardPronouns.Pronoun {
+			colour = HEX("FFAEC9"),
+			text_colour = HEX("122597"),
+			pronoun_table = { "She", "It" },
+			in_pool = function()
+				return true
+			end,
+			key = "she_it"
+		}
+	end
+	if not CardPronouns.badge_types["he_it"] then
+		CardPronouns.Pronoun {
+			colour = HEX("122597"),
+			text_colour = HEX("FFF200"),
+			pronoun_table = { "He", "It" },
+			in_pool = function()
+				return true
+			end,
+			key = "he_it"
+		}
+	end
+	if not CardPronouns.badge_types["they_it"] then
+		CardPronouns.Pronoun {
+			colour = HEX("FFF200"),
+			text_colour = HEX("122597"),
+			pronoun_table = { "They", "It" },
+			in_pool = function()
+				return true
+			end,
+			key = "they_it"
+		}
+	end
+	if not CardPronouns.badge_types["none"] then
+		CardPronouns.Pronoun {
+			colour = HEX("000000"),
+			text_colour = HEX("FFFFFF"),
+			pronoun_table = { "None" },
+			in_pool = function()
+				return false
+			end,
+			key = "none"
+		}
+	end
+end
+
 local jokers = {
     'helpful_joker', helpful_joker = {
         config = { extra = {
@@ -9,6 +89,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -49,6 +130,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -149,6 +231,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "they_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -179,6 +262,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -205,6 +289,7 @@ local jokers = {
         pos = { x = 1, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -241,6 +326,7 @@ local jokers = {
         pos = { x = 2, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "he_him",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -269,6 +355,7 @@ local jokers = {
         pos = { x = 3, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -298,6 +385,7 @@ local jokers = {
         pos = { x = 4, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -331,6 +419,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 3,
         rarity = 1,
+		pronouns = "any_all",
         blueprint_compat = false,
         eternal_compat = false,
         perishable_compat = true,
@@ -352,6 +441,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -389,6 +479,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -424,6 +515,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 20,
         rarity = 4,
+		pronouns = "he_him",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -456,6 +548,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 20,
         rarity = 4,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -501,6 +594,7 @@ local jokers = {
         pos = { x = 4, y = 3 },
         cost = 6,
         rarity = 2,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -532,6 +626,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "she_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -565,6 +660,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 5,
         rarity = 2,
+		pronouns = "it_its",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -614,6 +710,7 @@ local jokers = {
         soul_pos = { x = 4, y = 2 },
         cost = 20,
         rarity = 4,
+		pronouns = "it_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -742,6 +839,7 @@ local jokers = {
         soul_pos = { x = 5, y = 2 },
         cost = 20,
         rarity = 4,
+		pronouns = "it_she_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -775,6 +873,8 @@ local jokers = {
         soul_pos = { x = 6, y = 2 },
         cost = 20,
         rarity = 4,
+		pronouns = "it_he_they",
+		has_halo = true,
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -817,6 +917,7 @@ local jokers = {
         pos = { x = 5, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -871,6 +972,7 @@ local jokers = {
         pos = { x = 6, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -911,6 +1013,7 @@ local jokers = {
         pos = { x = 8, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -953,6 +1056,7 @@ local jokers = {
         pos = { x = 9, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "they_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -996,6 +1100,7 @@ local jokers = {
         pos = { x = 7, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1042,6 +1147,7 @@ local jokers = {
         pos = { x = 7, y = 1 },
         cost = 9,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1092,6 +1198,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1122,6 +1229,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "she_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1150,14 +1258,16 @@ local jokers = {
         config = { extra = {
             money = 8,
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 9, y = 3 },
         cost = 7,
         rarity = 2,
+		pronouns = "he_him",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             return {vars = {
                 card.ability.extra.money
             }}
@@ -1184,6 +1294,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 3,
         rarity = 1,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1220,6 +1331,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1252,6 +1364,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 5,
         rarity = 2,
+		pronouns = "he_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1291,6 +1404,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "he_him",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1345,6 +1459,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1376,6 +1491,7 @@ local jokers = {
         pos = { x = 5, y = 3 },
         cost = 5,
         rarity = 2,
+		pronouns = "they_it",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -1405,14 +1521,16 @@ local jokers = {
         config = { extra = {
             Xchips = 0.4,
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 3, y = 4 },
         cost = 7,
         rarity = 3,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
             info_queue[#info_queue+1] = G.P_CENTERS.m_stone
             local gy_stones = AMM.api.graveyard.count_center(G.P_CENTERS.m_stone)
@@ -1443,6 +1561,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1474,6 +1593,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 10,
         rarity = 3,
+		pronouns = "it_he_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1506,6 +1626,7 @@ local jokers = {
         pos = { x = 6, y = 3 },
         cost = 6,
         rarity = 2,
+		pronouns = "it_its",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -1536,6 +1657,7 @@ local jokers = {
         pos = { x = 7, y = 2 },
         cost = 8,
         rarity = 3,
+		pronouns = "she_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1588,6 +1710,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 3,
         rarity = 1,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1625,6 +1748,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 10,
         rarity = 3,
+		pronouns = "it_she_they",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -1651,6 +1775,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 10,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1691,6 +1816,7 @@ local jokers = {
         pos = { x = 7, y = 3 },
         cost = 5,
         rarity = 1,
+		pronouns = "he_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1721,6 +1847,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "they_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1762,6 +1889,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1817,6 +1945,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+		pronouns = "it_they",
         -- "Ternary System"
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
@@ -1846,6 +1975,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1870,6 +2000,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "she_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1897,6 +2028,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1925,6 +2057,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1950,6 +2083,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -1987,6 +2121,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 10,
         rarity = 3,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2029,6 +2164,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 10,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -2055,6 +2191,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "any_all",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -2094,6 +2231,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2348,6 +2486,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2394,6 +2533,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "it_its",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -2465,6 +2605,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 7,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,
@@ -2517,6 +2658,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 3,
         rarity = 1,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2542,6 +2684,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 8,
         rarity = 3,
+		pronouns = "none",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2583,6 +2726,7 @@ local jokers = {
         pos = { x = 8, y = 2 },
         cost = 8,
         rarity = 3,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2605,6 +2749,7 @@ local jokers = {
         pos = { x = 9, y = 2 },
         cost = 6,
         rarity = 2,
+		pronouns = "it_he_they",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2635,6 +2780,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2660,6 +2806,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2701,6 +2848,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2776,6 +2924,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2822,6 +2971,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2869,6 +3019,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "any_all",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2897,6 +3048,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 4,
         rarity = 1,
+		pronouns = "she_they",
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             return {vars = { card.ability.extra.mult }}
@@ -2925,6 +3077,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "she_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2957,6 +3110,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 6,
         rarity = 2,
+		pronouns = "it_its",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -2996,6 +3150,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+		pronouns = "she_it",
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'astro'} end
 			info_queue[#info_queue+1] = { key = "petting", set = "Other" }
@@ -3081,6 +3236,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+		pronouns = "she_it",
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'astro'} end
 			info_queue[#info_queue+1] = { key = "petting", set = "Other" }
@@ -3159,6 +3315,7 @@ local jokers = {
 		rarity = "hmlt_player",
 		cost = 4,
 		dependencies = { "homelatro" },
+		pronouns = "it_they",
 		config = {
 			extra = {
 				numer = 1,
@@ -3207,6 +3364,7 @@ local jokers = {
 		rarity = "hmlt_player",
 		cost = 4,
 		dependencies = { "homelatro" },
+		pronouns = "it_she_they",
 		config = {
 			extra = {
 				numer = 1,
@@ -3277,6 +3435,7 @@ local jokers = {
 		rarity = "hmlt_player",
 		cost = 4,
 		dependencies = { "homelatro" },
+		pronouns = "it_he_they",
 		config = {
 			extra = {
 				numer = 1,
@@ -3357,6 +3516,7 @@ local jokers = {
 		rarity = "hmlt_godtier",
 		cost = 8,
 		dependencies = { "homelatro" },
+		pronouns = "it_they",
 		config = { extra = {
 		}},
 		loc_vars = function(self, info_queue, card)
@@ -3391,6 +3551,7 @@ local jokers = {
 		rarity = "hmlt_godtier",
 		cost = 8,
 		dependencies = { "homelatro" },
+		pronouns = "it_she_they",
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			if card.area.config.collection then
@@ -3430,6 +3591,7 @@ local jokers = {
 		rarity = "hmlt_godtier",
 		cost = 8,
 		dependencies = { "homelatro" },
+		pronouns = "it_he_they",
 		loc_vars = function(self, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -3511,6 +3673,7 @@ local jokers = {
         pos = { x = 0, y = 0 },
         cost = 9,
         rarity = 3,
+		pronouns = "they_them",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -3552,6 +3715,44 @@ local jokers = {
 		end,
 	},
 	--]]
+    'amalgam_joker', amalgam_joker = {
+        config = { extra = {
+            combines = 2,
+			value_gain = 0.1,
+        }},
+        pos = { x = 4, y = 4 },
+        cost = 6,
+        rarity = 2,
+		pronouns = "they_them",
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {card.ability.extra.combines, card.ability.extra.value_gain}}
+        end,
+        calculate = function(self, card, context)
+            if context.end_of_round and context.cardarea == G.jokers and #G.hand.cards > card.ability.extra.combines and not context.blueprint then
+				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2,func = function()
+					local hand_cards = {}
+					for i=1,#G.hand.cards do hand_cards[i] = G.hand.cards[i] end
+					pseudoshuffle(hand_cards, pseudoseed("amalgam_joker"))
+					
+
+					local new_card = AMM.combine_cards({hand_cards[1], hand_cards[2]}, "amalgam_joker", G.hand)
+					
+					card.ability.extra_value = card.ability.extra_value + math.floor(new_card:get_chip_bonus() * card.ability.extra.value_gain)
+					card:set_cost()
+				return true end}))
+				return {
+					message = localize('k_val_up'),
+					colour = G.C.MONEY
+				}
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

@@ -5,6 +5,7 @@ local jokers = {
         }},
         pos = { x = 0, y = 0 },
         cost = 10,
+		pronouns = "they_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -40,6 +41,7 @@ local jokers = {
         }},
         pos = { x = 0, y = 0 },
         cost = 10,
+		pronouns = "they_it",
         blueprint_compat = true,
         eternal_compat = true,
         perishable_compat = true,
@@ -67,6 +69,7 @@ local jokers = {
         eternal_compat = true,
         perishable_compat = true,
         rental_compat = true,
+		pronouns = "it_he_they",
 		loc_vars = function(self, info_queue, card)
 			if card.area.config.collection then
 			return {vars = {"N/A"}}

@@ -12,6 +12,7 @@ local jokers = {
         pos = { x = 6, y = 0 },
         cost = 15,
 		rarity = "cry_epic",
+		pronouns = "none",
         blueprint_compat = false,
         eternal_compat = true,
         perishable_compat = true,

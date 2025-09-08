@@ -2302,6 +2302,7 @@ local thac_effects = {
 				ability_table.value * 100,
 				ability_table.value * 100 * hexxies,
 				localize{type = 'name_text', set = 'Other', key = "gb_"..ability_table.hex_key.."_hex"},
+				colours = {HEX("9493aa")}
 			},
 			background_colour = lighten(G.C.SECONDARY_SET.Tarot, bg_contrast)}
         end,
@@ -2414,7 +2415,7 @@ local thac_effects = {
 		type = {"attack", "cursed"},
         ability = {value = 1.75, min_possible = 1.5, max_possible = 3},
         loc_vars = function(info_queue, card, ability_table)
-			info_queue[#info_queue+1] = G.P_CENTERS["counter_burn"]
+			info_queue[#info_queue+1] = Blockbuster.Counters.Counters["counter_burn"]
             return {vars = {
 				ability_table.value,
 			},
@@ -2459,7 +2460,7 @@ local thac_effects = {
         ability = { },
 		no_potency = true,
         loc_vars = function(info_queue, card, ability_table)
-			info_queue[#info_queue+1] = G.P_CENTERS["counter_stun"]
+			info_queue[#info_queue+1] = Blockbuster.Counters.Counters["counter_stun"]
             return {vars = {
 			},
 			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
@@ -2509,6 +2510,86 @@ local thac_effects = {
 			return next(SMODS.find_mod("Blockbuster-Counters"))
 		end,
 	},
+	thac_held_counter = {
+		type = {"passive"},
+        ability = {value = 1, counter = "counter_mult", min_possible = 2, max_possible = 5},
+        loc_vars = function(info_queue, card, ability_table)
+			info_queue[#info_queue+1] = Blockbuster.Counters.Counters[ability_table.counter]
+            return {vars = {
+				ability_table.value,
+				localize{type = 'name_text', set = 'Counter', key = ability_table.counter},
+				ability_table.value == 1 and "" or "s",
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.counter = pseudorandom_element({
+				"counter_mult", "counter_chip", "counter_xmult",
+				"counter_retrigger", "counter_money"
+			}, card.config.center_key.."_"..ability_table.pseed)
+			randvalue_default(card, ability_table)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+			if context.end_of_round and context.game_over == false and context.main_eval and ability_table.value > 0 and not context.blueprint then
+				for i=1,ability_table.value do
+					local _target = pseudorandom_element(G.hand.cards, card.config.center_key.."_"..ability_table.pseed)
+					_target:bb_counter_apply(ability_table.counter, 1, nil)
+				end
+				return {
+					message = "Counters!",
+				}
+            end
+        end,
+		load_check = function()
+			return next(SMODS.find_mod("Blockbuster-Counters"))
+		end,
+	},
+    thac_cq_spawner = {
+		type = "passive",
+        ability = {value = 1, quality = "face", min_possible = 1, max_possible = 2},
+        loc_vars = function(info_queue, card, ability_table)
+            return {vars = {
+				ability_table.value,
+				ability_table.value == 1 and "" or "s",
+				AMM.api.cardqualities.localize(ability_table.quality),
+				AMM.api.cardqualities.localize(ability_table.quality,1)
+			},
+			background_colour = lighten(G.C.IMPORTANT, bg_contrast)}
+        end,
+        randomize_values = function(card, ability_table)
+			ability_table.quality = AMM.api.cardqualities.random(pseudoseed(card.config.center.key.."_"..ability_table.pseed))
+			randvalue_default(card, ability_table)
+			--randvalue_hundreths(card, ability_table)
+			--ability_table.value = math.floor(cardquality_value(ability_table.value*10, ability_table.quality)/10)
+		end,
+        update_values = function(card, ability_table)
+			updvalue_whole(card, ability_table)
+			--updvalue_default(card, ability_table)
+			--ability_table.value = math.floor(cardquality_value(ability_table.value*10, ability_table.quality)/10)
+		end,
+        calculate = function(card, context, ability_table, ability_index)
+			if context.first_hand_drawn and not context.blueprint then
+				local _cards = AMM.api.cardqualities.create(ability_table.quality, ability_table.value, G.hand, card.config.center_key.."_"..ability_table.pseed)
+
+				
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						for k,_card in ipairs(_cards) do
+							G.GAME.blind:debuff_card(_card)
+						end
+						G.hand:sort()
+						card:juice_up()
+						SMODS.calculate_context({ playing_card_added = true, cards = _cards })
+						save_run()
+						return true
+					end
+				}))
+            end
+        end,
+    },
 }
 
 for k,v in pairs(thac_effects) do

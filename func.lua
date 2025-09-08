@@ -12,6 +12,8 @@ G.ARGS.LOC_COLOURS['witchofmind'] = HEX('50B250')
 G.ARGS.LOC_COLOURS['witchofmindw'] = HEX('46FBC4')
 G.ARGS.LOC_COLOURS['knightofheart'] = HEX('6E0E2E')
 G.ARGS.LOC_COLOURS['knightofheartw'] = HEX('BD1864')
+G.ARGS.LOC_COLOURS['thac_friend1'] = HEX('FFF200')
+G.ARGS.LOC_COLOURS['thac_friend2'] = HEX('FFAEC9')
 
 function func.artcredit(_c, info_queue, card, desc_nodes, specific_vars, full_UI_table)
 	localize {

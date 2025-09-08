@@ -11,6 +11,16 @@ for i = 1, 99 do
 end
 TheAutumnCircus.mod.version = version
 
+TheAutumnCircus.mod.ui_config = {
+    colour = HEX('00164F'),
+    bg_colour = HEX('ffaec999'),
+    back_colour = HEX('46fbc4'),
+	outline_colour = HEX('46fbc4'),
+    tab_button_colour = HEX('bd1864'),
+    collection_option_cycle_colour = HEX('fff200'),
+    author_outline_colour = HEX('00000000'),
+}
+
 TheAutumnCircus.mod.optional_features = function()
 	return {
 		retrigger_joker = true,
@@ -175,6 +185,7 @@ TheAutumnCircus.data = NFS.load(TheAutumnCircus.mod.path.."data.lua")()
 -- I know this can be done better but i really just don't care right now
 if TheAutumnCircus.config.enabled_modules.lookslikethejokers then
 	TheAutumnCircus.LLTJ = NFS.load(TheAutumnCircus.mod.path.."modules/LooksLikeTheJokers.lua")()
+	NFS.load(TheAutumnCircus.mod.path.."modules/TheAutumnQuips.lua")()
 end
 if TheAutumnCircus.config.enabled_modules.moreconsumables then
 	TheAutumnCircus.MC = NFS.load(TheAutumnCircus.mod.path.."modules/MoreConsumables.lua")()
@@ -198,7 +209,7 @@ if TheAutumnCircus.config.enabled_modules.skinnington then
 	TheAutumnCircus.SGTB = NFS.load(TheAutumnCircus.mod.path.."modules/Skinnington.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.basicoddities then
-	TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
+	--TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.enhancable then
 	TheAutumnCircus.EA = NFS.load(TheAutumnCircus.mod.path.."modules/Enhancable.lua")()	
