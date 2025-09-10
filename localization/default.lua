@@ -1122,6 +1122,33 @@ return {
 					"additional {C:money}sell value",
 				},
 			},
+			['j_thac_:joker:'] = {
+				name = "{f:thac_emoji}🃏{}",
+				text = {
+					"{C:mult,s:1.1}+#1#{s:1.1} Mult",
+				},
+			},
+			['j_thac_:art:'] = {
+				name = "{f:thac_emoji}🎨{}",
+				text = {
+					"Placeholder Text",
+				},
+			},
+			['j_thac_:currency_exchange:'] = {
+				name = "{f:thac_emoji}💱{}",
+				text = {
+					"{C:green}Pet this Joker{C:attention} clockwise",
+					"to {C:attention}convert {C:money}$#1#{} to {C:blue}¥#2#",
+					"or {C:attention}counter-clockwise{} to",
+					"{C:attention}convert {C:blue}¥#3#{} to {C:money}$#4#",
+				},
+			},
+			['j_thac_:free:'] = {
+				name = "{C:blue,f:thac_emoji}🆓{}",
+				text = {
+					"{X:blue,s:1.5,C:white}FREE",
+				},
+			},
 			j_thac_jera = {
 				name = {
 					"Jera",
@@ -1891,7 +1918,7 @@ return {
 				},
 				text = {
 					"Creates {C:attention}#1#{} random",
-					"{C:attention}River Cards{} and puts",
+					"{C:attention}Ripple Cards{} and puts",
 					"them in your hand"
 				},
 			},

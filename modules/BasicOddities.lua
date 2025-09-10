@@ -1082,14 +1082,14 @@ local oddities = {
 		cost = 3,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_gb_honey
+			info_queue[#info_queue+1] = G.P_CENTERS.m_crv_honey
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			local cards = {}
 			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_gb_honey}, G.hand)
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_crv_honey}, G.hand)
 				cardmak:set_edition(poll_edition("pot_of_honey"))
 				cardmak:set_seal(SMODS.poll_seal{key = "pot_of_honey", mod = 10})
 				cards[#cards+1] = cardmak
@@ -1099,7 +1099,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		dependencies = { "GrabBag" },
+		dependencies = { "RevosVault" },
 	},
 	'bottle_of_water', bottle_of_water = {
 		config = {
@@ -1112,14 +1112,14 @@ local oddities = {
 		cost = 3,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_gb_river
+			info_queue[#info_queue+1] = G.P_CENTERS.m_gb_ripple
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
 			local cards = {}
 			for i=1,card.ability.extra.cards do
-				local cardmak = create_playing_card({center = G.P_CENTERS.m_gb_river}, G.hand)
+				local cardmak = create_playing_card({center = G.P_CENTERS.m_gb_ripple}, G.hand)
 				cardmak:set_edition(poll_edition("bottle_of_water"))
 				cardmak:set_seal(SMODS.poll_seal{key = "bottle_of_water", mod = 10})
 				cards[#cards+1] = cardmak

@@ -25,6 +25,7 @@ local config = {
 		transgirlswhobooster = true,
 		stakemepls = true,
 		skinnington = true,
+		emojiokers = true,
 	},
 	enabled_jokers = {
 		helpful_joker = true,

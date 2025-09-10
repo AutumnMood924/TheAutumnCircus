@@ -208,6 +208,9 @@ end
 if TheAutumnCircus.config.enabled_modules.skinnington then
 	TheAutumnCircus.SGTB = NFS.load(TheAutumnCircus.mod.path.."modules/Skinnington.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.emojiokers then
+	TheAutumnCircus.EJ = NFS.load(TheAutumnCircus.mod.path.."modules/Emojiokers.lua")()	
+end
 if TheAutumnCircus.config.enabled_modules.basicoddities then
 	TheAutumnCircus.BO = NFS.load(TheAutumnCircus.mod.path.."modules/BasicOddities.lua")()	
 end

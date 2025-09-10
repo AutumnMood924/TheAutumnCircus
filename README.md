@@ -51,4 +51,5 @@ Eremel, Gappie, Crimson Heart, and the rest of Ortalab's crew - Ortalab :)
   
 LocalThunk - Balatro and its assets  
 Homestuck - Homestuck (as far as I know all referenced material here was made by Andrew Hussie)  
+Twitter - Twemoji https://github.com/twitter/twemoji  
   
