@@ -246,9 +246,6 @@ end
 if TheAutumnCircus.config.enabled_modules.joyinautumn and next(SMODS.find_mod("JoyousSpring")) then
 	TheAutumnCircus.JIA = NFS.load(TheAutumnCircus.mod.path.."modules/JoyInAutumn.lua")()
 end
-if TheAutumnCircus.config.enabled_modules.effectsonmyjokersitsmorelikelythanyouthink and next(SMODS.find_mod("stacked")) then
-	TheAutumnCircus.EOMJIMLTYT = NFS.load(TheAutumnCircus.mod.path.."modules/EffectsOnMyJokersItsMoreLikelyThanYouThink.lua")()
-end
 
 NFS.load(TheAutumnCircus.mod.path.."modules/compatibility.lua")()
 
