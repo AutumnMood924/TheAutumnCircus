@@ -188,9 +188,9 @@ match_indent = true
 overwrite = false
 [[patches]]
 [patches.pattern]
-target = '=[SMODS _ "src/ui.lua"]'
+target = '=[SMODS _ "src/ui.lua"]' #Serena's patch: use SMODS.create_sprite instead of Sprite() to reflect new smods version. source: SMODS src/ui.lua:2102 since smods commit 9bb705b (11/23/2025)
 pattern = '''
-                        { n = G.UIT.O, config = { object = Sprite(0, 0, 0.8, 0.8, G.ASSET_ATLAS['mod_tags'], { x = 0, y = 0 }) } },
+                        { n = G.UIT.O, config = { object = SMODS.create_sprite(0, 0, 0.8, 0.8, 'mod_tags', { x = 0, y = 0 }) } },
                     }
                 }, 
             }
