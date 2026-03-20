@@ -204,7 +204,7 @@ function Game:main_menu(ctx)
 		local target_pcard = nil
 		
 		
-		if tg.cards[1].base.suit then
+		if tg.cards[1].base and tg.cards[1].base.suit then
 			target_pcard = tg.cards[1]
 		else
 			target_pcard = Card(tg.T.x,tg.T.y,G.CARD_W*1.4,G.CARD_H*1.4,nil,G.P_CENTERS['c_base'])
@@ -280,19 +280,21 @@ function Game:main_menu(ctx)
 						-- counters
 						if next(SMODS.find_mod("Blockbuster-Counters")) then
 							math.randomseed(os.time()*k)
-							v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3, nil, true)
+							--v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3, nil, true)
 						end
 						v.draw_halo = true
 						
 						
 						-- HOOOO BOY THIS IS JANK AS FUUUUUUUUUUUUUUU
 						
-						if v.config.center.mod and not (v.config.center.set == "Default" or v.config.center.set == "Enhanced") then
+						if v.config and v.config.center and v.config.center.mod and not (v.config.center.set == "Default" or v.config.center.set == "Enhanced") then
 							function v:click()
 								play_sound('button', 1, 0.3)
 								G.FUNCS['openModUI_'..v.config.center.mod.id]()
 							end
 						end
+						
+						--]]
 						
 					end
 				return true end

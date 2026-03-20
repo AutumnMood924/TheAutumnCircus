@@ -16,7 +16,6 @@
 		"AutumnMoodMechanics (>=0.0.0f)"
 	],
 	"conflicts": [
-		"Talisman (>=0.0.0)"
 	],
 	"provides": [],
 	"dump_loc": false 

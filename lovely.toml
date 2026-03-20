@@ -172,39 +172,6 @@ match_indent = true
 overwrite = false
 
 
-# fix smods
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/ui.lua"]'
-pattern = '''
-local gurso = G.UIDEF.run_setup_option
-function G.UIDEF.run_setup_option(_type)
-'''
-position = "before"
-payload = '''
---[[
-'''
-match_indent = true
-overwrite = false
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/ui.lua"]'
-pattern = '''
-                        { n = G.UIT.O, config = { object = Sprite(0, 0, 0.8, 0.8, G.ASSET_ATLAS['mod_tags'], { x = 0, y = 0 }) } },
-                    }
-                }, 
-            }
-        })
-    end
-    return ret
-end
-'''
-position = "after"
-payload = '''
---]]
-'''
-match_indent = true
-overwrite = false
 
 # also fix smods
 [[patches]]

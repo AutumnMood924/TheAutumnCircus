@@ -365,6 +365,7 @@ function data.buffer_insert(buffer, object, extra)
 			}
 		end
 	end
+	object.discovered = true
 	table.insert(data.BUFFERS[buffer], object)
 end
 
