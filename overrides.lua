@@ -580,7 +580,9 @@ function Game:main_menu(ctx)
 
         function G.SPLASH_THAC:hover()
             G.SPLASH_THAC:juice_up(0.1225, 0.515)
-            play_sound('foil1', math.random() * 0.33 + 0.11, 0.333)
+            play_sound('foil1', math.random() * 0.66 + 0.17, math.random() * 0.99 + 0.33)
+            play_sound('foil1', math.random() * 0.66 + 0.17, math.random() * 0.99 + 0.33)
+            play_sound('foil1', math.random() * 0.66 + 0.17, math.random() * 0.99 + 0.33)
             Node.hover(self)
         end
 

@@ -747,7 +747,7 @@ local oddities = {
 				info_queue[#info_queue+1] = G.P_CENTERS.m_mf_teal
 			end
 			if next(SMODS.find_mod("GrabBag")) then
-				info_queue[#info_queue+1] = G.P_CENTERS.m_gb_river
+				info_queue[#info_queue+1] = G.P_CENTERS.m_gb_ripple
 			end
 			if next(SMODS.find_mod("aikoyorisshenanigans")) then
 				info_queue[#info_queue+1] = G.P_CENTERS.m_akyrs_scoreless
@@ -780,7 +780,7 @@ local oddities = {
 					centers[#centers+1] = G.P_CENTERS.m_mf_teal
 				end
 				if next(SMODS.find_mod("GrabBag")) then
-					centers[#centers+1] = G.P_CENTERS.m_gb_river
+					centers[#centers+1] = G.P_CENTERS.m_gb_ripple
 				end
 				if next(SMODS.find_mod("aikoyorisshenanigans")) then
 					centers[#centers+1] = G.P_CENTERS.m_akyrs_scoreless
@@ -1112,7 +1112,7 @@ local oddities = {
 		cost = 3,
 		loc_vars = function(_c, info_queue, card) 
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			info_queue[#info_queue+1] = G.P_CENTERS.m_gb_ripple
+			info_queue[#info_queue+1] = G.P_CENTERS.m_akyrs_droplet_card
 			return {vars = { card.ability.extra.cards }}
 		end,
 		use = function(self, card, area, copier)
@@ -1129,7 +1129,7 @@ local oddities = {
 		can_use = function(self, card, area, copier)
 			return #G.hand.cards > 1
 		end,
-		dependencies = { "GrabBag" },
+		dependencies = { "aikoyorisshenanigans" },
 	},
 	'bag_of_bricks', bag_of_bricks = {
 		config = {
@@ -1346,7 +1346,7 @@ local oddities = {
 		config = {
 			extra = {
 				cards = 4,
-				enh = "m_gb_river",
+				enh = "m_gb_ripple",
 			}
 		},
 		pos = { x = 0, y = 4 },

@@ -366,8 +366,8 @@ return {
 				text = {
 					"Played {C:attention}9s{} reduce {C:attention}Blind{}",
 					"requirement by {C:attention}#1#%{}",
-					"This Joker {C:attention}improves{} at the",
-					"end of each {C:attention}Boss Blind{}"
+					"This Joker {C:attention}becomes stronger{}",
+					"after each {C:attention}Boss Blind{} slain"
 				},
 			},
 			j_thac_astront = {
