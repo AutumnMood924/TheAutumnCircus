@@ -554,14 +554,14 @@ function Game:main_menu(ctx)
         G.SPLASH_THAC:set_alignment({
             major = G.title_top,
             type = 'cm',
-            bond = 'Strong',
-            offset = { x = 5.15, y = -4.13 }
+            bond = 'Weak',
+            offset = { x = 9.99, y = 3.33 }
         })
-        G.SPLASH_THAC:define_draw_steps({ {
+        --[[G.SPLASH_THAC:define_draw_steps({ {
             shader = 'dissolve',
 			other_obj = G.SPLASH_THAC,
 			ms = 0,
-        } })
+        } })--]]
 
         -- Define logo properties
         G.SPLASH_THAC.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
@@ -570,7 +570,7 @@ function Game:main_menu(ctx)
         G.SPLASH_THAC.dissolve = -1
 
         G.SPLASH_THAC.states.visible = true
-		--G.SPLASH_THAC.states.drag.can = true
+		G.SPLASH_THAC.states.drag.can = true
         G.SPLASH_THAC.states.collide.can = true
 
         function G.SPLASH_THAC:click()

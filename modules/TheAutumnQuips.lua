@@ -76,7 +76,7 @@ local quips = {
         },
 		"j_thac_witch_of_mind", j_thac_witch_of_mind = {
 			{
-				"oooooooooooo you did it!!!",
+				"ooooooooo you did it!!!",
 			},
 			{
 				"wowi3!!!",
@@ -106,6 +106,11 @@ local quips = {
 			{
 				"Are you done?",
 				"Or...?",
+			},
+			{
+				"Congratulations.",
+				"Onto the next phase",
+				"of our experiment.",
 			},
 		},
     }

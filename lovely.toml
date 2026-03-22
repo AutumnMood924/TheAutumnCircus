@@ -1,7 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 1
+priority = 99999
 
 # Need to improve this
 [[patches]]
@@ -242,6 +242,24 @@ end
 '''
 match_indent = true
 overwrite = false
+# ASPECT : Breath effect (count breaths - redundant ver for patch?)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then
+			if self.ability.consumeable and self.ability.consumeable.max_highlighted then
+'''
+position = "after"
+payload = '''
+local thac_selbreaths = 0
+for k,v in ipairs(G.hand.highlighted) do
+	if v.aspect == "thac_breath" then thac_selbreaths = thac_selbreaths + 1 end
+			print(thac_selbreaths)
+end
+'''
+match_indent = true
+overwrite = false
 # ASPECT : Breath effect (noncryptid ver)
 [[patches]]
 [patches.pattern]
@@ -249,6 +267,15 @@ target = "card.lua"
 pattern = "if self.ability.consumeable.mod_num >= #G.hand.highlighted and #G.hand.highlighted >= (self.ability.consumeable.min_highlighted or 1) then"
 position = "at"
 payload = "if self.ability.consumeable.mod_num >= (#G.hand.highlighted - thac_selbreaths) and #G.hand.highlighted >= (self.ability.consumeable.min_highlighted or 1) then"
+match_indent = true
+overwrite = true
+# ASPECT : Breath effect (noncryptid ver - redundant)
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if (self.ability.consumeable.max_highlighted or 9999) + (self.area == G.hand and 1 or 0) >= #G.hand.highlighted and #G.hand.highlighted - (self.area == G.hand and 1 or 0) >= (self.ability.consumeable.min_highlighted or 1) then"
+position = "at"
+payload = "if (self.ability.consumeable.max_highlighted or 9999) + (self.area == G.hand and 1 or 0) >= (#G.hand.highlighted - thac_selbreaths) and #G.hand.highlighted - (self.area == G.hand and 1 or 0) >= (self.ability.consumeable.min_highlighted or 1) then"
 match_indent = true
 overwrite = true
 # ASPECT : Breath effect (cryptid ver)

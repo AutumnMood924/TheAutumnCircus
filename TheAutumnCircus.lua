@@ -126,12 +126,6 @@ TheAutumnCircus.mod.process_loc_text = function()
     }
 
     G.localization.descriptions.thacmeta = {
-        lyman = {
-            name = "Art Credit",
-            text = {
-                "{X:lyman,C:dark_edition,s:1.2}Lyman{}"
-            }
-        },
         jevonn = {
             name = "Art Credit",
             text = {

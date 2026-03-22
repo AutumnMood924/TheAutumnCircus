@@ -321,99 +321,6 @@ local jokers = {
             end
         end,
     },
-    'lord_of_the_meek', lord_of_the_meek = {
-        config = {extra = {retriggers = 1}},
-        pos = { x = 2, y = 0 },
-        cost = 8,
-        rarity = 3,
-		pronouns = "he_him",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-        demicolon_compat = false,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            local blah = ""
-            if card.ability.extra.retriggers > 1 then blah = "s" end
-            return {vars = {card.ability.extra.retriggers, blah}}
-        end,
-        calculate = function(self, card, context)
-            if (context.retrigger_joker_check and context.other_card.config.center.rarity == 1) then
-                return {
-                    repetitions = card.ability.extra.retriggers,
-                    card = card,
-                    colour = G.C.ORANGE,
-                    message = localize('k_again_ex')
-                }     
-            end
-			-- incompatible with context.forcetrigger
-        end,
-    },
-    'mirage_joker', mirage_joker = {
-        config = {extra = {odds = 4, retriggers = 1}},
-        pos = { x = 3, y = 0 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "any_all",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-        demicolon_compat = false,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            local blah = ""
-            if card.ability.extra.retriggers > 1 then blah = "s" end
-			local probvars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
-            return {vars = {probvars[1], probvars[2], card.ability.extra.retriggers, blah}}
-        end,
-        calculate = function(self, card, context)
-            if (context.retrigger_joker_check and (not context.other_context.mod_probability) and (not context.other_context.fix_probability) and context.other_card ~= card and SMODS.pseudorandom_probability(card, 'mirage_joker', 1, card.ability.extra.odds)) then
-                return {
-                    repetitions = card.ability.extra.retriggers,
-                    card = card,
-                    colour = G.C.ORANGE,
-                    message = localize('k_again_ex')
-                }     
-            end
-			-- incompatible with context.forcetrigger
-        end,
-    },
-    'transfusion', transfusion = {
-        config = {extra = {rate = 0.4, Xmult = 1.25, buffer = 0}},
-        pos = { x = 4, y = 0 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "none",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-        demicolon_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            return {vars = {card.ability.extra.rate * 100, card.ability.extra.Xmult}}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main or (context.forcetrigger and type(hand_chips) == "number" and hand_chips > -1) then
-				local hchips = hand_chips - card.ability.extra.buffer
-				local val = math.floor(card.ability.extra.rate * hchips)
-				card.ability.extra.buffer = card.ability.extra.buffer + val
-				return {
-					chip_mod = -val,
-					mult_mod = val * card.ability.extra.Xmult,
-					card = card,
-					colour = G.C.PURPLE,
-					message = localize("k_thac_converted"),
-					func = function()
-						card.ability.extra.buffer = 0
-						return true
-					end,
-				}
-            end
-        end,
-    },
     'placeholder_joker', placeholder_joker = {
         config = {extra = {odds = 3}},
         pos = { x = 0, y = 0 },
@@ -587,38 +494,6 @@ local jokers = {
 						message = localize("k_thac_negative")
                     }
 				end
-            end
-        end,
-    },
-    'clown_posse', clown_posse = {
-        config = {extra = {Xmult_mod = 0.10, Xmult_curr = 1.0}},
-        pos = { x = 4, y = 3 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "they_them",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-        demicolon_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult_curr}}
-        end,
-        calculate = function(self, card, context)
-            if context.card_added and context.card.ability.set == "Joker" and not context.blueprint then
-				SMODS.scale_card(card, {
-					ref_table = card.ability.extra,
-					ref_value = "Xmult_curr",
-					scalar_value = "Xmult_mod",
-					message_colour = G.C.MULT,
-				})
-            end
-            if (context.joker_main or context.forcetrigger) and card.ability.extra.Xmult_curr > 1 then
-                return {
-                    colour = G.C.MULT,
-                    xmult = card.ability.extra.Xmult_curr
-                }
             end
         end,
     },
@@ -1000,7 +875,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		no_collection = true,
+		--no_collection = true,
 		no_doe = true,
     },
     'bladekind', bladekind = {
@@ -1043,7 +918,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		no_collection = true,
+		--no_collection = true,
 		no_doe = true,
     },
     'pokerkind', pokerkind = {
@@ -1086,7 +961,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		no_collection = true,
+		--no_collection = true,
 		no_doe = true,
     },
     'combat_capability', combat_capability = {
@@ -1132,7 +1007,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		no_collection = true,
+		--no_collection = true,
 		no_doe = true,
     },
     'pseudoscratch', pseudoscratch = {
@@ -1190,7 +1065,7 @@ local jokers = {
         calculate = function(self, card, context)
         end,
         yes_pool_flag = "no",
-		no_collection = true,
+		--no_collection = true,
 		no_doe = true,
     },
     'astront', astront = {
@@ -1251,38 +1126,6 @@ local jokers = {
                         end,
                         card = card,
                         message = localize('k_level_up_ex')
-                    }
-                end
-            end
-        end,
-    },
-    'landlord', landlord = {
-        config = { extra = {
-            money = 8,
-        }},
-        pos = { x = 9, y = 3 },
-        cost = 7,
-        rarity = 2,
-		pronouns = "he_him",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            return {vars = {
-                card.ability.extra.money
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.pre_discard then
-                local text,disp_text,poker_hands = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-                if next(poker_hands['Full House']) then
-                    ease_dollars(card.ability.extra.money)
-                    return {
-                        message = localize('$')..card.ability.extra.money,
-                        colour = G.C.MONEY,
-                        card = card
                     }
                 end
             end
@@ -1486,76 +1329,6 @@ local jokers = {
             return AMM.api.graveyard.count_cards() > 0
         end,
     },
-    'common_ground', common_ground = {
-        config = { extra = {
-            cards = 1,
-        }},
-        pos = { x = 5, y = 3 },
-        cost = 5,
-        rarity = 2,
-		pronouns = "they_it",
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-            return {vars = {
-                math.floor(card.ability.extra.cards) == 1 and "an" or math.floor(card.ability.extra.cards),
-                math.floor(card.ability.extra.cards) ~= 1 and "s" or "",
-                AMM.api.graveyard.count_different_ranks()
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.first_hand_drawn then
-                local gy_ranks = AMM.api.graveyard.count_different_ranks()
-                if gy_ranks == 0 then return end
-                local cards = math.floor(card.ability.extra.cards) * gy_ranks
-                TheAutumnCircus.func.force_draw_cards(cards)
-            end
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_cards() > 0
-        end,
-    },
-    'tombstone', tombstone = {
-        config = { extra = {
-            Xchips = 0.4,
-        }},
-        pos = { x = 3, y = 4 },
-        cost = 7,
-        rarity = 3,
-		pronouns = "any_all",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-            info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-            local gy_stones = AMM.api.graveyard.count_center(G.P_CENTERS.m_stone)
-            return {vars = {
-                card.ability.extra.Xchips,
-                1 + (card.ability.extra.Xchips * gy_stones)
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main then
-                local gy_stones = AMM.api.graveyard.count_center(G.P_CENTERS.m_stone)
-                if gy_stones > 0 then
-                    return {
-                        colour = G.C.CHIPS,
-                        xchips = 1 + (card.ability.extra.Xchips * gy_stones)
-                    }
-                end
-            end
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_center(G.P_CENTERS.m_stone) > 0
-        end,
-    },
     'gem_joker', gem_joker = {
         config = { extra = {
             Xchips = 1.5,
@@ -1621,89 +1394,6 @@ local jokers = {
             end
         end,
     },
-    'afterlife_archive', afterlife_archive = {
-        config = { extra = {
-            money = 1
-        }},
-        pos = { x = 6, y = 3 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "it_its",
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            local gy_4 = AMM.api.graveyard.count_rank("4")
-            local gy_9 = AMM.api.graveyard.count_rank("9")
-            return {vars = {
-                math.floor(card.ability.extra.money),
-                math.floor(card.ability.extra.money) * (gy_4 + gy_9)
-            }}
-        end,
-        calc_dollar_bonus = function(self, card)
-            local gy_4 = AMM.api.graveyard.count_rank("4")
-            local gy_9 = AMM.api.graveyard.count_rank("9")
-            return math.floor(card.ability.extra.money) * (gy_4 + gy_9)
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_rank("4") > 0 or AMM.api.graveyard.count_rank("9") > 0
-        end,
-    },
-    'jokermancer', jokermancer = {
-        config = { extra = {
-            mult = 1
-        }},
-        pos = { x = 7, y = 2 },
-        cost = 8,
-        rarity = 3,
-		pronouns = "she_they",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            return {vars = {card.ability.extra.mult}}
-        end,
-        calculate = function(self, card, context)
-            if context.individual and context.cardarea == G.play and not context.end_of_round then
-                local no_suit = SMODS.has_no_suit(context.other_card)
-                local no_rank = SMODS.has_no_rank(context.other_card)
-                local gy_matches = 0
-                local suit_check = function(v)
-                    for _,k in ipairs(SMODS.Suit.obj_buffer) do
-                        if v:is_suit(k) and context.other_card:is_suit(k) then return true end
-                    end
-                    return false
-                end
-                local rank_check = function(v)
-                    if v.base.value == context.other_card.base.value and not SMODS.has_no_rank(v) then return true else return false end
-                end
-                if no_suit then
-                    if no_rank then
-                        return
-                    else
-                        gy_matches = AMM.api.graveyard.filter_count(rank_check)
-                    end
-                else
-                    if no_rank then
-                        gy_matches = AMM.api.graveyard.filter_count(suit_check)
-                    else
-                        gy_matches = AMM.api.graveyard.filter_count(function(v) return rank_check(v) or suit_check(v) end)
-                    end
-                end
-                if gy_matches == 0 then return end
-                return { card = context.other_card, mult = gy_matches * card.ability.extra.mult }
-            end
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_cards() > 5
-        end,
-    },
     'gaudy_bracelet', gaudy_bracelet = {
         config = { extra = {
             chips_curr = 0,
@@ -1756,7 +1446,6 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = { }}
         end,
@@ -1767,121 +1456,6 @@ local jokers = {
 		end,
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
-        end,
-    },
-    'joke_book_of_the_dead', joke_book_of_the_dead = {
-        config = { extra = {
-            discards = 1,
-            targets = 4,
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 10,
-        rarity = 3,
-		pronouns = "it_its",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            local blah = ""
-            if math.floor(card.ability.extra.discards) ~= 1 then blah = "s" end
-            return {vars = {
-                math.floor(card.ability.extra.discards),
-                blah,
-                math.floor(card.ability.extra.targets),
-                math.floor(card.ability.extra.discards) * math.floor(AMM.api.graveyard.count_cards() / math.floor(card.ability.extra.targets)),
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.setting_blind and not card.getting_sliced and not (context.blueprint_card or card).getting_sliced then
-                local gy_count = AMM.api.graveyard.count_cards()
-                local tally = math.floor(gy_count / math.floor(card.ability.extra.targets))
-                local d_rate = math.floor(card.ability.extra.discards)
-                if tally == 0 or d_rate == 0 then return end
-                ease_discard(d_rate * tally)
-                return {
-                    message = localize("k_thac_heeheehee"),
-                    colour = G.C.RED,
-                }
-            end
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_cards() > 0
-        end,
-    },
-    'gravedigger', gravedigger = {
-        config = { extra = {
-            money = 2,
-        }},
-        pos = { x = 7, y = 3 },
-        cost = 5,
-        rarity = 1,
-		pronouns = "he_they",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            return {vars = {
-                math.floor(card.ability.extra.money),
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.amm_buried_card then
-                ease_dollars(math.floor(card.ability.extra.money))
-                return {
-                    message = "$"..math.floor(card.ability.extra.money),
-                    colour = G.C.MONEY,
-                }
-            end
-        end,
-    },
-    'matchbook', matchbook = {
-        config = { extra = {
-            targets = 3,
-            targets_curr = 3,
-            Xmult = 3
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 8,
-        rarity = 3,
-		pronouns = "they_it",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            local blah = ""
-            if math.floor(card.ability.extra.targets) ~= 1 then blah = "s" end
-            local blah2 = ""
-            if math.floor(card.ability.extra.targets_curr) ~= 1 then blah2 = "s" end
-            return {vars = {
-                card.ability.extra.Xmult,
-                math.floor(card.ability.extra.targets),
-                blah,
-                math.floor(card.ability.extra.targets_curr),
-                blah2,
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main then
-                return {
-                    xmult = card.ability.extra.Xmult
-                }
-            end
-            if not context.blueprint then
-                if context.setting_blind then card.ability.extra.targets_curr = math.floor(card.ability.extra.targets) end
-                if context.destroying_card and card.ability.extra.targets_curr > 0 then
-                    card.ability.extra.targets_curr = card.ability.extra.targets_curr - 1
-                    return true
-                end
-            end
         end,
     },
     'dark_hallway', dark_hallway = {
@@ -1897,7 +1471,6 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             local blah = ""
             if math.floor(card.ability.extra.targets) ~= 1 then blah = "s" end
@@ -2920,7 +2493,7 @@ local jokers = {
 			end
         end,
     },
-    --[['topaz_starmage', topaz_starmage = {
+    'topaz_starmage', topaz_starmage = {
         config = { extra = {
             odds = 2,
         }},
@@ -3684,7 +3257,6 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = {
                 math.floor(card.ability.extra.retriggers),
@@ -3720,44 +3292,6 @@ local jokers = {
 		end,
 	},
 	--]]
-    'amalgam_joker', amalgam_joker = {
-        config = { extra = {
-            combines = 2,
-			value_gain = 0.1,
-        }},
-        pos = { x = 4, y = 4 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "they_them",
-        blueprint_compat = false,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'lyman'} end
-            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
-            return {vars = {card.ability.extra.combines, card.ability.extra.value_gain}}
-        end,
-        calculate = function(self, card, context)
-            if context.end_of_round and context.cardarea == G.jokers and #G.hand.cards > card.ability.extra.combines and not context.blueprint then
-				G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2,func = function()
-					local hand_cards = {}
-					for i=1,#G.hand.cards do hand_cards[i] = G.hand.cards[i] end
-					pseudoshuffle(hand_cards, pseudoseed("amalgam_joker"))
-					
-
-					local new_card = AMM.combine_cards({hand_cards[1], hand_cards[2]}, "amalgam_joker", G.hand)
-					
-					card.ability.extra_value = card.ability.extra_value + math.floor(new_card:get_chip_bonus() * card.ability.extra.value_gain)
-					card:set_cost()
-				return true end}))
-				return {
-					message = localize('k_val_up'),
-					colour = G.C.MONEY
-				}
-            end
-        end,
-    },
 }
 
 SMODS.Atlas{

@@ -2063,7 +2063,7 @@ return {
 				},
 				text = {
 					"Creates a random {C:dark_edition}Polychrome",
-					"{C:dark_edition}Light {C:attention}3 of {C:hearts}Hearts{} with {C:knightofheart}Heart{C:red} Aspect",
+					"{C:attention}3 of {C:hearts}Hearts{} with {C:knightofheart}Heart{C:red} Aspect",
 					"and adds it to your hand",
 				},
 			},

@@ -42,6 +42,7 @@ local blinds = {
 		pos = { x = 0, y = 0 },
 		boss = {showdown = true},
 		boss_colour = HEX('f7dc42'),
+		pronouns = "it_she_they",
 		dollars = 8,
 		mult = 3,
 		atlas = "ShowdownThrowdown",
