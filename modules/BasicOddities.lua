@@ -398,6 +398,32 @@ local oddities = {
 			return true
 		end,
 	},
+	'mass_reanimation', mass_reanimation = {
+		config = {
+			extra = {
+			}
+		},
+		pos = { x = 0, y = 4 },
+		rarity = 3,
+		cost = 8,
+		loc_vars = function(_c, info_queue, card) 
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			info_queue[#info_queue+1] = G.P_CENTERS["m_thac_soulbound"]
+			return {vars = {  }}
+		end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for k,v in ipairs(G.graveyard_area.cards) do
+				v:set_ability(G.P_CENTERS["m_thac_soulbound"])
+			end
+		end,
+		can_use = function(self, card, area, copier)
+			return #G.graveyard_area.cards > 0
+		end,
+		in_pool = function(self)
+			return #G.graveyard_area.cards > 0
+		end
+	},
 }
 
 SMODS.Atlas{

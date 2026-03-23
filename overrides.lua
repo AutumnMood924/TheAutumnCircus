@@ -277,17 +277,23 @@ function Game:main_menu(ctx)
 		)
 		end
 		
-		local _suits = {"Spades", "Hearts"}
-		local _ranks = {"Ace", "3", "Queen", "King", "Jack"}
+		local _suits = SMODS.Suit.obj_buffer
+		local _ranks = SMODS.Rank.obj_buffer
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
 		
-		local _enhancements = {"m_bonus", "m_mult", "m_wild", "m_lucky", "m_glass", "m_steel", "m_gold", "m_thac_star", "m_thac_soulbound", "m_thac_bone", "m_thac_plan", "m_thac_angel", "m_thac_ruled", "m_thac_cardboard", "m_thac_sky", "m_thac_mist", "m_thac_loop", "m_thac_school", "m_thac_party"}
+		local _enhancements = {}
+		for k,v in pairs(G.P_CENTERS) do
+			if v.set == "Enhanced" then _enhancements[#_enhancements+1] = k end
+		end
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
 		
 		
-		local _seals = {"Red"}
+		local _seals = {}
+		for k,v in pairs(G.P_SEALS) do
+			_seals[#_seals+1] = k
+		end
 		math.randomseed(os.time())
 		target_pcard:set_seal(_seals[math.random(#_seals)], true, true)
 		
@@ -303,15 +309,10 @@ function Game:main_menu(ctx)
 				}
 			)
 		end
-		local _aspect = "thac_void"
+		local _aspects = AMM.Aspect.obj_buffer
 		math.randomseed(os.time())
-		if math.random() < 1/2 then
-			_aspect = "thac_heart"
-		else
-			_aspect = "thac_mind"
-		end
-		target_pcard:set_aspect(_aspect, true, true)
-		target_pcard.bottle = true
+		target_pcard:set_aspect(_aspects[math.random(#_aspects)], true, true)
+		target_pcard.bottle = math.random() < 0.2
 		
 		--now set other things
 		
@@ -345,15 +346,9 @@ function Game:main_menu(ctx)
 				)
 			end
 			
-			local _aspect = "thac_void"
 			math.randomseed(os.time()+k)
-			if math.random() < 1/2 then
-				_aspect = "thac_heart"
-			else
-				_aspect = "thac_mind"
-			end
-			new_pcard:set_aspect(_aspect, true, true)
-			new_pcard.bottle = true
+			new_pcard:set_aspect(_aspects[math.random(#_aspects)], true, true)
+			new_pcard.bottle = math.random() < 0.2
 		end
 		
 		tg.T.w = tg.T.w * #tg.cards

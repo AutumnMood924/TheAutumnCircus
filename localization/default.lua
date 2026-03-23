@@ -795,6 +795,16 @@ return {
 					"{C:inactive}(Currently {C:money}$#3#{C:inactive})"
 				},
 			},
+			c_thac_mass_reanimation = {
+				name = {
+					"Mass Reanimation",
+					"{C:autumn,s:0.5}Familiar faces surround me",
+				},
+				text = {
+					"Enhances {C:attention}all cards{} in your",
+					"{C:attention}graveyard{} to {C:attention}Soulbound Cards",
+				},
+			},
 		},
 		Voucher = {
 			v_thac_spectral_merchant = {
@@ -919,9 +929,16 @@ return {
 				name = "Soulbound Card",
 				text = {
 					"Returns from your {C:attention}graveyard{}",
-					"after each {C:attention}Boss Blind{}",
-					"Gains {C:white,X:mult}X#1#{} Mult permanently after",
+					"after completing a {C:attention}Blind{}",
+					"Gains {C:mult}+{C:white,X:mult}X#1#{} Mult permanently after",
 					"returning from your {C:attention}graveyard{}",
+				},
+			},
+			m_thac_loop = {
+				name = "Loop Card",
+				text = {
+					'Retriggers {C:attention}#1#{} time#2#',
+					'when scored',
 				},
 			},
 		},

@@ -211,7 +211,7 @@ local config = {
 		dusk = true,
 	},
 	enabled_enhancements = {
-		loop = false,
+		loop = true,
 		grass = true,
 		dirt = true,
 		star = true,

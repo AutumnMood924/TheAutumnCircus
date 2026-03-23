@@ -1,61 +1,4 @@
 local enhancements = {
-	--[['loop', loop = {
-		name = "loop",
-		display_name = "Loop Card",
-		text = {
-			'Returns to the deck',
-			'after being played'
-		},
-		effect = 'loop',
-		config = {
-		},
-		pos = { x = 0, y = 0 },
-	},              This effect requires too much jank rn
-	'grass', grass = {
-		name = "grass",
-		effect = 'grass',
-		config = {
-			extra = {
-				chips = 10
-			}
-		},
-		pos = { x = 1, y = 0 },
-		loc_vars = function(self, info_queue, card)
-			return {vars = {card.ability.extra.chips}}
-		end,
-		calculate = function(self, card, context)
-			if context.cardarea == G.hand and
-				context.main_scoring then
-				card.ability.perma_bonus = card.ability.perma_bonus or 0
-				card.ability.perma_bonus = card.ability.perma_bonus + (card.ability.extra and card.ability.extra.chips or 10)
-				return {
-					message = localize('k_upgrade_ex'),
-					colour = G.C.CHIPS,
-					card = card,
-				}
-			end
-		end,
-	},
-	'dirt', dirt = {
-		name = "dirt",
-		effect = 'dirt',
-		config = {
-			extra = {
-				mult = 3
-			}
-		},
-		pos = { x = 2, y = 0 },
-		loc_vars = function(self, info_queue, card)
-			return {vars = {card.ability.extra.mult}}
-		end,
-		calculate = function(self, card, context)
-			if context.discard and context.other_card == card then
-				card.ability.perma_mult = card.ability.perma_mult or 0
-				card.ability.perma_mult = card.ability.perma_mult + (card.ability.extra and card.ability.extra.mult or 3)
-				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex'), colour = G.C.MULT})
-			end
-		end,
-	},--]]
 	'star', star = {
 		name = "star",
 		effect = 'bounty',
@@ -88,6 +31,52 @@ local enhancements = {
 				}
 			end
 		end,
+	},
+	'loop', loop = {
+		name = "loop",
+		effect = 'loop',
+		config = {
+			extra = {
+				repeats = 1
+			}
+		},
+		pos = { x = 0, y = 0 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            --info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = { card.ability.extra.repeats, card.ability.extra.repeats == 1 and "" or "s" }}
+		end,
+		calculate = function(self, card, context)
+			if context.repetition and context.cardarea == G.play then
+				return {
+					repetitions = card.ability.extra.repeats
+				}
+			end
+		end,
+	},
+	'party', party = {
+		name = "party",
+		display_name = "Party Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'party',
+		config = {
+		},
+		pos = { x = 6, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'plan', plan = {
+		name = "plan",
+		display_name = "Plan Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'plan',
+		config = {
+		},
+		pos = { x = 3, y = 1 },
+		in_pool = function(self) return false end,
 	},
 	'bone', bone = {
 		name = "bone",
@@ -142,6 +131,117 @@ local enhancements = {
 			end
 		end,
 	},
+	'cardboard', cardboard = {
+		name = "cardboard",
+		display_name = "Cardboard Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'cardboard',
+		config = {
+		},
+		pos = { x = 4, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'ruled', ruled = {
+		name = "ruled",
+		display_name = "Ruled Card",
+		text = {
+			'{C:attention}Write{} played {C:attention}standard poker hands{} onto',
+			'this card while it is {C:attention}held in hand',
+			'This card gives {C:chips}+Chips{} and {C:mult}+Mult',
+			'equal to the {C:attention}highest{} base {C:chips}Chips{}',
+			'and {C:mult}Mult{} of hands {C:attention}written{} on it',
+			'{C:inactive}(Currently: {C:chips}+#1#{C:inactive} Chips and {C:mult}+#2#{C:inactive} Mult)',
+			'no suit or rank',
+		},
+		no_rank = true,
+		no_suit = true,
+		replace_base_card = true,
+		always_scores = true,
+		effect = 'ruled',
+		config = {
+			extra = {
+				["High Card"] = 0,
+				["Pair"] = 0,
+				["Two Pair"] = 0,
+				["Three of a Kind"] = 0,
+				["Straight"] = 0,
+				["Flush"] = 0,
+				["Full House"] = 0,
+				["Four of a Kind"] = 0,
+				["Straight Flush"] = 0,
+				-- Basically just an easter egg. Still works like StrFlush
+				["Royal Flush"] = 0,
+			},
+		},
+		pos = { x = 5, y = 0 },
+		active_hands = function(self, card)
+			local ret = {}
+			for k,v in pairs(card.ability.extra) do
+				if k ~= "Royal Flush" and v > 0 then
+					ret[#ret+1] = k
+				end
+			end
+			return ret
+		end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'thac_standard_hands', set = 'Other'}
+			local _hands = self:active_hands(card)
+			local _chips = 0
+			local _mult = 0
+			for k,v in ipairs(_hands) do
+				if G.GAME.hands[v].chips > _chips then _chips = G.GAME.hands[v].chips end
+				if G.GAME.hands[v].mult > _mult then _mult = G.GAME.hands[v].mult end
+			end
+			return {vars = { _chips, _mult }}
+		end,
+		calculate = function(self, card, context)
+			if context.before and context.cardarea == G.hand then
+				if card.ability.extra[context.scoring_name] then
+					card.ability.extra[context.scoring_name] = card.ability.extra[context.scoring_name] + 1
+				end
+			end
+			if context.main_scoring and context.cardarea == G.play then
+				local _hands = self:active_hands(card)
+				local _chips = 0
+				local _mult = 0
+				for k,v in ipairs(_hands) do
+					if G.GAME.hands[v].chips > _chips then _chips = G.GAME.hands[v].chips end
+					if G.GAME.hands[v].mult > _mult then _mult = G.GAME.hands[v].mult end
+				end
+				return {
+					chips = _chips,
+					mult = _mult
+				}
+			end
+		end,
+	},
+	'mist', mist = {
+		name = "mist",
+		display_name = "Mist Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'mist',
+		config = {
+		},
+		pos = { x = 1, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'sky', sky = {
+		name = "sky",
+		display_name = "Sky Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'sky',
+		config = {
+		},
+		pos = { x = 2, y = 0 },
+		in_pool = function(self) return false end,
+	},
 	'soulbound', soulbound = {
 		name = "soulbound",
 		effect = 'soulbound',
@@ -160,11 +260,41 @@ local enhancements = {
 			card.ability.perma_x_mult = card.ability.perma_x_mult + card.ability.extra.xmult
 		end,
 	},
+	'angel', angel = {
+		name = "angel",
+		display_name = "Angel Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'angel',
+		config = {
+		},
+		pos = { x = 7, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'school', school = {
+		name = "school",
+		display_name = "School Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'school',
+		config = {
+		},
+		pos = { x = 4, y = 1 },
+		in_pool = function(self) return false end,
+	},
 }
 
 SMODS.Atlas{
 	key = "Enhancable",
 	path = "Enhancable.png",
+	px = 71,
+	py = 95,
+}
+SMODS.Atlas{
+	key = "RouxldKaard",
+	path = "RouxldKaard.png",
 	px = 71,
 	py = 95,
 }
@@ -174,3 +304,33 @@ for _, k in ipairs(enhancements) do
 	local v = enhancements[k]
 	TheAutumnCircus.data.buffer_insert("Enhancements", v, {key = k, atlas = "Enhancable"})
 end
+
+local scribbles
+SMODS.DrawStep {
+    key = "rouxldkaard",
+    order = 55,
+    func = function(card, layer)
+        if card and card.config.center == G.P_CENTERS["m_thac_ruled"] then
+
+            scribbles = scribbles or {
+				["High Card"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 0, y = 0}),
+				["Pair"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 1, y = 0}),
+				["Two Pair"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 2, y = 0}),
+				["Three of a Kind"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 3, y = 0}),
+				["Straight"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 4, y = 0}),
+				["Flush"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 5, y = 0}),
+				["Full House"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 6, y = 0}),
+				["Four of a Kind"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 7, y = 0}),
+				["Straight Flush"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 8, y = 0}),
+				["Royal Flush"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 9, y = 0}),
+			}
+			for k,v in ipairs({"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Straight Flush", "Royal Flush"}) do
+				if card.ability.extra[v] > 0 then
+					scribbles[v].role.draw_major = card
+					scribbles[v]:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil, 0, 0)
+				end
+			end
+        end
+    end,
+    conditions = {vortex = false, facing = 'front'}
+}
