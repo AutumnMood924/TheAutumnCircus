@@ -1170,7 +1170,7 @@ return {
 						"{C:attention}graveyard{} into {C:attention}Suit{} and {C:attention}Rank{} cards",
 					},
 					{
-						"Earn {C:blue}¥#1#{} at end of round after",
+						"Earn {f:hpot_plincoin,C:hpot_plincoin}$#1#{} at end of round after",
 						"{C:attention}Boss Blind{} is defeated for each",
 						"{C:attention}rankless card{} in your {C:attention}graveyard {C:inactive}[{C:attention}#2#{C:inactive}]",
 					},

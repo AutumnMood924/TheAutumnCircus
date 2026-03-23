@@ -230,37 +230,7 @@ function Game:main_menu(ctx)
         card.T.h = card.T.h * 1.4
 		
 		math.randomseed(os.time())
-		local _editions = {"polychrome", "negative", "thac_gilded"}
-		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			_editions[#_editions+1] = "akyrs_texelated"
-			_editions[#_editions+1] = "akyrs_noire"
-			_editions[#_editions+1] = "akyrs_sliced"
-		end
-		if next(SMODS.find_mod("Cryptid")) then
-			_editions[#_editions+1] = "cry_noisy"
-			_editions[#_editions+1] = "cry_astral"
-			_editions[#_editions+1] = "cry_glitched"
-			_editions[#_editions+1] = "cry_mosaic"
-			_editions[#_editions+1] = "cry_gold"
-			--_editions[#_editions+1] = "cry_jolly"
-		end
-		if next(SMODS.find_mod("RevosVault")) then
-			_editions[#_editions+1] = "crv_pastel"
-			_editions[#_editions+1] = "crv_magnetised_edition"
-		end
-		if next(SMODS.find_mod("entr")) then
-			_editions[#_editions+1] = "entr_sunny"
-			_editions[#_editions+1] = "entr_solar"
-			_editions[#_editions+1] = "entr_fractured"
-			_editions[#_editions+1] = "entr_freaky"
-		end
-		if next(SMODS.find_mod("allinjest")) then
-			_editions[#_editions+1] = "aij_glimmer"
-			_editions[#_editions+1] = "aij_stellar"
-		end
-		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
-			_editions = {"poke_shiny"}
-		end
+		local _editions = {"polychrome", "negative"}
 		card:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
 		math.randomseed(os.time())
 		for k,v in ipairs(self.title_top.cards) do
@@ -277,12 +247,6 @@ function Game:main_menu(ctx)
 							math.randomseed(os.time()*k)
 							v:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
 						end
-						-- counters
-						if next(SMODS.find_mod("Blockbuster-Counters")) then
-							math.randomseed(os.time()*k)
-							--v:bb_counter_apply(Blockbuster.Counters.Counter.obj_buffer[math.random(#Blockbuster.Counters.Counter.obj_buffer)], 3, nil, true)
-						end
-						v.draw_halo = true
 						
 						
 						-- HOOOO BOY THIS IS JANK AS FUUUUUUUUUUUUUUU
@@ -317,184 +281,21 @@ function Game:main_menu(ctx)
 		
 		local _suits = {"Spades", "Hearts"}
 		local _ranks = {"Ace", "3", "Queen", "King", "Jack"}
-		if next(SMODS.find_mod("SixSuits")) then
-			_suits[#_suits+1] = "six_Stars"
-		end
-		if next(SMODS.find_mod("GrabBag")) then
-			_suits[#_suits+1] = "gb_Eyes"
-		end
-		if next(SMODS.find_mod("zeroError")) then
-			_suits[#_suits+1] = "zero_Brights"
-		end
-		if next(SMODS.find_mod("entr")) then
-			_suits[#_suits+1] = "entr_nilsuit"
-			_ranks[#_ranks+1] = "entr_nilrank"
-		end
-		if next(SMODS.find_mod("finity")) then
-			_ranks[#_ranks+1] = "finity_V"
-		end
-		if next(SMODS.find_mod("paperback")) then
-			_suits[#_suits+1] = "paperback_Stars"
-			_suits[#_suits+1] = "paperback_Crowns"
-			_ranks[#_ranks+1] = "paperback_Apostle"
-		end
 		target_pcard.ability.entr_yellow_sign = true
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
 		
 		local _enhancements = {"m_lucky", "m_glass", "m_steel", "m_thac_star", "m_thac_soulbound"}
-		if next(SMODS.find_mod("GrabBag")) then
-			_enhancements[#_enhancements+1] = "m_gb_alloyed"
-			_enhancements[#_enhancements+1] = "m_gb_ashen"
-			_enhancements[#_enhancements+1] = "m_gb_chained"
-			_enhancements[#_enhancements+1] = "m_gb_macabre"
-			_enhancements[#_enhancements+1] = "m_gb_ripple"
-			_enhancements[#_enhancements+1] = "m_gb_rotten"
-		end
-		if next(SMODS.find_mod("ortalab")) then
-			_enhancements[#_enhancements+1] = "m_ortalab_bent"
-			_enhancements[#_enhancements+1] = "m_ortalab_iou"
-			_enhancements[#_enhancements+1] = "m_ortalab_recycled"
-		end
-		if next(SMODS.find_mod("MoreFluff")) then
-			_enhancements[#_enhancements+1] = "m_mf_cult"
-			_enhancements[#_enhancements+1] = "m_mf_styled"
-			_enhancements[#_enhancements+1] = "m_mf_teal"
-		end
-		if next(SMODS.find_mod("RevosVault")) then
-			_enhancements[#_enhancements+1] = "m_crv_blessedcard"
-			_enhancements[#_enhancements+1] = "m_crv_tier3card"
-			_enhancements[#_enhancements+1] = "m_crv_aflame"
-			_enhancements[#_enhancements+1] = "m_crv_shattered"
-			if next(SMODS.find_mod("entr")) then
-				_enhancements[#_enhancements+1] = "m_crv_brightest"
-				_enhancements[#_enhancements+1] = "m_crv_darkest"
-			end
-		end
-		if next(SMODS.find_mod("VISIBILITY")) then
-			_enhancements[#_enhancements+1] = "m_vis_notebook"
-		end
-		if next(SMODS.find_mod("artbox")) then
-			_enhancements[#_enhancements+1] = "m_artb_pinata"
-		end
-		if next(SMODS.find_mod("zeroError")) then
-			_enhancements[#_enhancements+1] = "m_zero_sunsteel"
-		end
-		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			_enhancements[#_enhancements+1] = "m_akyrs_scoreless"
-			_enhancements[#_enhancements+1] = "m_akyrs_insolate_card"
-			_enhancements[#_enhancements+1] = "m_akyrs_canopy_card"
-			_enhancements[#_enhancements+1] = "m_akyrs_thai_tea_card"
-			_enhancements[#_enhancements+1] = "m_akyrs_zap_card"
-		end
-		if next(SMODS.find_mod("Cryptid")) then
-			_enhancements[#_enhancements+1] = "m_cry_echo"
-			_enhancements[#_enhancements+1] = "m_cry_light"
-		end
-		if next(SMODS.find_mod("kino")) then
-			_enhancements[#_enhancements+1] = "m_kino_action"
-			_enhancements[#_enhancements+1] = "m_kino_demonic"
-			_enhancements[#_enhancements+1] = "m_kino_sci_fi"
-			if next(SMODS.find_mod("MoreFluff")) then
-				_enhancements[#_enhancements+1] = "m_kino_angelic"
-			end
-		end
-		if next(SMODS.find_mod("entr")) then
-			_enhancements[#_enhancements+1] = "m_entr_flesh"
-			_enhancements[#_enhancements+1] = "m_entr_dark"
-			_enhancements[#_enhancements+1] = "m_entr_prismatic"
-		end
-		if next(SMODS.find_mod("pta_saka")) then
-			_enhancements[#_enhancements+1] = "m_payasaka_damp"
-			_enhancements[#_enhancements+1] = "m_payasaka_volatile"
-			_enhancements[#_enhancements+1] = "m_payasaka_laser"
-			_enhancements[#_enhancements+1] = "m_payasaka_true"
-			_enhancements[#_enhancements+1] = "m_payasaka_score"
-		end
-		if next(SMODS.find_mod("allinjest")) then
-			_enhancements[#_enhancements+1] = "m_aij_fervent"
-			_enhancements[#_enhancements+1] = "m_aij_charged"
-		end
-		if next(SMODS.find_mod("vallkarri")) then
-			_enhancements[#_enhancements+1] = "m_valk_mirrored"
-		end
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
 		
 		
 		local _seals = {"Red"}
-		if next(SMODS.find_mod("GrabBag")) then
-			_seals[#_seals+1] = "gb_fortune"
-			_seals[#_seals+1] = "gb_dual"
-			_seals[#_seals+1] = "gb_infinite"
-		end
-		if next(SMODS.find_mod("Pokermon")) then
-			_seals[#_seals+1] = "poke_pink_seal"
-		end
-		if next(SMODS.find_mod("RevosVault")) then
-			_seals[#_seals+1] = "crv_ps"
-		end
-		if next(SMODS.find_mod("VISIBILITY")) then
-			_seals[#_seals+1] = "vis_wooden"
-			_seals[#_seals+1] = "vis_mitosis"
-		end
-		if next(SMODS.find_mod("artbox")) then
-			_seals[#_seals+1] = "artb_brick"
-			_seals[#_seals+1] = "artb_ouroboros"
-		end
-		if next(SMODS.find_mod("TOGAPack")) then
-			_seals[#_seals+1] = "toga_sealseal"
-			_seals[#_seals+1] = "toga_urlseal"
-		end
-		if next(SMODS.find_mod("RiftRaft")) then
-			_seals[#_seals+1] = "riftraft_rift"
-		end
-		if next(SMODS.find_mod("pta_saka")) then
-			_seals[#_seals+1] = "payasaka_random"
-			_seals[#_seals+1] = "payasaka_thunder"
-			_seals[#_seals+1] = "payasaka_ghost"
-		end
-		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			_seals[#_seals+1] = "akyrs_carmine"
-		end
-		if next(SMODS.find_mod("Cryptid")) then
-			_seals[#_seals+1] = "cry_green"
-		end
 		math.randomseed(os.time())
 		target_pcard:set_seal(_seals[math.random(#_seals)], true, true)
 		
 		math.randomseed(os.time()*0.75)
-		local _editions = {"polychrome", "negative", "thac_gilded"}
-		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			_editions[#_editions+1] = "akyrs_texelated"
-			_editions[#_editions+1] = "akyrs_noire"
-			_editions[#_editions+1] = "akyrs_sliced"
-		end
-		if next(SMODS.find_mod("Cryptid")) then
-			_editions[#_editions+1] = "cry_noisy"
-			_editions[#_editions+1] = "cry_astral"
-			_editions[#_editions+1] = "cry_glitched"
-			_editions[#_editions+1] = "cry_mosaic"
-			_editions[#_editions+1] = "cry_gold"
-			--_editions[#_editions+1] = "cry_jolly"
-		end
-		if next(SMODS.find_mod("RevosVault")) then
-			_editions[#_editions+1] = "crv_pastel"
-			_editions[#_editions+1] = "crv_magnetised_edition"
-		end
-		if next(SMODS.find_mod("entr")) then
-			_editions[#_editions+1] = "entr_sunny"
-			_editions[#_editions+1] = "entr_solar"
-			_editions[#_editions+1] = "entr_fractured"
-			_editions[#_editions+1] = "entr_freaky"
-		end
-		if next(SMODS.find_mod("allinjest")) then
-			_editions[#_editions+1] = "aij_glimmer"
-			_editions[#_editions+1] = "aij_stellar"
-		end
-		if next(SMODS.find_mod("Pokermon")) and math.random() < 1/8192 then
-			_editions = {"poke_shiny"}
-		end
+		local _editions = {"polychrome", "negative"}
         G.E_MANAGER:add_event(
             Event{
 				func = function()
