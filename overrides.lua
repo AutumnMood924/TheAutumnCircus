@@ -215,13 +215,12 @@ function Game:main_menu(ctx)
 			target_pcard.no_ui = true
 			target_pcard.states.visible = true
 
-			tg.T.w = tg.T.w * 1.25
-			tg.T.x = tg.T.x - 1
 			tg:emplace(target_pcard)
 			tg:align_cards()
 		end
 		
 		
+		local dont = function()
 		math.randomseed(os.time())
 		local _jokers = {"j_thac_triplicate_soul", "j_thac_knight_of_heart", "j_thac_witch_of_mind", "j_thac_lord_of_void", "j_thac_placeholder_joker"}
         local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS[_jokers[math.random(#_jokers)]])
@@ -238,6 +237,18 @@ function Game:main_menu(ctx)
 				v:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
 			end
 		end
+		card:set_seal("thac_sock_and_buskin", true, true)
+        card:set_sprites(card.config.center)
+        card.no_ui = true
+        card.states.visible = true
+        
+		--[[function card:click()
+            play_sound('button', 1, 0.3)
+            G.FUNCS['openModUI_TheAutumnCircus']()
+        end--]]
+
+        tg:emplace(card)
+        tg:align_cards()
 
         G.E_MANAGER:add_event(
             Event{
@@ -264,28 +275,14 @@ function Game:main_menu(ctx)
 				return true end
 			}
 		)
-		card:set_seal("thac_sock_and_buskin", true, true)
-        card:set_sprites(card.config.center)
-        card.no_ui = true
-        card.states.visible = true
-        
-		--[[function card:click()
-            play_sound('button', 1, 0.3)
-            G.FUNCS['openModUI_TheAutumnCircus']()
-        end--]]
-
-		tg.T.w = tg.T.w * 1.25
-			tg.T.x = tg.T.x - 1
-        tg:emplace(card)
-        tg:align_cards()
+		end
 		
 		local _suits = {"Spades", "Hearts"}
 		local _ranks = {"Ace", "3", "Queen", "King", "Jack"}
-		target_pcard.ability.entr_yellow_sign = true
 		math.randomseed(os.time())
 		SMODS.change_base(target_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
 		
-		local _enhancements = {"m_lucky", "m_glass", "m_steel", "m_thac_star", "m_thac_soulbound"}
+		local _enhancements = {"m_bonus", "m_mult", "m_wild", "m_lucky", "m_glass", "m_steel", "m_gold", "m_thac_star", "m_thac_soulbound", "m_thac_bone", "m_thac_plan", "m_thac_angel", "m_thac_ruled", "m_thac_cardboard", "m_thac_sky", "m_thac_mist", "m_thac_loop", "m_thac_school", "m_thac_party"}
 		math.randomseed(os.time())
 		target_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
 		
@@ -296,14 +293,16 @@ function Game:main_menu(ctx)
 		
 		math.randomseed(os.time()*0.75)
 		local _editions = {"polychrome", "negative"}
-        G.E_MANAGER:add_event(
-            Event{
-				func = function()
-					math.randomseed(os.time())
-					target_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
-				return true end
-			}
-		)
+		if math.random() < 1/4096 then
+			G.E_MANAGER:add_event(
+				Event{
+					func = function()
+						math.randomseed(os.time())
+						target_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+					return true end
+				}
+			)
+		end
 		local _aspect = "thac_void"
 		math.randomseed(os.time())
 		if math.random() < 1/2 then
@@ -316,36 +315,49 @@ function Game:main_menu(ctx)
 		
 		--now set other things
 		
-		-- paperclips
-		if next(SMODS.find_mod("paperback")) then
-			math.randomseed(os.time())
-			local clip_to_apply = PB_UTIL.ENABLED_PAPERCLIPS[math.random(#PB_UTIL.ENABLED_PAPERCLIPS)]
-			clip_to_apply = string.sub(clip_to_apply, 1, #clip_to_apply - 5)
-			PB_UTIL.set_paperclip(target_pcard, clip_to_apply)
-		end
-		
-		-- hexes
-		if next(SMODS.find_mod("GrabBag")) then
-			math.randomseed(os.time())
-			local hex_to_apply = GB.HEX_KEYS[math.random(#GB.HEX_KEYS)]
-			GB.set_hex(target_pcard, hex_to_apply)
-		end
-		
-		-- curses
-		if next(SMODS.find_mod("ortalab")) then
-			math.randomseed(os.time())
-			target_pcard:set_curse(Ortalab.Curse.obj_buffer[math.random(#Ortalab.Curse.obj_buffer)], true)
-		end
-		
-		-- pure suit / rank
-		if next(SMODS.find_mod("aikoyorisshenanigans")) then
-			math.randomseed(os.time())
-			if math.random() < 0.5 then
-				target_pcard.ability.akyrs_special_card_type = math.random() < 0.5 and "suit" or "rank"
+		for _,k in ipairs({12,25,420,666}) do
+			local new_pcard = Card(tg.T.x,tg.T.y,G.CARD_W*1.4,G.CARD_H*1.4,nil,G.P_CENTERS['c_base'])
+			new_pcard.bypass_discovery_center = true
+			new_pcard:set_sprites(new_pcard.config.center)
+			new_pcard.no_ui = true
+			new_pcard.states.visible = true
+
+			tg:emplace(new_pcard)
+			tg:align_cards()
+			
+			math.randomseed(os.time()+k)
+			SMODS.change_base(new_pcard, _suits[math.random(#_suits)], _ranks[math.random(#_ranks)])
+			
+			math.randomseed(os.time()+k)
+			new_pcard:set_ability(G.P_CENTERS[_enhancements[math.random(#_enhancements)]])
+			
+			math.randomseed(os.time()+k)
+			new_pcard:set_seal(_seals[math.random(#_seals)], true, true)
+			
+			if math.random() < 1/4096 then
+				G.E_MANAGER:add_event(
+					Event{
+						func = function()
+							math.randomseed(os.time()+k)
+							new_pcard:set_edition({[_editions[math.random(#_editions)]] = true}, true, true)
+						return true end
+					}
+				)
 			end
+			
+			local _aspect = "thac_void"
+			math.randomseed(os.time()+k)
+			if math.random() < 1/2 then
+				_aspect = "thac_heart"
+			else
+				_aspect = "thac_mind"
+			end
+			new_pcard:set_aspect(_aspect, true, true)
+			new_pcard.bottle = true
 		end
 		
-		target_pcard:set_sprites(target_pcard.config.center, target_pcard.config.card)
+		tg.T.w = tg.T.w * #tg.cards
+		tg.T.x = tg.T.x - #tg.cards
 		
 		
         -- Creates thac showdown blind Sprite

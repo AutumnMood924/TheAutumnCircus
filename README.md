@@ -18,7 +18,7 @@ help
 AutumnMood - Code    
 itayfeder - Mr. Bones stamp and Vampire stamp, porting stamp code  
 Jevonn - Planet S, H, C, D art  
-Fritz Lancastor - Some hand planet art
+Fritz Lancastor - Some hand planet art (currently unused)  
   
 LocalThunk - Balatro and its assets  
 Homestuck - Homestuck (as far as I know all referenced material here was made by Andrew Hussie)  

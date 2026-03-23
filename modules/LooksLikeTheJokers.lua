@@ -693,7 +693,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		--no_collection = true,
+		no_collection = true,
 		no_doe = true,
     },
     'bladekind', bladekind = {
@@ -736,7 +736,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		--no_collection = true,
+		no_collection = true,
 		no_doe = true,
     },
     'pokerkind', pokerkind = {
@@ -779,7 +779,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		--no_collection = true,
+		no_collection = true,
 		no_doe = true,
     },
     'combat_capability', combat_capability = {
@@ -825,7 +825,7 @@ local jokers = {
             
         end,
         yes_pool_flag = "no",
-		--no_collection = true,
+		no_collection = true,
 		no_doe = true,
     },
     'pseudoscratch', pseudoscratch = {
@@ -883,7 +883,7 @@ local jokers = {
         calculate = function(self, card, context)
         end,
         yes_pool_flag = "no",
-		--no_collection = true,
+		no_collection = true,
 		no_doe = true,
     },
     'astront', astront = {

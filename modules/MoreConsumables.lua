@@ -218,11 +218,6 @@ local planets = {
 		pos = { x = 5, y = 2 },
 		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			if G.GAME.used_vouchers.v_observatory then
-				info_queue[#info_queue+1] = {key = 'mc_obs_on_dysnomia', set = 'Other'}
-			else
-				info_queue[#info_queue+1] = {key = 'mc_obs_off_dysnomia', set = 'Other'}
-			end
 			return {vars = { SMODS.get_probability_vars(card, 1, card.ability.extra.odds) }}
 		end,
 		use = function(self, card, area, copier)

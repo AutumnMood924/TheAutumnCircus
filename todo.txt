@@ -1,2 +1,0 @@
-cryptid - 
-	stamps don't calculate
