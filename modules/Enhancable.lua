@@ -1,37 +1,4 @@
 local enhancements = {
-	'star', star = {
-		name = "star",
-		effect = 'bounty',
-		config = {
-			extra = {
-				reduction = 0.10,
-			}
-		},
-		pos = { x = 3, y = 0 },
-		loc_vars = function(self, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {card.ability.extra.reduction*100}}
-		end,
-		calculate = function(self, card, context)
-			if context.main_scoring and context.cardarea == G.play then
-				return {
-					extra = {focus = card,
-						message = localize{type = 'variable', key = 'a_blind_minus_percent',
-							vars = {card.ability.extra and card.ability.extra.reduction*100 or 10}}, },
-					card = card,
-                    func = function()
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'before',
-                        delay = 0.0,
-                        func = (function()
-                            AMM.mod_blind(1-(card.ability.extra and card.ability.extra.reduction or 0.10), nil, true)
-                            return true
-                        end)}))
-					end,
-				}
-			end
-		end,
-	},
 	'loop', loop = {
 		name = "loop",
 		effect = 'loop',
@@ -64,6 +31,18 @@ local enhancements = {
 		config = {
 		},
 		pos = { x = 6, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'school', school = {
+		name = "school",
+		display_name = "School Card",
+		text = {
+			'Work in Progress!'
+		},
+		effect = 'school',
+		config = {
+		},
+		pos = { x = 4, y = 1 },
 		in_pool = function(self) return false end,
 	},
 	'plan', plan = {
@@ -159,15 +138,24 @@ local enhancements = {
 	},
 	'cardboard', cardboard = {
 		name = "cardboard",
-		display_name = "Cardboard Card",
-		text = {
-			'Work in Progress!'
-		},
 		effect = 'cardboard',
 		config = {
+			extra = {
+				xchips = 2,
+				threshold = 4
+			},
 		},
 		pos = { x = 4, y = 0 },
-		in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+			return {vars = {card.ability.extra.xchips, card.ability.extra.threshold}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play and G.GAME.dollars < card.ability.extra.threshold then
+				return {
+					xchips = card.ability.extra.xchips
+				}
+			end
+		end,
 	},
 	'ruled', ruled = {
 		name = "ruled",
@@ -234,19 +222,103 @@ local enhancements = {
 			end
 		end,
 	},
-	'mist', mist = {
-		name = "mist",
-		display_name = "Mist Card",
+	'star', star = {
+		name = "star",
+		effect = 'bounty',
+		config = {
+			extra = {
+				reduction = 0.10,
+			}
+		},
+		pos = { x = 3, y = 0 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {card.ability.extra.reduction*100}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				return {
+					extra = {focus = card,
+						message = localize{type = 'variable', key = 'a_blind_minus_percent',
+							vars = {card.ability.extra and card.ability.extra.reduction*100 or 10}}, },
+					card = card,
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                            AMM.mod_blind(1-(card.ability.extra and card.ability.extra.reduction or 0.10), nil, true)
+                            return true
+                        end)}))
+					end,
+				}
+			end
+		end,
+	},
+	'angel', angel = {
+		name = "angel",
+		display_name = "Angel Card",
 		text = {
 			'Work in Progress!'
 		},
+		effect = 'angel',
+		config = {
+		},
+		pos = { x = 7, y = 0 },
+		in_pool = function(self) return false end,
+	},
+	'mist', mist = {
+		name = "mist",
 		effect = 'mist',
 		config = {
 		},
 		pos = { x = 1, y = 0 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then info_queue[#info_queue+1] = G.P_CENTERS.m_thac_tempmist end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = {}}
+		end,
+		calculate = function(self, card, context)
+			if context.first_hand_drawn and card.area == G.graveyard_area then
+				local _card = copy_card(card)
+				_card:set_ability(G.P_CENTERS["m_thac_tempmist"])
+				G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+				_card.playing_card = G.playing_card
+				table.insert(G.playing_cards, _card)
+
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						G.hand:emplace(_card)
+						_card:start_materialize()
+						G.GAME.blind:debuff_card(_card)
+						G.hand:sort()
+						SMODS.calculate_context({ playing_card_added = true, cards = { _card } })
+						save_run()
+						return true
+					end
+				}))
+
+				return nil, true
+			end
+		end,
 		in_pool = function(self) return false end,
 	},
-	'sky', sky = {
+	'tempmist', tempmist = {
+		name = "tempmist",
+		effect = 'mist',
+		config = {
+		},
+		pos = { x = 1, y = 0 },
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then info_queue[#info_queue+1] = G.P_CENTERS.m_thac_mist end
+			return {vars = {}}
+		end,
+		in_pool = function(self) return false end,
+		no_collection = true,
+	},
+	--[['sky', sky = {
 		name = "sky",
 		display_name = "Sky Card",
 		text = {
@@ -257,7 +329,7 @@ local enhancements = {
 		},
 		pos = { x = 2, y = 0 },
 		in_pool = function(self) return false end,
-	},
+	},--]]
 	'soulbound', soulbound = {
 		name = "soulbound",
 		effect = 'soulbound',
@@ -275,30 +347,6 @@ local enhancements = {
 		remove_from_graveyard = function(self, card)
 			card.ability.perma_x_mult = card.ability.perma_x_mult + card.ability.extra.xmult
 		end,
-	},
-	'angel', angel = {
-		name = "angel",
-		display_name = "Angel Card",
-		text = {
-			'Work in Progress!'
-		},
-		effect = 'angel',
-		config = {
-		},
-		pos = { x = 7, y = 0 },
-		in_pool = function(self) return false end,
-	},
-	'school', school = {
-		name = "school",
-		display_name = "School Card",
-		text = {
-			'Work in Progress!'
-		},
-		effect = 'school',
-		config = {
-		},
-		pos = { x = 4, y = 1 },
-		in_pool = function(self) return false end,
 	},
 }
 

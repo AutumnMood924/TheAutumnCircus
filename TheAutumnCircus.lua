@@ -28,12 +28,56 @@ TheAutumnCircus.mod.optional_features = function()
 		post_trigger = true,
         cardareas = {
             unscored = true,
-            --graveyard = true,
+            graveyard = true,
         },
         amm_suit_levels = true,
 		amm_graveyard = true,
 		--amm_plusmult = true,
 	}
+end
+
+TheAutumnCircus.mod.calculate = function(self, context)
+	if context.first_hand_drawn then
+		for _,card in ipairs(G.graveyard) do
+			if card.config.center.key == "m_thac_mist" then
+				local _card = copy_card(card)
+				_card.states.visible = false
+				_card:set_ability(G.P_CENTERS["m_thac_tempmist"])
+				G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+				_card.playing_card = G.playing_card
+				table.insert(G.playing_cards, _card)
+
+				G.E_MANAGER:add_event(Event({
+					delay = 0.1, trigger = 'after', func = function()
+						G.hand:emplace(_card)
+						_card:start_materialize({G.C.JOKER_GREY})
+						G.GAME.blind:debuff_card(_card)
+						G.hand:sort()
+						--SMODS.calculate_context({ playing_card_added = true, cards = { _card } })
+						save_run()
+						return true
+					end
+				}))
+			end
+		end
+	end
+	if context.end_of_round and context.main_eval then
+		local kill = {}
+		for k,v in ipairs(G.playing_cards) do
+			if v.config.center.key == "m_thac_tempmist" then
+				kill[#kill+1] = v
+			end
+		end
+		for i=#kill,1,-1 do
+			G.E_MANAGER:add_event(Event({
+				delay = 0.1, trigger = 'after', func = function()
+		--print(context)
+					kill[i]:start_dissolve({G.C.JOKER_GREY}, nil, 0.33, true)
+					return true
+				end
+			}))
+		end
+	end
 end
 
 TheAutumnCircus.mod.process_loc_text = function()

@@ -963,6 +963,30 @@ return {
 					'to hand when scored'
 				},
 			},
+			m_thac_cardboard = {
+				name = "Cardboard Card",
+				text = {
+					'{C:white,X:chips}X#1#{} Chips if scored','with {C:money}$#2#{} or less'
+				},
+			},
+			m_thac_mist = {
+				name = "Mist Card",
+				text = {
+					'When round begins with this',
+					'card in your {C:attention}graveyard{}, create',
+					'a {C:dark_edition}Temporary{} copy of this card',
+					'and add it to your hand'
+				},
+			},
+			m_thac_tempmist = {
+				name = "Mist Copy",
+				text = {
+					'{C:dark_edition}Temporary',
+					'Removed from your deck',
+					'at end of round',
+					"{C:inactive,s:0.6}Doesn't enter your graveyard"
+				},
+			},
 		},
 		Aspect = {
 			thac_breath_aspect = {
