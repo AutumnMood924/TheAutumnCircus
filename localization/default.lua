@@ -923,6 +923,7 @@ return {
 				text = {
 					'Earns {C:money}$#1#{} when scored',
 					'no rank or suit',
+					'always scores',
 				},
 			},
 			m_thac_soulbound = {
@@ -939,6 +940,27 @@ return {
 				text = {
 					'Retriggers {C:attention}#1#{} time#2#',
 					'when scored',
+				},
+			},
+			m_thac_ruled = {
+				name = "List Card",
+				text = {
+					'{C:attention}Write{} played {C:attention}standard poker hands{} onto',
+					'this card while it is {C:attention}held in hand',
+					'{s:0.17} ',
+					'This card gives {C:chips}Chips{} and {C:mult}Mult{} equal',
+					'to the {C:attention}highest{} base {C:chips}Chips{} and {C:mult}Mult{}',
+					'of poker hands {C:attention}written{} on it',
+					'{C:inactive}(Currently: {C:chips}+#1#{C:inactive} Chips and {C:mult}+#2#{C:inactive} Mult)',
+					'{s:0.17} ',
+					'no rank or suit, always scores',
+				},
+			},
+			m_thac_plan = {
+				name = "Plan Card",
+				text = {
+					'Draws another {C:attention}Plan Card{}',
+					'to hand when scored'
 				},
 			},
 		},

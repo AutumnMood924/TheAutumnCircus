@@ -68,15 +68,41 @@ local enhancements = {
 	},
 	'plan', plan = {
 		name = "plan",
-		display_name = "Plan Card",
-		text = {
-			'Work in Progress!'
-		},
 		effect = 'plan',
 		config = {
+			extra = {
+				planning = false
+			}
 		},
 		pos = { x = 3, y = 1 },
-		in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            if not card.fake_card then info_queue[#info_queue+1] = G.P_CENTERS.m_thac_plan end
+			return {vars = {}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				local found = false
+				for k,v in ipairs(G.deck.cards) do
+					if v.config.center.key == "m_thac_plan" and not v.ability.extra.planning then
+						draw_card(G.deck, G.hand, 100, 'up', true, v)
+						v.ability.extra.planning = true
+						found = true
+						--[[G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0, func = function()
+							--v:flip()
+							return true
+						end}))]]
+						break
+					end
+				end
+				if found then return {
+					message = "Planned!",
+				} end
+			end
+			if context.after or context.end_of_round then
+				card.ability.extra.planning = false
+			end
+		end,
 	},
 	'bone', bone = {
 		name = "bone",
@@ -145,16 +171,6 @@ local enhancements = {
 	},
 	'ruled', ruled = {
 		name = "ruled",
-		display_name = "Ruled Card",
-		text = {
-			'{C:attention}Write{} played {C:attention}standard poker hands{} onto',
-			'this card while it is {C:attention}held in hand',
-			'This card gives {C:chips}+Chips{} and {C:mult}+Mult',
-			'equal to the {C:attention}highest{} base {C:chips}Chips{}',
-			'and {C:mult}Mult{} of hands {C:attention}written{} on it',
-			'{C:inactive}(Currently: {C:chips}+#1#{C:inactive} Chips and {C:mult}+#2#{C:inactive} Mult)',
-			'no suit or rank',
-		},
 		no_rank = true,
 		no_suit = true,
 		replace_base_card = true,
@@ -324,7 +340,7 @@ SMODS.DrawStep {
 				["Straight Flush"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 8, y = 0}),
 				["Royal Flush"] = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS["thac_RouxldKaard"], {x = 9, y = 0}),
 			}
-			for k,v in ipairs({"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Straight Flush", "Royal Flush"}) do
+			for k,v in ipairs({"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush"}) do
 				if card.ability.extra[v] > 0 then
 					scribbles[v].role.draw_major = card
 					scribbles[v]:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil, 0, 0)
