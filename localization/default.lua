@@ -987,6 +987,12 @@ return {
 					"{C:inactive,s:0.6}Doesn't enter your graveyard"
 				},
 			},
+			m_thac_angel = {
+				name = "Angel Card",
+				text = {
+					'{C:attention}Becomes stronger{}','when scored'
+				},
+			},
 		},
 		Aspect = {
 			thac_breath_aspect = {

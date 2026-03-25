@@ -257,15 +257,68 @@ local enhancements = {
 	},
 	'angel', angel = {
 		name = "angel",
-		display_name = "Angel Card",
-		text = {
-			'Work in Progress!'
-		},
 		effect = 'angel',
 		config = {
 		},
 		pos = { x = 7, y = 0 },
-		in_pool = function(self) return false end,
+		--in_pool = function(self) return false end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				pseudorandom_element({
+					function()
+						card.ability.perma_bonus = card.ability.perma_bonus + math.floor(66* pseudorandom("It's impossible to have mysteries nowadays..."))
+					end,
+					function()
+						card.ability.perma_mult = card.ability.perma_mult + math.floor(17* pseudorandom("Because of nosy people like you"))
+					end,
+					function()
+						card.ability.perma_u_mult = card.ability.perma_u_mult + math.floor(12* pseudorandom("So it's rather a moot point to complain about it."))
+					end,
+					function()
+						card.ability.perma_u_chips = card.ability.perma_u_chips + math.floor(25* pseudorandom("And besides,"))
+					end,
+					function()
+						card.ability.perma_x_chips = card.ability.perma_x_chips + (math.floor(13* pseudorandom("It's rude to talk about someone who's listening."))/10)
+					end,
+					function()
+						card.ability.perma_x_mult = card.ability.perma_x_mult + (math.floor(13* pseudorandom("All ears, huh?"))/10)
+					end,
+					function()
+						card.ability.perma_u_x_chips = card.ability.perma_u_x_chips + (math.floor(9* pseudorandom("Just keep listening to the receiver"))/10)
+					end,
+					function()
+						card.ability.perma_u_x_mult = card.ability.perma_u_x_mult + (math.floor(9* pseudorandom("Maybe it'll stop listening to you"))/10)
+					end,
+					function()
+						card.ability.perma_h_mult = card.ability.perma_h_chips + math.floor(11* pseudorandom("Maybe you'll start listening to me"))
+					end,
+					function()
+						card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + (math.floor(5* pseudorandom("Maybe you'll stop listening to you"))/10)
+					end,
+					function()
+						card.ability.perma_h_chips = card.ability.perma_h_chips + math.floor(42* pseudorandom("Do you think you have all the answers?"))
+					end,
+					function()
+						card.ability.perma_h_x_chips = card.ability.perma_h_x_chips + (math.floor(5* pseudorandom("Or are you just enjoying this?"))/10)
+					end,
+					function()
+						card.ability.perma_p_dollars = card.ability.perma_p_dollars + math.floor(3* pseudorandom("Watching numbers go up..."))
+					end,
+					function()
+						card.ability.perma_h_dollars = card.ability.perma_h_dollars + math.floor(3* pseudorandom("But you know how it goes."))
+					end,
+					function()
+						card.ability.perma_repetitions = card.ability.perma_repetitions + math.floor(2* pseudorandom("This world wasn't made for two =)"))
+					end,
+				}, pseudoseed("END OF FILE"))()
+                return {
+                    card = card,
+                    focus = card,
+                    message = localize("k_thac_lvup"),
+                    colour = G.C.GOLD
+                }
+			end
+		end,
 	},
 	'mist', mist = {
 		name = "mist",
@@ -279,30 +332,7 @@ local enhancements = {
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = {}}
 		end,
-		calculate = function(self, card, context)
-			if context.first_hand_drawn and card.area == G.graveyard_area then
-				local _card = copy_card(card)
-				_card:set_ability(G.P_CENTERS["m_thac_tempmist"])
-				G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-				_card.playing_card = G.playing_card
-				table.insert(G.playing_cards, _card)
-
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						G.hand:emplace(_card)
-						_card:start_materialize()
-						G.GAME.blind:debuff_card(_card)
-						G.hand:sort()
-						SMODS.calculate_context({ playing_card_added = true, cards = { _card } })
-						save_run()
-						return true
-					end
-				}))
-
-				return nil, true
-			end
-		end,
-		in_pool = function(self) return false end,
+		--in_pool = function(self) return false end,
 	},
 	'tempmist', tempmist = {
 		name = "tempmist",
