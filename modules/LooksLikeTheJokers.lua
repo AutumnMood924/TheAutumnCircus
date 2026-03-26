@@ -2125,6 +2125,51 @@ local jokers = {
             end
         end,
     },
+    'listkeeper', listkeeper = {
+        config = { extra = {
+            dollars = 3,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 6,
+        rarity = 2,
+		pronouns = "he_him",
+        blueprint_compat = false,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		enhancement_gate = "m_thac_ruled",
+		loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue+1] = G.P_CENTERS.m_thac_ruled--{key = "graveyard", set = "Other"}
+            return {vars = {
+                math.floor(card.ability.extra.dollars),
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.individual and context.cardarea == G.play and context.other_card.config.center.key == "m_thac_ruled" then
+				local i = 0
+				for _,k in ipairs({"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush"}) do
+					if context.other_card.ability.extra[k] > 0 then
+						i = i + 1
+					end
+				end
+				if i > 0 then
+					local _card = context.other_card
+					return {
+						dollars = math.floor(card.ability.extra.dollars) * i,
+						card = _card,
+						func = function()
+							G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0, func = function()
+								for _,k in ipairs({"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush"}) do
+									_card.ability.extra[k] = 0
+								end
+								return true
+							end}))
+						end
+					}
+				end
+            end
+        end,
+    },
 }
 
 SMODS.Atlas{

@@ -578,6 +578,17 @@ return {
 					"permanently gain {C:attention}#1#{} retrigger",
 				},
 			},
+			j_thac_listkeeper = {
+				name = {
+					"Listkeeper",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"Played {C:attention}List Cards{} earn {C:money}$#1#{} for",
+					"each of their {C:attention}written poker{}",
+					"{C:attention}hands{}, then {C:red}erase{} those {C:attention}hands"
+				},
+			},
 			['j_thac_:joker:'] = {
 				name = "{f:thac_emoji}🃏{}",
 				text = {
@@ -991,6 +1002,15 @@ return {
 				name = "Angel Card",
 				text = {
 					'{C:attention}Becomes stronger{}','when scored'
+				},
+			},
+			m_thac_school = {
+				name = "Focus Card",
+				text = {
+					'{C:mult}+#1#{} Mult when scored',
+					'Resets when discarded',
+					'or unscoring',
+					'{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)',
 				},
 			},
 		},

@@ -35,15 +35,34 @@ local enhancements = {
 	},
 	'school', school = {
 		name = "school",
-		display_name = "School Card",
-		text = {
-			'Work in Progress!'
-		},
 		effect = 'school',
 		config = {
+			extra = {
+				mult = 2,
+				curr_mult = 0
+			}
 		},
 		pos = { x = 4, y = 1 },
-		in_pool = function(self) return false end,
+		--in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {card.ability.extra.mult, card.ability.extra.curr_mult}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring then
+				if context.cardarea == G.play then
+					card.ability.extra.curr_mult = card.ability.extra.curr_mult + card.ability.extra.mult
+					return {mult = card.ability.extra.curr_mult}
+				elseif context.cardarea == "unscored" and card.ability.extra.curr_mult > 0 then
+					card.ability.extra.curr_mult = 0
+					return {message = localize('k_reset')}
+				end
+			end
+			if context.discard and context.other_card == card and card.ability.extra.curr_mult > 0 then
+				card.ability.extra.curr_mult = 0
+				return {message = localize('k_reset')}
+			end
+		end,
 	},
 	'plan', plan = {
 		name = "plan",
@@ -398,6 +417,22 @@ for _, k in ipairs(enhancements) do
 	local v = enhancements[k]
 	TheAutumnCircus.data.buffer_insert("Enhancements", v, {key = k, atlas = "Enhancable"})
 end
+
+SMODS.Shader {
+	key = "trans",
+	path = "trans.fs",
+}
+
+SMODS.DrawStep {
+    key = 'tempmist',
+    order = -9,
+    func = function(self)
+        if self.config.center.key == "m_thac_tempmist" then
+            self.children.center:draw_shader('thac_trans', nil, self.ARGS.send_to_shader)
+        end
+    end,
+    conditions = { vortex = false, facing = 'front' },
+}
 
 local scribbles
 SMODS.DrawStep {

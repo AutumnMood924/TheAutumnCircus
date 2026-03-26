@@ -485,3 +485,30 @@ if G.SPLASH_THAC then
 end
 '''
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = '''
+elseif not self.greyed then
+	self.children.center:draw_shader('dissolve')
+'''
+position = "before"
+payload = '''
+elseif self.config.center.key == "m_thac_tempmist" then
+'''
+match_indent = true
+overwrite = false
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/card_draw.lua"]'
+pattern = '''
+--Draw the shadow
+'''
+position = "before"
+payload = '''
+if self.config.center.key == "m_thac_tempmist" then return end
+'''
+match_indent = true
+overwrite = false
