@@ -1,3 +1,6 @@
+# CW: TRYPOPHOBIA / SCOPOPHOBIA  
+yes seriously  
+  
 # REQUIRES https://github.com/AutumnMood924/AutumnMoodMechanics  
   
 # INCOMPATIBLE WITH TALISMAN, USE AMULET INSTEAD https://github.com/frostice482/amulet   

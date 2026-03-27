@@ -107,7 +107,7 @@ local enhancements = {
 		effect = 'bone',
 		config = {
 			extra = {
-				mult = 1,
+				chips = 6,
 			}
 		},
 		pos = { x = 0, y = 1 },
@@ -115,8 +115,8 @@ local enhancements = {
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
 			return {vars = {
-				card.ability.extra and card.ability.extra.mult or 1,
-				(card.ability.extra and card.ability.extra.mult or 1) * AMM.api.graveyard.count_cards()
+				card.ability.extra and card.ability.extra.chips or 6,
+				(card.ability.extra and card.ability.extra.chips or 6) * AMM.api.graveyard.count_cards()
 			}}
 		end,
 		calculate = function(self, card, context)
@@ -124,7 +124,7 @@ local enhancements = {
 				local gy_cards = AMM.api.graveyard.count_cards()
 				if gy_cards == 0 then return end
 				return {
-					mult = (card.ability.extra and card.ability.extra.mult or 1) * gy_cards
+					chips = (card.ability.extra and card.ability.extra.chips or 6) * gy_cards
 				}
 			end
 		end,
@@ -223,6 +223,9 @@ local enhancements = {
 		calculate = function(self, card, context)
 			if context.before and context.cardarea == G.hand then
 				if card.ability.extra[context.scoring_name] then
+					if context.scoring_name == "Royal Flush" then
+						card.ability.extra["Straight Flush"] = card.ability.extra["Straight Flush"] + 1
+					end
 					card.ability.extra[context.scoring_name] = card.ability.extra[context.scoring_name] + 1
 				end
 			end
@@ -278,63 +281,28 @@ local enhancements = {
 		name = "angel",
 		effect = 'angel',
 		config = {
+			extra = {
+				ap = 1,
+				chips = 6,
+				chips_factor = 0.17,
+				chips_power = 0.06,
+			},
 		},
+		no_rank = true,
+		no_suit = true,
+		replace_base_card = true,
+		always_scores = true,
 		pos = { x = 7, y = 0 },
 		--in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {((G.GAME.amm_ap or 0) + card.ability.extra.ap) * (card.ability.extra.chips + math.floor((G.GAME.amm_ap or 0) * card.ability.extra.chips_factor) + math.floor((G.GAME.amm_ap or 0) ^ card.ability.extra.chips_power))}}
+		end,
 		calculate = function(self, card, context)
 			if context.main_scoring and context.cardarea == G.play then
-				pseudorandom_element({
-					function()
-						card.ability.perma_bonus = card.ability.perma_bonus + math.floor(66* pseudorandom("It's impossible to have mysteries nowadays..."))
-					end,
-					function()
-						card.ability.perma_mult = card.ability.perma_mult + math.floor(17* pseudorandom("Because of nosy people like you"))
-					end,
-					function()
-						card.ability.perma_u_mult = card.ability.perma_u_mult + math.floor(12* pseudorandom("So it's rather a moot point to complain about it."))
-					end,
-					function()
-						card.ability.perma_u_chips = card.ability.perma_u_chips + math.floor(25* pseudorandom("And besides,"))
-					end,
-					function()
-						card.ability.perma_x_chips = card.ability.perma_x_chips + (math.floor(13* pseudorandom("It's rude to talk about someone who's listening."))/10)
-					end,
-					function()
-						card.ability.perma_x_mult = card.ability.perma_x_mult + (math.floor(13* pseudorandom("All ears, huh?"))/10)
-					end,
-					function()
-						card.ability.perma_u_x_chips = card.ability.perma_u_x_chips + (math.floor(9* pseudorandom("Just keep listening to the receiver"))/10)
-					end,
-					function()
-						card.ability.perma_u_x_mult = card.ability.perma_u_x_mult + (math.floor(9* pseudorandom("Maybe it'll stop listening to you"))/10)
-					end,
-					function()
-						card.ability.perma_h_mult = card.ability.perma_h_chips + math.floor(11* pseudorandom("Maybe you'll start listening to me"))
-					end,
-					function()
-						card.ability.perma_h_x_mult = card.ability.perma_h_x_mult + (math.floor(5* pseudorandom("Maybe you'll stop listening to you"))/10)
-					end,
-					function()
-						card.ability.perma_h_chips = card.ability.perma_h_chips + math.floor(42* pseudorandom("Do you think you have all the answers?"))
-					end,
-					function()
-						card.ability.perma_h_x_chips = card.ability.perma_h_x_chips + (math.floor(5* pseudorandom("Or are you just enjoying this?"))/10)
-					end,
-					function()
-						card.ability.perma_p_dollars = card.ability.perma_p_dollars + math.floor(3* pseudorandom("Watching numbers go up..."))
-					end,
-					function()
-						card.ability.perma_h_dollars = card.ability.perma_h_dollars + math.floor(3* pseudorandom("But you know how it goes."))
-					end,
-					function()
-						card.ability.perma_repetitions = card.ability.perma_repetitions + math.floor(2* pseudorandom("This world wasn't made for two =)"))
-					end,
-				}, pseudoseed("END OF FILE"))()
                 return {
-                    card = card,
-                    focus = card,
-                    message = localize("k_thac_lvup"),
-                    colour = G.C.GOLD
+                    ap = card.ability.extra.ap,
+					chips = (G.GAME.amm_ap + card.ability.extra.ap) * (card.ability.extra.chips + math.floor(G.GAME.amm_ap * card.ability.extra.chips_factor) + math.floor(G.GAME.amm_ap ^ card.ability.extra.chips_power))
                 }
 			end
 		end,

@@ -1114,39 +1114,6 @@ local jokers = {
             return AMM.api.graveyard.count_cards() > 0
         end,
     },
-    'gallows_humor', gallows_humor = {
-        config = { extra = {
-            targets = 15,
-            Xmult = 3,
-        }},
-        pos = { x = 0, y = 0 },
-        cost = 6,
-        rarity = 2,
-		pronouns = "none",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
-            return {vars = {
-                card.ability.extra.Xmult,
-                card.ability.extra.targets,
-                AMM.api.graveyard.count_cards()
-            }}
-        end,
-        calculate = function(self, card, context)
-            if context.joker_main and AMM.api.graveyard.count_cards() > card.ability.extra.targets then
-                return {
-                    colour = G.C.MULT,
-                    xmult = card.ability.extra.Xmult
-                }
-            end
-        end,
-        in_pool = function(self)
-            return AMM.api.graveyard.count_cards() > 0
-        end,
-    },
     'gem_joker', gem_joker = {
         config = { extra = {
             Xchips = 1.5,
@@ -1794,7 +1761,7 @@ local jokers = {
             end
         end,
     },
-    'hardlyquin', hardlyquin = {
+    --[['hardlyquin', hardlyquin = {
         config = { extra = {
 			odds = 3,
 			mult = 15,
@@ -1822,7 +1789,7 @@ local jokers = {
 				end
 			end
         end,
-    },
+    },--]]
 	"golden_ratio", golden_ratio = {
         config = {extra = { Xmult = 1.618033988749894 }},
         pos = { x = 8, y = 2 },
@@ -2067,7 +2034,7 @@ local jokers = {
             end
         end,
     },
-	'coven', coven = {
+	--[['coven', coven = {
         config = {
             extra = {
                 mult = 15,
@@ -2096,7 +2063,7 @@ local jokers = {
 				end
             end
         end,
-    },
+    },--]]
     'stirring_graves', stirring_graves = {
         config = { extra = {
             retriggers = 1,

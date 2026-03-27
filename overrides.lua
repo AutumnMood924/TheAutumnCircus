@@ -357,7 +357,7 @@ function Game:main_menu(ctx)
 		
         -- Creates thac showdown blind Sprite
         G.SPLASH_THAC = AnimatedSprite(0, 0, 1.5, 1.5,
-            G.ANIMATION_ATLAS["thac_modicon"], { x = 0, y = 0 }
+            G.ANIMATION_ATLAS["thac_BlindToAllButTheVideo"], { x = 0, y = 24 }
         )
         G.SPLASH_THAC:set_alignment({
             major = G.title_top,

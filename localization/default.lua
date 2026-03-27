@@ -924,9 +924,9 @@ return {
 			m_thac_bone = {
 				name = "Bone Card",
 				text = {
-					'{C:mult}+#1#{} Mult for each',
+					'{C:chips}+#1#{} Chips for each',
 					'card in your {C:attention}graveyard{}',
-					'{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)',
+					'{C:inactive}(Currently: {C:chips}+#2#{C:inactive} Chips)',
 				},
 			},
 			m_thac_jewel = {
@@ -956,7 +956,7 @@ return {
 			m_thac_ruled = {
 				name = "List Card",
 				text = {
-					'{C:attention}Write{} played {C:attention}standard poker hands{} onto',
+					'{C:attention}Write{} played {C:attention}standard hands{} onto',
 					'this card while it is {C:attention}held in hand',
 					'{s:0.17} ',
 					'This card gives {C:chips}Chips{} and {C:mult}Mult{} equal',
@@ -1001,7 +1001,7 @@ return {
 			m_thac_angel = {
 				name = "Angel Card",
 				text = {
-					'{C:attention}Becomes stronger{}','when scored'
+					'{C:attention}Becomes stronger{}',"{C:inactive}(Currently: {C:chips}+#1#{C:inactive} Chips)",'no rank or suit','always scores'
 				},
 			},
 			m_thac_school = {
@@ -1103,7 +1103,7 @@ return {
 				name = "Mind",
 				text = {
 					'This card permanently',
-					'gains {C:white,X:mult}X0.3{} Mult while',
+					'gains {C:mult}+{C:white,X:mult}X0.3{} Mult while',
 					'held in hand each',
 					'{C:blue}Hand{} played while this',
 					'card is held in hand'
@@ -1323,10 +1323,154 @@ return {
 			},
 		},
 		Blind = {
+			bl_thac_fehu = {
+				name = "Fehu",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_uruz = {
+				name = "Uruz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_Þurisaz = {
+				name = "Þurisaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_ansuz = {
+				name = "Ansuz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_raido = {
+				name = "Raido",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_kaunan = {
+				name = "Kaunan",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_gyfu = {
+				name = "Gyfu",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_wynn = {
+				name = "Wynn",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_hagalaz = {
+				name = "Hagalaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_naudiz = {
+				name = "Naudiz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_isaz = {
+				name = "Isaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
 			bl_thac_jera = {
 				name = "Jera",
 				text = {
 					"1 in 4 chance to","copy played cards",
+				},
+			},
+			bl_thac_eiwaz = {
+				name = "Eiwaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_perthro = {
+				name = "Perthro",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_algiz = {
+				name = "Algiz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_sowilo = {
+				name = "Sowilo",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_teiwaz = {
+				name = "Teiwaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_berkanan = {
+				name = "Berkanan",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_ehwaz = {
+				name = "Ehwaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_mannaz = {
+				name = "Mannaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_laguz = {
+				name = "Laguz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_ingwaz = {
+				name = "Ingwaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_dagaz = {
+				name = "Dagaz",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_oÞala = {
+				name = "OÞala",
+				text = {
+					"Work in Progress!",
+				},
+			},
+			bl_thac_angels_wrath = {
+				name = "Angel's Wrath",
+				text = {
+					localize('k_angel')
 				},
 			},
 			bl_thac_thac = {
