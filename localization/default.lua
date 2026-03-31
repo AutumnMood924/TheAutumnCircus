@@ -1,5 +1,12 @@
 return {
 	misc = {
+		ranks = {
+			thac_jester = "Jester",
+			thac_wand = "Wand",
+			thac_sword = "Sword",
+			thac_vessel = "Vessel",
+			thac_coin = "Coin",
+		},
 		dictionary = {
 			k_thac_scrapped = "Scrapped!",
 			k_thac_planets = "Planets!",
@@ -13,10 +20,13 @@ return {
 			k_thac_owo = "owo",
 			k_thac_hubris = "Your hubris exceeds my interest.",
 			k_thac_not_fun = "Nah. Not fun anymore.",
+			k_thac_minty = "Minty!",
 			
 			k_thac_option_select = "Option Select",
 		},
 		v_dictionary = {
+			a_thac_handsize = "+#1# Hand Size",
+			a_thac_handsize_minus = "-#1# Hand Size",
 		},
 		labels = {
 			thac_breath_aspect = "Breath",
@@ -589,6 +599,15 @@ return {
 					"{C:attention}hands{}, then {C:red}erase{} those {C:attention}hands"
 				},
 			},
+			j_thac_jimbos_brother = {
+				name = {
+					"Jimbo's Brother",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:mult}+#1#{} Mult whenever","{C:attention}exactly{C:mult} +4 {}Mult is scored"
+				},
+			},
 			['j_thac_:joker:'] = {
 				name = "{f:thac_emoji}🃏{}",
 				text = {
@@ -778,8 +797,8 @@ return {
 					"{C:autumn,s:0.5}Three of...",
 				},
 				text = {
-					"Creates a random {C:dark_edition}Polychrome",
-					"{C:attention}3 of {C:hearts}Hearts{} with {C:knightofheart}Heart{C:red} Aspect",
+					"Creates a {C:dark_edition}Polychrome {C:attention}Sword",
+					"of {C:hearts}Hearts{} with {C:knightofheart}Heart{C:red} Aspect",
 					"and adds it to your hand",
 				},
 			},
@@ -1001,7 +1020,7 @@ return {
 			m_thac_angel = {
 				name = "Angel Card",
 				text = {
-					'{C:attention}Becomes stronger{}',"{C:inactive}(Currently: {C:chips}+#1#{C:inactive} Chips)",'no rank or suit','always scores'
+					'{C:attention}Becomes stronger{}',"{C:inactive}(Currently: {C:purple}+#1#{C:inactive} Score)",'no rank or suit','always scores'
 				},
 			},
 			m_thac_school = {
@@ -1011,6 +1030,22 @@ return {
 					'Resets when discarded',
 					'or unscoring',
 					'{C:inactive}(Currently: {C:mult}+#2#{C:inactive} Mult)',
+				},
+			},
+			m_thac_spark = {
+				name = "Glitter Card",
+				text = {
+					'Chips and Mult from {C:attention}suit',
+					'{C:attention}level{} increased by {C:white,X:attention}X#1#{}',
+				},
+			},
+			m_thac_mint = {
+				name = "Mint Card",
+				text = {
+					'Gains {C:money}$#1#{C:attention} when scored{} when',
+					'held in hand {C:inactive}(Currently: {C:money}$#2#{C:inactive})',
+                    "{C:green}#3# in #4#{} chance to {C:red}destroy",
+					"this card {C:attention}when it is played",
 				},
 			},
 		},
@@ -1252,6 +1287,37 @@ return {
 			},
 		},
 		Other = {
+            card_mult = {
+                text = {
+                    "{C:mult}+#1#{} Mult"
+                }
+            },
+            card_levelup = {
+                text = {
+                    "Level up {V:1}#1#{} when",
+					"played and scoring",
+                }
+            },
+            card_handsize = {
+                text = {
+                    "{C:attention}+#1#{} hand size until end",
+					"of round when scored",
+                }
+            },
+            card_sword = {
+                text = {
+                    "{C:white,X:mult}X#1#{} Mult for",
+					"each {V:1}#3#{} level",
+					"{C:inactive}(Currently: {C:white,X:mult}X#2#{C:inactive} Mult)"
+                }
+            },
+            card_coin = {
+                text = {
+                    "Earn {C:money}$#1#{} when scored",
+					"for each {V:1}#3#{} level",
+					"{C:inactive}(Currently: {C:money}$#2#{C:inactive})"
+                }
+            },
 			['what_are_you_wearing'] = {
                 name = "what are you wearing",
                 text = {

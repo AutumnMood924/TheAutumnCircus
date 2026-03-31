@@ -26,6 +26,7 @@ data.BUFFERS = {
 	Materials = {},
 	Recipes = {},
 	Bakery = {},
+	Ranks = {},
 }
 
 data.buffer_register_funcs = {
@@ -291,6 +292,11 @@ data.buffer_register_funcs = {
 			m.config = v.config
 			m.card_key = v.card_key
 			YggCraftingRecipes[#YggCraftingRecipes+1] = m
+		end
+	end,
+	Ranks = function(v)
+		if not (TheAutumnCircus.config.enabled_ranks[v.key] == false) and ((not v.load_check) or v:load_check()) then
+			SMODS.Rank(v)
 		end
 	end,
 }

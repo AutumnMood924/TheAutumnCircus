@@ -356,39 +356,6 @@ local jokers = {
             end
         end,
     },
-    'stellar_alignment', stellar_alignment = {
-        config = {extra = {retriggers = 1}},
-        pos = { x = 0, y = 0 },
-        cost = 9,
-        rarity = 3,
-		pronouns = "she_they",
-        blueprint_compat = true,
-        eternal_compat = true,
-        perishable_compat = true,
-        rental_compat = true,
-		loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue+1] = G.P_CENTERS['m_thac_star']
-            local blah = ""
-            if card.ability.extra.retriggers > 1 then blah = "s" end
-            return {vars = {card.ability.extra.retriggers, blah}}
-        end,
-        calculate = function(self, card, context)
-            if context.repetition and context.cardarea == G.play and (context.other_card.config.center.key == "m_thac_star") then
-                local ret = card.ability.extra.retriggers
-                ret = ret * G.GAME.amm_data.suit_levels[context.other_card.base.suit].level
-                return {
-                    repetitions = ret,
-                    card = card,
-                    message = localize('k_again_ex'),
-                    colour = G.C.ORANGE,
-                }
-            end
-        end,
-        enhancement_gate = "m_thac_star",
-        load_check = function()
-            return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.star == false
-        end,
-    },
     'knight_of_heart', knight_of_heart = {
         config = {extra = {
             chips = 10,
@@ -1222,7 +1189,7 @@ local jokers = {
     'twisted_mind', twisted_mind = {
         config = { extra = {
         }},
-        pos = { x = 0, y = 0 },
+        pos = { x = 7, y = 2 },
         cost = 10,
         rarity = 3,
 		pronouns = "it_she_they",
@@ -1231,6 +1198,7 @@ local jokers = {
         perishable_compat = true,
         rental_compat = true,
 		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
             info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
             return {vars = { }}
         end,
@@ -2137,6 +2105,51 @@ local jokers = {
             end
         end,
     },
+    --[['jimbos_brother', jimbos_brother = {
+        config = { extra = {
+            mult = 12,
+        }},
+        pos = { x = 0, y = 0 },
+        cost = 4,
+        rarity = 1,
+		pronouns = "he_him",
+        blueprint_compat = true,
+        eternal_compat = true,
+        perishable_compat = true,
+        rental_compat = true,
+		loc_vars = function(self, info_queue, card)
+            --info_queue[#info_queue+1] = {key = "graveyard", set = "Other"}
+            return {vars = {
+                card.ability.extra.mult
+            }}
+        end,
+        calculate = function(self, card, context)
+            if context.post_trigger and context.other_ret and context.other_card ~= card and (
+				(context.other_ret.mult and context.other_ret.mult == 4) or 
+				(context.other_ret.mult_mod and context.other_ret.mult_mod == 4) or
+				(context.other_ret.jokers and (
+					(context.other_ret.jokers.mult and context.other_ret.jokers.mult == 4) or
+					(context.other_ret.jokers.mult_mod and context.other_ret.jokers.mult_mod == 4)
+				)) or
+				(context.other_ret.playing_card and (
+					(context.other_ret.playing_card.mult and context.other_ret.playing_card.mult == 4) or
+					(context.other_ret.playing_card.h_mult and context.other_ret.playing_card.h_mult == 4)
+				)) or
+				(context.other_ret.enhancement and (
+					(context.other_ret.enhancement.mult and context.other_ret.enhancement.mult == 4) or
+					(context.other_ret.enhancement.mult_mod and context.other_ret.enhancement.mult_mod == 4)
+				)) or
+				(context.other_ret.edition and (
+					(context.other_ret.edition.mult and context.other_ret.edition.mult == 4) or
+					(context.other_ret.edition.mult_mod and context.other_ret.edition.mult_mod == 4)
+				))
+			) then
+                return {
+                    mult = card.ability.extra.mult,
+                }
+            end
+        end,
+    },--]]
 }
 
 SMODS.Atlas{

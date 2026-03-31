@@ -3,7 +3,7 @@ local config = {
 		retrievehands = true,
 		deckthebalatro = true,
 		suitedunimpresseddispleasedoverlord = true,
-		dankranks = false, --not real
+		dankranks = true, --not real
 		skinmeadeck = true,
 		enhancable = true,
 		vouchme = true,
@@ -195,6 +195,9 @@ local config = {
 		x_four = true,
 	},
 	enabled_seals = {
+	},
+	enabled_ranks = {
+		jester = true,
 	},
 	enabled_stamps = {
 		jimbo = true,

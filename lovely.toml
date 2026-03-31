@@ -512,3 +512,125 @@ if self.config.center.key == "m_thac_tempmist" then return end
 '''
 match_indent = true
 overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+match_indent = true
+pattern = '''local ret = (not self.ability.extra_enhancement and self.ability.perma_mult) or 0'''
+position = "after"
+payload = '''
+if self:get_id() == SMODS.Ranks["thac_jester"].id then
+    ret = ret + 4
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+match_indent = true
+pattern = '''local ret = SMODS.multiplicative_stacking(self.ability.x_mult or 1, (not self.ability.extra_enhancement and self.ability.perma_x_mult) or 0)'''
+position = "after"
+payload = '''
+if self:get_id() == SMODS.Ranks["thac_sword"].id then
+    ret = SMODS.multiplicative_stacking(ret, 0.25 * (G.GAME.amm_data.suit_levels[self.base.suit] and G.GAME.amm_data.suit_levels[self.base.suit].level or 1))
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+match_indent = true
+pattern = '''ret = ret + ((not self.ability.extra_enhancement and self.ability.perma_p_dollars) or 0)'''
+position = "after"
+payload = '''
+if self:get_id() == SMODS.Ranks["thac_coin"].id then
+    ret = ret + (1 * (G.GAME.amm_data.suit_levels[self.base.suit] and G.GAME.amm_data.suit_levels[self.base.suit].level or 1))
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+match_indent = true
+pattern = '''return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)'''
+position = "before"
+payload = '''
+if self:get_id() == SMODS.Ranks["thac_jester"].id or
+  self:get_id() == SMODS.Ranks["thac_wand"].id or
+  self:get_id() == SMODS.Ranks["thac_sword"].id or
+  self:get_id() == SMODS.Ranks["thac_vessel"].id then
+    return self.ability.bonus + (self.ability.perma_bonus or 0)
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "=[SMODS _ \"src/game_object.lua\"]"
+match_indent = true
+overwrite = true
+pattern = "localize { type = 'other', key = 'card_chips', nodes = desc_nodes, vars = { specific_vars.nominal_chips } }"
+position = "at"
+payload = '''
+if specific_vars.card.base.id == SMODS.Ranks["thac_jester"].id then
+	localize{type = 'other', key = 'card_mult', nodes = desc_nodes, vars = {4}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_wand"].id then
+	localize{type = 'other', key = 'card_levelup', nodes = desc_nodes, vars = {localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_sword"].id then
+	localize{type = 'other', key = 'card_sword', nodes = desc_nodes, vars = {0.25, 1 + (0.25 * (G.GAME.amm_data.suit_levels[card.base.suit] and G.GAME.amm_data.suit_levels[card.base.suit].level or 1)), localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_vessel"].id then
+	localize{type = 'other', key = 'card_handsize', nodes = desc_nodes, vars = {2}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_coin"].id then
+	localize{type = 'other', key = 'card_coin', nodes = desc_nodes, vars = {1, (1 * (G.GAME.amm_data.suit_levels[card.base.suit] and G.GAME.amm_data.suit_levels[card.base.suit].level or 1)), localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+else
+	localize{type = 'other', key = 'card_chips'..(specific_vars.nominal_chips < 0 and '_minus' or ''), nodes = desc_nodes, vars = {specific_vars.nominal_chips}}
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+overwrite = true
+pattern = "localize{type = 'other', key = 'card_chips'..(specific_vars.nominal_chips < 0 and '_minus' or ''), nodes = desc_nodes, vars = {specific_vars.nominal_chips}}"
+position = "at"
+payload = '''
+if specific_vars.card.base.id == SMODS.Ranks["thac_jester"].id then
+	localize{type = 'other', key = 'card_mult', nodes = desc_nodes, vars = {4}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_wand"].id then
+	localize{type = 'other', key = 'card_levelup', nodes = desc_nodes, vars = {localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_sword"].id then
+	localize{type = 'other', key = 'card_sword', nodes = desc_nodes, vars = {0.25, 1 + (0.25 * (G.GAME.amm_data.suit_levels[card.base.suit] and G.GAME.amm_data.suit_levels[card.base.suit].level or 1)), localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_vessel"].id then
+	localize{type = 'other', key = 'card_handsize', nodes = desc_nodes, vars = {2}}
+elseif specific_vars.card.base.id == SMODS.Ranks["thac_coin"].id then
+	localize{type = 'other', key = 'card_coin', nodes = desc_nodes, vars = {1, (1 * (G.GAME.amm_data.suit_levels[card.base.suit] and G.GAME.amm_data.suit_levels[card.base.suit].level or 1)), localize(card.base.suit, 'suits_plural'), colours = {G.C.SUITS[card.base.suit]}}}
+else
+	localize{type = 'other', key = 'card_chips'..(specific_vars.nominal_chips < 0 and '_minus' or ''), nodes = desc_nodes, vars = {specific_vars.nominal_chips}}
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "=[SMODS AutumnMoodMechanics \"amm.lua\"]"
+match_indent = true
+overwrite = false
+pattern = "ret = ret + G.GAME.amm_data.suit_levels[self.base.suit].chips"
+position = "after"
+payload = '''
+if self.config.center.key == "m_thac_spark" then
+	ret = ret + (G.GAME.amm_data.suit_levels[self.base.suit].chips * (self.ability.extra.factor - 1))
+end
+'''
+[[patches]]
+[patches.pattern]
+target = "=[SMODS AutumnMoodMechanics \"amm.lua\"]"
+match_indent = true
+overwrite = false
+pattern = "ret = ret + G.GAME.amm_data.suit_levels[self.base.suit].mult"
+position = "after"
+payload = '''
+if self.config.center.key == "m_thac_spark" then
+	ret = ret + (G.GAME.amm_data.suit_levels[self.base.suit].mult * (self.ability.extra.factor - 1))
+end
+'''

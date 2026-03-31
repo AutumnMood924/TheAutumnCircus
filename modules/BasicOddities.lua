@@ -323,7 +323,7 @@ local oddities = {
 				if pseudorandom(pseudoseed("gift_of_the_knight")) < 0.5 then
 					enhancement = pseudorandom_element(G.P_CENTER_POOLS.Enhanced)
 				end
-				local cardmak = create_playing_card({front = G.P_CARDS.H_3, center = enhancement}, G.hand)
+				local cardmak = create_playing_card({front = G.P_CARDS.H_thac_SWORD, center = enhancement}, G.hand)
 				cardmak:set_edition({polychrome = true})
 				cardmak:set_seal(SMODS.poll_seal{key = "gift_of_the_knight", mod = 10})
 				cardmak:set_aspect("thac_heart")

@@ -78,6 +78,27 @@ TheAutumnCircus.mod.calculate = function(self, context)
 			}))
 		end
 	end
+	if context.before then
+		for k,card in ipairs(G.play.cards) do
+			if SMODS.in_scoring(card, context.scoring_hand) and card.base.id == SMODS.Ranks["thac_wand"].id and not SMODS.has_no_rank(card) then
+				AMM.level_up_suit(card, card.base.suit)
+				update_hand_text({delay = 0}, {handname = localize(context.scoring_name, "poker_hands"),chips = hand_chips, mult = mult, level = nil })
+			end
+		end
+	end
+	if context.individual and context.cardarea == G.play and context.other_card.base.id == SMODS.Ranks["thac_vessel"].id and not SMODS.has_no_rank(context.other_card) then
+		local amount = 2
+		return {
+			func = function()
+                G.hand:change_size(amount)
+                G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + amount
+			end,
+			card = context.other_card,
+			focus = context.other_card,
+			message = localize{type='variable',key=amount > 0 and 'a_thac_handsize' or "a_thac_handsize_minus",vars={math.abs(amount)}},
+			colour = G.C.PURPLE
+		}
+	end
 end
 
 TheAutumnCircus.mod.process_loc_text = function()
@@ -148,6 +169,9 @@ if TheAutumnCircus.config.enabled_modules.moreconsumables then
 end
 if TheAutumnCircus.config.enabled_modules.jokerstamps then
 	TheAutumnCircus.JS = NFS.load(TheAutumnCircus.mod.path.."modules/JokerStamps.lua")()
+end
+if TheAutumnCircus.config.enabled_modules.dankranks then
+	TheAutumnCircus.DR = NFS.load(TheAutumnCircus.mod.path.."modules/DankRanks.lua")()	
 end
 if TheAutumnCircus.config.enabled_modules.vouchme then
 	TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/VouchMe.lua")()	
