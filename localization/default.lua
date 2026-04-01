@@ -1048,6 +1048,22 @@ return {
 					"this card {C:attention}when it is played",
 				},
 			},
+			m_thac_shadow = {
+				name = "Shadow Card",
+				text = {
+					"While held in hand, gain {C:attention}+#1# hand",
+					"{C:attention}size{} this {C:attention}Round{} and {C:red}+#2#% Blind",
+					"{C:red}requirement{} each {C:blue}Hand{} played",
+				},
+			},
+			m_thac_ecto = {
+				name = "Ecto Card",
+				text = {
+					"Put {C:attention}#1# cop#2#{} of this card",
+					"into {C:attention}your graveyard when",
+					"played and scored",
+				},
+			},
 		},
 		Aspect = {
 			thac_breath_aspect = {

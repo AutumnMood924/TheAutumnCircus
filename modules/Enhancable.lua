@@ -404,31 +404,89 @@ local enhancements = {
 	},
 	'shadow', shadow = {
 		name = "shadow",
-		display_name = "Shadow Card",
-		text = {
-			'Work in Progress!'
-		},
 		effect = 'shadow',
 		config = {
+			extra = {
+				h_growth = 1,
+				bl_growth = 0.13,
+			}
 		},
 		pos = { x = 6, y = 1 },
-		in_pool = function(self) return false end,
+		--in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {card.ability.extra.h_growth, card.ability.extra.bl_growth * 100}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.hand then
+				return {
+					extra = {focus = card,
+						message = localize{type = 'variable', key = 'a_blind_percent',
+							vars = {card.ability.extra and card.ability.extra.bl_growth*100 or 13}}, extra = {
+								func = function()
+									G.hand:change_size(card.ability.extra.h_growth)
+									G.GAME.round_resets.temp_handsize = (G.GAME.round_resets.temp_handsize or 0) + card.ability.extra.h_growth
+								end,
+								card = context.other_card,
+								focus = context.other_card,
+								message = localize{type='variable',key=card.ability.extra.h_growth > 0 and 'a_thac_handsize' or "a_thac_handsize_minus",vars={math.abs(card.ability.extra.h_growth)}},
+								colour = G.C.PURPLE
+							}
+					},
+					card = card,
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                            AMM.mod_blind(1+(card.ability.extra and card.ability.extra.bl_growth or 0.13), nil, true)
+                            return true
+                        end)}))
+					end,
+				}
+			end
+		end,
 	},
-	'placeholder', placeholder = {
-		name = "placeholder",
-		display_name = "SOLAR",
-		text = {
-			"{C:inactive,s:0.666}This shouldn't be here..."
-		},
+	'ecto', ecto = {
+		name = "ecto",
 		effect = 'placeholder',
 		config = {
+			extra = {
+				cards = 1,
+			},
 		},
-		no_rank = true,
-		no_suit = true,
-		replace_base_card = true,
-		always_scores = true,
 		pos = { x = 7, y = 1 },
-		in_pool = function(self) return false end,
+		--in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+            info_queue[#info_queue+1] = {key = 'graveyard', set = 'Other'}
+			return {vars = {card.ability.extra.cards, card.ability.extra.cards == 1 and "y" or "ies"}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+                local card_ = card
+                return {
+                    extra = {
+                        message = localize("k_copied_ex"),
+                        colour = G.C.JOKER_GREY,
+                    },
+                    card = card,
+                    func = function()
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'immediate',
+                            func = function() 
+                                for i=1,math.floor(card.ability.extra.cards) do
+                                    local _card = copy_card(card_, nil, nil, G.playing_card)
+                                    _card:move_to_graveyard()
+                                end
+                                return true
+                            end
+                        }))
+                    end,
+                    colour = G.C.JOKER_GREY
+                }
+			end
+		end,
 	},
 }
 
