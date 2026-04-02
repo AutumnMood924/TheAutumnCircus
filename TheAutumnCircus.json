@@ -9,11 +9,11 @@
 	"badge_colour": "00164F",
 	"badge_text_colour": "fff200",
 	"display_name": "ÞAC",
-	"version": "0.0.0g",
+	"version": "0.0.0h",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0815a)",
 		"Lovely (>=0.7.1)",
-		"AutumnMoodMechanics (>=0.0.0g)"
+		"AutumnMoodMechanics (>=0.0.0h)"
 	],
 	"conflicts": [
 	],
