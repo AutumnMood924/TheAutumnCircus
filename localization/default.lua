@@ -1059,9 +1059,9 @@ return {
 			m_thac_ecto = {
 				name = "Ecto Card",
 				text = {
-					"Put {C:attention}#1# cop#2#{} of this card",
-					"into {C:attention}your graveyard when",
-					"played and scored",
+					"Put {C:attention}#1# cop#2#{} of this",
+					"card into {C:attention}your graveyard",
+					"when played and scored",
 				},
 			},
 		},
@@ -1276,7 +1276,8 @@ return {
 			b_thac_violet = {
 				name = "Violet Deck",
 				text = {
-					" ",
+					'Chips and Mult from {C:attention}suit',
+					'{C:attention}level{} increased by {C:white,X:attention}X3{}',
 				},
 			},
 			b_thac_grey = {

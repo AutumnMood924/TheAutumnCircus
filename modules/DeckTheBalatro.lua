@@ -31,18 +31,19 @@ local decks = {
 			G.GAME.modifiers.thac_undying_deck = true
 		end,
 	},
-	--[[
 	'alpha_deck', alpha_deck = {
 		name = "Alpha Deck",
 		text = {
-			"Start run with",
-			"{C:thac_life}Life{}, {C:thac_hope}Hope{}, {C:thac_void}Void{},",
-			"and {C:thac_heart}Heart{} in deck",
+			"Each face card starts with",
+			"a suit-dependant {C:red}Aspect{}:",
+			"{C:spades}Spades{}: Life, {C:hearts}Hearts{}: Heart",
+			"{C:clubs}Clubs{}: Hope, {C:diamonds}Diamonds{}: Void",
+			"{C:red}-1 consumable slot",
+		},
+		config = {
+			consumable_slot = -1,
 		},
 		pos = { x = 3, y = 0 },
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord ~= false
-		end,
 		apply = function(self)
 			G.GAME.modifiers.thac_alpha_deck = true
 		end,
@@ -50,14 +51,16 @@ local decks = {
 	'beta_deck', beta_deck = {
 		name = "Beta Deck",
 		text = {
-			"Start run with",
-			"{C:thac_breath}Breath{}, {C:thac_space}Space{}, {C:thac_light}Light{},",
-			"and {C:thac_time}Time{} in deck",
+			"Each face card starts with",
+			"a suit-dependant {C:red}Aspect{}:",
+			"{C:spades}Spades{}: Space, {C:hearts}Hearts{}: Time",
+			"{C:clubs}Clubs{}: Breath, {C:diamonds}Diamonds{}: Light",
+			"{C:red}-1 Hand",
+		},
+		config = {
+			hands = -1,
 		},
 		pos = { x = 2, y = 0 },
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord ~= false
-		end,
 		apply = function(self)
 			G.GAME.modifiers.thac_beta_deck = true
 		end,
@@ -65,14 +68,16 @@ local decks = {
 	'omega_deck', omega_deck = {
 		name = "Omega Deck",
 		text = {
-			"Start run with",
-			"{C:thac_blood}Blood{}, {C:thac_rage}Rage{}, {C:thac_doom}Doom{},",
-			"and {C:thac_mind}Mind{} in deck",
+			"Each face card starts with",
+			"a suit-dependant {C:red}Aspect{}:",
+			"{C:spades}Spades{}: Rage, {C:hearts}Hearts{}: Blood",
+			"{C:clubs}Clubs{}: Mind, {C:diamonds}Diamonds{}: Doom",
+			"{C:red}-1 Joker slot",
+		},
+		config = {
+			joker_slot = -1,
 		},
 		pos = { x = 4, y = 0 },
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord ~= false
-		end,
 		apply = function(self)
 			G.GAME.modifiers.thac_omega_deck = true
 		end,
@@ -80,21 +85,18 @@ local decks = {
 	'progenitor_deck', progenitor_deck = {
 		name = "Progenitor Deck",
 		text = {
-			"Start run with",
-			"{C:thac_time}Time{}, {C:thac_breath}Breath{}, {C:thac_doom}Doom{}, {C:thac_blood}Blood{},",
-			"{C:thac_heart}Heart{}, {C:thac_space}Space{}, {C:thac_mind}Mind{}, {C:thac_light}Light{},",
-			"{C:thac_void}Void{}, {C:thac_rage}Rage{}, {C:thac_hope}Hope{},",
-			"and {C:thac_life}Life{} in deck",
+			"Each face card starts",
+			"with an {C:red}Aspect",
+			"{C:red}-1 Discard",
+		},
+		config = {
+			discards = -1,
 		},
 		pos = { x = 5, y = 0 },
-		load_check = function()
-			return TheAutumnCircus.config.enabled_modules.suitedunimpresseddispleasedoverlord ~= false
-		end,
 		apply = function(self)
 			G.GAME.modifiers.thac_progenitor_deck = true
 		end,
 	},
-	---]]
 	"duality", duality = {
 		pos = {x = 1, y = 1},
 		config = {
@@ -187,14 +189,15 @@ local decks = {
 		},
 		apply = function(self)
 		end,
-	},
+	},--]]
 	"violet", violet = {
 		pos = {x = 3, y = 2},
 		config = {
 		},
 		apply = function(self)
+			G.GAME.modifiers.thac_violet_deck = true
 		end,
-	},--]]
+	},
 	"grey", grey = {
 		pos = {x = 4, y = 2},
 		config = {

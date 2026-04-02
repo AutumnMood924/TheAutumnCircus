@@ -634,3 +634,86 @@ if self.config.center.key == "m_thac_spark" then
 	ret = ret + (G.GAME.amm_data.suit_levels[self.base.suit].mult * (self.ability.extra.factor - 1))
 end
 '''
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+match_indent = true
+overwrite = false
+pattern = "if control.d then _card:set_edition({[control.d] = true}, true, true) end"
+position = "after"
+payload = '''
+if G.GAME.modifiers.thac_alpha_deck and _card:is_face() then
+	local _aspect = nil
+	if control.s == "S" then
+		_aspect = "thac_life"
+	elseif control.s == "H" then
+		_aspect = "thac_heart"
+	elseif control.s == "C" then
+		_aspect = "thac_hope"
+	elseif control.s == "D" then
+		_aspect = "thac_void"
+	end
+	_card:set_aspect(_aspect, true, true)
+elseif G.GAME.modifiers.thac_beta_deck and _card:is_face() then
+	local _aspect = nil
+	if control.s == "S" then
+		_aspect = "thac_space"
+	elseif control.s == "H" then
+		_aspect = "thac_time"
+	elseif control.s == "C" then
+		_aspect = "thac_breath"
+	elseif control.s == "D" then
+		_aspect = "thac_light"
+	end
+	_card:set_aspect(_aspect, true, true)
+elseif G.GAME.modifiers.thac_omega_deck and _card:is_face() then
+	local _aspect = nil
+	if control.s == "S" then
+		_aspect = "thac_rage"
+	elseif control.s == "H" then
+		_aspect = "thac_blood"
+	elseif control.s == "C" then
+		_aspect = "thac_mind"
+	elseif control.s == "D" then
+		_aspect = "thac_doom"
+	end
+	_card:set_aspect(_aspect, true, true)
+elseif G.GAME.modifiers.thac_progenitor_deck and _card:is_face() then
+	local _aspect = nil
+	if control.s == "S" then
+		if control.r == "J" then
+			_aspect = "thac_time"
+		elseif control.r == "Q" then
+			_aspect = "thac_space"
+		elseif control.r == "K" then
+			_aspect = "thac_hope"
+		end
+	elseif control.s == "H" then
+		if control.r == "J" then
+			_aspect = "thac_blood"
+		elseif control.r == "Q" then
+			_aspect = "thac_heart"
+		elseif control.r == "K" then
+			_aspect = "thac_life"
+		end
+	elseif control.s == "C" then
+		if control.r == "J" then
+			_aspect = "thac_breath"
+		elseif control.r == "Q" then
+			_aspect = "thac_mind"
+		elseif control.r == "K" then
+			_aspect = "thac_rage"
+		end
+	elseif control.s == "D" then
+		if control.r == "J" then
+			_aspect = "thac_doom"
+		elseif control.r == "Q" then
+			_aspect = "thac_light"
+		elseif control.r == "K" then
+			_aspect = "thac_void"
+		end
+	end
+	_card:set_aspect(_aspect, true, true)
+end
+'''

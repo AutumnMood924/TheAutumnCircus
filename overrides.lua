@@ -69,6 +69,14 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 	return card
 end
 
+-- glitter card
+local alias__Card_get_suit_level_potency = Card.get_suit_level_potency;
+function Card:get_suit_level_potency()
+	local ret = alias__Card_get_suit_level_potency(self)
+	ret = SMODS.multiplicative_stacking(ret, self.config.center.key == "m_thac_spark" and (self.ability.extra.factor - 1) or 0)
+	ret = SMODS.multiplicative_stacking(ret, G.GAME.modifiers.thac_violet_deck and (2) or 0)
+	return ret
+end
 
 -- Chaos' Stamp's effect
 local alias__check_for_unlock = check_for_unlock;
@@ -421,46 +429,4 @@ local alias__CardArea_can_highlight = CardArea.can_highlight
 function CardArea:can_highlight(card)
 	if card.aspect == "thac_breath" then return true end
 	return alias__CardArea_can_highlight(self, card)
-end
-
-if next(SMODS.find_mod("JoyousSpring")) then
-	local alias__JoyousSpring_is_monster_type = JoyousSpring.is_monster_type
-	function JoyousSpring.is_monster_type(card, monster_type)
-		if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
-			for k,v in ipairs(card.ability.hsr_extra_effects) do
-				if v.key == "thac_bonus_ygotype" and v.ability.type == monster_type then
-					return true
-				end
-			end
-		end
-		return alias__JoyousSpring_is_monster_type(card, monster_type)
-	end
-	local alias__JoyousSpring_is_attribute = JoyousSpring.is_attribute
-	function JoyousSpring.is_attribute(card, attribute)
-		if JoyousSpring.is_monster_card(card) and card.ability.hsr_extra_effects then
-			for k,v in ipairs(card.ability.hsr_extra_effects) do
-				if v.key == "thac_bonus_attr" and v.ability.attr == attribute then
-					return true
-				end
-			end
-		end
-		return alias__JoyousSpring_is_attribute(card, attribute)
-	end
-end
-
-if next(SMODS.find_mod("kino")) and next(SMODS.find_mod("stacked")) then
-	local alias__Kino_count_bullets = Kino.count_bullets
-	function Kino:count_bullets()
-		local _bullet_count = alias__Kino_count_bullets(self)
-		for __,_joker in ipairs(G.jokers.cards) do
-			if _joker.ability.hsr_extra_effects then
-				for _,_effect in ipairs(_joker.ability.hsr_extra_effects) do
-					if _effect.key == "thac_magazine" then
-						_bullet_count = _bullet_count + _effect.ability.value
-					end
-				end
-			end
-		end
-		return _bullet_count
-	end
 end
