@@ -111,6 +111,7 @@ local jokers = {
 				}
 			end
         end,
+		attributes = {"xmult", "hand_type"},
     },
     'nonstandard', nonstandard = {
         config = {
@@ -142,6 +143,7 @@ local jokers = {
 				}
 			end
         end,
+		attributes = {"xmult", "hand_type"},
     },
     'gift_from_the_void', gift_from_the_void = {
         config = { },
@@ -179,6 +181,7 @@ local jokers = {
 				}
             end
         end,
+		attributes = {"generation", "hand_size"},
     },
     'placeholder_joker', placeholder_joker = {
         config = {extra = {odds = 3}},
@@ -201,6 +204,7 @@ local jokers = {
                 card:set_ability(G.P_CENTERS[pseudorandom_element(TheAutumnCircus.placeholder_jokers, pseudoseed('placeholder_joker'))])
             end
         end,
+		attributes = {"generation", "chance"},
     },
     'filler_card', filler_card = {
         config = {extra = { Xchips_curr = 1, Xchips = 0.05 }},
@@ -239,6 +243,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"xchips", "scaling"},
     },
     'test_print', test_print = {
         config = {extra = { Xchips = 1.8 }},
@@ -275,6 +280,7 @@ local jokers = {
 				}
 			end
         end,
+		attributes = {"xchips", "joker"},
     },
     'sans', sans = {
         config = {extra = {  }},
@@ -308,6 +314,7 @@ local jokers = {
             end
 			-- incompatible with context.forcetrigger
         end,
+		attributes = {"retrigger", "joker"},
     },
     'null', null = {
         config = {extra = {  }},
@@ -355,6 +362,7 @@ local jokers = {
 				end
             end
         end,
+		attributes = {"joker", "joker_slot"},
     },
     'knight_of_heart', knight_of_heart = {
         config = {extra = {
@@ -492,6 +500,7 @@ local jokers = {
         calc_dollar_bonus = function(self, card)
             if card.ability.extra.curr_money >= 1 then return math.floor(card.ability.extra.curr_money) end
         end,
+		attributes = {"chips", "mult", "xmult", "economy", "modify_card", "hearts", "suit", "scaling"},
     },
     'witch_of_mind', witch_of_mind = {
         config = {extra = {
@@ -525,6 +534,7 @@ local jokers = {
 				}
             end
         end,
+		attributes = {"retrigger", "joker"},
     },
     'lord_of_void', lord_of_void = {
         config = {extra = {
@@ -569,6 +579,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"retrigger", "xmult"},
     },
     'highest_number', highest_number = {
         config = {extra = { 
@@ -621,6 +632,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"scaling", "nine", "rank"},
     },
     'daggerkind', daggerkind = {
         name = "Daggerkind Specibus",
@@ -884,6 +896,7 @@ local jokers = {
                 end
             end
         end,
+		attributes = {"chance", "suit", "space"},
     },
     'torrential', torrential = {
         config = { extra = {
@@ -915,6 +928,7 @@ local jokers = {
                 end
             end
         end,
+		attributes = {"discard", "suit", "hand_type"},
     },
     'lost_sock', lost_sock = {
         config = { extra = {
@@ -953,6 +967,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"scaling", "chips"},
     },
     'the_csi', the_csi = {
         config = { extra = {
@@ -986,6 +1001,7 @@ local jokers = {
         in_pool = function(self)
             return AMM.api.graveyard.count_faces() > 0
         end,
+		attributes = {"chips"},
     },
     --[['junk_collector', junk_collector = {
         config = { extra = {
@@ -1080,6 +1096,7 @@ local jokers = {
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
         end,
+		attributes = {"destroy_card", "xmult", "scaling"},
     },
     'gem_joker', gem_joker = {
         config = { extra = {
@@ -1112,6 +1129,7 @@ local jokers = {
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.jewel == false
         end,
+		attributes = {"enhancements", "xchips"},
     },
     'discarded_vessel', discarded_vessel = {
         config = { extra = {
@@ -1145,6 +1163,7 @@ local jokers = {
                 context.other_card:set_aspect(god_tier)
             end
         end,
+		attributes = {"chance", "modify_card"},
     },
     'gaudy_bracelet', gaudy_bracelet = {
         config = { extra = {
@@ -1185,6 +1204,7 @@ local jokers = {
         load_check = function()
             return TheAutumnCircus.config.enabled_modules.enhancable and not TheAutumnCircus.config.enabled_enhancements.jewel == false
         end,
+		attributes = {"chips", "scaling", "enhancements"},
     },
     'twisted_mind', twisted_mind = {
         config = { extra = {
@@ -1210,6 +1230,7 @@ local jokers = {
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
         end,
+		attributes = { },
     },
     'dark_hallway', dark_hallway = {
         config = { extra = {
@@ -1260,6 +1281,7 @@ local jokers = {
                 return true
             end
         end,
+		attributes = {"destroy_card", "full_deck"},
     },
     'triplicate_soul', triplicate_soul = {
         config = { extra = {
@@ -1295,6 +1317,7 @@ local jokers = {
 				card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_copied_ex"), colour = G.C.JOKER_GREY, instant = true})
             end
         end,
+		attributes = {"generation"},
     },
     'grasp_of_emptiness', grasp_of_emptiness = {
         config = { extra = {
@@ -1320,6 +1343,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"xmult"},
     },
     'shutin', shutin = {
         config = { extra = {
@@ -1348,6 +1372,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"modify_card","mult","scaling"},
     },
     'ace_in_the_hole', ace_in_the_hole = {
         config = { extra = {
@@ -1376,6 +1401,7 @@ local jokers = {
                 return { remove = true }
             end
         end,
+		attributes = {"rank","ace","destroy_card","economy"},
     },
     'underdogs_secret', underdogs_secret = {
         config = { extra = {
@@ -1402,6 +1428,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"economy"},
     },
     'topple_the_titans', topple_the_titans = {
         config = { extra = {
@@ -1441,6 +1468,7 @@ local jokers = {
 				}
             end
         end,
+		attributes = { },
     },
     'autoapotheosis', autoapotheosis = {
         config = { extra = {
@@ -1484,6 +1512,7 @@ local jokers = {
                 } end
             end
         end,
+		attributes = { },
     },
     'amalgamiter', amalgamiter = {
         config = { extra = {
@@ -1512,6 +1541,7 @@ local jokers = {
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
         end,
+		attributes = {"destroy_card","generation"},
     },
     'somber_snowfall', somber_snowfall = {
         config = { extra = {
@@ -1555,6 +1585,7 @@ local jokers = {
                 end
             end
         end,
+		attributes = {"chips","suit"},
     },
 	
     'grave_legion', grave_legion = {
@@ -1604,6 +1635,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"generation","chance"},
     },
     'scrapper', scrapper = {
         config = { extra = {
@@ -1677,6 +1709,7 @@ local jokers = {
         in_pool = function(self)
             return AMM.api.graveyard.count_cards() > 0
         end,
+		attributes = {"destroy_card","generation","enhancements"},
     },
     'snecko_eye', snecko_eye = {
         config = { h_size = 2, extra = {
@@ -1704,30 +1737,33 @@ local jokers = {
 							play_sound('tarot1')
 							card:juice_up(0.3, 0.5)
 							return true end }))
+							--[[
 						for i=1, #temp_drawn do
 							local percent = 1.15 - (i-0.999)/(#temp_drawn-0.998)*0.3
-							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('card1', percent);temp_drawn[i]:juice_up(0.3, 0.3);return true end }))
-							end
+							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('card1', percent);return true end }))
+							end--]]
 						for i=1, #temp_drawn do
 							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.0,func = function()	
 								local _card = temp_drawn[i]
 								
 								SMODS.change_base(_card, nil, pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('snecko')))
-								--_card:set_sprites(_card.config.card, _card.config.center)
+								temp_drawn[i]:juice_up(0.3, 0.3);
+								temp_drawn[i]:set_sprites(_card.config.center, _card.config.card)
 								
 								return true 
 							end }))
-						end
+						end--[[
 						for i=1, #temp_drawn do
 							local percent = 0.85 + (i-0.999)/(#temp_drawn-0.998)*0.3
-							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('tarot2', percent, 0.6);temp_drawn[i]:juice_up(0.3, 0.3);return true end }))
-						end
+							G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.10,func = function() temp_drawn[i]:flip();play_sound('tarot2', percent, 0.6);temp_drawn[i]:juice_up(0.3, 0.3);temp_drawn[i]:set_sprites(temp_drawn[i], temp_drawn[i].config.center);return true end }))
+						end--]]
 						delay(0.1)
 						return true
 					end
 				}
             end
         end,
+		attributes = {"hand_size","modify_card","rank"},
     },
     --[['hardlyquin', hardlyquin = {
         config = { extra = {
@@ -1780,6 +1816,7 @@ local jokers = {
                 end
             end
         end,
+		attributes = {"xmult","rank","ace","two","three","five","eight"},
 	},
 	"whispers_of_beyond", whispers_of_beyond = {
         config = {extra = { retriggers = 2 }},
@@ -1810,6 +1847,7 @@ local jokers = {
                 end
             end
         end,
+		attributes = {"retrigger"},
 	},
     'jet_worldmage', jet_worldmage = {
         config = { extra = {
@@ -1835,6 +1873,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"xchips","suit","spades"},
     },
     'ruby_sunmage', ruby_sunmage = {
         config = { extra = {
@@ -1877,6 +1916,7 @@ local jokers = {
                 }
 			end
         end,
+		attributes = {"mult","scaling","suit","hearts"},
     },
     'opal_moonmage', opal_moonmage = {
         config = { extra = {
@@ -1954,6 +1994,7 @@ local jokers = {
 				card.ability.extra.temp_cardlist = {}
 			end
         end,
+		attributes = {"retrigger","suit","clubs"},
     },
     'topaz_starmage', topaz_starmage = {
         config = { extra = {
@@ -2001,6 +2042,7 @@ local jokers = {
 				end
             end
         end,
+		attributes = {"generation","chance","suit","diamonds"},
     },
 	--[['coven', coven = {
         config = {
@@ -2059,6 +2101,7 @@ local jokers = {
                 }
             end
         end,
+		attributes = {"scaling","retrigger"},
     },
     'listkeeper', listkeeper = {
         config = { extra = {
@@ -2104,6 +2147,7 @@ local jokers = {
 				end
             end
         end,
+		attributes = {"enhancements","economy"},
     },
     --[['jimbos_brother', jimbos_brother = {
         config = { extra = {

@@ -167,7 +167,7 @@ local vouchers = {
 				limit = 1,
 			},
 		},
-		pos = { x = 0, y = 1 },
+		pos = { x = 2, y = 1 },
 		loc_vars = function(_c, info_queue, card)
 			return {vars = {card.ability.extra.limit}}
 		end,
@@ -182,7 +182,7 @@ local vouchers = {
 				limit = 1,
 			},
 		},
-		pos = { x = 1, y = 1 },
+		pos = { x = 3, y = 1 },
 		requires = {'v_thac_limit_breaker'},
 		loc_vars = function(_c, info_queue, card)
 			return {vars = {card.ability.extra.limit}}

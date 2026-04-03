@@ -16,6 +16,7 @@ local jokers = {
         calculate = function(self, card, context)
             if context.joker_main then return {mult = card.ability.extra.mult} end
         end,
+		attributes = {"mult"},
     },
     ':free:', [':free:'] = {
         config = { extra = {
@@ -39,6 +40,7 @@ local jokers = {
 				card:set_cost()
 			end
 		end,
+		attributes = {"modify_card"},
     },
 }
 
