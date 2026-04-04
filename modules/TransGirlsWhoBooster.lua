@@ -18,12 +18,12 @@ local boosters = {
 		thac_cardmapping = {
 			{"c_emperor", {}},
 			{"c_high_priestess", {}},
-			{"c_thac_scry", {}},
+			{"c_thac_seer", {}},
 			{"c_judgement", {}},
-			{"c_poke_pokeball", {"Pokermon"}},
-			{"c_cry_trade", {"Cryptid"}},
+			--{"c_poke_pokeball", {"Pokermon"}},
+			--{"c_cry_trade", {"Cryptid"}},
 			--{"c_mf_white", {"MoreFluff"}},
-			{"c_akyrs_umbral_book_smart", {"aikoyorisshenanigans"}},
+			--{"c_akyrs_umbral_book_smart", {"aikoyorisshenanigans"}},
 		},
 		--select_card = "consumeables",
 		thac_cardmap = {},
@@ -33,7 +33,7 @@ local boosters = {
 				if pseudorandom(pseed) < 0.03 then
 					return "c_thac_quest_bed"
 				end
-				if pseudorandom(pseed) < 0.025 and next(SMODS.find_mod("GrabBag")) then
+				--[[if pseudorandom(pseed) < 0.025 and next(SMODS.find_mod("GrabBag")) then
 					return "c_gb_awaken"
 				end
 				if pseudorandom(pseed) < 0.0999 and next(SMODS.find_mod("RevosVault")) then
@@ -41,13 +41,13 @@ local boosters = {
 				end
 				if pseudorandom(pseed) < 0.45 and next(SMODS.find_mod("MoreFluff")) then
 					return "c_mf_rot_emperor"
-				end
+				end--]]
 			end
 			if key == "c_high_priestess" then
 				if pseudorandom(pseed) < 0.025 then
 					return "c_black_hole"
 				end
-				if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
+				--[[if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
 					return "c_entr_quasar"
 				end
 				if pseudorandom(pseed) < 0.025 and next(SMODS.find_mod("Cryptid")) then
@@ -67,18 +67,18 @@ local boosters = {
 				end
 				if pseudorandom(pseed) < 0.45 and next(SMODS.find_mod("MoreFluff")) then
 					return "c_mf_rot_high_priestess"
-				end
+				end--]]
 			end
-			if key == "c_thac_scry" then
-				if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
+			if key == "c_thac_seer" then
+				--[[if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
 					return "c_entr_desire"
-				end
+				end--]]
 			end
 			if key == "c_judgement" then
 				if pseudorandom(pseed) < 0.025 then
 					return "c_soul"
 				end
-				if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
+				--[[if pseudorandom(pseed) < 0.015 and next(SMODS.find_mod("entr")) then
 					return "c_entr_fervour"
 				end
 				if pseudorandom(pseed) < 0.04 and next(SMODS.find_mod("VISIBILITY")) then
@@ -113,9 +113,9 @@ local boosters = {
 				end
 				if pseudorandom(pseed) < 0.45 and next(SMODS.find_mod("MoreFluff")) then
 					return "c_mf_rot_judgement"
-				end
+				end--]]
 			end
-			if key == "c_poke_pokeball" then
+			--[[if key == "c_poke_pokeball" then
 				if pseudorandom(pseed) < 0.025 then
 					return "c_poke_masterball"
 				end
@@ -135,7 +135,7 @@ local boosters = {
 				if pseudorandom(pseed) < 0.025 and next(SMODS.find_mod("entr")) then
 					return "c_mf_circle"
 				end
-			end
+			end--]]
 			return key
 		end,
 		create_card = function(self, card, i)
