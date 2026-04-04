@@ -176,6 +176,9 @@ end
 if TheAutumnCircus.config.enabled_modules.vouchme then
 	TheAutumnCircus.VM = NFS.load(TheAutumnCircus.mod.path.."modules/VouchMe.lua")()	
 end
+if TheAutumnCircus.config.enabled_modules.imgonnathrowhands then
+	TheAutumnCircus.IGTH = NFS.load(TheAutumnCircus.mod.path.."modules/ImGonnaThrowHands.lua")()	
+end
 if TheAutumnCircus.config.enabled_modules.deckthebalatro then
 	TheAutumnCircus.DTB = NFS.load(TheAutumnCircus.mod.path.."modules/DeckTheBalatro.lua")()	
 end

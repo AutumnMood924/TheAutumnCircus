@@ -145,6 +145,29 @@ local tarots = {
 }
 
 local planets = {
+	'battlefield', battlefield = {
+		name = "The Battlefield",
+		effect = 'Hand Upgrade',
+		config = {hand_type = 'thac_manus_arcana', softlock = true},
+		pos = { x = 2, y = 3 },
+		loc_vars = function(_c,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'fritz'} end
+			return handplanetloc_vars(_c,info_queue,card)
+		end,
+		process_loc_text = function(self)
+			local target_text = G.localization.descriptions.Planet['c_earth'].text
+			SMODS.Consumable.process_loc_text(self)
+			G.localization.descriptions.Planet[self.key].text = target_text
+		end,
+		set_badges = function(self, card, badges)
+			if self.discovered then
+				badges[1].nodes[1].nodes[2].config.object:remove()
+				badges[1] = create_badge("Skaian Cuboid", get_type_colour(self or card.config, card), nil, 1.2)
+				return badges
+			end
+		end,
+		--generate_ui = 0, --??????
+	},
 	'satellite', satellite = {
 		effect = 'Round Bonus',
 		config = {planets = 2},

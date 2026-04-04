@@ -15,6 +15,8 @@ data.BUFFERS = {
 	Enhancements = {},
 	Decks = {},
 	DeckSkins = {},
+	HandParts = {},
+	Hands = {},
 	Blinds = {},
 	Stakes = {},
 	Shaders = {},
@@ -45,6 +47,23 @@ data.buffer_register_funcs = {
 			end
 			
 			SMODS.Joker(v)
+		end
+	end,
+	HandParts = function(v)
+		if (not v.load_check) or v.load_check() then			
+			SMODS.PokerHandPart(v)
+		end
+	end,
+	Hands = function(v)
+		if not (TheAutumnCircus.config.enabled_hands[v.key] == false) and ((not v.load_check) or v.load_check()) then			
+			if not v.loc_txt then
+				v.loc_txt = {
+					name = v.display_name or v.name,
+					description = v.text
+				}
+			end
+			
+			SMODS.PokerHand(v)
 		end
 	end,
 	Consumables = function(v)

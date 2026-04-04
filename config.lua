@@ -26,6 +26,9 @@ local config = {
 		stakemepls = true,
 		skinnington = true,
 		emojiokers = true,
+		imgonnathrowhands = true,
+	},
+	enabled_hands = {
 	},
 	enabled_jokers = {
 		helpful_joker = true,
