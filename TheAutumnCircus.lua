@@ -80,7 +80,7 @@ TheAutumnCircus.mod.calculate = function(self, context)
 	end
 	if context.before then
 		for k,card in ipairs(G.play.cards) do
-			if SMODS.in_scoring(card, context.scoring_hand) and card.base.id == SMODS.Ranks["thac_wand"].id and not SMODS.has_no_rank(card) then
+			if SMODS.in_scoring(card, context.scoring_hand) and card.base.id == SMODS.Ranks["thac_wand"].id and (not SMODS.has_no_rank(card)) and (not card.debuff) then
 				AMM.level_up_suit(card, card.base.suit)
 				update_hand_text({delay = 0}, {handname = localize(context.scoring_name, "poker_hands"),chips = hand_chips, mult = mult, level = nil })
 			end
