@@ -836,6 +836,148 @@ return {
 				},
 			},
 		},
+		Class = {
+			c_thac_sylph = {
+				name = {
+					"The Sylph",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_mage = {
+				name = {
+					"The Mage",
+				},
+				text = {
+					"Upgrades each of",
+					"{C:attention}#1#{} selected cards",
+					"to {C:attention}#2#{} rank"
+				},
+			},
+			c_thac_knight = {
+				name = {
+					"The Knight",
+				},
+				text = {
+					"Upgrades each of",
+					"{C:attention}#1#{} selected cards",
+					"to {C:attention}#2#{} rank"
+				},
+			},
+			c_thac_thief = {
+				name = {
+					"The Thief",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected card into",
+					"a {C:attention}#2#"
+				},
+			},
+			c_thac_prince = {
+				name = {
+					"The Prince",
+				},
+				text = {
+					"Destroys up to {C:attention}#1#",
+					"selected cards {C:attention}if",
+					"they share a {C:attention}suit",
+				},
+			},
+			c_thac_witch = {
+				name = {
+					"The Witch",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_lord = {
+				name = {
+					"The Lord",
+				},
+				text = {
+					"Enhances {C:attention}all",
+					"selected cards to",
+					"{C:attention}#1#s"
+				},
+			},
+			c_thac_maid = {
+				name = {
+					"The Maid",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"sorry nothing"
+				},
+			},
+			c_thac_seer = {
+				name = {
+					"The Seer",
+				},
+				text = {
+					"Creates up to",
+					"{C:attention}#1#{C:class} Class{} cards",
+					"{C:inactive}(Must have room)",
+				},
+			},
+			c_thac_page = {
+				name = {
+					"The Page",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected card into",
+					"a {C:attention}#2#"
+				},
+			},
+			c_thac_rogue = {
+				name = {
+					"The Rogue",
+				},
+				text = {
+					"Upgrades each of",
+					"{C:attention}#1#{} selected cards",
+					"to {C:attention}#2#{} rank"
+				},
+			},
+			c_thac_bard = {
+				name = {
+					"The Bard",
+				},
+				text = {
+					"Upgrades each of",
+					"{C:attention}#1#{} selected cards",
+					"to {C:attention}#2#{} rank"
+				},
+			},
+			c_thac_heir = {
+				name = {
+					"The Heir",
+				},
+				text = {
+					"Upgrades each of",
+					"{C:attention}#1#{} selected cards",
+					"to {C:attention}#2#{} rank"
+				},
+			},
+			c_thac_muse = {
+				name = {
+					"The Muse",
+					"{C:autumn,s:0.5}Work In Progress!",
+				},
+				text = {
+					"{C:attention}#1#{} random cards in",
+					"hand become copies of",
+					"{C:attention}one{} selected card",
+				},
+			},
+		},
 		Voucher = {
 			v_thac_spectral_merchant = {
 				name = "Spectral Merchant",
@@ -1333,6 +1475,42 @@ return {
                     "Earn {C:money}$#1#{} when scored",
 					"for each {V:1}#3#{} level",
 					"{C:inactive}(Currently: {C:money}$#2#{C:inactive})"
+                }
+            },
+            thac_jester_info = {
+				name = "Jester Rank",
+                text = {
+                    "{C:mult}+4{} Mult"
+                }
+            },
+            thac_wand_info = {
+				name = "Wand Rank",
+                text = {
+                    "Level up this card's",
+					"suit when played",
+					"and scoring",
+                }
+            },
+            thac_vessel_info = {
+				name = "Vessel Rank",
+                text = {
+                    "{C:attention}+2{} hand size until end",
+					"of round when scored",
+                }
+            },
+            thac_sword_info = {
+				name = "Sword Rank",
+                text = {
+                    "{C:white,X:mult}X0.25{} Mult for",
+					"each suit level",
+					"{C:inactive}(Starts at {C:white,X:mult}X1{C:inactive} Mult)"
+                }
+            },
+            thac_coin_info = {
+				name = "Coin Rank",
+                text = {
+                    "Earn {C:money}$1{} when scored",
+					"for each suit level",
                 }
             },
 			['what_are_you_wearing'] = {

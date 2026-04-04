@@ -1372,7 +1372,7 @@ local jokers = {
                 }
             end
         end,
-		attributes = {"modify_card","mult","scaling"},
+		attributes = {"modify_card","mult","perma_bonus"},
     },
     'ace_in_the_hole', ace_in_the_hole = {
         config = { extra = {
@@ -2101,7 +2101,7 @@ local jokers = {
                 }
             end
         end,
-		attributes = {"scaling","retrigger"},
+		attributes = {"perma_bonus","retrigger"},
     },
     'listkeeper', listkeeper = {
         config = { extra = {

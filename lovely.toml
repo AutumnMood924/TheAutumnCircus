@@ -717,3 +717,20 @@ elseif G.GAME.modifiers.thac_progenitor_deck and _card:is_face() then
 	_card:set_aspect(_aspect, true, true)
 end
 '''
+
+[[patches]]
+[patches.pattern]
+target = "=[SMODS _ \"src/card_draw.lua\"]"
+match_indent = true
+overwrite = false
+position = "after"
+pattern = '''
+if (self.ability.set == 'Booster' or self.ability.set == 'Spectral') and self:should_draw_base_shader() and not self.config.center.disable_shine then
+	self.children.center:draw_shader('booster', nil, self.ARGS.send_to_shader)
+end
+'''
+payload = '''
+if (self.ability.set == 'Class') and self:should_draw_base_shader() and not self.config.center.disable_shine then
+	self.children.center:draw_shader('booster', nil, self.ARGS.send_to_shader)
+end
+'''

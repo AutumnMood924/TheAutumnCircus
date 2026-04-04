@@ -63,10 +63,10 @@ for _, k in ipairs(jokers) do
 	TheAutumnCircus.data.buffer_insert("Jokers", v, {key = k, pos = {x = 0, y = 0}, atlas = "Emojiokers",
     set_ability = function(self, card, initial, delay_sprites)
         local yoffset = pseudorandom("emojiokers", 0 , 3)
-		G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
-                card.children.center:set_sprite_pos({ x = 0, y = yoffset })
+		--[[G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function()
+                --]]card.children.center:set_sprite_pos({ x = 0, y = yoffset })--[[
                 return true
             end
-		}))
+		}))--]]
     end})
 end

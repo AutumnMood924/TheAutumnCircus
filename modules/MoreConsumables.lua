@@ -462,3 +462,375 @@ for _, k in ipairs(spectrals) do
 	local v = spectrals[k]
 	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Spectral", key = k, atlas = "MoreConsumables"})
 end
+
+G.C.SET.Class = HEX("4f6367")
+G.C.SECONDARY_SET.Class = HEX("d2cdca")
+loc_colour("mult", nil)
+G.ARGS.LOC_COLOURS["class"] = G.C.SECONDARY_SET.Class
+
+SMODS.ConsumableType {
+	key = 'Class',
+	collection_rows = { 7, 7 },
+	primary_colour = G.C.SET.Class,
+	secondary_colour = G.C.SECONDARY_SET.Class,
+	loc_txt = {
+		name = "Class Card",
+		collection = "Class Cards",
+		label = "Class Card",
+		undiscovered = {
+			name = "Not Discovered",
+			text = {
+				"Purchase or use",
+				"this card in an",
+				"unseeded run to",
+				"learn what it does"
+			},
+		},
+	},
+	inject_card = function(self, center)
+		if not self.default then self.default = center.key end
+		SMODS.ConsumableType.inject_card(self, center)
+	end,
+	shop_rate = 4,
+}
+
+local rank_conv_use = function(self, card, area, copier)
+			local used_tarot = copier or card
+	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+		play_sound('tarot1')
+		used_tarot:juice_up(0.3, 0.5)
+		return true end }))
+	for i=1, #G.hand.highlighted do
+		local percent = 1.15 - (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+		G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.highlighted[i]:flip();play_sound('card1', percent);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
+	end
+	delay(0.2)
+	for i=1, #G.hand.highlighted do
+		G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() SMODS.change_base(G.hand.highlighted[i], nil, card.ability.extra.rank_conv);return true end }))
+	end
+	for i=1, #G.hand.highlighted do
+		local percent = 0.85 + (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+		G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.highlighted[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
+	end
+	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+	delay(0.5)
+end
+
+local rank_conv_loc_vars = function(self, info_queue, card)
+	info_queue[#info_queue+1] = {set = "Other", key = card.ability.extra.rank_conv .. "_info"}
+	return {vars = {
+		card.ability.max_highlighted,
+		localize(card.ability.extra.rank_conv, 'ranks'),
+	}}
+end
+
+local classes = {
+	'sylph', sylph = {
+		config = {
+			mod_conv = "m_thac_loop",
+			max_highlighted = 2,
+		},
+		pos = { x = 0, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'mage', mage = {
+		config = {
+			extra = {
+				rank_conv = "thac_wand"
+			},
+			max_highlighted = 2,
+		},
+		pos = { x = 1, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return rank_conv_loc_vars(_c, info_queue, card) end,
+		use = rank_conv_use,
+		can_use = function(_, self) return #G.hand.highlighted > 0 end,
+	},
+	'knight', knight = {
+		config = {
+			extra = {
+				rank_conv = "thac_sword"
+			},
+			max_highlighted = 2,
+		},
+		pos = { x = 2, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return rank_conv_loc_vars(_c, info_queue, card) end,
+		use = rank_conv_use,
+		can_use = function(_, self) return #G.hand.highlighted > 0 end,
+	},
+	'thief', thief = {
+		config = {
+			mod_conv = "m_thac_jewel",
+			max_highlighted = 1,
+		},
+		pos = { x = 3, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'prince', prince = {
+		config = {
+			extra = {
+			},
+			max_highlighted = 3,
+		},
+		pos = { x = 4, y = 0 },
+		loc_vars = function(self, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.max_highlighted }} end,
+		use = function(self, card, area, copier)
+			local destroyed_cards = {}
+			local used_tarot = copier or card
+			for i=#G.hand.highlighted, 1, -1 do
+				destroyed_cards[#destroyed_cards+1] = G.hand.highlighted[i]
+			end
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				return true end }))
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.2,
+				func = function() 
+					for i=#G.hand.highlighted, 1, -1 do
+						local _card = G.hand.highlighted[i]
+						if SMODS.shatters(_card) then
+							_card:shatter()
+						else
+							_card:start_dissolve(nil, i == #G.hand.highlighted)
+						end
+					end
+					return true end }))
+			delay(0.3)
+			SMODS.calculate_context({ remove_playing_cards = true, removed = destroyed_cards })
+			G.GAME.cards_destroyed = G.GAME.cards_destroyed + (#destroyed_cards or 0)
+		end,
+		can_use = function(self, card)
+			local SUIT_MAP = {}
+			local ret = false
+			
+			if #G.hand.highlighted == 0 then return false end
+			
+			for i = #SMODS.Suit.obj_buffer, 1, -1 do
+				SUIT_MAP[SMODS.Suit.obj_buffer[i]] = 0
+			end
+			
+			for k,v in ipairs(G.hand.highlighted) do
+				for _,suit in pairs(SUIT_MAP) do
+					if v:is_suit(_) then
+						SUIT_MAP[_] = suit + 1
+					end
+				end
+			end
+			
+			for k,v in pairs(SUIT_MAP) do
+				if v >= #G.hand.highlighted then
+					ret = true
+					break
+				end
+			end
+			
+			return ret
+		end,
+	},
+	'witch', witch = {
+		config = {
+			mod_conv = "m_thac_bone",
+			max_highlighted = 2,
+		},
+		pos = { x = 5, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'lord', lord = {
+		config = {
+			mod_conv = "m_thac_angel",
+			max_highlighted = 9999999,
+		},
+		pos = { x = 6, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+		hidden = true,
+		soul_rate = 0.0612,
+		soul_set = "Tarot",
+	},
+	'maid', maid = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 0, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'seer', seer = {
+		config = {
+			extra = {
+				cards = 2
+			},
+		},
+		pos = { x = 1, y = 1 },
+		loc_vars = function(self,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.cards }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i = 1, math.min(card.ability.extra.cards, G.consumeables.config.card_limit - #G.consumeables.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = create_card('Class', G.consumeables, nil, nil, nil, nil, nil, 'seer')
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(self, card) if #G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables then return true end end,
+	},
+	'page', page = {
+		config = {
+			mod_conv = "m_thac_ruled",
+			max_highlighted = 1,
+		},
+		pos = { x = 2, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'rogue', rogue = {
+		config = {
+			extra = {
+				rank_conv = "thac_coin",
+			},
+			max_highlighted = 2,
+		},
+		pos = { x = 3, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return rank_conv_loc_vars(_c, info_queue, card) end,
+		use = rank_conv_use,
+		can_use = function(_, self) return #G.hand.highlighted > 0 end,
+	},
+	'bard', bard = {
+		config = {
+			extra = {
+				rank_conv = "thac_jester"
+			},
+			max_highlighted = 2,
+		},
+		pos = { x = 4, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return rank_conv_loc_vars(_c, info_queue, card) end,
+		use = rank_conv_use,
+		can_use = function(_, self) return #G.hand.highlighted > 0 end,
+	},
+	'heir', heir = {
+		config = {
+			extra = {
+				rank_conv = "thac_vessel"
+			},
+			max_highlighted = 2,
+		},
+		pos = { x = 5, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return rank_conv_loc_vars(_c, info_queue, card) end,
+		use = rank_conv_use,
+		can_use = function(_, self) return #G.hand.highlighted > 0 end,
+	},
+	'muse', muse = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 6, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+		hidden = true,
+		soul_rate = 0.0612,
+		soul_set = "Tarot",
+	},
+}
+
+SMODS.Atlas{
+	key = "ClassOfCards",
+	path = "ClassOfCards.png",
+	px = 71,
+	py = 95,
+}
+
+--classes
+for _, k in ipairs(classes) do
+	local v = classes[k]
+	TheAutumnCircus.data.buffer_insert("Consumables", v, {set = "Class", key = k, atlas = "ClassOfCards"})
+end
