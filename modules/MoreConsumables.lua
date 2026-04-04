@@ -651,7 +651,6 @@ local classes = {
 					return true end }))
 			delay(0.3)
 			SMODS.calculate_context({ remove_playing_cards = true, removed = destroyed_cards })
-			G.GAME.cards_destroyed = G.GAME.cards_destroyed + (#destroyed_cards or 0)
 		end,
 		can_use = function(self, card)
 			local SUIT_MAP = {}
