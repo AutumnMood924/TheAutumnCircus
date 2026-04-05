@@ -21,7 +21,11 @@ local tags = {
 					G.E_MANAGER:add_event(Event({
 						func = (function()
 							for _, tag in pairs(tagset) do
-								add_tag(Tag(tag, false, 'Small'))
+								local tag_ = Tag(tag, false, 'Small')
+								if tag == "tag_orbital" then
+									tag_.ability.orbital_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
+								end
+								add_tag(tag_)
 							end
 							play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
 							play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
@@ -29,6 +33,7 @@ local tags = {
 								func = (function()
 									  for i = 1, #G.GAME.tags do
 										G.GAME.tags[i]:apply_to_run({type = 'immediate'})
+										G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'})
 									  end
 									return true
 								end)

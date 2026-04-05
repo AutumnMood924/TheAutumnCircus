@@ -358,16 +358,44 @@ local tarots = {
 	'tower', tower = {
 		config = {
 			extra = {
+				cards = 4
 			},
 		},
 		pos = { x = 5, y = 1 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.extra.cards }} end,
+		use = function(self, card, area, copier)
+			local destroyed_cards = {}
+			local used_tarot = copier or card
+            local temp_deck = {}
+            for k, v in ipairs(G.playing_cards) do temp_deck[#temp_deck+1] = v end
+            table.sort(temp_deck, function (a, b) return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card end)
+            pseudoshuffle(temp_deck, pseudoseed('tower2'))
+
+            for i = 1, math.floor(card.ability.extra.cards) do destroyed_cards[#destroyed_cards+1] = temp_deck[i] end
+
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                play_sound('tarot1')
+                used_tarot:juice_up(0.3, 0.5)
+                return true end }))
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.2,
+				func = function() 
+					for i=#destroyed_cards, 1, -1 do
+						local _card = destroyed_cards[i]
+						if SMODS.shatters(_card) then
+							_card:shatter()
+						else
+							_card:start_dissolve(nil, i == #G.hand.highlighted)
+						end
+					end
+					return true end }))
+			delay(0.3)
+			SMODS.calculate_context({ remove_playing_cards = true, removed = destroyed_cards })
 		end,
 		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'star', star = {
 		config = {
@@ -392,16 +420,33 @@ local tarots = {
 	'mon', mon = {
 		config = {
 			extra = {
+				tags = 1
 			},
 		},
 		pos = { x = 7, y = 1 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			info_queue[#info_queue+1] = {key = 'tag_orbital', set = 'Tag'}
+			return {vars = { card.ability.extra.tags, card.ability.extra.tags == 1 and "" or "s" }} end,
+		use = function(_, card, area, copier)
+			for i = 1, card.ability.extra.tags do
+				local tag_ = Tag("tag_orbital", false, 'Small')
+				tag_.ability.orbital_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
+				add_tag(tag_)
+			end
+			play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+			play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					  for i = 1, #G.GAME.tags do
+						G.GAME.tags[i]:apply_to_run({type = 'immediate'})
+						G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'})
+					  end
+					return true
+				end)
+			}))
 		end,
 		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'sun', sun = {
 		config = {
@@ -426,16 +471,48 @@ local tarots = {
 	'judgement', judgement = {
 		config = {
 			extra = {
+				tags = 2
 			},
 		},
 		pos = { x = 9, y = 1 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.extra.tags }} end,
+		use = function(self, card, area, copier)
+			local tagpool = get_current_pool('Tag')
+			local tagset = {}
+			for i = 1, card.ability.extra.tags do
+				local tag = pseudorandom_element(tagpool, pseudoseed('chaos_tag'))
+				while tag == 'UNAVAILABLE' do
+					tag = pseudorandom_element(tagpool, pseudoseed('chaos_tag'))
+				end
+				tagset[i] = tag
+			end
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					for _, tag in pairs(tagset) do
+						local tag_ = Tag(tag, false, 'Small')
+						if tag == "tag_orbital" then
+							tag_.ability.orbital_hand = TheAutumnCircus.func.pseudorandom_unlocked_hand()
+						end
+						add_tag(tag_)
+					end
+					play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+					play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+					G.E_MANAGER:add_event(Event({
+						func = (function()
+							  for i = 1, #G.GAME.tags do
+								G.GAME.tags[i]:apply_to_run({type = 'immediate'})
+								G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'})
+							  end
+							return true
+						end)
+					}))
+					return true
+				end)
+			}))
 		end,
 		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'world', world = {
 		config = {
@@ -1129,16 +1206,31 @@ local classes = {
 	'maid', maid = {
 		config = {
 			extra = {
+				tags = 1
 			},
 		},
 		pos = { x = 0, y = 1 },
 		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			info_queue[#info_queue+1] = {key = 'tag_double', set = 'Tag'}
+			return {vars = { card.ability.extra.tags, card.ability.extra.tags == 1 and "" or "s" }} end,
+		use = function(_, card, area, copier)
+			for i = 1, card.ability.extra.tags do
+				add_tag(Tag("tag_double", false, 'Small'))
+			end
+			play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
+			play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					  for i = 1, #G.GAME.tags do
+						G.GAME.tags[i]:apply_to_run({type = 'immediate'})
+						G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'})
+					  end
+					return true
+				end)
+			}))
 		end,
 		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'seer', seer = {
 		config = {

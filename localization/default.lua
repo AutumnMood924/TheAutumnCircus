@@ -809,6 +809,8 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
+					"Creates {C:attention}#1#",
+					"{C:attention}Orbital Tag#2#"
 				},
 			},
 			c_thac_sun = {
@@ -828,6 +830,7 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
+					"Creates {C:attention}#1#{} Tags",
 				},
 			},
 			c_thac_world = {
@@ -1128,10 +1131,10 @@ return {
 			c_thac_maid = {
 				name = {
 					"The Maid",
-					"{C:autumn,s:0.5}Work In Progress!",
 				},
 				text = {
-					"sorry nothing"
+					"Creates {C:attention}#1#",
+					"{C:attention}Double Tag#2#"
 				},
 			},
 			c_thac_seer = {
