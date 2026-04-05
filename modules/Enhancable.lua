@@ -114,15 +114,45 @@ local enhancements = {
 	},
 	'party', party = {
 		name = "party",
-		display_name = "Party Card",
-		text = {
-			'Work in Progress!'
-		},
-		effect = 'party',
 		config = {
+			extra = {
+				xscore = 1.5
+			},
 		},
 		pos = { x = 6, y = 0 },
-		in_pool = function(self) return false end,
+		loc_vars = function(self, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {card.ability.extra.xscore}}
+		end,
+		calculate = function(self, card, context)
+			if context.main_scoring and context.cardarea == G.play then
+				return {
+					xscore = card.ability.extra.xscore
+				}
+			end
+			if context.after and card.area == G.play then
+				return {
+					card = card,
+					message = localize('k_thac_partied'),
+                    func = function()
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+							local crads = {}
+							for k,v in ipairs(G.hand.cards) do
+								crads[k] = v
+							end
+							pseudoshuffle(crads, pseudoseed("partyhardy"))
+							crads[1]:set_ability(G.P_CENTERS.m_thac_party)
+							
+                            card:set_ability(G.P_CENTERS.c_base)
+                            return true
+                        end)}))
+					end,
+				}
+			end
+		end,
 	},
 	'plan', plan = {
 		name = "plan",

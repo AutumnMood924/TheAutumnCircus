@@ -232,17 +232,36 @@ local tarots = {
 	},
 	'wheel_of_fortune', wheel_of_fortune = {
 		config = {
-			extra = {
-			},
+			max_highlighted = 3,
 		},
 		pos = { x = 10, y = 0 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.consumeable.max_highlighted }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				return true end }))
+			for i=1, #G.hand.highlighted do
+				local percent = 1.15 - (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.highlighted[i]:flip();play_sound('card1', percent);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
+			end
+			delay(0.2)
+			for i=1, #G.hand.highlighted do
+				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() 
+					SMODS.change_base(G.hand.highlighted[i], pseudorandom_element(SMODS.Suit.obj_buffer, pseudoseed('wof2')), pseudorandom_element(SMODS.Rank.obj_buffer, pseudoseed('wof2')));
+					G.hand.highlighted[i]:set_ability(pseudorandom_element(G.P_CENTER_POOLS["Enhanced"], pseudoseed('wof2')))
+				return true end }))
+			end
+			for i=1, #G.hand.highlighted do
+				local percent = 0.85 + (i-0.999)/(#G.hand.highlighted-0.998)*0.3
+				G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function() G.hand.highlighted[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
+			end
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+			delay(0.5)
 		end,
-		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'strength', strength = {
 		config = {
@@ -300,17 +319,21 @@ local tarots = {
 	},
 	'temperance', temperance = {
 		config = {
-			extra = {
-			},
+			max_highlighted = 2,
 		},
 		pos = { x = 3, y = 1 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.consumeable.max_highlighted }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				return true end }))
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() AMM.combine_cards(G.hand.highlighted, "temp2", G.hand); return true end }))
+			delay(0.3)
 		end,
-		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'devil', devil = {
 		config = {
@@ -416,17 +439,23 @@ local tarots = {
 	},
 	'world', world = {
 		config = {
-			extra = {
-			},
+			mod_conv = "m_thac_party",
+			max_highlighted = 2,
 		},
 		pos = { x = 10, y = 1 },
-		loc_vars = function(_c, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
 		end,
-		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'joker', joker = {
 		effect = 'NOTHING',

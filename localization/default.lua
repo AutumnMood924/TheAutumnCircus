@@ -9,6 +9,7 @@ return {
 		},
 		dictionary = {
 			k_thac_scrapped = "Scrapped!",
+			k_thac_partied = "Partied!",
 			k_thac_planets = "Planets!",
 			k_thac_godtier = "God Tier!",
 			k_thac_heeheehee = "Hee Hee Hee",
@@ -764,9 +765,9 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
-					"Combine #1#",
+					"Combine {C:attention}#1#",
 					"selected cards",
-					"into one card"
+					"into {C:attention}one{} card"
 				},
 			},
 			c_thac_devil = {
@@ -835,6 +836,9 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
 				},
 			},
 			c_thac_joker = {
@@ -1418,6 +1422,16 @@ return {
 					"Put {C:attention}#1# cop#2#{} of this",
 					"card into {C:attention}your graveyard",
 					"when played and scored",
+				},
+			},
+			m_thac_party = {
+				name = "Party Card",
+				text = {
+					"{C:white,X:purple}X#1#{} Score",
+					"Convert a random card",
+					"in hand into a {C:attention}Party Card",
+					"and then remove {C:attention}this card{}'s",
+					"enhancement after scoring",
 				},
 			},
 		},
