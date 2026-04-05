@@ -136,8 +136,8 @@ local oddities = {
 		},
 		pos = { x = 3, y = 2 },
 		pixel_size = { w = 49, h = 62 },
-		rarity = 3,
-		cost = 7,
+		rarity = 4,
+		cost = 10,
 		loc_vars = function(_c, info_queue, card) 
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			info_queue[#info_queue+1] = {key = 'bottle', set = 'Other'} return {vars = { _c.config.max_highlighted }} end,

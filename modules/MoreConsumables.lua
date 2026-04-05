@@ -53,12 +53,387 @@ local handplanetloc_vars = function(_c, info_queue, card)
 end
 
 local tarots = {
+	'fool', fool = {
+		config = {
+			mod_conv = "m_thac_cardboard",
+			max_highlighted = 2,
+		},
+		pos = { x = 0, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'magician', magician = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 1, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'high_priestess', high_priestess = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 2, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'empress', empress = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 3, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'emperor', emperor = {
+		config = {
+			mod_conv = "m_thac_plan",
+			max_highlighted = 2,
+		},
+		pos = { x = 4, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'hierophant', hierophant = {
+		config = {
+			extra = {
+				cards = 2
+			},
+		},
+		pos = { x = 5, y = 0 },
+		loc_vars = function(self,info_queue,card)
+            if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = { card.ability.extra.cards }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			for i = 1, math.min(card.ability.extra.cards, G.consumeables.config.card_limit - #G.consumeables.cards) do
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = create_card('Class', G.consumeables, nil, nil, nil, nil, nil, 'seer')
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
+		end,
+		can_use = function(self, card) if #G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables then return true end end,
+	},
+	'lovers', lovers = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 6, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'chariot', chariot = {
+		config = {
+			mod_conv = "m_thac_school",
+			max_highlighted = 2,
+		},
+		pos = { x = 7, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'justice', justice = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 8, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'hermit', hermit = {
+		config = {
+			mod_conv = "m_thac_mint",
+			max_highlighted = 1,
+		},
+		pos = { x = 9, y = 0 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'wheel_of_fortune', wheel_of_fortune = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 10, y = 0 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'strength', strength = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 0, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'hanged_man', hanged_man = {
+		config = {
+			mod_conv = "m_thac_mist",
+			max_highlighted = 2,
+		},
+		pos = { x = 1, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'death', death = {
+		config = {
+			mod_conv = "m_thac_ecto",
+			max_highlighted = 2,
+		},
+		pos = { x = 2, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'temperance', temperance = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 3, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'devil', devil = {
+		config = {
+			mod_conv = "m_thac_shadow",
+			max_highlighted = 1,
+		},
+		pos = { x = 4, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'tower', tower = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 5, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'star', star = {
+		config = {
+			mod_conv = "m_thac_star",
+			max_highlighted = 2,
+		},
+		pos = { x = 6, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'mon', mon = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 7, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'sun', sun = {
+		config = {
+			mod_conv = "m_thac_spark",
+			max_highlighted = 2,
+		},
+		pos = { x = 8, y = 1 },
+		loc_vars = function(self, info_queue, card)
+			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.consumeable.mod_conv]
+			return {
+				vars = {
+					card.ability.consumeable.max_highlighted,
+					localize{
+						type = 'name_text',
+						set = 'Enhanced',
+						key = card.ability.consumeable.mod_conv
+					}
+				}
+			}
+		end,
+	},
+	'judgement', judgement = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 9, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
+	'world', world = {
+		config = {
+			extra = {
+			},
+		},
+		pos = { x = 10, y = 1 },
+		loc_vars = function(_c, info_queue, card)
+            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
+			return {vars = {  }} end,
+		use = function(_, self, area, copier)
+		end,
+		can_use = function(_, self) return true end,
+		in_pool = function() return false end,
+	},
 	'joker', joker = {
 		effect = 'NOTHING',
 		config = {
 			mult = 4
 		},
-		pos = { x = 0, y = 1 },
+		pos = { x = 0, y = 2 },
 		loc_vars = function(_c, info_queue, card)
             if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 			return {vars = { _c.config.mult }} end,
@@ -719,7 +1094,7 @@ local classes = {
 			}
 		end,
 		hidden = true,
-		soul_rate = 0.0612,
+		soul_rate = 0.0413,
 		soul_set = "Tarot",
 	},
 	'maid', maid = {
@@ -802,7 +1177,7 @@ local classes = {
 			extra = {
 				rank_conv = "thac_jester"
 			},
-			max_highlighted = 2,
+			max_highlighted = 3,
 		},
 		pos = { x = 4, y = 1 },
 		loc_vars = function(_c, info_queue, card)
@@ -839,7 +1214,7 @@ local classes = {
 		can_use = function(_, self) return true end,
 		in_pool = function() return false end,
 		hidden = true,
-		soul_rate = 0.0612,
+		soul_rate = 0.0413,
 		soul_set = "Tarot",
 	},
 }

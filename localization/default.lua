@@ -622,6 +622,221 @@ return {
 			},
 		},
 		Tarot = {
+			c_thac_fool = {
+				name = {
+					"Þe Fool",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_magician = {
+				name = {
+					"Þe Magician",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_high_priestess = {
+				name = {
+					"Þe High Priestess",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_empress = {
+				name = {
+					"Þe Empress",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_emperor = {
+				name = {
+					"Þe Emperor",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_hierophant = {
+				name = {
+					"Þe Hierophant",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Creates up to",
+					"{C:attention}#1#{C:class} Class{} cards",
+					"{C:inactive}(Must have room)",
+				},
+			},
+			c_thac_lovers = {
+				name = {
+					"Þe Lovers",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_chariot = {
+				name = {
+					"Þe Chariot",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_justice = {
+				name = {
+					"Justice",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_hermit = {
+				name = {
+					"Þe Hermit",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected card into",
+					"a {C:attention}#2#"
+				},
+			},
+			c_thac_wheel_of_fortune = {
+				name = {
+					"Wheel of Fortune",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Randomize the rank,",
+					"suit, and enhancement",
+					"of {C:attention}#1#{} selected cards",
+				},
+			},
+			c_thac_strength = {
+				name = {
+					"StrengÞ",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_hanged_man = {
+				name = {
+					"Þe Hanged Man",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_death = {
+				name = {
+					"DeaÞ",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_temperance = {
+				name = {
+					"Temperance",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Combine #1#",
+					"selected cards",
+					"into one card"
+				},
+			},
+			c_thac_devil = {
+				name = {
+					"Þe Devil",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected card into",
+					"a {C:attention}#2#"
+				},
+			},
+			c_thac_tower = {
+				name = {
+					"Þe Tower",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Destroy {C:attention}#1#{}",
+					"random cards in",
+					"your full deck",
+				},
+			},
+			c_thac_star = {
+				name = {
+					"Þe Star",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_mon = {
+				name = {
+					"Þe Moon",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_sun = {
+				name = {
+					"Þe Sun",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+					"Enhances {C:attention}#1#",
+					"selected cards to",
+					"{C:attention}#2#s"
+				},
+			},
+			c_thac_judgement = {
+				name = {
+					"Judgement",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
+			c_thac_world = {
+				name = {
+					"Þe World",
+					"{C:autumn,s:0.5}Work in Progress!",
+				},
+				text = {
+				},
+			},
 			c_thac_joker = {
 				name = {
 					"The Joker",
@@ -634,7 +849,6 @@ return {
 					'{C:inactive}Looks like the joke\'s{}',
 					'{C:dark_edition,E:2,s:1.75}ON YOU!{}',
 				},
-				boxes = { 2, 3, },
 			},
 		},
 		Planet = {
