@@ -640,6 +640,8 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
+					"Randomly earn one of:",
+					"{C:money}$#1#{}, {C:money}$#2#{}, {C:money}$#3#{}, a {C:tarot}Tarot{}","Card, a {C:class}Class{} Card,","or a {C:spectral}Spectral{} Card"
 				},
 			},
 			c_thac_high_priestess = {
@@ -686,6 +688,9 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
+					"Combine {C:attention}#1#",
+					"selected cards",
+					"into {C:attention}one{} card"
 				},
 			},
 			c_thac_chariot = {
@@ -765,9 +770,10 @@ return {
 					"{C:autumn,s:0.5}Work in Progress!",
 				},
 				text = {
-					"Combine {C:attention}#1#",
-					"selected cards",
-					"into {C:attention}one{} card"
+					"Earn {C:attention}${} equal to the",
+					"selected cards' {C:attention}summed",
+					"{C:attention}suit levels{C:inactive} (Max {C:money}$#1#{C:inactive})",
+					"{C:inactive}(Currently {C:money}$#2#{C:inactive})",
 				},
 			},
 			c_thac_devil = {

@@ -76,16 +76,69 @@ local tarots = {
 	'magician', magician = {
 		config = {
 			extra = {
+				dollars = 4,
+				p_dollars = 13,
+				h_dollars = 0,
 			},
 		},
 		pos = { x = 1, y = 0 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.extra.dollars, card.ability.extra.p_dollars, card.ability.extra.h_dollars }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			
+			local mode = pseudorandom("magic2", 1, 6)
+			
+			if mode == 1 then -- dollars
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+						ease_dollars(card.ability.extra.dollars)
+						used_tarot:juice_up(0.3, 0.5)
+					return true end }))
+			elseif mode == 2 then -- p_dollars
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+						ease_dollars(card.ability.extra.p_dollars)
+						used_tarot:juice_up(0.3, 0.5)
+					return true end }))
+			elseif mode == 3 then -- h_dollars
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+						ease_dollars(card.ability.extra.h_dollars)
+						used_tarot:juice_up(0.3, 0.5)
+					return true end }))
+			elseif mode == 4 then -- tarot
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, nil, 'magic2')
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			elseif mode == 5 then -- class
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = create_card('Class', G.consumeables, nil, nil, nil, nil, nil, 'magic2')
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			elseif mode == 6 then -- spectral
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+					if G.consumeables.config.card_limit > #G.consumeables.cards then
+						play_sound('timpani')
+						local card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, nil, 'magic2')
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						used_tarot:juice_up(0.3, 0.5)
+					end
+					return true end }))
+			end
+			delay(0.6)
 		end,
-		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
+		can_use = function(self, card) if #G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables then return true end end,
 	},
 	'high_priestess', high_priestess = {
 		config = {
@@ -164,17 +217,21 @@ local tarots = {
 	},
 	'lovers', lovers = {
 		config = {
-			extra = {
-			},
+			max_highlighted = 2,
 		},
 		pos = { x = 6, y = 0 },
 		loc_vars = function(_c, info_queue, card)
             --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = {  }} end,
-		use = function(_, self, area, copier)
+			return {vars = { card.ability.consumeable.max_highlighted }} end,
+		use = function(self, card, area, copier)
+			local used_tarot = copier or card
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+				play_sound('tarot1')
+				used_tarot:juice_up(0.3, 0.5)
+				return true end }))
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() AMM.combine_cards(G.hand.highlighted, "temp2", G.hand); return true end }))
+			delay(0.3)
 		end,
-		can_use = function(_, self) return true end,
-		in_pool = function() return false end,
 	},
 	'chariot', chariot = {
 		config = {
@@ -319,20 +376,47 @@ local tarots = {
 	},
 	'temperance', temperance = {
 		config = {
-			max_highlighted = 2,
+			extra = {
+				dollars = 40
+			},
 		},
 		pos = { x = 3, y = 1 },
-		loc_vars = function(_c, info_queue, card)
-            --if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
-			return {vars = { card.ability.consumeable.max_highlighted }} end,
+		loc_vars = function(self, info_queue, card)
+			local sum = 0
+			if G.hand then
+				for k,v in ipairs(G.hand.highlighted) do
+					if not SMODS.has_no_suit(v) then
+						sum = sum + G.GAME.amm_data.suit_levels[v.base.suit].level
+					end
+				end
+				sum = math.min(sum, card.ability.extra.dollars)
+			end
+			return {
+				vars = {
+					card.ability.extra.dollars,
+					sum
+				}
+			}
+		end,
 		use = function(self, card, area, copier)
 			local used_tarot = copier or card
+			local sum = 0
+			for k,v in ipairs(G.hand.highlighted) do
+				if not SMODS.has_no_suit(v) then
+					sum = sum + G.GAME.amm_data.suit_levels[v.base.suit].level
+				end
+			end
+			sum = math.min(sum, card.ability.extra.dollars)
+			
 			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-				play_sound('tarot1')
-				used_tarot:juice_up(0.3, 0.5)
+					ease_dollars(sum)
+					used_tarot:juice_up(0.3, 0.5)
 				return true end }))
-			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() AMM.combine_cards(G.hand.highlighted, "temp2", G.hand); return true end }))
-			delay(0.3)
+			G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+			delay(0.5)
+		end,
+		can_use = function(self, card)
+			return #G.hand.highlighted > 0
 		end,
 	},
 	'devil', devil = {

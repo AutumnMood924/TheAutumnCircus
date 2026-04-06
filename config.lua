@@ -213,7 +213,7 @@ local config = {
 		sock_and_buskin = true,
 		hiker = false,
 		gros_michel = true,
-		blueprint = true,
+		blueprint = false,
 		dusk = true,
 	},
 	enabled_enhancements = {
